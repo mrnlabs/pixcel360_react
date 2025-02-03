@@ -76,14 +76,7 @@ typography
 * Date: 2024-02-25
 */
 @font-face {
-  font-family: "remixicon";
-  src: url('https://spruko.com/demo/tailwind/xintra/dist/assets/icon-fonts/RemixIcons/fonts/remixicon.eot?t=1708865856766'); /* IE9*/
-  src: url('https://spruko.com/demo/tailwind/xintra/dist/assets/icon-fonts/RemixIcons/fonts/remixicon.eot?t=1708865856766#iefix') format('embedded-opentype'), /* IE6-IE8 */
-  url("https://spruko.com/demo/tailwind/xintra/dist/assets/icon-fonts/RemixIcons/fonts/remixicon.woff2?t=1708865856766") format("woff2"),
-  url("https://spruko.com/demo/tailwind/xintra/dist/assets/icon-fonts/RemixIcons/fonts/remixicon.woff?t=1708865856766") format("woff"),
-  url('https://spruko.com/demo/tailwind/xintra/dist/assets/icon-fonts/RemixIcons/fonts/remixicon.ttf?t=1708865856766') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
-  url('https://spruko.com/demo/tailwind/xintra/dist/assets/icon-fonts/RemixIcons/fonts/remixicon.svg?t=1708865856766#remixicon') format('svg'); /* iOS 4.1- */
-  font-display: swap;
+ 
 }
 [class^="ri-"], [class*=" ri-"] {
   font-family: 'remixicon' !important;
@@ -31648,7 +31641,7 @@ readers do not read off random characters that represent icons */
 .authentication.authentication-cover-main .show-password-button{
   padding: 0.45rem;
 }
-.{
+.authentication-background{
   position: relative !important;
   background-color: rgb(var(--primary)) !important;
 }

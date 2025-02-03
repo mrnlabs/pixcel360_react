@@ -22,7 +22,7 @@
         @inertiaHead
     </head>
     <!-- If route = '/' then put class 'authentication-background' -->
-    <body class="{{ Route::currentRouteName() === 'home' ? 'authentication-background' : '' }}">
+    <body class="{{ Route::currentRouteName() === 'home' ? 'authentication-background' : '' }} {{ Route::currentRouteName() === 'register' ? 'authentication-background' : '' }}">
         @inertia
         @inertia
     </body>
