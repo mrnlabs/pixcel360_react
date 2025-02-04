@@ -34,7 +34,6 @@ class EventController extends Controller
     public function index()
     {
         try{
-    
            $events =  $this->eventService->getEvents();
             return Inertia::render('Events/Events', ['events' => $events]);
         } catch (\Exception $e){

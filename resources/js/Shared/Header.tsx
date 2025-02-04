@@ -1,4 +1,5 @@
 import React from 'react'
+import { ToggleNav } from './ToggleNav'
 
 export default function Header() {
   return (
@@ -11,22 +12,18 @@ export default function Header() {
               <div className="header-element">
                 <div className="horizontal-logo">
                   <a href="index.html" className="header-logo">
-                    <img src="../assets/images/brand-logos/desktop-logo.png" alt="logo" className="desktop-logo"/>
-                    <img src="../assets/images/brand-logos/toggle-dark.png" alt="logo" className="toggle-dark"/>
-                    <img src="../assets/images/brand-logos/desktop-dark.png" alt="logo" className="desktop-dark"/>
-                    <img src="../assets/images/brand-logos/toggle-logo.png" alt="logo" className="toggle-logo"/>
-                    <img src="../assets/images/brand-logos/toggle-white.png" alt="logo" className="toggle-white"/>
-                    <img src="../assets/images/brand-logos/desktop-white.png" alt="logo" className="desktop-white"/>
+                    <img src="https://pixcel360.com/wp-content/uploads/2024/01/Backup_of_PIXEL360-LOGO-with-grey.png" alt="logo" className="desktop-logo"/>
+                    <img src="https://pixcel360.com/wp-content/uploads/2024/01/Backup_of_PIXEL360-LOGO-with-grey.png" alt="logo" className="toggle-dark"/>
+                    <img src="https://pixcel360.com/wp-content/uploads/2024/01/Backup_of_PIXEL360-LOGO-with-grey.png" alt="logo" className="desktop-dark"/>
+                    <img src="https://pixcel360.com/wp-content/uploads/2024/01/Backup_of_PIXEL360-LOGO-with-grey.png" alt="logo" className="toggle-logo"/>
+                    <img src="https://pixcel360.com/wp-content/uploads/2024/01/Backup_of_PIXEL360-LOGO-with-grey.png" alt="logo" className="toggle-white"/>
+                    <img src="https://pixcel360.com/wp-content/uploads/2024/01/Backup_of_PIXEL360-LOGO-with-grey.png" alt="logo" className="desktop-white"/>
                   </a>
                 </div>
               </div>
               {/* <!-- End::header-element --> */}
               {/* <!-- Start::header-element --> */}
-              <div className="header-element mx-lg-0">
-                <a aria-label="Hide Sidebar" className="sidemenu-toggle header-link animated-arrow hor-toggle horizontal-navtoggle" data-bs-toggle="sidebar" href="javascript:void(0);">
-                  <span></span>
-                </a>
-              </div>
+              <ToggleNav />
               {/* <!-- End::header-element --> */}
               {/* <!-- Start::header-element --> */}
               <div className="header-element header-search md:!block !hidden my-auto auto-complete-search">
