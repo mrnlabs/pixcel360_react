@@ -1,7 +1,7 @@
 import Authenticated from '@/Layouts/AuthenticatedLayout'
 import { Breadcrumb } from '@/Shared/Breadcrumb'
-import { Head } from '@inertiajs/react'
-import { QrCode } from 'lucide-react'
+import { Head, Link } from '@inertiajs/react'
+import { Copy, QrCode, SquarePen, SquarePlus, Trash2 } from 'lucide-react'
 import React, { lazy, Suspense, useState } from 'react'
 const QRModal = lazy(() => import("./QRModal"));
 
@@ -29,24 +29,15 @@ export default function Index() {
                   <div className="box">
                     <div className="box-header justify-between">
                       <div className="box-title"> Events </div>
-                      <div className="flex flex-wrap">
-                        <div className="me-3 my-1">
-                          <input className="form-control form-control-sm" type="text" placeholder="Search Here" aria-label=" example"/>
+                      <div className="flex flex-wrap gap-2">
+                        <Link href={route('events.create')} className="ti-btn ti-btn-primary !m-0 btn-wave ti-btn-sm waves-effect waves-light">
+                          <SquarePlus classNameme-1 align-middle />Create </Link>
+                        <div>
+                          <input className="form-control form-control-sm" type="text" placeholder="Search Here" aria-label=".form-control-sm example"/>
                         </div>
-                        <div className="ti-dropdown hs-dropdown my-1">
-                          <a href="javascript:void(0);" className="ti-btn ti-btn-sm ti-btn-primary ti-dropdown-toggle hs-dropdown-toggle !m-0" data-bs-toggle="dropdown" aria-expanded="false"> Sort By <i className="ri-arrow-down-s-line align-middle ms-1"></i>
+                        <div className="ti-dropdown hs-dropdown">
+                          <a href="javascript:void(0);" className="ti-btn ti-btn-primary !m-0 ti-btn-sm btn-wave waves-effect waves-light" data-bs-toggle="dropdown" aria-expanded="false"> Sort By <i className="ri-arrow-down-s-line align-middle ms-1 inline-block"></i>
                           </a>
-                          <ul className="ti-dropdown-menu hs-dropdown-menu hidden" role="menu">
-                            <li>
-                              <a className="ti-dropdown-item" href="javascript:void(0);">New</a>
-                            </li>
-                            <li>
-                              <a className="ti-dropdown-item" href="javascript:void(0);">Popular</a>
-                            </li>
-                            <li>
-                              <a className="ti-dropdown-item" href="javascript:void(0);">Relevant</a>
-                            </li>
-                          </ul>
                         </div>
                       </div>
                     </div>
@@ -64,7 +55,6 @@ export default function Index() {
                               <th scope="col">Data</th>
                               <th scope="col">GALLERY</th>
                               <th scope="col">Overlays</th>
-                              <th scope="col">Salary</th>
                               <th scope="col">Manage</th>			
                             </tr>
                           </thead>
@@ -106,22 +96,29 @@ export default function Index() {
                                 <span className="font-medium">$15,000</span>
                               </td>
                               <td>
-                                {/* <div className="btn-list">
+                                <div className="btn-list">
                                   <div className="hs-tooltip ti-main-tooltip [--placement:top]">
                                     <a aria-label="anchor" href="javascript:void(0);" className="hs-tooltip-toggle ti-btn ti-btn-icon me-2 ti-btn-soft-primary !mb-0">
-                                      <span className="ri-pencil-line text-[14px]"></span>
+                                      <SquarePen className="text-[14px]" />
                                       <span className="hs-tooltip-content ti-main-tooltip-content py-1 px-2 !bg-black !text-xs !font-medium !text-white shadow-sm dark:bg-slate-700" role="tooltip" data-popper-reference-hidden="" data-popper-escaped="" data-popper-placement="top" 
                                       style={{ position: 'fixed', inset: 'auto auto 0px 0px', margin: '0px', transform: 'translate(1719px, 1074px)'}}> Edit </span>
                                     </a>
                                   </div>
                                   <div className="hs-tooltip ti-main-tooltip [--placement:top]">
+                                    <a aria-label="anchor" href="javascript:void(0);" className="hs-tooltip-toggle ti-btn ti-btn-icon me-2 ti-btn-soft-primary !mb-0">
+                                      <Copy className="text-[14px]" />
+                                      <span className="hs-tooltip-content ti-main-tooltip-content py-1 px-2 !bg-black !text-xs !font-medium !text-white shadow-sm dark:bg-slate-700" role="tooltip" data-popper-reference-hidden="" data-popper-escaped="" data-popper-placement="top" 
+                                      style={{ position: 'fixed', inset: 'auto auto 0px 0px', margin: '0px', transform: 'translate(1719px, 1074px)'}}> Edit </span>
+                                    </a>
+                                  </div>
+                                   <div className="hs-tooltip ti-main-tooltip [--placement:top]">
                                     <a aria-label="anchor" href="javascript:void(0);" className="hs-tooltip-toggle ti-btn ti-btn-icon me-2 ti-btn-soft-danger !mb-0">
-                                      <span className="ri-delete-bin-7-line text-[14px]"></span>
+                                    <Trash2 className="text-[14px]" />
                                       <span className="hs-tooltip-content ti-main-tooltip-content py-1 px-2 !bg-black !text-xs !font-medium !text-white shadow-sm dark:bg-slate-700" role="tooltip" data-popper-reference-hidden="" data-popper-escaped="" data-popper-placement="top" 
                                       style={{position: 'fixed', inset: 'auto auto 0px 0px; margin: 0px; transform: translate(1756px, 1074px)' }}> Delete </span>
                                     </a>
                                   </div>
-                                </div> */}
+                                </div>
                               </td>
                             </tr>
                             

@@ -21,7 +21,7 @@ class ProfileController extends Controller
     {
         $profile =  $this->profileService->getProfile();
         $isMyProfile = request('id') ?  false : true;
-        return Inertia::render('Profile/Edit' , 
+        return Inertia::render('Profile/Index' , 
         ['profile' => $profile,
         'isMyProfile' => $isMyProfile
     ]);

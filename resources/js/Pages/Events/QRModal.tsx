@@ -20,7 +20,7 @@ function QRModal({
     return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogContent className="sm:max-w-[425px] top-[15%] translate-y-0">
-                <DialogHeader>
+                <DialogHeader className="border-b">
                     <DialogTitle className="card-title">Activate Event</DialogTitle>
                     <DialogDescription></DialogDescription>
                 </DialogHeader>
