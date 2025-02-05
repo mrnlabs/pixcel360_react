@@ -71,7 +71,7 @@ const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
               <ProfileImage/>
             <div className="xl:col-span-6 col-span-12">
               <label htmlFor="firstname" className="form-label">First Name :</label>
-              <Input value={data.firstname} 
+              <Input value={data.firstname ?? ''} 
               onChange={(e) => setData('firstname', e.target.value)} 
               type="text" className="form-control" id="firstname" placeholder="Enter First Name"/>
               <InputError message={errors.firstname} />
@@ -79,7 +79,7 @@ const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
             <div className="xl:col-span-6 col-span-12">
               <label htmlFor="lastname" className="form-label">Last Name :</label>
               <Input 
-              value={data.lastname}
+              value={data.lastname ?? ''}
               onChange={(e) => setData('lastname', e.target.value)}
                type="text" className="form-control" id="lastname"  placeholder="Enter Last Name"/>
               <InputError message={errors.lastname} />
@@ -87,7 +87,7 @@ const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
             <div className="xl:col-span-6 col-span-12">
               <label htmlFor="profile-email" className="form-label">Email :</label>
               <Input 
-              value={data.email}
+              value={data.email ?? ''}
               onChange={(e) => setData('email', e.target.value)}
               type="email" className="form-control" id="profile-email"  placeholder="Enter Email"/>
               <InputError message={errors.email} />
@@ -95,7 +95,7 @@ const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
             <div className="xl:col-span-6 col-span-12">
               <label htmlFor="display_name" className="form-label">Display Name :</label>
               <Input 
-              value={data.display_name}
+              value={data.display_name ?? ''}
               onChange={(e) => setData('display_name', e.target.value)}
               type="text" className="form-control" id="display_name"  placeholder="Enter Display Name"/>
               <InputError message={errors.display_name} />
@@ -103,7 +103,7 @@ const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
             <div className="xl:col-span-6 col-span-12">
               <label htmlFor="profile-phn-no" className="form-label">Phone No :</label>
               <Input 
-              value={data.phone}
+              value={data.phone ?? ''}
               onChange={(e) => setData('phone', e.target.value)}
               type="text" className="form-control" id="profile-phn-no"  placeholder="Enter Number" />
               <InputError message={errors.phone} />
@@ -111,7 +111,7 @@ const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
             <div className="xl:col-span-6 col-span-12">
               <label htmlFor="addreess" className="form-label">Address 1 :</label>
               <Input 
-              value={data.address}
+              value={data.address ?? ''}
               onChange={(e) => setData('address', e.target.value)}
               type="text" className="form-control" id="addreess"  placeholder="Enter Address"/>
               <InputError message={errors.address} />
@@ -120,7 +120,7 @@ const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
             <div className="xl:col-span-6 col-span-12">
               <label htmlFor="address2" className="form-label">Address 2 :</label>
               <Input 
-              value={data.address2}
+              value={data.address2 ?? ''}
               onChange={(e) => setData('address2', e.target.value)}
               type="text" className="form-control" id="address2" placeholder="Enter Address"  />
               <InputError message={errors.address2} />
@@ -128,7 +128,7 @@ const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
             <div className="xl:col-span-6 col-span-12">
               <label htmlFor="country" className="form-label">Country :</label>
               <CountrySelector 
-                value={data.country} 
+                value={data.country ?? ''} 
                 setData={setData} 
               />
               <InputError message={errors.country} />
@@ -136,7 +136,7 @@ const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
             <div className="xl:col-span-4 col-span-12">
               <label htmlFor="city" className="form-label">City :</label>
               <Input 
-              value={data.city}
+              value={data.city ?? ''}
               onChange={(e) => setData('city', e.target.value)}
               type="text" className="form-control" id="city" placeholder="Enter Your City"  />
               <InputError message={errors.city} />
@@ -144,7 +144,7 @@ const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
             <div className="xl:col-span-4 col-span-12">
               <label htmlFor="province" className="form-label">Province :</label>
               <Input 
-              value={data.province}
+              value={data.province ?? ''}
               onChange={(e) => setData('province', e.target.value)}
               type="text" className="form-control" id="province" placeholder="Enter Your Province"  />
               <InputError message={errors.province} />
@@ -152,12 +152,12 @@ const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
             <div className="xl:col-span-4 col-span-12">
               <label htmlFor="postalCode" className="form-label">Postal Code :</label>
               <Input 
-              value={data.post_code}
+              value={data.post_code ?? ''}
               onChange={(e) => setData('post_code', e.target.value)}
               type="text" className="form-control" id="postalCode" placeholder="Enter Your Postal Code"  />
               <InputError message={errors.post_code} />
             </div>
-            <button disabled={processing} type="submit" className="ti-btn ti-btn-primary">Save</button>
+            <button disabled={processing} type="submit" className="ti-btn ti-btn-primary">{ processing ? 'Saving...' : 'Save'}</button>
           </form>
           <Toaster />
         </div>

@@ -19,6 +19,7 @@ return new class extends Migration
             $table->enum('role', ['admin', 'user'])->default('admin');
             $table->string('display_name')->nullable();
             $table->string('company_name')->nullable();
+            $table->string('photo')->nullable();
             $table->string('email')->unique();
             $table->string('phone')->unique()->nullable();
             $table->timestamp('email_verified_at')->nullable();

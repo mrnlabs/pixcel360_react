@@ -1,11 +1,13 @@
 import { Button } from '@/Components/ui/button'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuShortcut, DropdownMenuTrigger } from '@/Components/ui/dropdown-menu'
-import { router } from '@inertiajs/react'
+import { router, usePage } from '@inertiajs/react'
 import { CreditCard, Keyboard, Settings, User } from 'lucide-react'
-import React from 'react'
+import React, { useState } from 'react'
 
 export default function HeaderProfile() {
-
+  const filePath = usePage().props.filePath;
+  const user = usePage().props.auth.user;
+  const [preview, setPreview] = useState(user.photo ? filePath+user.photo : 'profile_placeholder.jpg');
     const goToProfile = () => {
         router.get('/profile')
     }
@@ -16,7 +18,7 @@ export default function HeaderProfile() {
     <div aria-label="anchor" className="cursor-pointer header-link hs-dropdown-toggle ti-dropdown-toggle" id="mainHeaderProfile" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
        <div className="flex items-center">
          <div>
-           <img src="../assets/images/faces/15.jpg" alt="img" className="avatar avatar-sm mb-0"/>
+           <img src={preview} alt="img" className="avatar avatar-sm mb-0"/>
          </div>
        </div>
      </div>

@@ -54,12 +54,14 @@ class ProfileController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function updatePicture(Request $request, string $type)
+    public function updatePicture(Request $request)
     {
-        //store file and save url
+       $request->validate([
+              'photo' => 'required|image|mimes:jpeg,png,jpg|max:2048'
+       ]);
        try {
-        $path = $request->file('image')->storeAs('/avatars', $request->file('image')->getClientOriginalName(), 'public');
-        $this->profileService->updateProfilePicture($path, $type);
+        $path = $request->file('photo')->storeAs('/avatars', $request->file('photo')->getClientOriginalName(), 'public');
+        $this->profileService->updateProfilePicture($path);
         return back()->with('success', 'Profile picture updated successfully!');
        } catch (\Throwable $th) {
         throw $th;
