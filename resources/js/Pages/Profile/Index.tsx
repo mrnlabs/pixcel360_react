@@ -24,8 +24,8 @@ export default function Index({user} : any) {
              <Breadcrumb
              items={[
                 { label: 'Home', href: '/' },
-                { label: 'Events', href: '/events' },
-                { label: 'All', active: true }
+                { label: 'Profile', href: '/profile' },
+                { label: 'Details', active: true }
               ]}
               />
              
