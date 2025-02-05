@@ -37,7 +37,7 @@ Route::get('/event-gallery/{id}', [EventController::class, 'gallery'])->name('ev
 
 //profile
 Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
-Route::patch('/profile', [ProfileController::class, 'update'])->name('update_profile');
+Route::post('/profile', [ProfileController::class, 'update'])->name('update_profile');
 Route::post('/update-profile-picture/{type}', [ProfileController::class, 'updatePicture'])->name('update_pro_pic');
 
 //subscriptions

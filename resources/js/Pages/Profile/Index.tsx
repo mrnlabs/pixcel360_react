@@ -7,7 +7,7 @@ import AccountSettings from './AccountSettings'
 import NotificationSettings from './NotificationSettings'
 import SecuritySettings from './SecuritySettings'
 
-export default function Index() {
+export default function Index({user} : any) {
     const [activeTab, setActiveTab] = useState('account');
 
   const tabs = [
@@ -52,7 +52,7 @@ export default function Index() {
       <div className="p-4 border-b border-t border-dashed border-defaultborder dark:border-defaultborder/10 tab-content">
 
       <div className={activeTab === 'account' ? 'block' : 'hidden'}>
-          <AccountSettings />
+          <AccountSettings user={user} />
       </div>
         
 
@@ -68,12 +68,7 @@ export default function Index() {
         
        
       </div>
-      <div className="box-footer border-t-0">
-        <div className="btn-list float-end">
-          <button type="button" className="ti-btn bg-primarytint2color text-white btn-wave waves-effect waves-light">Deactivate Account</button>
-          <button type="button" className="ti-btn ti-btn-primary btn-wave waves-effect waves-light">Save Changes</button>
-        </div>
-      </div>
+      
     </div>
   </div>
 </div>

@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ProfileUpdateRequest;
 use App\Models\User;
-use App\Services\ProfileService;
-use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Illuminate\Http\Request;
+use App\Services\ProfileService;
+use Illuminate\Support\Facades\Auth;
 
 class ProfileController extends Controller
 {
@@ -19,11 +21,9 @@ class ProfileController extends Controller
      */
     public function index()
     {
-        $profile =  $this->profileService->getProfile();
-        $isMyProfile = request('id') ?  false : true;
+        $user =  $this->profileService->getProfile();
         return Inertia::render('Profile/Index' , 
-        ['profile' => $profile,
-        'isMyProfile' => $isMyProfile
+        ['user' => $user
     ]);
     }
 
@@ -69,11 +69,13 @@ class ProfileController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request)
+    public function update(ProfileUpdateRequest $request)
     {
         try {
-            User::find($request->id)->update($request->all());
-            return back()->with('success', 'Profile updated successfully!');
+            $user = $request->user();
+            $user->fill($request->validated());
+            $request->user()->email_verified_at = null;
+             Auth::user()->save();
         } catch (\Throwable $th) {
             throw $th;
         }
