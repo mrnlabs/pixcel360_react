@@ -1,58 +1,117 @@
-import React from 'react'
+import ThemeTextInput from '@/Components/Form/ThemeTextInput';
+import InputError from '@/Components/InputError';
+import { Button } from '@/Components/ui/button';
+import { Toaster } from '@/Components/ui/toaster';
+import { useToast } from '@/hooks/use-toast';
+import {  useForm } from '@inertiajs/react';
+import { Eye, EyeOff } from 'lucide-react';
+import React, { FormEventHandler, useState } from 'react'
 
 export default function SecuritySettings() {
+      const { toast } = useToast();
+      const [showPassword, setShowPassword] = useState(false);
+      const { data, setData, patch, processing, errors, reset, isDirty } = useForm({
+          password: "",
+          password_confirmation: "",
+          logoutOtherDevices: false as boolean,
+      });
+      const submit: FormEventHandler = (e) => {
+          e.preventDefault();
+          patch(route("password.update"), {
+              onSuccess: () => {
+                reset("password")
+                toast({
+                  title: "Success",
+                  description: "Password updated successfully",
+                  variant: "default",
+              })
+              },
+              onError: () => {
+                toast({
+                  title: "Error",
+                  description: "Something went wrong",
+                  variant: "destructive",
+              })
+              }
+          });
+      };
   return (
     <div className="tab-pane show overflow-hidden p-0 border-0 " id="notification-tab-pane" role="tabpanel">
-          <div className="flex justify-between items-center mb-4 flex-wrap gap-1">
-            <div className="font-semibold block text-[15px]">Notifications Settings:</div>
-            <div className="ti-btn ti-btn-primary ti-btn-sm">
-              <i className="ri-loop-left-line leading-none me-2"></i>Restore Changes
+         <div className="grid grid-cols-12 justify-center authentication authentication-basic h-full ml-1">
+      <div className="xxl:col-span-4 xl:col-span-4 lg:col-span-6 md:col-span-6 sm:col-span-8 col-span-12 ">
+      <div className="font-semibold block text-[15px]">Change Password:</div>
+         <div className="my-4">
+            <div className="box-body">  
+               <div className="grid grid-cols-12 gap-y-3">
+                
+                  <div className="xl:col-span-12 col-span-12"> 
+                    <label htmlFor="new-password" className="form-label text-defaulttextcolor">New Password<sup className="text-xs text-danger">*</sup>
+                    </label> 
+                    <div className="relative"> 
+                        <ThemeTextInput 
+                        id="password"
+                        type={showPassword ? "text" : "password"}
+                        name="password"
+                        value={data.password}
+                        autoComplete="current-password"
+                        isFocused={false}
+                        onChange={(e) => setData("password", e.target.value) }
+                        placeholder="New Password"
+                        className="form-control create-password-input" 
+                        /> 
+                        <a onClick={() => setShowPassword(!showPassword)} aria-label="anchor" href="#!" 
+                        className="show-password-button text-textmuted dark:text-textmuted/50" 
+                         id="button-addon2">
+                            {showPassword ? <EyeOff className='align-middle' /> : <Eye className='align-middle' />}
+                         </a>
+                         <InputError message={errors.password} className="mt-1" />
+                         </div> 
+                  </div>
+                  <div className="xl:col-span-12 col-span-12 mb-2">
+                     <label htmlFor="password_confirmation" className="form-label text-defaulttextcolor block">Password<sup className="text-xs text-danger">*</sup>
+                     </label> 
+                     <div className="relative"> 
+                        <ThemeTextInput 
+                        id="password_confirmation"
+                        type={showPassword ? "text" : "password"}
+                        name="password_confirmation"
+                        value={data.password_confirmation}
+                        autoComplete="current-password"
+                        isFocused={false}
+                        onChange={(e) => setData("password_confirmation", e.target.value) }
+                        placeholder="Confirm Password"
+                        className="form-control create-password-input" 
+                        /> 
+                        <a onClick={() => setShowPassword(!showPassword)} aria-label="anchor" href="#!" 
+                        className="show-password-button text-textmuted dark:text-textmuted/50" 
+                         id="button-addon2">
+                            {showPassword ? <EyeOff className='align-middle' /> : <Eye className='align-middle' />}
+                         </a>
+                         <InputError message={errors.password_confirmation} className="mt-1" />
+                         </div>
+                     <div className="mt-2">
+                        <div className="form-check"> 
+                            <input 
+                                name="logout"
+                                checked={data.logoutOtherDevices}
+                                onChange={(e) => setData("logoutOtherDevices",e.target.checked)
+                                }
+                            className="form-check-input" type="checkbox" value="" id="logoutOtherDevices" /> 
+                            <label className="form-check-label text-red-500 dark:text-textmuted/50 font-normal" htmlFor="logoutOtherDevices"> Logout Other Devices ? </label> 
+                            </div>
+                     </div>
+                  </div>
+               </div>
+               <div className="grid mt-4"> 
+                <Button type="button" onClick={submit} 
+                  disabled={processing} className="cursor-pointer ti-btn ti-btn-primary">{processing ? "Saving..." : "Save"}</Button> 
+                </div>
             </div>
-          </div>
-          <div className="grid grid-cols-12 sm:gap-x-6 gx-5 gap-y-3">
-            <div className="xl:col-span-12 col-span-12">
-              <p className="text-[14px] mb-1 font-medium">Configure Notifications</p>
-              <p className="text-xs mb-0 text-textmuted dark:text-textmuted/50">Users can tailor their experience to receive alerts for the types of events that matter to them.</p>
-            </div>
-            <div className="xl:col-span-12 col-span-12">
-              <div className="flex items-top justify-between mt-3">
-                <div className="mail-notification-settings">
-                  <p className="text-[14px] mb-1 font-medium">Push Notifications</p>
-                  <p className="text-xs mb-0 text-textmuted dark:text-textmuted/50">Alerts sent to the user's mobile device or desktop.</p>
-                </div>
-                <div className="toggle on toggle-success mb-0 float-sm-end" id="push-notifications">
-                  <span></span>
-                </div>
-              </div>
-              <div className="flex items-top justify-between mt-3">
-                <div className="mail-notification-settings">
-                  <p className="text-[14px] mb-1 font-medium">Email Notifications</p>
-                  <p className="text-xs mb-0 text-textmuted dark:text-textmuted/50">Messages sent to the user's email address.</p>
-                </div>
-                <div className="toggle toggle-success mb-0 float-sm-end" id="email-notifications">
-                  <span></span>
-                </div>
-              </div>
-              <div className="flex items-top justify-between mt-3">
-                <div className="mail-notification-settings">
-                  <p className="text-[14px] mb-1 font-medium">In-App Notifications</p>
-                  <p className="text-xs mb-0 text-textmuted dark:text-textmuted/50">Alerts that appear within the application interface.</p>
-                </div>
-                <div className="toggle toggle-success mb-0 float-sm-end" id="in-app-notifications">
-                  <span></span>
-                </div>
-              </div>
-              <div className="flex items-top justify-between mt-3">
-                <div className="mail-notification-settings">
-                  <p className="text-[14px] mb-1 font-medium">SMS Notifications</p>
-                  <p className="text-xs mb-0 text-textmuted dark:text-textmuted/50">Text messages sent to the user's mobile phone.</p>
-                </div>
-                <div className="toggle toggle-success on mb-0 float-sm-end" id="sms-notifications">
-                  <span></span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+         </div>
+      </div>
+      <div className="xxl:col-span-4 xl:col-span-4 lg:col-span-3 md:col-span-3 sm:col-span-2 col-span-12"></div>
+   </div>
+    <Toaster />
+     </div>
   )
 }

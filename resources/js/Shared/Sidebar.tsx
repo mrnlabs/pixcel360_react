@@ -90,10 +90,10 @@ export default function Sidebar() {
                           {/* <!-- End::slide__category --> */}
                           {/* <!-- Start::slide --> */}
                           <MenuItem 
-                              href="subscriptions" 
+                              href="/profile" 
                               icon={SquareUserRound } 
                               label="My Profile"
-                              isRoute={true} 
+                              isRoute={false} 
                           />
                           <MenuItem 
                               href="logout" 

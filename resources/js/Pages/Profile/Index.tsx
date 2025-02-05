@@ -1,7 +1,6 @@
 import Authenticated from '@/Layouts/AuthenticatedLayout'
 import { Breadcrumb } from '@/Shared/Breadcrumb'
 import { Head, Link } from '@inertiajs/react'
-import { Copy, QrCode, SquarePen, SquarePlus, Trash2 } from 'lucide-react'
 import React, { lazy, Suspense, useState } from 'react'
 import AccountSettings from './AccountSettings'
 import NotificationSettings from './NotificationSettings'
@@ -20,7 +19,6 @@ export default function Index({user} : any) {
           <Head title="Dashboard" />
           <div className="main-content app-content">
             <div className="container-fluid">
-              {/* <!-- Start::page-header --> */}
              <Breadcrumb
              items={[
                 { label: 'Home', href: '/' },
