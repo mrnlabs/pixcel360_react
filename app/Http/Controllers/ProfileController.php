@@ -86,8 +86,8 @@ class ProfileController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function removePicture()
     {
-        //
+        $this->profileService->removeProfilePicture();
     }
 }

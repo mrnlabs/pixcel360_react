@@ -39,6 +39,7 @@ Route::get('/event-gallery/{id}', [EventController::class, 'gallery'])->name('ev
 Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
 Route::post('/profile', [ProfileController::class, 'update'])->name('update_profile');
 Route::post('/update-profile-picture', [ProfileController::class, 'updatePicture'])->name('update_pro_pic');
+Route::delete('/remove-profile-image', [ProfileController::class, 'removePicture'])->name('remove_pro_pic');
 
 //subscriptions
 Route::get('/subscriptions', [SubscriptionController::class, 'index'])->name('subscriptions');

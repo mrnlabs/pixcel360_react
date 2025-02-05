@@ -18,7 +18,13 @@ class ProfileService
         return User::where('id', auth()->id())->update([
             'photo' => $path,
         ]);
+    }
 
+    function removeProfilePicture() {
+        auth()->user()->update([
+            'photo' => null
+        ]);
+        return true;
     }
 
 }

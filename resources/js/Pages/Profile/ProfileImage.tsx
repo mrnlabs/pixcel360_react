@@ -1,13 +1,19 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, Suspense } from 'react';
 import { Trash2, Upload } from 'lucide-react';
 import { router, usePage } from '@inertiajs/react';
 import { useToast } from '@/hooks/use-toast';
 import { Toaster } from '@/Components/ui/toaster';
+import ConfirmDialog from '@/Components/ConfirmDialog';
+import InputError from '@/Components/InputError';
 
 export default function ProfileImage() {
   const filePath = usePage().props.filePath;
+  const {errors } = usePage().props;
   const user = usePage().props.auth.user;
   const { toast } = useToast();
+
+  const [dialogOpen, setDialogOpen] = useState(false);
+
   const [preview, setPreview] = useState(user.photo ? filePath+user.photo : 'profile_placeholder.jpg');
   const [uploading, setUploading] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -67,8 +73,21 @@ export default function ProfileImage() {
     
     router.delete('/remove-profile-image', {
       onSuccess: () => {
-        // Additional success handling if needed
+        setUploading(false);
+        toast({
+          title: "Success",
+          description: "Profile removed successfully",
+          variant: "default",
+      })
       },
+      onError: () => {
+        setUploading(false);
+        toast({
+          title: "Error",
+          description: "Something went wrong",
+          variant: "destructive",
+      })
+    }
     });
   };
 
@@ -106,13 +125,13 @@ export default function ProfileImage() {
                 ref={fileInputRef}
                 onChange={handleImageChange}
                 accept="image/jpeg,image/png,image/gif"
-                disabled={uploading}
+                disabled={uploading || !preview}
               />
             </label>
             <button 
               type="button" 
               className={`ti-btn ti-btn-sm ti-btn-soft-primary1 btn-wave waves-effect waves-light ${uploading ? 'opacity-50 cursor-not-allowed' : ''}`}
-              onClick={handleRemove}
+              onClick={() => setDialogOpen(true)}
               disabled={uploading}
             >
               <Trash2 size={16} className="me-1"/>
@@ -120,11 +139,21 @@ export default function ProfileImage() {
             </button>
           </div>
           <span className="block text-xs text-textmuted dark:text-textmuted/50">
-            Use JPEG, PNG, or GIF. Best size: 200x200 pixels. Keep it under 5MB
-          </span>
+            Use JPEG, PNG, or JPG. Best size: 200x200 pixels. Keep it under 5MB
+            </span>
+            <InputError message={errors.photo} className="mt-2" />
         </div>
       </div>
-      <Toaster />
+      
+      <Suspense fallback={""}>
+              <Toaster />
+              <ConfirmDialog 
+                message="Are you sure you want to remove your profile photo ?"
+                dialogOpen={dialogOpen} 
+                setDialogOpen={setDialogOpen}
+                onContinue={handleRemove}
+             />
+        </Suspense>
     </div>
   );
 }
