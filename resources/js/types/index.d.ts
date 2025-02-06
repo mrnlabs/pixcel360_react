@@ -35,6 +35,24 @@ export interface Event {
     app_logo: string;
     app_background: string;
     webgallery_background: string;
+    setting? : {
+        id: number;
+        event_id?: number;
+        count_down: 1;
+        beep_sounds: number;
+        face_props: number;
+        mirror_overlay: number;
+        front_rear_camera: number;
+        camera_exposure: number;
+        qr_app_protection: number;
+        gallery_name: null;
+        attract_screen: null;
+        app_logo: null;
+        app_background: null;
+        webgallery_background: null;
+        created_at: string;
+        updated_at: string
+      }
     created_at?: string;
 }
 

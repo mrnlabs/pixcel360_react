@@ -35,7 +35,7 @@ export default function Index({events} : any) {
                     <div className="box-header justify-between">
                       <div className="box-title"> Events </div>
                       <div className="flex flex-wrap gap-2">
-                        <Link href={route('events.create')} className="ti-btn ti-btn-primary !m-0 btn-wave ti-btn-sm waves-effect waves-light">
+                        <Link href={route('event.create')} className="ti-btn ti-btn-primary !m-0 btn-wave ti-btn-sm waves-effect waves-light">
                           <SquarePlus classNameme-1 align-middle />Create </Link>
                         <div>
                           <input className="form-control form-control-sm" type="text" placeholder="Search Here" aria-label=".form-control-sm example"/>

@@ -61,7 +61,7 @@ export default function Sidebar() {
                           />
 
                           <MenuItem 
-                              href="events.create" 
+                              href="event.create" 
                               icon={CalendarPlus2 } 
                               label="Create Event"
                               isRoute={true} 

@@ -1,6 +1,6 @@
-import React from 'react'
+import { Settings, SquarePen } from 'lucide-react'
 
-export default function EventSidebar() {
+export default function EventSidebar({activeTab,setActiveTab} : {activeTab: string,setActiveTab: (tab: string) => void}) {
   return (
     <div className="xxl:col-span-3 col-span-12">
     <div className="grid grid-cols-12 gap-x-6">
@@ -14,28 +14,27 @@ export default function EventSidebar() {
           <div className="box-body !pt-0 !p-3">
             <ul className="list-none files-main-nav" id="files-main-nav">
               <li className="px-0 pt-0">
-                <span className="text-xs text-textmuted dark:text-textmuted/50">My Files</span>
+                <span className="text-xs text-textmuted dark:text-textmuted/50">Event Details</span>
               </li>
-              <li className="active files-type">
-                <a href="javascript:void(0)">
+              <li className={`${activeTab === 'event-details' ? 'active' : ''} files-type`}> 
+                <div className="cursor-pointer" onClick={() => setActiveTab('event-details')}>
                   <div className="flex items-center">
                     <div className="me-2">
-                      <i className="ri-folder-2-line text-[1rem]"></i>
+                      <SquarePen size={16} />
                     </div>
-                    <span className="flex-auto text-nowrap"> All Files </span>
-                    <span className="badge bg-primary">412</span>
+                    <span className="flex-auto text-nowrap"> Edit </span>
                   </div>
-                </a>
+                </div>
               </li>
-              <li className="files-type">
-                <a href="javascript:void(0)">
+              <li className={`${activeTab === 'event-settings' ? 'active' : ''} files-type`}>
+                <div className="cursor-pointer" onClick={() => setActiveTab('event-settings')}>
                   <div className="flex items-center">
                     <div className="me-2">
-                      <i className="ri-history-fill text-[1rem]"></i>
+                    <Settings size={16} />
                     </div>
-                    <span className="flex-auto text-nowrap"> Recent Files </span>
+                    <span className="flex-auto text-nowrap"> Event Settings </span>
                   </div>
-                </a>
+                </div>
               </li>
               <li className="files-type">
                 <a href="javascript:void(0)">

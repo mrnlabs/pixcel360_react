@@ -85,8 +85,8 @@ class EventController extends Controller
         try{
             $event =  $this->eventService->getEvent(request('id'));
             return Inertia::render('Events/Create', ['e_vent' => $event]);
-        } catch (\Exception $e){
-            return Inertia::render('Error', ['message' => $e->getMessage()]);
+        } catch (\Throwable $th){
+            throw $th;
         }
     }
 

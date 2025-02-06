@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 
         Route::middleware('auth')->prefix('events')->group(function () {
         Route::get('/', [EventController::class, 'index'])->name('events');
-        Route::get('/create', [EventController::class, 'create'])->name('events.create');
+        Route::get('/create', [EventController::class, 'create'])->name('event.create');
         Route::post('/store', [EventController::class, 'store'])->name('events.store');
         Route::get('/edit/{slug}', [EventController::class, 'edit'])->name('event.edit');
         Route::patch('/update/{slug}', [EventController::class, 'update'])->name('event.update');

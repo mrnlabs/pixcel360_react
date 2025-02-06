@@ -1,14 +1,40 @@
 import Authenticated from "@/Layouts/AuthenticatedLayout";
 import { Breadcrumb } from "@/Shared/Breadcrumb";
 import { EventProps } from "@/types";
-import { Head } from "@inertiajs/react";
+import { Head, Link } from "@inertiajs/react";
 
 import React from 'react'
-import EditDetails from "./EditDetails";
+import EditDetails from "./TabContent/EditDetails";
 import { QRCodeSVG } from "qrcode.react";
 import EventSidebar from "./EventSidebar";
+import VedioSettings from "./TabContent/VedioSettings";
+import { SquarePlus } from "lucide-react";
 
 export default function Edit({event} : EventProps) {
+
+  const [activeTab, setActiveTab] = React.useState('event-details');
+
+  const getHeader = () => {
+      switch (activeTab) {
+          case 'event-details':
+              return 'Event details';
+          case 'event-settings':
+              return 'Vedio settings';
+          default:
+              return '';
+      }
+  }
+
+  const getActiveTabContent = () => {
+      switch (activeTab) {
+          case 'event-details':
+              return <EditDetails event={event} />;
+          case 'event-settings':
+              return <VedioSettings />;
+          default:
+              return null;
+      }
+  }
   return (
     <Authenticated>
 <Head title={'Edit Event' + event.name} />
@@ -25,26 +51,27 @@ export default function Edit({event} : EventProps) {
    
 
    <div className="grid grid-cols-12 gap-x-6">
-  <EventSidebar />
+  <EventSidebar setActiveTab={setActiveTab} activeTab={activeTab} />
   <div className="xxl:col-span-6 col-span-12">
     <div className="box overflow-hidden">
       <div className="box-body p-0">
         <div className="file-manager-folders">
           <div className="flex p-4 flex-wrap gap-2 items-center justify-between border-b border-defaultborder dark:border-defaultborder/10">
             <div className="flex-auto">
-              <h6 className="font-medium mb-0">Event details</h6>
+              <h6 className="font-medium mb-0">{getHeader()}</h6>
             </div>
-            <div className="flex gap-2 lg:nowrap flex-wrap justify-content-sm-end sm:w-[80%]">
+            <div className="flex gap-2 lg:nowrap justify-end flex-wrap justify-content-sm-end sm:w-[80%]">
               
-              <button aria-label="button" type="button" className="ti-btn ti-btn-primary !m-0 btn-w-md flex items-center justify-center btn-wave waves-light text-nowrap waves-effect waves-light">
-                <i className="ri-add-circle-line align-middle"></i>Create New Event </button>
+              <Link href={route('event.create')} aria-label="button" type="button" className="ti-btn ti-btn-primary !m-0 btn-w-md flex items-center  btn-wave waves-light text-nowrap waves-effect waves-light">
+                <SquarePlus className="align-middle" />Create New Event </Link>
               
             </div>
           </div>
           <div className="p-4 file-folders-container">
             
             <div className="grid  sm:gap-x-6 mb-2">
-            <EditDetails event={event} />
+            {/* <EditDetails event={event} /> */}
+              { getActiveTabContent() }
             </div>
            
           </div>

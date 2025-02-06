@@ -8,7 +8,7 @@ use Illuminate\Support\HtmlString;
 class EventService
 {
 public function getEvents(){
-    $events = Event::latest()->get();
+    $events = Event::with('setting')->latest()->get();
     // $data = $events->map(function ($event) {
     //     $event->qrCode = QrCode::size(150)->generate("'<div>'.$event->name.'</div>'");
     //     return $event;
@@ -20,7 +20,7 @@ public function getEvents(){
 
     public function getEvent($slug)
     {
-        return Event::whereSlug($slug)->firstOrFail();
+        return Event::with('setting')->whereSlug($slug)->first();
     }
 
     public function createEvent(array $data)
