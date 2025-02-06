@@ -1,5 +1,5 @@
 
-import { Button } from "@/Components/ui/button";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -7,15 +7,17 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@/Components/ui/dialog";
+} from "@/components/ui/dialog";
 import { QRCodeSVG } from "qrcode.react";
 
 function QRModal({
     open,
-    setOpen
+    setOpen,
+    QRData
 }: {
     open: boolean
-    setOpen: React.Dispatch<React.SetStateAction<boolean>>
+    setOpen: React.Dispatch<React.SetStateAction<boolean>>,
+    QRData: any
 }) {
     return (
         <Dialog open={open} onOpenChange={setOpen}>
@@ -26,7 +28,7 @@ function QRModal({
                 </DialogHeader>
                 <div className="flex justify-center items-center">
                 <QRCodeSVG
-                    value={"https://reactjs.org/"}
+                    value={JSON.stringify(QRData)}
                     title={"Title for my QR Code"}
                     size={128}
                     bgColor={"#ffffff"}

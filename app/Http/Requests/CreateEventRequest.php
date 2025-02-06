@@ -19,6 +19,8 @@ class CreateEventRequest extends FormRequest
 
         return [
             'name' => 'required|string|min:3|max:255',
+            'start_date' => 'nullable|date',
+            'end_date' => 'nullable|date',
             'language' => 'required|string',
             'country' => 'required|string',
         ];

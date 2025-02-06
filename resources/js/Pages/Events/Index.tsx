@@ -3,17 +3,20 @@ import { Breadcrumb } from '@/Shared/Breadcrumb'
 import { Head, Link } from '@inertiajs/react'
 import { Copy, QrCode, SquarePen, SquarePlus, Trash2 } from 'lucide-react'
 import React, { lazy, Suspense, useState } from 'react'
+import Table from './Table'
 const QRModal = lazy(() => import("./QRModal"));
 
-export default function Index() {
+export default function Index({events} : any) {
   
   const [modalOpen, setModalOpen] = useState(false);
+  const [QRData, setQRData] = useState(null);
+
+  console.log('QRData', QRData);
   return (
     <Authenticated>
           <Head title="Dashboard" />
           <div className="main-content app-content">
             <div className="container-fluid">
-              {/* <!-- Start::page-header --> */}
              <Breadcrumb
              items={[
                 { label: 'Home', href: '/' },
@@ -42,89 +45,11 @@ export default function Index() {
                       </div>
                     </div>
                     <div className="box-body">
-                      <div className="table-responsive overflow-auto table-bordered-default">
-                        <table className="ti-custom-table text-nowrap ti-custom-table-hover">
-                          <thead>
-                            <tr className="border-b border-defaultborder dark:border-defaultborder/10">
-                              <th scope="col" className="text-center">NR.</th>
-                              <th scope="col">NAME</th>
-                              <th scope="col">Created</th>
-                              <th scope="col">Status</th>
-                              <th scope="col">Expires</th>
-                              <th scope="col">QR Code</th>
-                              <th scope="col">Data</th>
-                              <th scope="col">GALLERY</th>
-                              <th scope="col">Overlays</th>
-                              <th scope="col">Manage</th>			
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr className="border-b border-defaultborder dark:border-defaultborder/10">
-                            <td>
-                                <span className="text-primary text-[14px]">#520</span>
-                              </td>
-                              <td>
-                                <div className="flex items-center">
-                                  <div className="flex-1 flex-between pos-relative ms-2">
-                                    <div className="">
-                                      <a href="javascript:void(0);" className="text-[13px] font-medium">Richard Dom</a>
-                                    </div>
-                                  </div>
-                                </div>
-                              </td>
-                              <td className=""> 2025-01-23 </td>
-                              
-                              
-                              <td>
-                              <span className="badge bg-success/10 text-success leading-none">Active</span>
-                              </td>
-                              <td>
-                                <span className="">Backend</span>
-                              </td>
-                              <td>
-                                <div onClick={() => setModalOpen(true)} className="cursor-pointer">
-                                <QrCode />
-                                </div>
-                              </td>
-                              <td>
-                                <span className="badge bg-success/10 text-success leading-none">Active</span>
-                              </td>
-                              <td>
-                                <span className="">+0987654321</span>
-                              </td>
-                              <td>
-                                <span className="font-medium">$15,000</span>
-                              </td>
-                              <td>
-                                <div className="btn-list">
-                                  <div className="hs-tooltip ti-main-tooltip [--placement:top]">
-                                    <a aria-label="anchor" href="javascript:void(0);" className="hs-tooltip-toggle ti-btn ti-btn-icon me-2 ti-btn-soft-primary !mb-0">
-                                      <SquarePen className="text-[14px]" />
-                                      <span className="hs-tooltip-content ti-main-tooltip-content py-1 px-2 !bg-black !text-xs !font-medium !text-white shadow-sm dark:bg-slate-700" role="tooltip" data-popper-reference-hidden="" data-popper-escaped="" data-popper-placement="top" 
-                                      style={{ position: 'fixed', inset: 'auto auto 0px 0px', margin: '0px', transform: 'translate(1719px, 1074px)'}}> Edit </span>
-                                    </a>
-                                  </div>
-                                  <div className="hs-tooltip ti-main-tooltip [--placement:top]">
-                                    <a aria-label="anchor" href="javascript:void(0);" className="hs-tooltip-toggle ti-btn ti-btn-icon me-2 ti-btn-soft-primary !mb-0">
-                                      <Copy className="text-[14px]" />
-                                      <span className="hs-tooltip-content ti-main-tooltip-content py-1 px-2 !bg-black !text-xs !font-medium !text-white shadow-sm dark:bg-slate-700" role="tooltip" data-popper-reference-hidden="" data-popper-escaped="" data-popper-placement="top" 
-                                      style={{ position: 'fixed', inset: 'auto auto 0px 0px', margin: '0px', transform: 'translate(1719px, 1074px)'}}> Edit </span>
-                                    </a>
-                                  </div>
-                                   <div className="hs-tooltip ti-main-tooltip [--placement:top]">
-                                    <a aria-label="anchor" href="javascript:void(0);" className="hs-tooltip-toggle ti-btn ti-btn-icon me-2 ti-btn-soft-danger !mb-0">
-                                    <Trash2 className="text-[14px]" />
-                                      <span className="hs-tooltip-content ti-main-tooltip-content py-1 px-2 !bg-black !text-xs !font-medium !text-white shadow-sm dark:bg-slate-700" role="tooltip" data-popper-reference-hidden="" data-popper-escaped="" data-popper-placement="top" 
-                                      style={{position: 'fixed', inset: 'auto auto 0px 0px; margin: 0px; transform: translate(1756px, 1074px)' }}> Delete </span>
-                                    </a>
-                                  </div>
-                                </div>
-                              </td>
-                            </tr>
-                            
-                          </tbody>
-                        </table>
-                      </div>
+                      <Table 
+                      setModalOpen={setModalOpen} 
+                      events={events}
+                      setQRData={setQRData}
+                       />
                     </div>
                     <div className="box-footer">
                       <div className="flex flex-wrap items-center">
@@ -155,7 +80,7 @@ export default function Index() {
               </div>
 
               <Suspense fallback={""}>
-              <QRModal open={modalOpen} setOpen={setModalOpen} />
+              <QRModal open={modalOpen} setOpen={setModalOpen} QRData={QRData}/>
              </Suspense>
             
             </div>

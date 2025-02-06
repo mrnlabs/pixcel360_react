@@ -17,6 +17,22 @@ export interface User {
     email_verified_at?: string;
 }
 
+export interface Event {
+    id?: number;
+    name: string;
+    language: string;
+    country: string;
+    countdown: string;
+    beep_sounds: string;
+    face_props: string;
+    gallery_name: string;
+    attract_screen: string;
+    app_logo: string;
+    app_background: string;
+    webgallery_background: string;
+    created_at?: string;
+}
+
 export type PageProps<
     T extends Record<string, unknown> = Record<string, unknown>,
 > = T & {
