@@ -1,4 +1,4 @@
-import { Settings, SquarePen } from 'lucide-react'
+import { Settings, SquareFunction, SquarePen } from 'lucide-react'
 
 export default function EventSidebar({activeTab,setActiveTab} : {activeTab: string,setActiveTab: (tab: string) => void}) {
   return (
@@ -36,15 +36,15 @@ export default function EventSidebar({activeTab,setActiveTab} : {activeTab: stri
                   </div>
                 </div>
               </li>
-              <li className="files-type">
-                <a href="javascript:void(0)">
+              <li className={`${activeTab === 'event-functions' ? 'active' : ''} files-type`}>
+                <div onClick={() => setActiveTab('event-functions')} className='cursor-pointer'>
                   <div className="flex items-center">
                     <div className="me-2">
-                      <i className="ri-share-forward-line text-[1rem]"></i>
+                      <SquareFunction size={16} className="ri-share-forward-line text-[1rem]"/>
                     </div>
-                    <span className="flex-auto text-nowrap"> Shared Files </span>
+                    <span className="flex-auto text-nowrap"> Functions </span>
                   </div>
-                </a>
+                </div>
               </li>
               <li className="files-type">
                 <a href="javascript:void(0)">

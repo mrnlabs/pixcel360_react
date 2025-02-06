@@ -9,6 +9,7 @@ import { QRCodeSVG } from "qrcode.react";
 import EventSidebar from "./EventSidebar";
 import VedioSettings from "./TabContent/VedioSettings";
 import { SquarePlus } from "lucide-react";
+import Functions from "./TabContent/Functions";
 
 export default function Edit({event} : EventProps) {
 
@@ -20,6 +21,8 @@ export default function Edit({event} : EventProps) {
               return 'Event details';
           case 'event-settings':
               return 'Vedio settings';
+          case 'event-functions':
+              return 'Functions';
           default:
               return '';
       }
@@ -30,7 +33,9 @@ export default function Edit({event} : EventProps) {
           case 'event-details':
               return <EditDetails event={event} />;
           case 'event-settings':
-              return <VedioSettings />;
+              return <VedioSettings event={event}  />;
+          case 'event-functions':
+              return <Functions event={event} />;
           default:
               return null;
       }
