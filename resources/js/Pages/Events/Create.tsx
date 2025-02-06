@@ -11,7 +11,7 @@ import CountrySelector from '../Profile/CountrySelector'
 import QuillEditor from '@/Components/Editors/QuillEditor'
 
 
-export default function Create({user} : any) {
+export default function Create() {
   const { toast } = useToast();
 
   const [quillValue, setQuillValue] = React.useState('');
@@ -135,7 +135,7 @@ const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
                             </div>
                     
                             <div className="flex justify-between mt-6">
-                              <button onClick={handleSubmit} type="button" className="ti-btn ti-btn-primary w-full">
+                              <button disabled={processing} onClick={handleSubmit} type="button" className="ti-btn ti-btn-primary w-full">
                                 {processing ? 'Creating...' : 'Create Event'}</button>
                             </div>
                           </div>

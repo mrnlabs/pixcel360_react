@@ -17,6 +17,11 @@ export interface User {
     email_verified_at?: string;
 }
 
+export interface EventProps {
+    event: Event;
+    events: Event[];
+}
+
 export interface Event {
     id?: number;
     name: string;

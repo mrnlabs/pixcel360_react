@@ -34,12 +34,12 @@ import {
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel className="rounded-[5px]" onClick={() => setDialogOpen(false)}>Cancel</AlertDialogCancel>
+            <AlertDialogCancel className="bg-neutral-200 ti-btn-warning" onClick={() => setDialogOpen(false)}>Cancel</AlertDialogCancel>
             <AlertDialogAction onClick={() => {
               onContinue();
               setDialogOpen(false);
             }}
-            className="rounded-[5px]"
+            className=" ti-btn-primary"
             >
               Continue
             </AlertDialogAction>

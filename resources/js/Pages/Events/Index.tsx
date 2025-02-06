@@ -4,11 +4,13 @@ import { Head, Link } from '@inertiajs/react'
 import { Copy, QrCode, SquarePen, SquarePlus, Trash2 } from 'lucide-react'
 import React, { lazy, Suspense, useState } from 'react'
 import Table from './Table'
+import DuplicateModal from './DuplicateModal'
 const QRModal = lazy(() => import("./QRModal"));
 
 export default function Index({events} : any) {
   
   const [modalOpen, setModalOpen] = useState(false);
+  const [duplicateModalOpen, setDuplicateModalOpen] = useState(false);
   const [QRData, setQRData] = useState(null);
 
   console.log('QRData', QRData);
@@ -47,6 +49,7 @@ export default function Index({events} : any) {
                     <div className="box-body">
                       <Table 
                       setModalOpen={setModalOpen} 
+                      setDuplicateModalOpen={setDuplicateModalOpen}
                       events={events}
                       setQRData={setQRData}
                        />
@@ -81,6 +84,7 @@ export default function Index({events} : any) {
 
               <Suspense fallback={""}>
               <QRModal open={modalOpen} setOpen={setModalOpen} QRData={QRData}/>
+              <DuplicateModal open={duplicateModalOpen} setDuplicateModalOpen={setDuplicateModalOpen} event={QRData}/>
              </Suspense>
             
             </div>

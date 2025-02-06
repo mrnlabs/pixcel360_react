@@ -23,14 +23,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-
-
-        Route::get('/events', [EventController::class, 'index'])->name('events');
-        Route::get('/create-event', [EventController::class, 'create'])->name('events.create');
-        Route::post('/create-event', [EventController::class, 'store'])->name('events.store');
-        Route::get('/event/{id}', [EventController::class, 'show'])->name('event');
-        Route::delete('/event/{id}', [EventController::class, 'destroy'])->name('delete_event');
-        Route::post('/duplicate-event/{id}', [EventController::class, 'duplicate'])->name('duplicate_event');
 });
 //event gallery
 Route::get('/event-gallery/{id}', [EventController::class, 'gallery'])->name('event-gallery');
@@ -71,3 +63,4 @@ Route::get('/cancel', [PayfastController::class, 'cancel'])->name('cancel');
 Route::post('/notify', [PayfastController::class, 'notify'])->name('notify');
 
 require __DIR__.'/auth.php';
+require __DIR__.'/event.php';

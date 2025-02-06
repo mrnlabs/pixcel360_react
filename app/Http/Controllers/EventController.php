@@ -13,6 +13,7 @@ use App\Http\Requests\UpdateEventRequest;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use App\Http\Requests\CreateVideoSettingsRequest;
 use App\Http\Requests\CreateSharingSettingsRequest;
+use Inertia\Response;
 
 class EventController extends Controller
 {
@@ -42,9 +43,10 @@ class EventController extends Controller
 
     }
 
-        public function duplicate($id){
+        public function duplicate(Request $request, $slug){
+            // $request->validate(['name' => 'required|string|max:255']);
            try {
-            $this->eventService->duplicate($id);
+            $this->eventService->duplicate($slug);
             return back()->with('success', 'Event duplicated successfully');
            } catch (\Throwable $th) {
              return back()->with('error', 'Error duplicating event');
@@ -89,33 +91,36 @@ class EventController extends Controller
     }
 
 
+    function edit($slug) : Response
+    {
+        $event = $this->eventService->getEvent($slug);
+        return Inertia::render('Events/Edit', ['event' => $event]);
+    }
+
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateEventRequest $updateEventRequest,
-                           CreateSharingSettingsRequest $updateSharingSettingsRequest,
-                           CreateVideoSettingsRequest $updateVideoRequest,
-                           $id)
+    public function update(UpdateEventRequest $updateEventRequest,$slug)
     {
         try{
-            $this->eventService->updateEvent($updateEventRequest->validated());
+            $this->eventService->updateEvent($slug,$updateEventRequest->validated());
             //update videoSettings and sharingSettings
-            $this->sharingSettingService->updateSharingSettings($id, $updateSharingSettingsRequest->validated());
-            $this->videoSettingsService->updateVideoSettings($id, $updateVideoRequest->validated());
-            return redirect()->route('event.index');
-        } catch (\Exception $e){
-            return Inertia::render('Error', ['message' => $e->getMessage()]);
+            // $this->sharingSettingService->updateSharingSettings($id, $updateSharingSettingsRequest->validated());
+            // $this->videoSettingsService->updateVideoSettings($id, $updateVideoRequest->validated());
+            return back()->with('success', 'Event updated successfully');
+        } catch (\Throwable $th) {
+            throw $th;
         }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $slug)
     {
         try{
-            $this->eventService->deleteEvent($id);
+            $this->eventService->deleteEvent($slug);
             return back()->with('success', 'Event deleted successfully');
         } catch (\Exception $e){
             return back()->with('error', 'Error deleting event');

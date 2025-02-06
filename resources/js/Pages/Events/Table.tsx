@@ -1,8 +1,41 @@
 import { Copy, QrCode, SquarePen, Trash2 } from 'lucide-react'
 import { format } from "date-fns";
 import CustomTooltip from '@/Components/CustomTooltip';
+import DuplicateModal from './DuplicateModal';
+import { Suspense, useState } from 'react';
+import { Toaster } from '@/Components/ui/toaster';
+import ConfirmDialog from '@/Components/ConfirmDialog';
+import { Link, router } from '@inertiajs/react';
+import { useToast } from '@/hooks/use-toast';
 
-export default function Table({events, setModalOpen, setQRData}: any) {
+export default function Table({events, setModalOpen, setQRData, setDuplicateModalOpen}: any) {
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [event, setEvent] = useState<{ slug: string } | null>(null);
+
+  const { toast } = useToast();
+
+  const handleDelete = () => {
+    if(!event) return;
+    router.delete(route('delete_event', event?.slug), {
+      preserveScroll: true,
+      onSuccess: () => {
+        setDialogOpen(false);
+        toast({
+          title: "Success",
+          description: "Event deleted successfully",
+          variant: "default",
+      })
+      },
+      onError: () => {
+        setDialogOpen(false);
+        toast({
+          title: "Error",
+          description: "Profile image updated successfully",
+          variant: "destructive",
+      })
+      }
+    })
+  }
   return (
     <div className="table-responsive overflow-auto table-bordered-default">
     <table className="ti-custom-table text-nowrap ti-custom-table-hover">
@@ -57,11 +90,12 @@ export default function Table({events, setModalOpen, setQRData}: any) {
                 <span className="">{ event.end_date ? format(new Date(event.end_date), 'dd-MM-yyyy') : '-'}</span>
               </td>
               <td>
-                <div onClick={() => {
+                <div 
+                 onClick={() => {
                   setModalOpen(true)
                   setQRData(event)
-                }
-                } className="cursor-pointer">
+                }} 
+                className="cursor-pointer">
                 <QrCode />
                 </div>
               </td>
@@ -76,21 +110,32 @@ export default function Table({events, setModalOpen, setQRData}: any) {
               </td>
               <td>
                 <div className="btn-list">
-                  <div className="hs-tooltip ti-main-tooltip [--placement:top]">
-                    <div aria-label="anchor" className="hs-tooltip-toggle ti-btn ti-btn-icon me-2 ti-btn-soft-primary !mb-0">
-                      <SquarePen className="text-[14px]" />
-                    </div>
-                  </div>
-                  <div className="hs-tooltip ti-main-tooltip [--placement:top]">
+                  <div className="hs-tooltip ti-main-tooltip">
                   <CustomTooltip content="Edit">
-                     <div aria-label="anchor" className="hs-tooltip-toggle ti-btn ti-btn-icon me-2 ti-btn-soft-primary !mb-0">
+                    <Link href={route('event.edit', event.slug)} aria-label="anchor" className="hs-tooltip-toggle ti-btn ti-btn-icon me-2 ti-btn-soft-primary !mb-0">
+                      <SquarePen className="text-[14px]" />
+                    </Link>
+                    </CustomTooltip>
+                  </div>
+                  <div className="hs-tooltip ti-main-tooltip">
+                  <CustomTooltip content="Duplicate">
+                     <div 
+                     onClick={() => {
+                      setDuplicateModalOpen(true)
+                      setQRData(event)
+                    }} 
+                     aria-label="anchor" className="hs-tooltip-toggle ti-btn ti-btn-icon me-2 ti-btn-soft-primary !mb-0">
                       <Copy className="text-[14px]" />
                     </div>
                   </CustomTooltip>
                     
                   </div>
-                   <div className="hs-tooltip ti-main-tooltip [--placement:top]">
-                    <div aria-label="anchor" className="hs-tooltip-toggle ti-btn ti-btn-icon me-2 ti-btn-soft-danger !mb-0">
+                   <div className="hs-tooltip ti-main-tooltip">
+                    <div onClick={() => {
+                      setDialogOpen(true)
+                      setEvent(event)
+                    }
+                    } aria-label="anchor" className="hs-tooltip-toggle ti-btn ti-btn-icon me-2 ti-btn-soft-danger !mb-0">
                     <Trash2 className="text-[14px]" />
                     </div>
                   </div>
@@ -101,6 +146,15 @@ export default function Table({events, setModalOpen, setQRData}: any) {
         
       </tbody>
     </table>
+    <Suspense fallback={""}>
+              <Toaster />
+              <ConfirmDialog 
+                message="Are you sure you want to remove this event ?"
+                dialogOpen={dialogOpen} 
+                setDialogOpen={setDialogOpen}
+                onContinue={handleDelete}
+             />
+        </Suspense>
   </div>
   )
 }

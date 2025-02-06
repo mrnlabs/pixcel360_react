@@ -17,17 +17,11 @@ class UpdateEventRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string',
-            'language' => 'sometimes|required|string',
-            'country' => 'sometimes|required|string',
-            'countdown' => 'sometimes|required|date',
-            'beep_sounds' => 'sometimes|required|string',
-            'face_props' => 'sometimes|required|string',
-            'gallery_name' => 'sometimes|required|string',
-            'attract_screen' => 'sometimes|required|string',
-            'app_logo' => 'sometimes|required|string',
-            'app_background' => 'sometimes|required|string',
-            'webgallery_background' => 'sometimes|required|string',
+            'name' => 'required|string|min:3|max:255',
+            'start_date' => 'nullable|date',
+            'end_date' => 'nullable|date',
+            'language' => 'required|string',
+            'country' => 'required|string',
         ];
     }
 }
