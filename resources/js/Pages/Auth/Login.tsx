@@ -1,7 +1,8 @@
 import ThemeTextInput from '@/Components/Form/ThemeTextInput';
+import InputError from '@/Components/InputError';
 import Guest from '@/Layouts/GuestLayout';
 import { Head, Link, useForm, usePage } from '@inertiajs/react';
-import { Eye, EyeOff } from 'lucide-react';
+import { Eye, EyeOff, Loader } from 'lucide-react';
 import { FormEventHandler, useState } from 'react';
 
 export default function Welcome() {
@@ -61,6 +62,7 @@ export default function Welcome() {
                     onChange={(e) => setData("email", e.target.value) }
                     placeholder="Email"
                   /> 
+                  <InputError message={errors.email} className="mt-2" />
                   </div>
                   <div className="xl:col-span-12 col-span-12 mb-2">
                      <label htmlFor="signin-password" className="form-label text-defaulttextcolor block">Password<sup className="text-xs text-danger">*</sup>
@@ -83,6 +85,7 @@ export default function Welcome() {
                          id="button-addon2">
                             {showPassword ? <EyeOff className='align-middle' /> : <Eye className='align-middle' />}
                          </a>
+                         <InputError message={errors.password} className="mt-2" />
                          </div>
                      <div className="mt-2">
                         <div className="form-check"> 
@@ -99,7 +102,8 @@ export default function Welcome() {
                </div>
                <div className="grid mt-4"> 
                 <button type="button" onClick={submit} 
-                  disabled={processing} className="cursor-pointer ti-btn ti-btn-primary">Sign In</button> 
+                  disabled={processing} className="cursor-pointer ti-btn ti-btn-primary">
+                     {processing && <Loader className="mr-2 animate-spin" />}Sign In</button> 
                 </div>
                <div className="text-center">
                   <p className="text-textmuted dark:text-textmuted/50 mt-3 mb-0">Dont have an account? 

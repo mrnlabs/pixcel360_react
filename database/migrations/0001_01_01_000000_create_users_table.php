@@ -30,6 +30,7 @@ return new class extends Migration
             $table->string('post_code')->nullable();
             $table->string('province')->nullable();
             $table->string('country')->nullable();
+            $table->string('slug')->unique();
             $table->rememberToken();
             $table->timestamps();
         });

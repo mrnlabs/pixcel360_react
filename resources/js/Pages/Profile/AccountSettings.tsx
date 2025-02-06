@@ -12,18 +12,20 @@ export default function AccountSettings({user} : any) {
   const { toast } = useToast();
 
   useEffect(() => {
-    setData('country', user.country)
-    setData('firstname', user.firstname)
-    setData('lastname', user.lastname)
-    setData('display_name', user.display_name)
-    setData('phone', user.phone)
-    setData('address', user.address)
-    setData('address2', user.address2)
-    setData('city', user.city)
-    setData('province', user.province)
-    setData('post_code', user.post_code)
-    setData('company_name', user.company_name)
-    setData('email', user.email)
+    if(user){
+      setData('country', user.country)
+      setData('firstname', user.firstname)
+      setData('lastname', user.lastname)
+      setData('display_name', user.display_name)
+      setData('phone', user.phone)
+      setData('address', user.address)
+      setData('address2', user.address2)
+      setData('city', user.city)
+      setData('province', user.province)
+      setData('post_code', user.post_code)
+      setData('company_name', user.company_name)
+      setData('email', user.email)
+    }
   }, [user])
 
   const { data, setData, post, processing, errors, reset } = useForm({
@@ -33,7 +35,7 @@ export default function AccountSettings({user} : any) {
     phone: "",
     address: "",
     address2: "",
-    country: "",
+    country: "South Africa",
     city: "",
     province: "",
     post_code: "",
@@ -128,7 +130,7 @@ const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
             <div className="xl:col-span-6 col-span-12">
               <label htmlFor="country" className="form-label">Country :</label>
               <CountrySelector 
-                value={data.country ?? ''} 
+                value={data.country ?? 'South Africa'} 
                 setData={setData} 
               />
               <InputError message={errors.country} />

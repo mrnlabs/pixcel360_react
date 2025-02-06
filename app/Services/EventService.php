@@ -28,7 +28,6 @@ public function getEvents(){
 //        add user id
         $data['user_id'] = auth()->user()->id;
         $event = Event::create($data);
-        $event->update(['qrCode' => QrCode::size(150)->generate($event)]);
         return $event;
     }
 

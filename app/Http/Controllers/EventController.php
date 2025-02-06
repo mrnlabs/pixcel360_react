@@ -56,11 +56,13 @@ class EventController extends Controller
      */
     public function store(CreateEventRequest $createEventRequest)
     {
-
         try{
             $new_event = $this->eventService->createEvent($createEventRequest->validated());
             if($new_event){
                 $createVideoSettingsRequest['event_id'] = $new_event->id;
+                $new_event->setting()->create([
+                    'event_id' => $new_event->id
+                ]);
                // $createSharingSettingsRequest['event_id'] = $new_event->id;
                 // $this->videoSettingsService->createVideoSettings($createVideoSettingsRequest->validated());
                // $this->sharingSettingService->createSharingSettings($createSharingSettingsRequest->validated());
@@ -80,7 +82,7 @@ class EventController extends Controller
     {
         try{
             $event =  $this->eventService->getEvent(request('id'));
-            return Inertia::render('Events/CreateEvent', ['e_vent' => $event]);
+            return Inertia::render('Events/Create', ['e_vent' => $event]);
         } catch (\Exception $e){
             return Inertia::render('Error', ['message' => $e->getMessage()]);
         }

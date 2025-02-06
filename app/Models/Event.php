@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
+use App\Traits\HasSlug;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Event extends Model
 {
-    use HasFactory;
+    use HasFactory,HasSlug;
 
 
     protected $guarded = [];
@@ -28,7 +29,10 @@ class Event extends Model
     public function sharingSettings(){
         return $this->hasOne(SharingSetting::class);
     }
-
+    public function setting()
+    {
+        return $this->hasOne(EventSetting::class);
+    }
  
 
 }

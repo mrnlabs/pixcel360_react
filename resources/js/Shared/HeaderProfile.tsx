@@ -1,4 +1,4 @@
-import { Button } from '@/Components/ui/button'
+
 import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuShortcut, DropdownMenuTrigger } from '@/Components/ui/dropdown-menu'
 import { router, usePage } from '@inertiajs/react'
 import { CreditCard, Keyboard, Settings, User } from 'lucide-react'
@@ -7,7 +7,7 @@ import React, { useState } from 'react'
 export default function HeaderProfile() {
   const filePath = usePage().props.filePath;
   const user = usePage().props.auth.user;
-  const [preview, setPreview] = useState(user.photo ? filePath+user.photo : 'profile_placeholder.jpg');
+  const [preview, setPreview] = useState(user?.photo ? filePath+user?.photo : 'profile_placeholder.jpg');
     const goToProfile = () => {
         router.get('/profile')
     }

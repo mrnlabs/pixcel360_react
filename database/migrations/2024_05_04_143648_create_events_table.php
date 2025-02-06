@@ -15,20 +15,13 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('name');
+            $table->dateTime('start_date');
+            $table->dateTime('end_date');
+            $table->longText('description')->nullable();
             $table->string('language')->default('English');
             $table->string('country')->default('South Africa');
-            $table->integer('count_down')->default(1);
-            $table->boolean('beep_sounds')->default(0);
-            $table->boolean('face_props')->default(0);
-            $table->boolean('mirror_overlay')->default(0);
-            $table->boolean('front_rear_camera')->default(0);
-            $table->boolean('camera_exposure')->default(0);
-            $table->boolean('qr_app_protection')->default(0);
-            $table->string('gallery_name')->nullable();
-            $table->string('attract_screen')->nullable();
-            $table->string('app_logo')->nullable();
-            $table->string('app_background')->nullable();
-            $table->string('webgallery_background')->nullable();
+            $table->enum('status', ['1', '0'])->default('1');
+            $table->string('slug')->unique();
             $table->timestamps();
         });
     }
