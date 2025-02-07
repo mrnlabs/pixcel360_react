@@ -1,4 +1,4 @@
-import { ClockAlert, FileMusic, Settings, SquareFunction, SquarePen } from 'lucide-react'
+import { ClockAlert, Dice5, FileMusic, NotepadTextDashed, Settings, Share2, SquareFunction, SquarePen } from 'lucide-react'
 
 export default function EventSidebar({activeTab,setActiveTab} : {activeTab: string,setActiveTab: (tab: string) => void}) {
   return (
@@ -66,120 +66,35 @@ export default function EventSidebar({activeTab,setActiveTab} : {activeTab: stri
                   </div>
                 </div>
               </li>
-              <li>
-                <a href="javascript:void(0)">
+              <li className={`${activeTab === 'sharing-methods' ? 'active' : ''} files-type`}>
+                <div onClick={() => setActiveTab('sharing-methods')} className="cursor-pointer">
                   <div className="flex items-center">
                     <div className="me-2">
-                      <i className="ri-settings-3-line text-[1rem]"></i>
+                    <Share2 size={16} />
                     </div>
-                    <span className="flex-auto text-nowrap"> Settings </span>
-                  </div>
-                </a>
-              </li>
-              <li>
-                <a href="javascript:void(0)">
-                  <div className="flex items-center">
-                    <div className="me-2">
-                      <i className="ri-questionnaire-line text-[1rem]"></i>
-                    </div>
-                    <span className="flex-auto text-nowrap"> Help Center </span>
-                  </div>
-                </a>
-              </li>
-              <li>
-                <a href="javascript:void(0)">
-                  <div className="flex items-center">
-                    <div className="me-2">
-                      <i className="ri-folder-line text-[1rem]"></i>
-                    </div>
-                    <span className="flex-auto text-nowrap"> Version </span>
-                  </div>
-                </a>
-              </li>
-              <li>
-                <a href="javascript:void(0)">
-                  <div className="flex items-center">
-                    <div className="me-2">
-                      <i className="ri-logout-box-line text-[1rem]"></i>
-                    </div>
-                    <span className="flex-auto text-nowrap"> Log out </span>
-                  </div>
-                </a>
-              </li>
-              <li className="px-0 pt-0">
-                <span className="text-xs text-textmuted dark:text-textmuted/50">Most Recent</span>
-              </li>
-              <li>
-                <div className="flex items-center gap-2">
-                  <div className="me-0">
-                    <span className="avatar avatar-md bg-primary/10 !text-primary">
-                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
-                        <rect width="256" height="256" fill="none"></rect>
-                        <path d="M112,175.67V168a8,8,0,0,0-8-8H48a8,8,0,0,0-8,8v40a8,8,0,0,0,8,8h56a8,8,0,0,0,8-8v-8.82L144,216V160Z" opacity="0.2"></path>
-                        <polyline points="112 175.67 144 160 144 216 112 199.18" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"></polyline>
-                        <rect x="40" y="160" width="72" height="56" rx="8" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"></rect>
-                        <polygon points="152 32 152 88 208 88 152 32" opacity="0.2"></polygon>
-                        <polyline points="152 32 152 88 208 88" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"></polyline>
-                        <path d="M176,224h24a8,8,0,0,0,8-8V88L152,32H56a8,8,0,0,0-8,8v88" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"></path>
-                      </svg>
-                    </span>
-                  </div>
-                  <div>
-                    <a href="javascript:void(0);" data-hs-overlay="#offcanvasRight" aria-controls="offcanvasRight">VID-14512223-AKP823.mp4</a>
-                  </div>
-                  <div className="ms-auto">
-                    <span className="font-medium text-textmuted dark:text-textmuted/50">1.2KB</span>
+                    <span className="flex-auto text-nowrap"> Sharing Methods </span>
                   </div>
                 </div>
               </li>
-              <li>
-                <div className="flex items-center gap-2">
-                  <div className="me-0">
-                    <span className="avatar avatar-md bg-primarytint1color/10 !text-primarytint1color">
-                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
-                        <rect width="256" height="256" fill="none"></rect>
-                        <path d="M112,175.67V168a8,8,0,0,0-8-8H48a8,8,0,0,0-8,8v40a8,8,0,0,0,8,8h56a8,8,0,0,0,8-8v-8.82L144,216V160Z" opacity="0.2"></path>
-                        <polyline points="112 175.67 144 160 144 216 112 199.18" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"></polyline>
-                        <rect x="40" y="160" width="72" height="56" rx="8" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"></rect>
-                        <polygon points="152 32 152 88 208 88 152 32" opacity="0.2"></polygon>
-                        <polyline points="152 32 152 88 208 88" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"></polyline>
-                        <path d="M176,224h24a8,8,0,0,0,8-8V88L152,32H56a8,8,0,0,0-8,8v88" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"></path>
-                      </svg>
-                    </span>
-                  </div>
-                  <div>
-                    <a href="javascript:void(0);" data-hs-overlay="#offcanvasRight" aria-controls="offcanvasRight">AUD-14512223-AKP823.mp3</a>
-                  </div>
-                  <div className="ms-auto">
-                    <span className="font-medium text-textmuted dark:text-textmuted/50">25GB</span>
+              <li className={`${activeTab === 'sharing-subjects' ? 'active' : ''} files-type`}>
+                <div onClick={() => setActiveTab('sharing-subjects')} className="cursor-pointer">
+                  <div className="flex items-center">
+                    <div className="me-2">
+                    <NotepadTextDashed size={16} />
+                    </div>
+                    <span className="flex-auto text-nowrap"> Sharing Subjects </span>
                   </div>
                 </div>
               </li>
-              <li>
-                <div className="flex items-center gap-2">
-                  <div className="me-0">
-                    <span className="avatar avatar-md bg-primarytint2color/10 !text-primarytint2color">
-                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
-                        <rect width="256" height="256" fill="none"></rect>
-                        <path d="M112,175.67V168a8,8,0,0,0-8-8H48a8,8,0,0,0-8,8v40a8,8,0,0,0,8,8h56a8,8,0,0,0,8-8v-8.82L144,216V160Z" opacity="0.2"></path>
-                        <polyline points="112 175.67 144 160 144 216 112 199.18" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"></polyline>
-                        <rect x="40" y="160" width="72" height="56" rx="8" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"></rect>
-                        <polygon points="152 32 152 88 208 88 152 32" opacity="0.2"></polygon>
-                        <polyline points="152 32 152 88 208 88" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"></polyline>
-                        <path d="M176,224h24a8,8,0,0,0,8-8V88L152,32H56a8,8,0,0,0-8,8v88" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"></path>
-                      </svg>
-                    </span>
-                  </div>
-                  <div>
-                    <a href="javascript:void(0);" data-hs-overlay="#offcanvasRight" aria-controls="offcanvasRight">VID-14211110-AKP823.mp4</a>
-                  </div>
-                  <div className="ms-auto">
-                    <span className="font-medium text-textmuted dark:text-textmuted/50">36GB</span>
+              <li className={`${activeTab === 'branding' ? 'active' : ''} files-type`}>
+                <div onClick={() => setActiveTab('branding')} className="cursor-pointer">
+                  <div className="flex items-center">
+                    <div className="me-2">
+                    <Dice5 size={16} />
+                    </div>
+                    <span className="flex-auto text-nowrap"> Branding </span>
                   </div>
                 </div>
-              </li>
-              <li className="px-0 pt-3">
-                <span className="text-xs text-textmuted dark:text-textmuted/50">Upload File</span>
               </li>
              
             </ul>

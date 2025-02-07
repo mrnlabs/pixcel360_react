@@ -12,6 +12,9 @@ import { SquarePlus } from "lucide-react";
 import Functions from "./TabContent/Functions";
 import Audio from "./TabContent/Audio";
 import TimeOuts from "./TabContent/TimeOuts";
+import SharingMethods from "./TabContent/SharingMethods";
+import SharingSubjects from "./TabContent/SharingSubjects";
+import Branding from "./TabContent/Branding";
 
 export default function Edit({event} : EventProps) {
 
@@ -29,6 +32,12 @@ export default function Edit({event} : EventProps) {
                return 'Audio';
           case 'timeouts':
               return 'Timeouts';
+          case 'sharing-methods':
+              return 'Sharing methods';
+          case 'sharing-subjects':
+              return 'Sharing subjects';
+          case 'branding':
+              return 'Branding';
           default:
               return '';
       }
@@ -46,6 +55,12 @@ export default function Edit({event} : EventProps) {
               return <Audio event={event} />;
           case 'timeouts':
             return <TimeOuts event={event} />;
+          case 'sharing-methods':
+              return <SharingMethods event={event} />;
+          case 'sharing-subjects':
+              return <SharingSubjects event={event} />;
+          case 'branding':
+              return <Branding event={event} />;
           default:
               return null;
       }

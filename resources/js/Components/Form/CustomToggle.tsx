@@ -26,11 +26,11 @@ const CustomToggle = ({ label, initialValue = false, onChange }:
         role="switch"
         aria-checked={isOn}
         tabIndex={0}
-        onKeyPress={(e) => {
-          if (e.key === 'Enter' || e.key === ' ') {
-            handleToggle();
-          }
-        }}
+        // onKeyPress={(e) => {
+        //   if (e.key === 'Enter' || e.key === ' ') {
+        //     handleToggle();
+        //   }
+        // }}
       >
         <span></span>
       </div>

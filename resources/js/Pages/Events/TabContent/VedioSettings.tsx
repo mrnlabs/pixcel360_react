@@ -1,4 +1,5 @@
 import CustomToggle from '@/Components/Form/CustomToggle'
+import { Button } from '@/components/ui/button'
 import { Input } from '@/Components/ui/input'
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/Components/ui/select'
 import React from 'react'
@@ -71,6 +72,7 @@ export default function VedioSettings({event} : any) {
   </div>
     
   </div>
+  <Button className='mt-4 ti-btn ti-btn-primary w-full'>Save</Button>
 </div>
   )
 }
