@@ -16,4 +16,7 @@ Route::post('/duplicate/{slug}', [EventController::class, 'duplicate'])->name('d
 Route::patch('/update-vedio-settings/{slug}', [VideoSettingsController::class, 'updateVedioSettings'])->name('event.update.vedio.settings');
 Route::post('/update-vedio-functions/{slug}', [VideoSettingsController::class, 'updateVedioFunctions'])->name('event.update.vedio.functions');
 
+Route::post('/upload-vedio-audio/{slug}', [VideoSettingsController::class, 'uploadVedioAudio'])->name('event.update.audio');
+
+
 });
