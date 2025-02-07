@@ -11,6 +11,7 @@ import VedioSettings from "./TabContent/VedioSettings";
 import { SquarePlus } from "lucide-react";
 import Functions from "./TabContent/Functions";
 import Audio from "./TabContent/Audio";
+import TimeOuts from "./TabContent/TimeOuts";
 
 export default function Edit({event} : EventProps) {
 
@@ -26,6 +27,8 @@ export default function Edit({event} : EventProps) {
               return 'Functions';
           case 'audio':
                return 'Audio';
+          case 'timeouts':
+              return 'Timeouts';
           default:
               return '';
       }
@@ -41,6 +44,8 @@ export default function Edit({event} : EventProps) {
               return <Functions event={event} />;
           case 'audio':
               return <Audio event={event} />;
+          case 'timeouts':
+            return <TimeOuts event={event} />;
           default:
               return null;
       }

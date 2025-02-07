@@ -1,4 +1,4 @@
-import { FileMusic, Settings, SquareFunction, SquarePen } from 'lucide-react'
+import { ClockAlert, FileMusic, Settings, SquareFunction, SquarePen } from 'lucide-react'
 
 export default function EventSidebar({activeTab,setActiveTab} : {activeTab: string,setActiveTab: (tab: string) => void}) {
   return (
@@ -56,15 +56,15 @@ export default function EventSidebar({activeTab,setActiveTab} : {activeTab: stri
                   </div>
                 </div>
               </li>
-              <li className="files-type">
-                <a href="javascript:void(0)">
+              <li className={`${activeTab === 'timeouts' ? 'active' : ''} files-type`} >
+                <div onClick={() => setActiveTab('timeouts')} className="cursor-pointer">
                   <div className="flex items-center">
                     <div className="me-2">
-                      <i className="ri-delete-bin-line text-[1rem]"></i>
+                    <ClockAlert size={16} />
                     </div>
-                    <span className="flex-auto text-nowrap"> Recycle Bin </span>
+                    <span className="flex-auto text-nowrap"> Time Outs </span>
                   </div>
-                </a>
+                </div>
               </li>
               <li>
                 <a href="javascript:void(0)">
