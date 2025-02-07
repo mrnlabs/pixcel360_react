@@ -1,3 +1,4 @@
+import ConfirmDialog from '@/Components/ConfirmDialog';
 import CustomTooltip from '@/Components/CustomTooltip';
 import FileUpload from '@/Components/FileUpload'
 import { Button } from '@/components/ui/button';
@@ -5,7 +6,7 @@ import { Toaster } from '@/Components/ui/toaster';
 import { useToast } from '@/hooks/use-toast';
 import { formatFileSize } from '@/utils/formatFileSize';
 import { isAudioFile } from '@/utils/isAudioFile';
-import { useForm, usePage } from '@inertiajs/react';
+import { router, useForm, usePage } from '@inertiajs/react';
 import { Loader, Play, Pause, ArrowUpFromLine, Trash2 } from 'lucide-react'
 import React, { Suspense, useState, useRef, useEffect } from 'react'
 
@@ -13,6 +14,9 @@ export default function Audio({event}: any) {
     const { toast } = useToast();
     const filePath = usePage().props.filePath;
     const [dbAudio, setDbAudio] = useState(null);
+
+    
+    const [dialogOpen, setDialogOpen] = useState(false);
 
     const [audioFile, setAudioFile] = useState<File | null>(null);
     const [isPlaying, setIsPlaying] = useState(false);
@@ -50,6 +54,10 @@ export default function Audio({event}: any) {
     };
 
     const handleFileRemove = () => {
+        // console.log(event?.vedio_setting?.add_audio_file)
+        if(dbAudio) {
+            setDialogOpen(true)
+        }
         setAudioFile(null);
         setData('audioFile', null);
         setAudioUrl(null);
@@ -61,11 +69,7 @@ export default function Audio({event}: any) {
     };
 
     const togglePlayPause = () => {
-        // console.log(event?.vedio_setting?.add_audio_file)
-        // if(dbAudio) {
-        //     //open audio in new tab
-        //     window.open(dbAudio, '_blank');
-        // }
+        
         if (audioRef.current) {
             if (isPlaying) {
                 audioRef.current.pause();
@@ -110,6 +114,26 @@ export default function Audio({event}: any) {
       }
     });
       
+    }
+
+    const deleteDBFile = () => {
+        router.delete(route('event.update.audio', event.slug), {
+            preserveScroll: true,
+            onSuccess: () => {
+                toast({
+                    title: "Success",
+                    description: "Audio deleted successfully",
+                    variant: "default",
+                })
+            },
+            onError: () => {
+                toast({
+                    title: "Error",
+                    description: "Something went wrong",
+                    variant: "destructive",
+                })
+            }
+        })
     }
 
     return (
@@ -168,7 +192,15 @@ export default function Audio({event}: any) {
                 </div>
             )}
               {progress && (<progress value={progress.percentage} max="100">{progress.percentage}%</progress>)}
-            <Toaster />
+              <Suspense fallback={""}>
+              <Toaster />
+              <ConfirmDialog 
+                message="Do you want to delete this file from database ?"
+                dialogOpen={dialogOpen} 
+                setDialogOpen={setDialogOpen}
+                onContinue={deleteDBFile}
+             />
+        </Suspense>
         </div>
     )
 }

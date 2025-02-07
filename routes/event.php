@@ -17,6 +17,7 @@ Route::patch('/update-vedio-settings/{slug}', [VideoSettingsController::class, '
 Route::post('/update-vedio-functions/{slug}', [VideoSettingsController::class, 'updateVedioFunctions'])->name('event.update.vedio.functions');
 
 Route::post('/upload-vedio-audio/{slug}', [VideoSettingsController::class, 'uploadVedioAudio'])->name('event.update.audio');
+Route::delete('/upload-vedio-audio/{slug}', [VideoSettingsController::class, 'uploadVedioAudio'])->name('event.update.audio');
 
 
 });

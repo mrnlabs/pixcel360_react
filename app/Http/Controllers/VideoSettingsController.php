@@ -35,11 +35,16 @@ class VideoSettingsController extends Controller
      */
     public function uploadVedioAudio(Request $request, $slug)
     {
+        $event = Event::where('slug', $slug)->first();
+
+        if($request->isMethod('delete')) {
+             $event->video_setting()->update(['add_audio_file' => null]);
+            return back()->with('success', 'Audio removed successfully');
+        }
         if($request->hasFile('audioFile')) {
-            $event = Event::where('slug', $slug)->first();
             $path = $request->file('audioFile')->storeAs('audios',$event->name.'/'. $request->file('audioFile')->getClientOriginalName(), 'public');
             $event->video_setting()->update(['add_audio_file' => $path]);
-            return back()->with('success', 'Video uploaded successfully');
+            return back()->with('success', 'Audio uploaded successfully');
         }
     }
 
