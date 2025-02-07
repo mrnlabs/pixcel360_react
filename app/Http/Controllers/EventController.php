@@ -65,6 +65,9 @@ class EventController extends Controller
                 $new_event->setting()->create([
                     'event_id' => $new_event->id
                 ]);
+                $new_event->video_setting()->create([
+                    'event_id' => $new_event->id
+                ]);
                // $createSharingSettingsRequest['event_id'] = $new_event->id;
                 // $this->videoSettingsService->createVideoSettings($createVideoSettingsRequest->validated());
                // $this->sharingSettingService->createSharingSettings($createSharingSettingsRequest->validated());

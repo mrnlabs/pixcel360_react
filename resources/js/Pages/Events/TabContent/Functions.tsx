@@ -2,9 +2,60 @@ import CustomToggle from '@/Components/Form/CustomToggle'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/Components/ui/input'
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/Components/ui/select'
-import React from 'react'
+import { Toaster } from '@/Components/ui/toaster'
+import { useToast } from '@/hooks/use-toast'
+import { useForm } from '@inertiajs/react'
+import { Loader } from 'lucide-react'
+import React, { useEffect } from 'react'
 
 export default function Functions({event} : any) {
+
+  const { toast } = useToast();
+  const { data, setData, post, processing, errors, reset } = useForm({
+    boomerang: event?.setting?.boomerang,
+    slomo: event?.setting?.slomo,
+    videos: event?.setting?.videos,
+    boomerang_repeats: event?.setting?.boomerang_repeats,
+    boomerang_speed: event?.setting?.boomerang_speed,
+    boomerang_bounce: event?.setting?.boomerang_bounce,
+    slomo_recording_time: event?.setting?.slomo_recording_time,
+    slomo_boomerang: event?.setting?.slomo_boomerang,
+    speed: event?.setting?.speed,
+});
+
+useEffect(() => {
+  setData('boomerang', event?.setting?.boomerang);
+  setData('slomo', event?.setting?.slomo);
+  setData('videos', event?.setting?.videos);
+  setData('boomerang_repeats', event?.setting?.boomerang_repeats);
+  setData('boomerang_speed', event?.setting?.boomerang_speed);
+  setData('boomerang_bounce', event?.setting?.boomerang_bounce);
+  setData('slomo_recording_time', event?.setting?.slomo_recording_time);
+  setData('slomo_boomerang', event?.setting?.slomo_boomerang);
+  setData('speed', event?.setting?.speed);
+}, [event]);
+
+const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
+  e.preventDefault();
+  post(route('event.update.vedio.functions', event.slug),{
+    preserveScroll: true,
+    onSuccess: () => {
+      reset();
+      toast({
+        title: "Success",
+        description: "Settings updated successfully",
+        variant: "default",
+    })
+    },
+    onError: () => {
+      toast({
+        title: "Error",
+        description: "Something went wrong",
+        variant: "destructive",
+    })
+    }
+  });
+};
   return (
     <div className=" rounded-lg p-6">
     <div className="grid grid-cols-2 gap-6">
@@ -12,14 +63,14 @@ export default function Functions({event} : any) {
         <div>
           <CustomToggle 
             label="Boomerang" 
-            initialValue={false} 
-            onChange={(value) => console.log('Toggle value:', value)} 
+            initialValue={data.boomerang} 
+            onChange={(value) => setData('boomerang', value)} 
             />
         </div>
         <CustomToggle 
         label="Slomo" 
-        initialValue={false} 
-        onChange={(value) => console.log('Toggle value:', value)} 
+        initialValue={data.slomo} 
+        onChange={(value) => setData('slomo', value)} 
         />
       </div>
       
@@ -27,8 +78,8 @@ export default function Functions({event} : any) {
       <div className="space-y-4">
       <CustomToggle 
         label="Videos" 
-        initialValue={false} 
-        onChange={(value) => console.log('Toggle value:', value)} 
+        initialValue={data.videos} 
+        onChange={(value) => setData('videos', value)} 
         />
       </div>
     </div>
@@ -37,7 +88,7 @@ export default function Functions({event} : any) {
 
     <div className="xl:col-span-6 lg:col-span-6 md:col-span-6 sm:col-span-12 col-span-12">
   <label className="block text-sm mb-1">Boomerang repeats</label>
-        <Select>
+        <Select value={data.boomerang_repeats} onValueChange={(value) => setData('boomerang_repeats', value)}>
       <SelectTrigger className="w-[180px] form-control border rounded-lg">
         <SelectValue placeholder="Select" />
         </SelectTrigger>
@@ -52,23 +103,32 @@ export default function Functions({event} : any) {
   </div>
   <div className="xl:col-span-6 lg:col-span-6 md:col-span-6 sm:col-span-12 col-span-12">
     <label className="block text-sm mb-1">Boomerang speeds</label>
-    <Input type="number" min={0} className="form-control" id="input-text" />
+    <Input 
+    value={data.boomerang_speed}
+    onChange={(e) => setData('boomerang_speed', e.target.value)}
+     type="number" min={0} className="form-control" id="input-text" />
   </div>
 
 
 
   <div className="xl:col-span-6 lg:col-span-6 md:col-span-6 sm:col-span-12 col-span-12">
   <label className="block text-sm mb-1"> Bounce duration</label>
-  <Input type="number" min={0} className="form-control" id="input-text" />
+  <Input 
+  value={data.boomerang_bounce}
+  onChange={(e) => setData('boomerang_bounce', e.target.value)}
+  type="number" min={0} className="form-control" id="input-text" />
   </div>
   <div className="xl:col-span-6 lg:col-span-6 md:col-span-6 sm:col-span-12 col-span-12">
     <label className="block text-sm mb-1">Slomo recording time</label>
-    <Input type="number" min={0} className="form-control" id="input-text" />
+    <Input 
+    value={data.slomo_recording_time}
+    onChange={(e) => setData('slomo_recording_time', e.target.value)}
+    type="number" min={0} className="form-control" id="input-text" />
   </div>
   
   <div className="xl:col-span-6 lg:col-span-6 md:col-span-6 sm:col-span-12 col-span-12">
   <label className="block text-sm mb-1">Slomo Boomerang</label>
-        <Select>
+        <Select value={data.slomo_boomerang} onValueChange={(value) => setData('slomo_boomerang', value)}>
       <SelectTrigger className="w-[180px] form-control border rounded-lg">
         <SelectValue placeholder="Select" />
         </SelectTrigger>
@@ -83,12 +143,16 @@ export default function Functions({event} : any) {
   </div>
   <div className="xl:col-span-6 lg:col-span-6 md:col-span-6 sm:col-span-12 col-span-12">
     <label className="block text-sm mb-1">Slomo Speed</label>
-    <Input type="number" min={0} className="form-control" id="input-text" />
+    <Input 
+    value={data.speed}
+    onChange={(e) => setData('speed', e.target.value)}
+    type="number" min={0} className="form-control" id="input-text" />
   </div>
 
-    
   </div>
-  <Button className='mt-4 ti-btn ti-btn-primary w-full'>Save</Button>
+  <Button onClick={handleSubmit} disabled={processing}className='mt-4 ti-btn ti-btn-primary w-full'>
+    {processing && <Loader className='mr-2 h-4 w-4 animate-spin'/>}Save</Button>
+    <Toaster />
 </div>
   )
 }

@@ -28,7 +28,7 @@ function QRModal({
                 </DialogHeader>
                 <div className="flex justify-center items-center">
                 <QRCodeSVG
-                    value={JSON.stringify(QRData)}
+                    value={QRData.slug}
                     title={"Title for my QR Code"}
                     size={128}
                     bgColor={"#ffffff"}

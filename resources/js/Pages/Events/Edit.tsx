@@ -121,7 +121,7 @@ export default function Edit({event} : EventProps) {
         <div id="file-manager-storage" style={{minHeight: 142.8+'px'}} className="">
         <div className="flex justify-center items-center">
         <QRCodeSVG
-                    value={JSON.stringify(event)}
+                    value={event?.slug}
                     title={"Title for my QR Code"}
                     size={128}
                     bgColor={"#ffffff"}

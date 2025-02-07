@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Event;
+use App\Models\EventSetting;
 use Illuminate\Http\Request;
 
 class VideoSettingsController extends Controller
@@ -9,17 +11,23 @@ class VideoSettingsController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function updateVedioSettings(Request $request, $slug)
     {
-        //
+        $event = Event::where('slug', $slug)->first();
+        // EventSetting::where('event_id', $event->id)->update($request->all());
+        $event->setting()->update($request->all());
+        // dd($event->setting());
+        return back()->with('success', 'Event settings updated successfully');
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function updateVedioFunctions(Request $request, $slug)
     {
-        //
+        $event = Event::where('slug', $slug)->first();
+        $event->video_setting()->update($request->all());
+        return back()->with('success', 'Event settings updated successfully');
     }
 
     /**

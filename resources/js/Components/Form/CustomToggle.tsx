@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 
-const CustomToggle = ({ label, initialValue = false, onChange }:
+const CustomToggle = ({ label, initialValue = 0, onChange }:
     {
       label: string;
-      initialValue?: boolean;
+      initialValue?: number;  // Changed to number type
       onChange?: (value: boolean) => void;
     }
 ) => {
-  const [isOn, setIsOn] = useState(initialValue);
+  // Convert numeric 1/0 to boolean true/false
+  const [isOn, setIsOn] = useState(initialValue === 1);
 
   const handleToggle = () => {
     const newValue = !isOn;
@@ -26,11 +27,6 @@ const CustomToggle = ({ label, initialValue = false, onChange }:
         role="switch"
         aria-checked={isOn}
         tabIndex={0}
-        // onKeyPress={(e) => {
-        //   if (e.key === 'Enter' || e.key === ' ') {
-        //     handleToggle();
-        //   }
-        // }}
       >
         <span></span>
       </div>

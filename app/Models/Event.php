@@ -23,7 +23,7 @@ class Event extends Model
         return $this->hasMany(Video::class);
     }
 
-    public function videoSettings(){
+    public function video_setting(){
         return $this->hasOne(VideoSetting::class);
     }
 

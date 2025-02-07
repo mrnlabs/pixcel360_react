@@ -6,6 +6,7 @@ use App\Models\VideoSetting;
 
 class VideoSettingsService
 {
+    
     public function getAllVideoSettings()
     {
         return VideoSetting::all();

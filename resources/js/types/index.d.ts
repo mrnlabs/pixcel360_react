@@ -35,6 +35,7 @@ export interface Event {
     app_logo: string;
     app_background: string;
     webgallery_background: string;
+    slug: string;
     setting? : {
         id: number;
         event_id?: number;
