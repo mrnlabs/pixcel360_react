@@ -1,4 +1,4 @@
-import { Settings, SquareFunction, SquarePen } from 'lucide-react'
+import { FileMusic, Settings, SquareFunction, SquarePen } from 'lucide-react'
 
 export default function EventSidebar({activeTab,setActiveTab} : {activeTab: string,setActiveTab: (tab: string) => void}) {
   return (
@@ -46,16 +46,15 @@ export default function EventSidebar({activeTab,setActiveTab} : {activeTab: stri
                   </div>
                 </div>
               </li>
-              <li className="files-type">
-                <a href="javascript:void(0)">
+              <li  className={`${activeTab === 'audio' ? 'active' : ''} files-type`}>
+                <div onClick={() => setActiveTab('audio')} className='cursor-pointer'>
                   <div className="flex items-center">
                     <div className="me-2">
-                      <i className="ri-star-s-line text-[1rem]"></i>
+                    <FileMusic size={16} />
                     </div>
-                    <span className="flex-auto text-nowrap"> favourites </span>
-                    <span className="badge bg-primarytint1color">02</span>
+                    <span className="flex-auto text-nowrap"> Audio </span>
                   </div>
-                </a>
+                </div>
               </li>
               <li className="files-type">
                 <a href="javascript:void(0)">

@@ -64,28 +64,9 @@ export default function Functions({event} : any) {
     <label className="block text-sm mb-1">Slomo recording time</label>
     <Input type="number" min={0} className="form-control" id="input-text" />
   </div>
-
-
-
-
-
-
+  
   <div className="xl:col-span-6 lg:col-span-6 md:col-span-6 sm:col-span-12 col-span-12">
-    <CustomToggle 
-        label="Camera exposure menu" 
-        initialValue={false} 
-        onChange={(value) => console.log('Toggle value:', value)} 
-        />
-  </div>
-  <div className="xl:col-span-6 lg:col-span-6 md:col-span-6 sm:col-span-12 col-span-12">
-     <CustomToggle 
-        label="QR app protection" 
-        initialValue={false} 
-        onChange={(value) => console.log('Toggle value:', value)} 
-        />
-  </div>
-  <div className="xl:col-span-6 lg:col-span-6 md:col-span-6 sm:col-span-12 col-span-12">
-  <label className="block text-sm mb-1">Front or rear camera</label>
+  <label className="block text-sm mb-1">Slomo Boomerang</label>
         <Select>
       <SelectTrigger className="w-[180px] form-control border rounded-lg">
         <SelectValue placeholder="Select" />
@@ -93,12 +74,17 @@ export default function Functions({event} : any) {
         <SelectContent className='form-control'>
             <SelectGroup>
             <SelectLabel>Fruits</SelectLabel>
-            <SelectItem value="0">Front</SelectItem>
-            <SelectItem value="1">Back</SelectItem>
+            <SelectItem value="0">Yes</SelectItem>
+            <SelectItem value="1">No</SelectItem>
             </SelectGroup>
         </SelectContent>
     </Select>
   </div>
+  <div className="xl:col-span-6 lg:col-span-6 md:col-span-6 sm:col-span-12 col-span-12">
+    <label className="block text-sm mb-1">Slomo Speed</label>
+    <Input type="number" min={0} className="form-control" id="input-text" />
+  </div>
+
     
   </div>
 </div>

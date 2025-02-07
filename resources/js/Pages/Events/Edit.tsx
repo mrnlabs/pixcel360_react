@@ -10,6 +10,7 @@ import EventSidebar from "./EventSidebar";
 import VedioSettings from "./TabContent/VedioSettings";
 import { SquarePlus } from "lucide-react";
 import Functions from "./TabContent/Functions";
+import Audio from "./TabContent/Audio";
 
 export default function Edit({event} : EventProps) {
 
@@ -23,6 +24,8 @@ export default function Edit({event} : EventProps) {
               return 'Vedio settings';
           case 'event-functions':
               return 'Functions';
+          case 'audio':
+               return 'Audio';
           default:
               return '';
       }
@@ -36,6 +39,8 @@ export default function Edit({event} : EventProps) {
               return <VedioSettings event={event}  />;
           case 'event-functions':
               return <Functions event={event} />;
+          case 'audio':
+              return <Audio event={event} />;
           default:
               return null;
       }
