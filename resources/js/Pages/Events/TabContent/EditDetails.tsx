@@ -64,7 +64,7 @@ const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
   return (
    
    
-    <div className="bg-white rounded-lg shadow-sm p-6">
+    <div className="bg-white rounded-lg shadow-sm p-6" id="event-details">
             <div className="grid grid-cols-2 gap-6">
               <div className="space-y-4">
                 <div>

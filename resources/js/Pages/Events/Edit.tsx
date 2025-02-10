@@ -3,7 +3,7 @@ import { Breadcrumb } from "@/Shared/Breadcrumb";
 import { EventProps } from "@/types";
 import { Head, Link } from "@inertiajs/react";
 
-import React from 'react'
+import React, { useRef } from 'react'
 import EditDetails from "./TabContent/EditDetails";
 import { QRCodeSVG } from "qrcode.react";
 import EventSidebar from "./EventSidebar";
@@ -17,8 +17,26 @@ import SharingSubjects from "./TabContent/SharingSubjects";
 import Branding from "./TabContent/Branding";
 
 export default function Edit({event} : EventProps) {
-
   const [activeTab, setActiveTab] = React.useState('event-details');
+
+  const eventDetailsRef = useRef(null);
+  const section2Ref = useRef(null);
+  const section3Ref = useRef(null);
+
+  const scrollToDiv = ({ targetRef }: ScrollToDivProps): void => {
+    //targetRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  interface ScrollToDivProps {
+    targetRef: React.RefObject<HTMLDivElement>;
+  }
+
+  switch (activeTab) {
+    case 'event-details':
+      //scrollToDiv({ targetRef: eventDetailsRef });
+      break;
+  }
+  
 
   const getHeader = () => {
       switch (activeTab) {
@@ -46,21 +64,21 @@ export default function Edit({event} : EventProps) {
   const getActiveTabContent = () => {
       switch (activeTab) {
           case 'event-details':
-              return <EditDetails event={event} />;
+              return <EditDetails event={event} scrollToDiv={scrollToDiv} />;
           case 'event-settings':
-              return <VedioSettings event={event}  />;
+              return <VedioSettings event={event} scrollToDiv={scrollToDiv}  />;
           case 'event-functions':
-              return <Functions event={event} />;
+              return <Functions event={event} scrollToDiv={scrollToDiv} />;
           case 'audio':
-              return <Audio event={event} />;
+              return <Audio event={event} scrollToDiv={scrollToDiv} />;
           case 'timeouts':
-            return <TimeOuts event={event} />;
+            return <TimeOuts event={event} scrollToDiv={scrollToDiv} />;
           case 'sharing-methods':
-              return <SharingMethods event={event} />;
+              return <SharingMethods event={event} scrollToDiv={scrollToDiv} />;
           case 'sharing-subjects':
-              return <SharingSubjects event={event} />;
+              return <SharingSubjects event={event} scrollToDiv={scrollToDiv} />;
           case 'branding':
-              return <Branding event={event} />;
+              return <Branding event={event} scrollToDiv={scrollToDiv} />;
           default:
               return null;
       }
@@ -81,7 +99,10 @@ export default function Edit({event} : EventProps) {
    
 
    <div className="grid grid-cols-12 gap-x-6">
-  <EventSidebar setActiveTab={setActiveTab} activeTab={activeTab} />
+  <EventSidebar 
+  setActiveTab={setActiveTab} 
+  activeTab={activeTab}
+  scrollToDiv={scrollToDiv} />
   <div className="xxl:col-span-6 col-span-12">
     <div className="box overflow-hidden">
       <div className="box-body p-0">

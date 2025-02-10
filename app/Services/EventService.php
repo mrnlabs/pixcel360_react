@@ -20,7 +20,7 @@ public function getEvents(){
 
     public function getEvent($slug)
     {
-        return Event::with('setting','video_setting')->whereSlug($slug)->first();
+        return Event::with('setting','setting','video_setting')->whereSlug($slug)->first();
     }
 
     public function createEvent(array $data)

@@ -10,9 +10,6 @@ use App\Services\VideoSettingsService;
 use App\Services\SharingSettingsService;
 use App\Http\Requests\CreateEventRequest;
 use App\Http\Requests\UpdateEventRequest;
-use SimpleSoftwareIO\QrCode\Facades\QrCode;
-use App\Http\Requests\CreateVideoSettingsRequest;
-use App\Http\Requests\CreateSharingSettingsRequest;
 use Inertia\Response;
 
 class EventController extends Controller

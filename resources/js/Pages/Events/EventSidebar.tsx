@@ -1,6 +1,8 @@
 import { ClockAlert, Dice5, FileMusic, NotepadTextDashed, Settings, Share2, SquareFunction, SquarePen } from 'lucide-react'
 
-export default function EventSidebar({activeTab,setActiveTab} : {activeTab: string,setActiveTab: (tab: string) => void}) {
+export default function EventSidebar({activeTab,setActiveTab, scrollToDiv} : {
+  activeTab: string,setActiveTab: (tab: string) => void,
+  scrollToDiv: (divElement: any) => void}) {
   return (
     <div className="xxl:col-span-3 col-span-12">
     <div className="grid grid-cols-12 gap-x-6">
@@ -17,7 +19,10 @@ export default function EventSidebar({activeTab,setActiveTab} : {activeTab: stri
                 <span className="text-xs text-textmuted dark:text-textmuted/50">Event Details</span>
               </li>
               <li className={`${activeTab === 'event-details' ? 'active' : ''} files-type`}> 
-                <div className="cursor-pointer" onClick={() => setActiveTab('event-details')}>
+                <div className="cursor-pointer" onClick={() => {
+                  scrollToDiv('event-details');
+                  setActiveTab('event-details')
+                }}>
                   <div className="flex items-center">
                     <div className="me-2">
                       <SquarePen size={16} />
@@ -67,7 +72,11 @@ export default function EventSidebar({activeTab,setActiveTab} : {activeTab: stri
                 </div>
               </li>
               <li className={`${activeTab === 'sharing-methods' ? 'active' : ''} files-type`}>
-                <div onClick={() => setActiveTab('sharing-methods')} className="cursor-pointer">
+                <div onClick={() => {
+                  scrollToDiv('sharing-methods')
+                  setActiveTab('sharing-methods')
+                   }
+                } className="cursor-pointer">
                   <div className="flex items-center">
                     <div className="me-2">
                     <Share2 size={16} />
