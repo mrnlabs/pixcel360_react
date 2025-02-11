@@ -1,5 +1,5 @@
 import CustomToggle from '@/Components/Form/CustomToggle'
-import { Button } from '@/components/ui/button'
+import { Button } from '@/Components/ui/button'
 import { Input } from '@/Components/ui/input'
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/Components/ui/select'
 import { Toaster } from '@/Components/ui/toaster'

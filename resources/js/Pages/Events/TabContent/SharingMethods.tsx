@@ -1,5 +1,5 @@
 import CustomToggle from '@/Components/Form/CustomToggle'
-import { Button } from '@/components/ui/button'
+import { Button } from '@/Components/ui/button'
 import { Toaster } from '@/Components/ui/toaster'
 import { useToast } from '@/hooks/use-toast'
 import { useForm } from '@inertiajs/react'

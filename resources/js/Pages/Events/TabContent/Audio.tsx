@@ -1,7 +1,7 @@
 import ConfirmDialog from '@/Components/ConfirmDialog';
 import CustomTooltip from '@/Components/CustomTooltip';
 import FileUpload from '@/Components/FileUpload'
-import { Button } from '@/components/ui/button';
+import { Button } from '@/Components/ui/button';
 import { Toaster } from '@/Components/ui/toaster';
 import { useToast } from '@/hooks/use-toast';
 import { formatFileSize } from '@/utils/formatFileSize';

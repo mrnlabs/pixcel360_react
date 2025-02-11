@@ -1,13 +1,13 @@
 
 import InputError from "@/Components/InputError";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/Components/ui/button";
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog";
+} from "@/Components/ui/dialog";
 import { Input } from "@/Components/ui/input";
 import { useForm } from "@inertiajs/react";
 import { Loader } from "lucide-react";

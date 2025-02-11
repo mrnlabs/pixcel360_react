@@ -68,6 +68,9 @@ class EventController extends Controller
                 $new_event->sharing_method()->create([
                     'event_id' => $new_event->id
                 ]);
+                $new_event->sharing_subject()->create([
+                    'event_id' => $new_event->id
+                ]);
             }
            // redirect to /events route
             return redirect()->route('events');

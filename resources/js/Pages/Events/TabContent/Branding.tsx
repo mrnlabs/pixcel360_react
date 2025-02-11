@@ -2,7 +2,7 @@ import CustomToggle from '@/Components/Form/CustomToggle'
 import { Input } from '@/Components/ui/input'
 import { Textarea } from '@headlessui/react'
 import Logo from './Logo'
-import { Button } from '@/components/ui/button'
+import { Button } from '@/Components/ui/button'
 export default function Branding({event} : any) {
   return (
     <div className=" rounded-lg p-6">
