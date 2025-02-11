@@ -65,9 +65,9 @@ class EventController extends Controller
                 $new_event->boomerang_setting()->create([
                     'event_id' => $new_event->id
                 ]);
-               // $createSharingSettingsRequest['event_id'] = $new_event->id;
-                // $this->videoSettingsService->createVideoSettings($createVideoSettingsRequest->validated());
-               // $this->sharingSettingService->createSharingSettings($createSharingSettingsRequest->validated());
+                $new_event->sharing_method()->create([
+                    'event_id' => $new_event->id
+                ]);
             }
            // redirect to /events route
             return redirect()->route('events');

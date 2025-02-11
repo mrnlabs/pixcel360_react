@@ -29,6 +29,19 @@ class VideoSettingsController extends Controller
         $event->boomerang_setting()->update($request->all());
         return back()->with('success', 'Event settings updated successfully');
     }
+    
+    public function updateVedioSubjects(Request $request, $slug)
+    {
+        $event = Event::where('slug', $slug)->first();
+        $event->sharing_subject()->update($request->all());
+        return back()->with('success', 'Event settings updated successfully');
+    }
+     public function updateVedioSharingMethod(Request $request, $slug)
+    {
+        $event = Event::where('slug', $slug)->first();
+        $event->sharing_method()->update($request->all());
+        return back()->with('success', 'Event settings updated successfully');
+    }
      public function updateVedioTimeouts(Request $request, $slug)
     {
         $event = Event::where('slug', $slug)->first();

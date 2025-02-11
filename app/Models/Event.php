@@ -11,7 +11,7 @@ class Event extends Model
 {
     use HasFactory,HasSlug,KeepsDeletedModels;
 
-
+    
     protected $guarded = [];
 
     public function user()
@@ -27,12 +27,16 @@ class Event extends Model
         return $this->hasOne(VideoSetting::class, 'event_id', 'id');
     }
 
-    public function sharingSettings(){
-        return $this->hasOne(SharingSetting::class);
+    public function sharing_subject(){
+        return $this->hasOne(SharingSubject::class);
     }
     public function setting()
     {
         return $this->hasOne(EventSetting::class);
+    }
+    public function sharing_method()
+    {
+        return $this->hasOne(SharingMethod::class);
     }
  
 

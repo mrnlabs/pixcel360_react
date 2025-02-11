@@ -9,18 +9,13 @@ class EventService
 {
 public function getEvents(){
     $events = Event::with('setting')->latest()->get();
-    // $data = $events->map(function ($event) {
-    //     $event->qrCode = QrCode::size(150)->generate("'<div>'.$event->name.'</div>'");
-    //     return $event;
-    // });
-    
     return $events;
 }
 
 
     public function getEvent($slug)
     {
-        return Event::with('setting','setting','boomerang_setting')->whereSlug($slug)->first();
+        return Event::with('setting','setting','boomerang_setting','sharing_method','sharing_subject')->whereSlug($slug)->first();
     }
 
     public function createEvent(array $data)
@@ -52,6 +47,8 @@ public function getEvents(){
         $newEventSettings->save();
         
         $videoSettings = $event->boomerang_setting->replicate();
+        $videoSettings = $event->sharing_method->replicate();
+        
         $videoSettings->event_id = $newEvent->id;
         $videoSettings->save();
         

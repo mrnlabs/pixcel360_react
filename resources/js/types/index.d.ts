@@ -64,6 +64,15 @@ export interface Event {
         slomo_recording_time: number;
         slomo_boomerang: number;
         created_at: string;
+      },
+      sharing_method? : {
+        event_id: number;
+        text_message: string;
+        email_subject: string
+        default_text_email: string
+        webgallery_email_subject: string
+        webgallery_email_message: string
+        social_share_description: string
       }
     created_at?: string;
 }
