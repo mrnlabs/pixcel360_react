@@ -23,8 +23,8 @@ class Event extends Model
         return $this->hasMany(Video::class);
     }
 
-    public function video_setting(){
-        return $this->hasOne(VideoSetting::class);
+    public function boomerang_setting(){
+        return $this->hasOne(VideoSetting::class, 'event_id', 'id');
     }
 
     public function sharingSettings(){

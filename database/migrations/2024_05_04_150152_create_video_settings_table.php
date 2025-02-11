@@ -11,14 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('video_settings', function (Blueprint $table) {
+        Schema::create('boomerang_settings', function (Blueprint $table) {
             $table->id();
             $table->foreignId('event_id')->constrained()->onDelete('cascade');
             $table->string('motion_trigger')->nullable();
-            $table->string('mirror_overlay')->nullable();
-            $table->string('front_or_rear_camera')->nullable();
-            $table->string('camera_exposure_menu_item')->nullable();
-            $table->string('qr_app_protection')->nullable();
             $table->string('boomerang')->nullable();
             $table->string('animated_gif')->nullable();
             $table->string('videos')->nullable();
@@ -47,6 +43,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('video_settings');
+        Schema::dropIfExists('boomerang_settings');
     }
 };

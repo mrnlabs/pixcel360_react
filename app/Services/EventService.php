@@ -20,7 +20,7 @@ public function getEvents(){
 
     public function getEvent($slug)
     {
-        return Event::with('setting','setting','video_setting')->whereSlug($slug)->first();
+        return Event::with('setting','setting','boomerang_setting')->whereSlug($slug)->first();
     }
 
     public function createEvent(array $data)
@@ -51,7 +51,7 @@ public function getEvents(){
         $newEventSettings->event_id = $newEvent->id;
         $newEventSettings->save();
         
-        $videoSettings = $event->video_setting->replicate();
+        $videoSettings = $event->boomerang_setting->replicate();
         $videoSettings->event_id = $newEvent->id;
         $videoSettings->save();
         

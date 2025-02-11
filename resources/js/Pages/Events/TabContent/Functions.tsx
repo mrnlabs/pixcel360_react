@@ -12,27 +12,27 @@ export default function Functions({event} : any) {
 
   const { toast } = useToast();
   const { data, setData, post, processing, errors, reset } = useForm({
-    boomerang: event?.video_setting?.boomerang,
-    slomo: event?.video_setting?.slomo,
-    videos: parseInt(event?.video_setting?.videos),
-    boomerang_repeats: event?.video_setting?.boomerang_repeats,
-    boomerang_speed: event?.video_setting?.boomerang_speed,
-    boomerang_bounce: event?.video_setting?.boomerang_bounce,
-    slomo_recording_time: event?.video_setting?.slomo_recording_time,
-    slomo_boomerang: event?.video_setting?.slomo_boomerang,
-    speed: event?.video_setting?.speed,
+    boomerang: event?.boomerang_setting?.boomerang,
+    slomo: event?.boomerang_setting?.slomo,
+    videos: parseInt(event?.boomerang_setting?.videos),
+    boomerang_repeats: event?.boomerang_setting?.boomerang_repeats,
+    boomerang_speed: event?.boomerang_setting?.boomerang_speed,
+    boomerang_bounce: event?.boomerang_setting?.boomerang_bounce,
+    slomo_recording_time: event?.boomerang_setting?.slomo_recording_time,
+    slomo_boomerang: event?.boomerang_setting?.slomo_boomerang,
+    speed: event?.boomerang_setting?.speed,
 });
 
 useEffect(() => {
-  setData('boomerang', event?.video_setting?.boomerang);
-  setData('slomo', event?.video_setting?.slomo);
-  setData('videos', event?.video_setting?.videos);
-  setData('boomerang_repeats', event?.video_setting?.boomerang_repeats);
-  setData('boomerang_speed', event?.video_setting?.boomerang_speed);
-  setData('boomerang_bounce', event?.video_setting?.boomerang_bounce);
-  setData('slomo_recording_time', event?.video_setting?.slomo_recording_time);
-  setData('slomo_boomerang', event?.video_setting?.slomo_boomerang);
-  setData('speed', event?.video_setting?.speed);
+  setData('boomerang', event?.boomerang_setting?.boomerang);
+  setData('slomo', event?.boomerang_setting?.slomo);
+  setData('videos', event?.boomerang_setting?.videos);
+  setData('boomerang_repeats', event?.boomerang_setting?.boomerang_repeats);
+  setData('boomerang_speed', event?.boomerang_setting?.boomerang_speed);
+  setData('boomerang_bounce', event?.boomerang_setting?.boomerang_bounce);
+  setData('slomo_recording_time', event?.boomerang_setting?.slomo_recording_time);
+  setData('slomo_boomerang', event?.boomerang_setting?.slomo_boomerang);
+  setData('speed', event?.boomerang_setting?.speed);
 }, [event]);
 
 const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {

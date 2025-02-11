@@ -24,8 +24,8 @@ export default function Audio({event}: any) {
     const audioRef = useRef<HTMLAudioElement | null>(null);
 
         useEffect(() => {
-            if (event?.video_setting?.add_audio_file) {
-                setDbAudio(filePath + event?.video_setting?.add_audio_file);
+            if (event?.boomerang_setting?.add_audio_file) {
+                setDbAudio(filePath + event?.boomerang_setting?.add_audio_file);
             }
         }, [event]);
     
@@ -149,7 +149,7 @@ export default function Audio({event}: any) {
                 />
             </Suspense>
            
-            {(event?.video_setting?.add_audio_file || audioFile) && (
+            {(event?.boomerang_setting?.add_audio_file || audioFile) && (
                 <div>
                     <ul className="list-none files-main-nav" id="files-main-nav">
                         <li>

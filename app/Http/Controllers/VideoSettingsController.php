@@ -26,7 +26,7 @@ class VideoSettingsController extends Controller
     public function updateVedioFunctions(Request $request, $slug)
     {
         $event = Event::where('slug', $slug)->first();
-        $event->video_setting()->update($request->all());
+        $event->boomerang_setting()->update($request->all());
         return back()->with('success', 'Event settings updated successfully');
     }
 
@@ -38,12 +38,12 @@ class VideoSettingsController extends Controller
         $event = Event::where('slug', $slug)->first();
 
         if($request->isMethod('delete')) {
-             $event->video_setting()->update(['add_audio_file' => null]);
+             $event->boomerang_setting()->update(['add_audio_file' => null]);
             return back()->with('success', 'Audio removed successfully');
         }
         if($request->hasFile('audioFile')) {
             $path = $request->file('audioFile')->storeAs('audios',$event->name.'/'. $request->file('audioFile')->getClientOriginalName(), 'public');
-            $event->video_setting()->update(['add_audio_file' => $path]);
+            $event->boomerang_setting()->update(['add_audio_file' => $path]);
             return back()->with('success', 'Audio uploaded successfully');
         }
     }

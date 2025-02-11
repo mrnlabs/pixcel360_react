@@ -12,56 +12,56 @@ export default function SharingMethods({event} : any) {
     <div className="xl:col-span-3 lg:col-span-3 md:col-span-3 sm:col-span-12 col-span-12">
      <CustomToggle 
         label="Email" 
-        initialValue={false} 
+        initialValue={0} 
         onChange={(value) => console.log('Toggle value:', value)} 
         />
   </div>
   <div className="xl:col-span-3 lg:col-span-3 md:col-span-3 sm:col-span-12 col-span-12">
   <CustomToggle 
         label="SMS" 
-        initialValue={false} 
+        initialValue={0} 
         onChange={(value) => console.log('Toggle value:', value)} 
         />
   </div>
   <div className="xl:col-span-3 lg:col-span-3 md:col-span-3 sm:col-span-12 col-span-12">
   <CustomToggle 
         label="Download" 
-        initialValue={false} 
+        initialValue={0} 
         onChange={(value) => console.log('Toggle value:', value)} 
         />
   </div>
   <div className="xl:col-span-3 lg:col-span-3 md:col-span-3 sm:col-span-12 col-span-12">
   <CustomToggle 
         label="Airdrop" 
-        initialValue={false} 
+        initialValue={0} 
         onChange={(value) => console.log('Toggle value:', value)} 
         />
   </div>
   <div className="xl:col-span-3 lg:col-span-3 md:col-span-3 sm:col-span-12 col-span-12">
   <CustomToggle 
         label="QR" 
-        initialValue={false} 
+        initialValue={0} 
         onChange={(value) => console.log('Toggle value:', value)} 
         />
   </div>
    <div className="xl:col-span-3 lg:col-span-3 md:col-span-3 sm:col-span-12 col-span-12">
   <CustomToggle 
         label="General" 
-        initialValue={false} 
+        initialValue={0} 
         onChange={(value) => console.log('Toggle value:', value)} 
         />
   </div>
   <div className="xl:col-span-3 lg:col-span-3 md:col-span-3 sm:col-span-12 col-span-12">
   <CustomToggle 
         label="Whatsapp" 
-        initialValue={false} 
+        initialValue={0} 
         onChange={(value) => console.log('Toggle value:', value)} 
         />
   </div>
   <div className="xl:col-span-3 lg:col-span-3 md:col-span-3 sm:col-span-12 col-span-12">
   <CustomToggle 
         label="In-app gallery" 
-        initialValue={false} 
+        initialValue={0} 
         onChange={(value) => console.log('Toggle value:', value)} 
         />
   </div>
