@@ -3,7 +3,7 @@ import { Breadcrumb } from "@/Shared/Breadcrumb";
 import { EventProps } from "@/types";
 import { Head, Link } from "@inertiajs/react";
 
-import React, { useRef } from 'react'
+import React, { useMemo, useRef } from 'react'
 import EditDetails from "./TabContent/EditDetails";
 import { QRCodeSVG } from "qrcode.react";
 import EventSidebar from "./EventSidebar";
@@ -61,28 +61,28 @@ export default function Edit({event} : EventProps) {
       }
   }
 
-  const getActiveTabContent = () => {
-      switch (activeTab) {
-          case 'event-details':
-              return <EditDetails event={event} scrollToDiv={scrollToDiv} />;
-          case 'event-settings':
-              return <VedioSettings event={event} scrollToDiv={scrollToDiv}  />;
-          case 'event-functions':
-              return <Functions event={event} scrollToDiv={scrollToDiv} />;
-          case 'audio':
-              return <Audio event={event} scrollToDiv={scrollToDiv} />;
-          case 'timeouts':
+  const getActiveTabContent = useMemo(() => {
+    switch (activeTab) {
+        case 'event-details':
+            return <EditDetails event={event} scrollToDiv={scrollToDiv} />;
+        case 'event-settings':
+            return <VedioSettings event={event} scrollToDiv={scrollToDiv} />;
+        case 'event-functions':
+            return <Functions event={event} scrollToDiv={scrollToDiv} />;
+        case 'audio':
+            return <Audio event={event} scrollToDiv={scrollToDiv} />;
+        case 'timeouts':
             return <TimeOuts event={event} scrollToDiv={scrollToDiv} />;
-          case 'sharing-methods':
-              return <SharingMethods event={event} scrollToDiv={scrollToDiv} />;
-          case 'sharing-subjects':
-              return <SharingSubjects event={event} scrollToDiv={scrollToDiv} />;
-          case 'branding':
-              return <Branding event={event} scrollToDiv={scrollToDiv} />;
-          default:
-              return null;
-      }
-  }
+        case 'sharing-methods':
+            return <SharingMethods event={event} scrollToDiv={scrollToDiv} />;
+        case 'sharing-subjects':
+            return <SharingSubjects event={event} scrollToDiv={scrollToDiv} />;
+        case 'branding':
+            return <Branding event={event} scrollToDiv={scrollToDiv} />;
+        default:
+            return null;
+    }
+}, [activeTab, event, scrollToDiv]);
   return (
     <Authenticated>
 <Head title={'Edit Event' + event.name} />
@@ -121,8 +121,7 @@ export default function Edit({event} : EventProps) {
           <div className="p-4 file-folders-container">
             
             <div className="grid  sm:gap-x-6 mb-2">
-            {/* <EditDetails event={event} /> */}
-              { getActiveTabContent() }
+              { getActiveTabContent }
             </div>
            
           </div>
