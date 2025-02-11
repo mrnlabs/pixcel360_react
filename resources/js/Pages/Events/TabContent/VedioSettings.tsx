@@ -98,7 +98,7 @@ export default function VedioSettings({event} : any) {
   </div>
   <div className="xl:col-span-6 lg:col-span-6 md:col-span-6 sm:col-span-12 col-span-12">
   <label className="block text-sm mb-1">Front or rear camera</label>
-        <Select value={data.front_rear_camera} onValueChange={(value) => setData('front_rear_camera', value)}>
+        <Select value={String(data.front_rear_camera)} onValueChange={(value) => setData('front_rear_camera', value)}>
       <SelectTrigger className="w-[180px] form-control border rounded-lg">
         <SelectValue placeholder="Select" />
         </SelectTrigger>
