@@ -45,12 +45,19 @@ public function getEvents(){
         $newEventSettings = $event->setting->replicate();
         $newEventSettings->event_id = $newEvent->id;
         $newEventSettings->save();
-        
+       
         $videoSettings = $event->boomerang_setting->replicate();
-        $videoSettings = $event->sharing_method->replicate();
-        
         $videoSettings->event_id = $newEvent->id;
         $videoSettings->save();
+
+
+        $sharingSettings = $event->sharing_method->replicate();
+        $sharingSettings->event_id = $newEvent->id;
+         $sharingSettings->save();
+
+        $subjectSettings = $event->sharing_subject->replicate();   
+        $subjectSettings->event_id = $newEvent->id;
+        $subjectSettings->save();
         
         return $newEvent;
     }

@@ -13,7 +13,6 @@ export default function Index({events} : any) {
   const [duplicateModalOpen, setDuplicateModalOpen] = useState(false);
   const [QRData, setQRData] = useState(null);
 
-  console.log('QRData', QRData);
   return (
     <Authenticated>
           <Head title="Dashboard" />

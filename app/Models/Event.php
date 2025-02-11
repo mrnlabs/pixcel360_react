@@ -28,15 +28,15 @@ class Event extends Model
     }
 
     public function sharing_subject(){
-        return $this->hasOne(SharingSubject::class);
+        return $this->hasOne(SharingSubject::class, 'event_id', 'id');
     }
     public function setting()
     {
-        return $this->hasOne(EventSetting::class);
+        return $this->hasOne(EventSetting::class, 'event_id', 'id');
     }
     public function sharing_method()
     {
-        return $this->hasOne(SharingMethod::class);
+        return $this->hasOne(SharingMethod::class, 'event_id', 'id');
     }
  
 
