@@ -18,6 +18,8 @@ Route::post('/update-vedio-functions/{slug}', [VideoSettingsController::class, '
 
 Route::post('/upload-vedio-audio/{slug}', [VideoSettingsController::class, 'uploadVedioAudio'])->name('event.update.audio');
 Route::delete('/upload-vedio-audio/{slug}', [VideoSettingsController::class, 'uploadVedioAudio'])->name('event.update.audio');
+Route::patch('/update-vedio-timeouts/{slug}', [VideoSettingsController::class, 'updateVedioTimeouts'])->name('event.update.vedio.timeouts');
+
 
 
 });

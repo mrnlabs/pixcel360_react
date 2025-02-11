@@ -94,7 +94,7 @@ const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
         </SelectTrigger>
         <SelectContent className='form-control'>
             <SelectGroup>
-            <SelectLabel>Fruits</SelectLabel>
+            <SelectLabel>Boomerang repeats</SelectLabel>
             <SelectItem value="1">1</SelectItem>
             <SelectItem value="2">2</SelectItem>
             </SelectGroup>
@@ -134,7 +134,7 @@ const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
         </SelectTrigger>
         <SelectContent className='form-control'>
             <SelectGroup>
-            <SelectLabel>Fruits</SelectLabel>
+            <SelectLabel>Slomo Boomerang</SelectLabel>
             <SelectItem value="0">Yes</SelectItem>
             <SelectItem value="1">No</SelectItem>
             </SelectGroup>
@@ -150,7 +150,7 @@ const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
   </div>
 
   </div>
-  <Button onClick={handleSubmit} disabled={processing}className='mt-4 ti-btn ti-btn-primary w-full'>
+  <Button onClick={handleSubmit} disabled={processing} className='mt-4 ti-btn ti-btn-primary w-full'>
     {processing && <Loader className='mr-2 h-4 w-4 animate-spin'/>}Save</Button>
     <Toaster />
 </div>

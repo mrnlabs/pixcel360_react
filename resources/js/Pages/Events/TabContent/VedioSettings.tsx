@@ -30,7 +30,6 @@ export default function VedioSettings({event} : any) {
 
   const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    console.log(data);
     patch(route('event.update.vedio.settings', event.slug),{
       preserveScroll: true,
       onSuccess: () => {
@@ -104,7 +103,7 @@ export default function VedioSettings({event} : any) {
         </SelectTrigger>
         <SelectContent className='form-control'>
             <SelectGroup>
-            <SelectLabel>Fruits</SelectLabel>
+            <SelectLabel>Camera</SelectLabel>
             <SelectItem value="0">Front</SelectItem>
             <SelectItem value="1">Back</SelectItem>
             </SelectGroup>

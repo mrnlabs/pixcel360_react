@@ -29,6 +29,22 @@ class VideoSettingsController extends Controller
         $event->boomerang_setting()->update($request->all());
         return back()->with('success', 'Event settings updated successfully');
     }
+     public function updateVedioTimeouts(Request $request, $slug)
+    {
+        $event = Event::where('slug', $slug)->first();
+        $event->boomerang_setting()->update([
+            'boomerang_speed' => $request->boomerang_speed,
+            // 'boomerang_bounce' => $request->boomerang_bounce,
+            // 'slomo_recording_time' => $request->slomo_recording_time,
+            'slomo_boomerang' => $request->slomo_boomerang,
+            'sharing' => $request->sharing,
+            'editing' => $request->editing,
+            'props' => $request->props,
+            'thanks' => $request->thanks,
+            
+        ]);
+        return back()->with('success', 'Event settings updated successfully');
+    }
 
     /**
      * Store a newly created resource in storage.

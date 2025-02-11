@@ -29,7 +29,6 @@ export interface Event {
     country: string;
     countdown: string;
     beep_sounds: string;
-    face_props: string;
     gallery_name: string;
     attract_screen: string;
     app_logo: string;
@@ -41,7 +40,6 @@ export interface Event {
         event_id?: number;
         count_down: 1;
         beep_sounds: number;
-        face_props: number;
         mirror_overlay: number;
         front_rear_camera: number;
         camera_exposure: number;
@@ -53,6 +51,19 @@ export interface Event {
         webgallery_background: null;
         created_at: string;
         updated_at: string
+      },
+      boomerang_setting? : {
+        id: number;
+        event_id?: number;
+        editing: number;
+        sharing: number;
+        props: number;
+        thanks: number;
+        boomerang_speed: number;
+        boomerang_bounce: number;
+        slomo_recording_time: number;
+        slomo_boomerang: number;
+        created_at: string;
       }
     created_at?: string;
 }
