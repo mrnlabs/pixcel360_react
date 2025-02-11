@@ -6,7 +6,7 @@ import { Toaster } from '@/Components/ui/toaster'
 import { useToast } from '@/hooks/use-toast'
 import { useForm } from '@inertiajs/react'
 import { Loader } from 'lucide-react'
-import React from 'react'
+import React, { useEffect } from 'react'
 
 export default function TimeOuts({event} : any) {
 
@@ -19,6 +19,15 @@ export default function TimeOuts({event} : any) {
     slomo_boomerang: event?.boomerang_setting?.slomo_boomerang ?? 0,
     boomerang_speed: event?.boomerang_setting?.boomerang_speed ?? 0,
 });
+
+useEffect(() => {
+  setData('editing', event?.boomerang_setting?.editing);
+  setData('sharing', event?.boomerang_setting?.sharing);
+  setData('props', event?.boomerang_setting?.props);
+  setData('thanks', event?.boomerang_setting?.thanks);
+  setData('slomo_boomerang', event?.boomerang_setting?.slomo_boomerang);
+  setData('boomerang_speed', event?.boomerang_setting?.boomerang_speed);
+}, [event]);
 
  const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
