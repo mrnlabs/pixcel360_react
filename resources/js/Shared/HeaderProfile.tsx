@@ -23,7 +23,7 @@ export default function HeaderProfile() {
        </div>
      </div>
     </DropdownMenuTrigger>
-    <DropdownMenuContent className="w-56">
+    <DropdownMenuContent className="w-56 mt-4">
       <DropdownMenuLabel>My Account</DropdownMenuLabel>
       <DropdownMenuSeparator />
       <DropdownMenuGroup>

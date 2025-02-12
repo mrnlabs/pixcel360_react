@@ -2,6 +2,9 @@ import React from 'react'
 import { ToggleNav } from './ToggleNav'
 import HeaderProfile from './HeaderProfile'
 import FullScreen from './FullScreen'
+import { Search } from 'lucide-react'
+import { HeaderSearch } from './HeaderSearch'
+import NotificationBell from './NotificationBell'
 
 export default function Header() {
   return (
@@ -23,27 +26,11 @@ export default function Header() {
                   </a>
                 </div>
               </div>
-              {/* <!-- End::header-element --> */}
-              {/* <!-- Start::header-element --> */}
+            
               <ToggleNav />
-              {/* <!-- End::header-element --> */}
-              {/* <!-- Start::header-element --> */}
-              <div className="header-element header-search md:!block !hidden my-auto auto-complete-search">
-                {/* <!-- Start::header-link --> */}
-                <div className="autoComplete_wrapper" role="combobox" aria-owns="autoComplete_list_1" aria-haspopup="true" aria-expanded="false">
-                  <input type="text" className="header-search-bar form-control" id="header-search" placeholder="Search anything here ..." 
-                  autoComplete="off" />
-                  <ul id="autoComplete_list_1" role="listbox" hidden={false}></ul>
-                </div>
-                <a aria-label="anchor" href="javascript:void(0);" className="header-search-icon border-0">
-                  <i className="ri-search-line"></i>
-                </a>
-                {/* <!-- End::header-link --> */}
-              </div>
-              {/* <!-- End::header-element --> */}
+              <HeaderSearch/>
             </div>
-            {/* <!-- End::header-content-left --> */}
-            {/* <!-- Start::header-content-right --> */}
+          
             <ul className="header-content-right">
               {/* <!-- Start::header-element --> */}
               <li className="header-element md:!hidden block">
@@ -70,177 +57,7 @@ export default function Header() {
               {/* <!-- End::header-element --> */}
               {/* <!-- Start::header-element --> */}
               <li className="header-element notifications-dropdown !hidden xl:!block hs-dropdown ti-dropdown [--auto-close:inside]">
-                {/* <!-- Start::header-link|dropdown-toggle --> */}
-                <a aria-label="anchor" href="javascript:void(0);" className="header-link hs-dropdown-toggle ti-dropdown-toggle" data-bs-toggle="dropdown" data-bs-auto-close="outside" id="messageDropdown" aria-expanded="false">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6 header-link-icon" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0M3.124 7.5A8.969 8.969 0 0 1 5.292 3m13.416 0a8.969 8.969 0 0 1 2.168 4.5"></path>
-                  </svg>
-                  <span className="header-icon-pulse bg-primarytint2color rounded pulse pulse-secondary"></span>
-                </a>
-                {/* <!-- End::header-link|dropdown-toggle --> */}
-                {/* <!-- Start::main-header-dropdown --> */}
-                <div className="main-header-dropdown hs-dropdown-menu ti-dropdown-menu hidden" data-popper-placement="none" role="menu">
-                  <div className="p-4">
-                    <div className="flex items-center justify-between">
-                      <p className="mb-0 text-[15px] font-medium">Notifications</p>
-                      <span className="badge bg-secondary text-white rounded-sm" id="notifiation-data">5 Unread</span>
-                    </div>
-                  </div>
-                  <div className="dropdown-divider"></div>
-                  <ul className="list-none mb-0" id="header-notification-scroll" data-simplebar="init">
-                    <div className="simplebar-wrapper" style={{margin: '0px'}}>
-                      <div className="simplebar-height-auto-observer-wrapper">
-                        <div className="simplebar-height-auto-observer"></div>
-                      </div>
-                      <div className="simplebar-mask">
-                        <div className="simplebar-offset" style={{right: '0px', bottom: '0px'}}>
-                          <div className="simplebar-content-wrapper" tabIndex={0} role="region" aria-label="scrollable content" style={{height: 'auto', overflow: 'hidden'}}>
-                            <div className="simplebar-content" style={{padding: '0px'}}>
-                              <li className="ti-dropdown-item block">
-                                <div className="flex items-center">
-                                  <div className="pe-2 leading-none">
-                                    <span className="avatar avatar-md avatar-rounded bg-primary">
-                                      <img src="../assets/images/faces/1.jpg" alt="user1"/>
-                                    </span>
-                                  </div>
-                                  <div className="grow flex items-center justify-between">
-                                    <div>
-                                      <p className="mb-0 font-medium">
-                                        <a href="chat.html">New Messages</a>
-                                      </p>
-                                      <div className="text-textmuted dark:text-textmuted/50 font-normal text-xs header-notification-text truncate"> Jane Sam sent you a message.</div>
-                                      <div className="font-normal text-[10px] text-textmuted dark:text-textmuted/50 op-8"> Now</div>
-                                    </div>
-                                    <div>
-                                      <a aria-label="anchor" href="javascript:void(0);" className="min-w-fit-content dropdown-item-close1">
-                                        <i className="ri-close-line"></i>
-                                      </a>
-                                    </div>
-                                  </div>
-                                </div>
-                              </li>
-                              <li className="ti-dropdown-item block">
-                                <div className="flex items-center">
-                                  <div className="pe-2 leading-none">
-                                    <span className="avatar avatar-md bg-primary avatar-rounded text-xl">
-                                      <i className="fe fe-shopping-cart leading-none "></i>
-                                    </span>
-                                  </div>
-                                  <div className="grow flex items-center justify-between">
-                                    <div>
-                                      <p className="mb-0 font-medium">
-                                        <a href="chat.html">Order Updates</a>
-                                      </p>
-                                      <div className="text-textmuted dark:text-textmuted/50 font-normal text-xs header-notification-text truncate"> Order <span className="text-primarytint1color">#54321</span> has been shipped. </div>
-                                      <div className="font-normal text-[10px] text-textmuted dark:text-textmuted/50 op-8"> 2 hours ago</div>
-                                    </div>
-                                    <div>
-                                      <a aria-label="anchor" href="javascript:void(0);" className="min-w-fit-content dropdown-item-close1">
-                                        <i className="ri-close-line"></i>
-                                      </a>
-                                    </div>
-                                  </div>
-                                </div>
-                              </li>
-                              <li className="ti-dropdown-item block">
-                                <div className="flex items-center">
-                                  <div className="pe-2 leading-none">
-                                    <span className="avatar avatar-md bg-orange avatar-rounded">
-                                      <img src="../assets/images/faces/10.jpg" alt="user1"/>
-                                    </span>
-                                  </div>
-                                  <div className="grow flex items-center justify-between">
-                                    <div>
-                                      <p className="mb-0 font-medium">
-                                        <a href="chat.html">Comment on Post</a>
-                                      </p>
-                                      <div className="text-textmuted dark:text-textmuted/50 font-normal text-xs header-notification-text truncate"> Reacted: <span className="text-primary3">John Richard</span> on your next purchase! </div>
-                                      <div className="font-normal text-[10px] text-textmuted dark:text-textmuted/50 op-8"> 2 hours ago</div>
-                                    </div>
-                                    <div>
-                                      <a aria-label="anchor" href="javascript:void(0);" className="min-w-fit-content dropdown-item-close1">
-                                        <i className="ri-close-line"></i>
-                                      </a>
-                                    </div>
-                                  </div>
-                                </div>
-                              </li>
-                              <li className="ti-dropdown-item block">
-                                <div className="flex items-center">
-                                  <div className="pe-2 leading-none">
-                                    <span className="avatar avatar-md bg-success avatar-rounded">
-                                      <img src="../assets/images/faces/11.jpg" alt="user1"  />
-                                    </span>
-                                  </div>
-                                  <div className="grow flex items-center justify-between">
-                                    <div>
-                                      <p className="mb-0 font-medium">
-                                        <a href="chat.html">Follow Request</a>
-                                      </p>
-                                      <div className="text-textmuted dark:text-textmuted/50 font-normal text-xs header-notification-text truncate">
-                                        <span className="text-info">Kelin Brown</span> has sent you the request.
-                                      </div>
-                                      <div className="font-normal text-[10px] text-textmuted dark:text-textmuted/50 op-8"> 1 Day ago</div>
-                                    </div>
-                                    <div>
-                                      <a aria-label="anchor" href="javascript:void(0);" className="min-w-fit-content dropdown-item-close1">
-                                        <i className="ri-close-line"></i>
-                                      </a>
-                                    </div>
-                                  </div>
-                                </div>
-                              </li>
-                              <li className="ti-dropdown-item block">
-                                <div className="flex items-center">
-                                  <div className="pe-2 leading-none">
-                                    <span className="avatar avatar-md bg-primarytint2color avatar-rounded">
-                                      <i className="ri-gift-line leading-none text-[1rem]"></i>
-                                    </span>
-                                  </div>
-                                  <div className="grow flex items-center justify-between">
-                                    <div>
-                                      <p className="mb-0 font-medium">
-                                        <a href="chat.html">Exclusive Offers</a>
-                                      </p>
-                                      <div className="text-textmuted dark:text-textmuted/50 font-normal text-xs header-notification-text truncate"> Enjoy <span className="text-success">20% off</span> on your next purchase! </div>
-                                      <div className="font-normal text-[10px] text-textmuted dark:text-textmuted/50 op-8"> 5 hours ago</div>
-                                    </div>
-                                    <div>
-                                      <a aria-label="anchor" href="javascript:void(0);" className="min-w-fit-content dropdown-item-close1">
-                                        <i className="ri-close-line"></i>
-                                      </a>
-                                    </div>
-                                  </div>
-                                </div>
-                              </li>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="simplebar-placeholder" style={{width: '0px', height: '0px'}}></div>
-                    </div>
-                    <div className="simplebar-track simplebar-horizontal" style={{visibility: 'hidden'}}>
-                      <div className="simplebar-scrollbar" style={{width: '0px', display: 'none'}}></div>
-                    </div>
-                    <div className="simplebar-track simplebar-vertical" style={{visibility: 'hidden'}}>
-                      <div className="simplebar-scrollbar" style={{height: '0px', display: 'none'}}></div>
-                    </div>
-                  </ul>
-                  <div className="p-4 empty-header-item1 border-t">
-                    <div className="grid">
-                      <a href="javascript:void(0);" className="ti-btn ti-btn-primary btn-wave waves-effect waves-light">View All</a>
-                    </div>
-                  </div>
-                  <div className="p-[3rem] empty-item1 hidden">
-                    <div className="text-center">
-                      <span className="avatar avatar-xl avatar-rounded bg-secondary/10 !text-secondary">
-                        <i className="ri-notification-off-line fs-2"></i>
-                      </span>
-                      <h6 className="font-medium mt-3">No New Notifications</h6>
-                    </div>
-                  </div>
-                </div>
-                {/* <!-- End::main-header-dropdown --> */}
+                <NotificationBell/>
               </li>
               
               <FullScreen />

@@ -28,10 +28,11 @@ export default function Index({event} : EventProps) {
                 <div className="flex items-center justify-between flex-wrap gap-4">
                 <div className="avatar-list-stacked">
                  <div> Gallery Name: <span className='font-bold'>{event?.name}</span></div>
-                 <div> Event nr: <span className='font-bold'>#{event?.id}</span></div>
+                 <div> Event nr: <span className='font-bold'><span className='text-primary'>#</span>{event?.id}</span>
+                 <span className='ml-3'>Number of files: {event?.videos?.length ?? 0 }</span></div>
                   </div>
                   <div className="flex" role="search">
-                    <input className="form-control me-2" type="search" placeholder="Search Project" aria-label="Search"/>
+                    <input className="form-control me-2" type="search" placeholder="Search Video" aria-label="Search"/>
                     <button className="ti-btn bg-light !m-0" type="submit">Search</button>
                   </div>
                 </div>
