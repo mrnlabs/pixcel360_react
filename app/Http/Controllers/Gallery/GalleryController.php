@@ -12,9 +12,16 @@ use Inertia\Inertia;
 class GalleryController extends Controller
 {
    
-    public function index($slug)
+    public function index(Request $request, $slug)
     {
-      $event = Event::with('videos')->where('slug', $slug)->first();
+      $search = $request->input('search', '');
+
+      $event = Event::with(['videos' => function ($query) use ($search) {
+        if ($search) {
+            $query->where('name', 'like', "%{$search}%");
+        }
+    }])->where('slug', $slug)->first();
+
       return Inertia::render('Gallery/Index',[
         'event' => $event
       ]);

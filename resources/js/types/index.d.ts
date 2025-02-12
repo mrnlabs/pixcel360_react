@@ -79,6 +79,15 @@ export interface Event {
     created_at?: string;
 }
 
+interface Filters {
+    search: string;
+    status: string;
+  }
+
+  interface QueryParams {
+    [key: string]: string;
+  }
+
 export type PageProps<
     T extends Record<string, unknown> = Record<string, unknown>,
 > = T & {

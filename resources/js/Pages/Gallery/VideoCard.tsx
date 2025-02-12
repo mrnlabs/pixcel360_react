@@ -10,7 +10,7 @@ export default function VideoCard({event}: EventProps) {
         {event?.videos?.map((video: any) => (
              <div key={video.id} className="lg:col-span-3 md:col-span-3 sm:col-span-6 col-span-12" id="player">
              <VideoPlayer 
-             videoSrc={`${filePath}/${video.path}`}
+             videoSrc={`${filePath}${video.path}`}
               />
            </div>
         ))}

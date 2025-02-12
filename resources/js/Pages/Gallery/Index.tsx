@@ -1,12 +1,45 @@
 import Authenticated from '@/Layouts/AuthenticatedLayout'
 import { Breadcrumb } from '@/Shared/Breadcrumb'
-import { Head, Link } from '@inertiajs/react'
-import { Loader, SquarePlus } from 'lucide-react'
-import React, { lazy, Suspense, useState } from 'react';
+import { Head, router } from '@inertiajs/react'
+import { Loader } from 'lucide-react'
+import React, { Suspense, useState } from 'react';
 import VideoCard from './VideoCard';
-import { Event, EventProps } from '@/types';
+import { EventProps, Filters, QueryParams } from '@/types';
+// @ts-expect-error
+import { debounce } from 'lodash';
 
 export default function Index({event} : EventProps) {
+
+  const [filters, setFilters] = useState({
+    search: '',
+    store: '',
+    status: ''
+});
+
+const updateFilters = React.useCallback(
+  debounce((newFilters: Partial<Filters>) => {
+    const queryParams: QueryParams = {};
+    
+    // Merge new filters with existing filters
+    const updatedFilters = { ...filters, ...newFilters };
+    
+    // Add non-empty filter values to query params
+    Object.keys(updatedFilters).forEach(key => {
+      if (updatedFilters[key as keyof Filters]) {
+        queryParams[key] = updatedFilters[key as keyof Filters] as string;
+      }
+    });
+
+    router.get(route('gallery',event?.slug), queryParams, {
+      preserveState: true,
+      replace: true
+    });
+
+    // Update local state with merged filters
+    setFilters(updatedFilters);
+  }, 300),
+  [filters]
+);
 
   return (
     <Authenticated>
@@ -32,8 +65,9 @@ export default function Index({event} : EventProps) {
                  <span className='ml-3'>Number of files: {event?.videos?.length ?? 0 }</span></div>
                   </div>
                   <div className="flex" role="search">
-                    <input className="form-control me-2" type="search" placeholder="Search Video" aria-label="Search"/>
-                    <button className="ti-btn bg-light !m-0" type="submit">Search</button>
+                    <input 
+                    onChange={(e) => updateFilters({ search: e.target.value })} className="form-control me-2" type="search" placeholder="Search Video" aria-label="Search"/>
+                    <button className="ti-btn bg-primary !m-0 text-white" type="submit">Search</button>
                   </div>
                 </div>
               </div>
@@ -41,9 +75,11 @@ export default function Index({event} : EventProps) {
           </div>
         </div>
               <Suspense fallback={<Loader className="align-middle animate-spin"/>}>
-                <VideoCard event={event}/>
+                <VideoCard 
+                event={event}
+                />
               </Suspense>
-
+              {!event?.videos?.length && <div className="text-center">No videos found.</div>}
             </div>
           </div>
         </Authenticated>
