@@ -7,12 +7,14 @@ import VideoCard from './VideoCard';
 import { EventProps, Filters, QueryParams } from '@/types';
 // @ts-expect-error
 import { debounce } from 'lodash';
+import { Input } from '@/Components/ui/input';
+import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/Components/ui/select';
 
 export default function Index({event} : EventProps) {
 
   const [filters, setFilters] = useState({
     search: '',
-    status: ''
+    sort: ''
 });
 
 const updateFilters = React.useCallback(
@@ -40,6 +42,7 @@ const updateFilters = React.useCallback(
   [filters]
 );
 
+
   return (
     <Authenticated>
           <Head title="Dashboard" />
@@ -64,9 +67,20 @@ const updateFilters = React.useCallback(
                  <span className='ml-3'>Number of files: {event?.videos?.length ?? 0 }</span></div>
                   </div>
                   <div className="flex" role="search">
-                    <input 
+                    <Input 
                     onChange={(e) => updateFilters({ search: e.target.value })} className="form-control me-2" type="search" placeholder="Search Video" aria-label="Search"/>
-                    <button className="ti-btn bg-primary !m-0 text-white" type="submit">Search</button>
+                     <Select onValueChange={(e) => updateFilters({ sort: e })}>
+                          <SelectTrigger className="w-[180px] form-control">
+                            <SelectValue placeholder="Sort By"></SelectValue>
+                          </SelectTrigger>
+                          <SelectContent className='form-control'>
+                            <SelectGroup>
+                              <SelectLabel>Sort By</SelectLabel>
+                              <SelectItem className='cursor-pointer' value="latest">Latest</SelectItem>
+                              <SelectItem className='cursor-pointer' value="oldest">Oldest</SelectItem>
+                            </SelectGroup>
+                          </SelectContent>
+                        </Select>
                   </div>
                 </div>
               </div>
