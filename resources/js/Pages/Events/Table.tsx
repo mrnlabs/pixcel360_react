@@ -1,4 +1,4 @@
-import { Copy, QrCode, SquarePen, Trash2 } from 'lucide-react'
+import { Copy, Image, QrCode, SquarePen, Trash2 } from 'lucide-react'
 import { format } from "date-fns";
 import CustomTooltip from '@/Components/CustomTooltip';
 import DuplicateModal from './DuplicateModal';
@@ -103,7 +103,7 @@ export default function Table({events, setModalOpen, setQRData, setDuplicateModa
                 <span className="badge bg-success/10 text-success leading-none">Active</span>
               </td>
               <td>
-                <span className="">+0987654321</span>
+                <Link href={route('gallery',event.slug)}><span><Image/></span></Link>
               </td>
               <td>
                 <span className="font-medium">$15,000</span>

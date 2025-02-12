@@ -18,8 +18,8 @@ export interface User {
 }
 
 export interface EventProps {
-    event: Event;
-    events: Event[];
+    event?: Event;
+    events?: Event[];
 }
 
 export interface Event {
@@ -73,7 +73,8 @@ export interface Event {
         webgallery_email_subject: string
         webgallery_email_message: string
         social_share_description: string
-      }
+      },
+      videos?: Array<{ id: number; event_id: number; name: string; path: string }>;
     created_at?: string;
 }
 

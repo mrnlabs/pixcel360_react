@@ -64,3 +64,4 @@ Route::post('/notify', [PayfastController::class, 'notify'])->name('notify');
 
 require __DIR__.'/auth.php';
 require __DIR__.'/event.php';
+require __DIR__.'/gallery.php';
