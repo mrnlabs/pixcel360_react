@@ -11,6 +11,8 @@ use App\Services\VideoSettingsService;
 use App\Services\SharingSettingsService;
 use App\Http\Requests\VideoUploadRequest;
 use App\Models\Video;
+use Illuminate\Support\Facades\Storage;
+use Throwable;
 
 class EventAPIController extends Controller
 {
@@ -34,7 +36,9 @@ class EventAPIController extends Controller
         try{
             if ($request->file('video')) {
                 $event = Event::where('slug', $request->slug)->first();
-                $filePath = $request->file('video')->store('videos','public');
+                $filePath = Storage::put('video_uploads', $request->file('video'));
+                
+                $url = Storage::url($filePath);
                 $video = Video::create([
                     'name' => $request->file('video')->getClientOriginalName(),
                     'path' => $filePath,
@@ -43,14 +47,14 @@ class EventAPIController extends Controller
                 ]);
                 return response()->json([
                     'message' => 'Video uploaded successfully',
-                    'path' => $filePath,
+                    'path' => $url,
                     'video' => $video
                 ], 200);
             }
         
             return response()->json(['message' => 'No file uploaded'], 400);
-        } catch (\Exception $e){
-            return Inertia::render('Error', ['message' => $e->getMessage()]);
+        } catch (Throwable $th){
+            throw $th;
         }
 
     }

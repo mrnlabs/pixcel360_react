@@ -22,6 +22,14 @@ class HandleInertiaRequests extends Middleware
         return parent::version($request);
     }
 
+    public function isProduction() : bool
+    {
+        if (app()->environment(['production'])) {
+            return  env('FILE_PATH');
+        }
+        return env('AWS_STORAGE_URL');
+    }
+
     /**
      * Define the props that are shared by default.
      *
@@ -34,7 +42,7 @@ class HandleInertiaRequests extends Middleware
             'auth' => [
                 'user' => $request->user(),
             ],
-            'filePath' => env('FILE_PATH'),
+            'filePath' => fn () => $this->isProduction(),
         ];
     }
 }
