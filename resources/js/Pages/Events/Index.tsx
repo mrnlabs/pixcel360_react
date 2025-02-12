@@ -72,7 +72,7 @@ const updateFilters = React.useCallback(
                         <div>
                           <Input 
                           onChange={(e) => updateFilters({ search: e.target.value })}
-                          className="form-control form-control-sm" type="text" placeholder="Search Here" aria-label=".form-control-sm example"/>
+                          className="form-control form-control-sm" type="search" placeholder="Search Events" aria-label=".form-control-sm example"/>
                         </div>
                         <div className="ti-dropdown hs-dropdown">
                           <Select onValueChange={(e) => updateFilters({ sort: e })}>
