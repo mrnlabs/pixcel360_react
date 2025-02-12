@@ -43,6 +43,7 @@ class HandleInertiaRequests extends Middleware
                 'user' => $request->user(),
             ],
             'filePath' => env('AWS_STORAGE_URL'),
+            'main_js_path' => getenv('MAIN_JS')
         ];
     }
 }

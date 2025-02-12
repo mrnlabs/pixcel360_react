@@ -2,7 +2,7 @@ import { Copy, Image, QrCode, SquarePen, Trash2 } from 'lucide-react'
 import { format } from "date-fns";
 import CustomTooltip from '@/Components/CustomTooltip';
 import DuplicateModal from './DuplicateModal';
-import { Suspense, useState } from 'react';
+import React, { Suspense, useState } from 'react';
 import { Toaster } from '@/Components/ui/toaster';
 import ConfirmDialog from '@/Components/ConfirmDialog';
 import { Link, router } from '@inertiajs/react';
@@ -36,7 +36,7 @@ export default function Table({events, setModalOpen, setQRData, setDuplicateModa
       }
     })
   }
-  
+
   return (
     <div className="table-responsive overflow-auto table-bordered-default">
     <table className="ti-custom-table text-nowrap ti-custom-table-hover">

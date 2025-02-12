@@ -51,7 +51,7 @@ const MenuItem: React.FC<MenuItemProps> = ({
 
     return (
       <li className="slide active">
-        <Link {...linkProps} className={`side-menu__item ${className || ''} ${isActive ? 'active' : ''}`}>
+        <Link {...linkProps} className={`slide side-menu__item ${className || ''} ${isActive ? 'active' : ''}`}>
           <Icon size={18} className='mr-3 menu__angle active'/>
           <span className="menu-text ">{label}</span>
         </Link>
