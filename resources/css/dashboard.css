@@ -26304,8 +26304,8 @@ select.tabulator-page-size option:is(.dark *){
   transition-timing-function: ease;
 }
 .app-sidebar .main-sidebar-header .header-logo img{
-  height: 1.7rem;
-  line-height: 1.7rem;
+  height: 2.7rem;
+  line-height: 2.7rem;
 }
 .app-sidebar .main-sidebar-header .header-logo .desktop-logo{
   display: block;
