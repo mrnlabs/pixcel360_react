@@ -6,7 +6,7 @@ import React, { lazy, Suspense, useState } from 'react';
 import VideoCard from './VideoCard';
 import { Event, EventProps } from '@/types';
 
-export default function Index({event, events} : EventProps) {
+export default function Index({event} : EventProps) {
 
   return (
     <Authenticated>
@@ -27,7 +27,8 @@ export default function Index({event, events} : EventProps) {
               <div className="box-body p-4">
                 <div className="flex items-center justify-between flex-wrap gap-4">
                 <div className="avatar-list-stacked">
-                  Gallery Name
+                 <div> Gallery Name: <span className='font-bold'>{event?.name}</span></div>
+                 <div> Event nr: <span className='font-bold'>#{event?.id}</span></div>
                   </div>
                   <div className="flex" role="search">
                     <input className="form-control me-2" type="search" placeholder="Search Project" aria-label="Search"/>
