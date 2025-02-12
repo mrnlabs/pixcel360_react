@@ -12,7 +12,6 @@ export default function Index({event} : EventProps) {
 
   const [filters, setFilters] = useState({
     search: '',
-    store: '',
     status: ''
 });
 

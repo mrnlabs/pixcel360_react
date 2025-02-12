@@ -36,6 +36,7 @@ export default function Table({events, setModalOpen, setQRData, setDuplicateModa
       }
     })
   }
+  
   return (
     <div className="table-responsive overflow-auto table-bordered-default">
     <table className="ti-custom-table text-nowrap ti-custom-table-hover">

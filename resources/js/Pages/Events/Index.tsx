@@ -1,17 +1,52 @@
 import Authenticated from '@/Layouts/AuthenticatedLayout'
 import { Breadcrumb } from '@/Shared/Breadcrumb'
-import { Head, Link } from '@inertiajs/react'
+import { Head, Link, router } from '@inertiajs/react'
 import { Copy, QrCode, SquarePen, SquarePlus, Trash2 } from 'lucide-react'
 import React, { lazy, Suspense, useState } from 'react'
 import Table from './Table'
 import DuplicateModal from './DuplicateModal'
+import { Filters, QueryParams } from '@/types'
 const QRModal = lazy(() => import("./QRModal"));
+// @ts-expect-error
+import { debounce } from 'lodash';
+import { Input } from '@/Components/ui/input'
+import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/Components/ui/select'
 
 export default function Index({events} : any) {
   
   const [modalOpen, setModalOpen] = useState(false);
   const [duplicateModalOpen, setDuplicateModalOpen] = useState(false);
   const [QRData, setQRData] = useState(null);
+
+  const [filters, setFilters] = useState({
+    search: '',
+    sort: ''
+});
+
+const updateFilters = React.useCallback(
+  debounce((newFilters: Partial<Filters>) => {
+    const queryParams: QueryParams = {};
+    
+    // Merge new filters with existing filters
+    const updatedFilters = { ...filters, ...newFilters };
+    
+    // Add non-empty filter values to query params
+    Object.keys(updatedFilters).forEach(key => {
+      if (updatedFilters[key as keyof Filters]) {
+        queryParams[key] = updatedFilters[key as keyof Filters] as string;
+      }
+    });
+
+    router.get(route('events'), queryParams, {
+      preserveState: true,
+      replace: true
+    });
+
+    // Update local state with merged filters
+    setFilters(updatedFilters);
+  }, 300),
+  [filters]
+);
 
   return (
     <Authenticated>
@@ -26,8 +61,6 @@ export default function Index({events} : any) {
               ]}
               />
              
-             
-        
               <div className="grid grid-cols-12 gap-x-6">
                 <div className="xxl:col-span-12 col-span-12">
                   <div className="box">
@@ -37,11 +70,24 @@ export default function Index({events} : any) {
                         <Link href={route('event.create')} className="ti-btn ti-btn-primary !m-0 btn-wave ti-btn-sm waves-effect waves-light">
                           <SquarePlus className="align-middle" />Create </Link>
                         <div>
-                          <input className="form-control form-control-sm" type="text" placeholder="Search Here" aria-label=".form-control-sm example"/>
+                          <Input 
+                          onChange={(e) => updateFilters({ search: e.target.value })}
+                          className="form-control form-control-sm" type="text" placeholder="Search Here" aria-label=".form-control-sm example"/>
                         </div>
                         <div className="ti-dropdown hs-dropdown">
-                          <a href="javascript:void(0);" className="ti-btn ti-btn-primary !m-0 ti-btn-sm btn-wave waves-effect waves-light" data-bs-toggle="dropdown" aria-expanded="false"> Sort By <i className="ri-arrow-down-s-line align-middle ms-1 inline-block"></i>
-                          </a>
+                          <Select onValueChange={(e) => updateFilters({ sort: e })}>
+                          <SelectTrigger className="w-[180px] form-control">
+                            <SelectValue placeholder="Sort By"></SelectValue>
+                          </SelectTrigger>
+                          <SelectContent className='form-control'>
+                            <SelectGroup>
+                              <SelectLabel>Sort By</SelectLabel>
+                              <SelectItem className='cursor-pointer' value="latest">Latest</SelectItem>
+                              <SelectItem className='cursor-pointer' value="oldest">Oldest</SelectItem>
+                            </SelectGroup>
+                          </SelectContent>
+                        </Select>
+
                         </div>
                       </div>
                     </div>

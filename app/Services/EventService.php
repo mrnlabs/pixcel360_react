@@ -8,7 +8,22 @@ use Illuminate\Support\HtmlString;
 class EventService
 {
 public function getEvents(){
-    $events = Event::with('setting')->latest()->get();
+    $search = request('search');
+    $sort = request()->input('sort', 'latest'); // default to latest
+
+    $events = Event::with('setting')
+        ->when($search, function ($query) use ($search) {
+            $query->where('name', 'like', "%{$search}%");
+        })
+        ->when($sort === 'latest', function ($query) {
+            $query->latest();
+        })
+        ->when($sort === 'oldest', function ($query) {
+            $query->oldest();
+        })
+        ->get();
+
+
     return $events;
 }
 
