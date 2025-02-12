@@ -22,10 +22,10 @@ class HandleInertiaRequests extends Middleware
         return parent::version($request);
     }
 
-    public function isProduction() : bool
+    public function isProduction() : string
     {
-        if (app()->environment(['production'])) {
-            return  env('FILE_PATH');
+        if (!app()->environment(['production'])) {
+            return env('FILE_PATH');
         }
         return env('AWS_STORAGE_URL');
     }
@@ -42,7 +42,7 @@ class HandleInertiaRequests extends Middleware
             'auth' => [
                 'user' => $request->user(),
             ],
-            'filePath' => fn () => $this->isProduction(),
+            'filePath' => env('AWS_STORAGE_URL'),
         ];
     }
 }

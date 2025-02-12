@@ -8,6 +8,7 @@ use Inertia\Inertia;
 use Illuminate\Http\Request;
 use App\Services\ProfileService;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class ProfileController extends Controller
 {
@@ -60,8 +61,10 @@ class ProfileController extends Controller
               'photo' => 'required|image|mimes:jpeg,png,jpg|max:2048'
        ]);
        try {
-        $path = $request->file('photo')->storeAs('/avatars', $request->file('photo')->getClientOriginalName(), 'public');
-        $this->profileService->updateProfilePicture($path);
+        $filePath = Storage::put('logos', $request->file('photo'));
+        $url = Storage::url($filePath);
+
+        $this->profileService->updateProfilePicture($url);
         return back()->with('success', 'Profile picture updated successfully!');
        } catch (\Throwable $th) {
         throw $th;

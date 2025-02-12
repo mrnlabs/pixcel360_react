@@ -14,7 +14,7 @@ export default function ProfileImage() {
 
   const [dialogOpen, setDialogOpen] = useState(false);
 
-  const [preview, setPreview] = useState(user?.photo ? filePath+user?.photo : 'profile_placeholder.jpg');
+  const [preview, setPreview] = useState(user?.photo ? user?.photo : 'profile_placeholder.jpg');
   const [uploading, setUploading] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 

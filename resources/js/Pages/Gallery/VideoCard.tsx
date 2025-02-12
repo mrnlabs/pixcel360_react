@@ -4,7 +4,6 @@ import { Event, EventProps } from '@/types';
 import { usePage } from '@inertiajs/react';
 
 export default function VideoCard({event}: EventProps) {
-    console.log(event);
     const filePath = usePage().props.filePath;
   return (
     <div className="grid grid-cols-12 gap-x-6">
