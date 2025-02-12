@@ -36,6 +36,16 @@ class VideoSettingsController extends Controller
         $event->sharing_subject()->update($request->all());
         return back()->with('success', 'Event settings updated successfully');
     }
+    
+    public function updateVedioBranding(Request $request, $slug)
+    {
+        $event = Event::where('slug', $slug)->first();
+        $event->setting()->update([
+            'gallery_name' => $request->gallery_name,
+            'text_button_color' => $request->text_button_color
+        ]);
+        return back()->with('success', 'Event settings updated successfully');
+    }
      public function updateVedioSharingMethod(Request $request, $slug)
     {
         $event = Event::where('slug', $slug)->first();

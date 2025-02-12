@@ -78,14 +78,14 @@ export default function Edit({event} : EventProps) {
         case 'sharing-subjects':
             return <SharingSubjects event={event} scrollToDiv={scrollToDiv} />;
         case 'branding':
-            return <Branding event={event} scrollToDiv={scrollToDiv} />;
+            return <Branding event={event}  />;
         default:
             return null;
     }
 }, [activeTab, event, scrollToDiv]);
   return (
     <Authenticated>
-<Head title={'Edit Event' + event.name} />
+<Head title={'Edit Event' + event?.name} />
 <div className="main-content app-content">
   <div className="container-fluid">
    <Breadcrumb
@@ -99,10 +99,12 @@ export default function Edit({event} : EventProps) {
    
 
    <div className="grid grid-cols-12 gap-x-6">
-  <EventSidebar 
-  setActiveTab={setActiveTab} 
-  activeTab={activeTab}
-  scrollToDiv={scrollToDiv} />
+  {event && (
+    <EventSidebar event={event}
+      setActiveTab={setActiveTab} 
+      activeTab={activeTab}
+      scrollToDiv={scrollToDiv} />
+  )}
   <div className="xxl:col-span-6 col-span-12">
     <div className="box overflow-hidden">
       <div className="box-body p-0">
@@ -141,14 +143,14 @@ export default function Edit({event} : EventProps) {
         <div id="file-manager-storage" style={{minHeight: 142.8+'px'}} className="">
         <div className="flex justify-center items-center">
         <QRCodeSVG
-                    value={event?.slug}
-                    title={"Title for my QR Code"}
-                    size={128}
-                    bgColor={"#ffffff"}
-                    fgColor={"#000000"}
-                    level={"L"}
-                    minVersion={6}
-                    />
+          value={event?.slug ?? ''}
+          title={"Title for my QR Code"}
+          size={128}
+          bgColor={"#ffffff"}
+          fgColor={"#000000"}
+          level={"L"}
+          minVersion={6}
+          />
         </div>
         </div>
       </div>

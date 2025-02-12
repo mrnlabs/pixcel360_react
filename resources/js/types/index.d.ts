@@ -47,6 +47,7 @@ export interface Event {
         gallery_name: null;
         attract_screen: null;
         app_logo: null;
+        text_button_color: null;
         app_background: null;
         webgallery_background: null;
         created_at: string;

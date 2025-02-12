@@ -1,8 +1,10 @@
+import { Event } from '@/types';
 import { ClockAlert, Dice5, FileMusic, NotepadTextDashed, Settings, Share2, SquareFunction, SquarePen } from 'lucide-react'
 
-export default function EventSidebar({activeTab,setActiveTab, scrollToDiv} : {
+export default function EventSidebar({activeTab,setActiveTab, scrollToDiv,event} : {
   activeTab: string,setActiveTab: (tab: string) => void,
-  scrollToDiv: (divElement: any) => void}) {
+  scrollToDiv: (divElement: any) => void,
+  event: Event}) {
   return (
     <div className="xxl:col-span-3 col-span-12">
     <div className="grid grid-cols-12 gap-x-6">
@@ -10,7 +12,7 @@ export default function EventSidebar({activeTab,setActiveTab, scrollToDiv} : {
         <div className="box">
           <div className="flex p-4 flex-wrap gap-2 items-center justify-between border-b border-defaultborder dark:border-defaultborder/10">
             <div className="flex-auto">
-              <h6 className="font-medium mb-0">File Manager</h6>
+              <h6 className="font-medium mb-0">{event.name}</h6>
             </div>
           </div>
           <div className="box-body !pt-0 !p-3">
