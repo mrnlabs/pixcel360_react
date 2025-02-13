@@ -1,130 +1,254 @@
-import React from 'react'
-import MenuItem from './MenuItem'
-import { CalendarDays, CalendarHeart, CalendarPlus2, House, LogOut, SquarePlus, SquareUserRound } from 'lucide-react'
+import React, { useState, useEffect, useRef } from 'react';
+import { usePage, Link } from '@inertiajs/react';
+import { Calendar, CircleDollarSign, Home, Plus } from 'lucide-react';
 
-export default function Sidebar() {
+interface MenuState {
+  [key: string]: boolean;
+}
+
+interface MenuItem {
+  id: string;
+  label: string;
+  icon: JSX.Element;
+  path: string;
+  subItems?: SubItem[];
+}
+
+interface SubItem {
+  label: string;
+  icon: JSX.Element;
+  path: string;
+}
+
+const Sidebar: React.FC = () => {
+  const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(true);
+  const sidebarRef = useRef<HTMLDivElement>(null);
+  const [isMobile, setIsMobile] = useState<boolean>(false);
+  
+  const { url } = usePage();
+
+  // Check if exactly matches the current route
+  const isExactActive = (path: string): boolean => {
+    // Remove trailing slash for comparison
+    const currentPath = url.endsWith('/') ? url.slice(0, -1) : url;
+    const targetPath = path.endsWith('/') ? path.slice(0, -1) : path;
+    return currentPath === targetPath;
+  };
+
+  // Check if we're in a section (for showing submenu)
+  const isInSection = (parentPath: string): boolean => {
+    return url.startsWith(parentPath);
+  };
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  const toggleSidebar = (): void => {
+    if (isMobile) {
+      setIsSidebarOpen(prev => !prev);
+    }
+  };
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        isMobile && 
+        sidebarRef.current && 
+        !sidebarRef.current.contains(event.target as Node)
+      ) {
+        setIsSidebarOpen(false);
+      }
+    };
+
+    if (isMobile) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isMobile]);
+
+  const menuItems: MenuItem[] = [
+    {
+      id: 'dashboard',
+      label: 'Dashboard',
+      path: '/dashboard',
+      icon: (
+        <Home className="h-6 w-6 mr-2" />
+      )
+    },
+    {
+      id: 'events',
+      label: 'Events',
+      path: '/events',
+      icon: (<Calendar className="h-6 w-6 mr-2" />),
+      subItems: [
+        {
+          label: 'Create Event',
+          path: '/events/create',
+          icon: (<Plus className="h-5 w-5 mr-2" />)
+        }
+      ]
+    },
+    {
+      id: 'plans',
+      label: 'Plans',
+      path: '/plans',
+      icon: (<CircleDollarSign className="h-6 w-6 mr-2" />
+      ),
+      subItems: [
+        {
+          label: 'New Plan',
+          path: '/plans/create',
+          icon: (<Plus className="h-5 w-5 mr-2" />)
+        }
+      ]
+    }
+  ];
+
+  const renderMenuItem = (item: MenuItem) => {
+    const showSubmenu = isInSection(item.path);
+    
+    if (!item.subItems) {
+      return (
+        <Link 
+          key={item.id}
+          href={item.path}
+          className={`
+            flex items-center px-4 py-2 text-gray-300 rounded-lg
+            transition-all duration-200 ease-in-out
+            ${isExactActive(item.path)
+              ? 'bg-gray-700/50 text-white font-medium'
+              : 'hover:bg-gray-700/30'
+            }
+          `}
+        >
+          <span className={`
+            flex items-center
+            ${isExactActive(item.path) ? 'text-blue-400' : 'text-gray-400'}
+          `}>
+            {item.icon}
+          </span>
+          {item.label}
+        </Link>
+      );
+    }
+
+    return (
+      <div key={item.id} className="relative">
+        {/* Parent menu item */}
+        <Link href={item.path} className={`
+          flex items-center px-4 py-2 text-gray-300 rounded-lg
+          transition-all duration-200 ease-in-out
+          hover:bg-gray-700/30
+          ${isExactActive(item.path)
+            ? 'bg-gray-700/50 text-white font-medium'
+            : 'hover:bg-gray-700/30'
+          }
+        `}>
+          <span className="flex items-center text-gray-400">
+            {item.icon}
+          </span>
+          {item.label}
+          <svg 
+            xmlns="http://www.w3.org/2000/svg" 
+            className={`
+              h-4 w-4 ml-auto transition-transform duration-200
+              ${showSubmenu ? 'rotate-180' : ''}
+              text-gray-400
+            `}
+            fill="none" 
+            viewBox="0 0 24 24" 
+            stroke="currentColor"
+          >
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+          </svg>
+        </Link>
+        
+        {/* Submenu items */}
+        {showSubmenu && item.subItems && (
+          <div className="mt-1 space-y-1">
+            {item.subItems.map((subItem, index) => (
+              <Link 
+                key={`${item.id}-${index}`}
+                href={subItem.path}
+                className={`
+                  flex items-center pl-10 pr-4 py-2 text-sm text-gray-300 rounded-lg
+                  transition-all duration-200 ease-in-out
+                  ${isExactActive(subItem.path)
+                    ? 'bg-gray-700/50 text-white font-medium'
+                    : 'hover:bg-gray-700/30'
+                  }
+                `}
+              >
+                <span className={`
+                  flex items-center
+                  ${isExactActive(subItem.path) ? 'text-blue-400' : 'text-gray-400'}
+                `}>
+                  {subItem.icon}
+                </span>
+                {subItem.label}
+              </Link>
+            ))}
+          </div>
+        )}
+      </div>
+    );
+  };
+
   return (
     <aside className="app-sidebar" id="sidebar">
-          {/* <!-- Start::main-sidebar-header --> */}
-          <div className="main-sidebar-header">
-            <a href="index.html" className="header-logo">
-              <img src="https://pixcel360.com/wp-content/uploads/2024/01/Backup_of_PIXEL360-LOGO-with-grey.png" alt="logo" className="desktop-logo"/>
-              <img src="https://pixcel360.com/wp-content/uploads/2024/01/Backup_of_PIXEL360-LOGO-with-grey.png" alt="logo" className="toggle-dark"/>
-              <img src="https://pixcel360.com/wp-content/uploads/2024/01/Backup_of_PIXEL360-LOGO-with-grey.png" alt="logo" className="desktop-dark"/>
-              <img src="https://pixcel360.com/wp-content/uploads/2024/01/Backup_of_PIXEL360-LOGO-with-grey.png" alt="logo" className="toggle-logo"/>
-              <img src="https://pixcel360.com/wp-content/uploads/2024/01/Backup_of_PIXEL360-LOGO-with-grey.png" alt="logo" className="toggle-white"/>
-              <img src="https://pixcel360.com/wp-content/uploads/2024/01/Backup_of_PIXEL360-LOGO-with-grey.png" alt="logo" className="desktop-white"/>
-            </a>
+      <div className="flex h-screen bg-gray-100">
+        <div 
+          ref={sidebarRef} 
+          className={`
+            fixed inset-y-0 left-0 transform 
+            ${isMobile ? (isSidebarOpen ? 'translate-x-0' : '-translate-x-full') : 'translate-x-0'}
+            transition-transform duration-300 
+            md:relative md:translate-x-0 
+            flex flex-col w-64 bg-gray-800
+          `}
+        >
+          <div className="flex items-center justify-center h-16 bg-gray-900">
+            <span className="text-white font-bold uppercase">
+              <img 
+                src="/api/placeholder/56/56"
+                alt="logo" 
+                className="w-14 h-14"
+              />
+            </span>
           </div>
-          {/* <!-- End::main-sidebar-header --> */}
-          {/* <!-- Start::main-sidebar --> */}
-          <div className="main-sidebar" id="sidebar-scroll" data-simplebar="init">
-            <div className="simplebar-wrapper" style={{margin: '-8px 0px -80px'}}>
-              <div className="simplebar-height-auto-observer-wrapper">
-                <div className="simplebar-height-auto-observer"></div>
-              </div>
-              <div className="simplebar-mask">
-                <div className="simplebar-offset" style={{right: '0px', bottom: '0px'}}>
-                  <div className="simplebar-content-wrapper" tabIndex={0} role="region" aria-label="scrollable content" style={{height: '100%', overflow: 'hidden scroll'}}>
-                    <div className="simplebar-content" style={{padding: '8px 0px 80px'}}>
-                      {/* <!-- Start::nav --> */}
-                      <nav aria-label="nav2" className="main-menu-container nav nav-pills flex-col sub-open open active">
-                        <div className="slide-left active hidden" id="slide-left">
-                          <svg xmlns="http://www.w3.org/2000/svg" fill="#7b8191" width="24" height="24" viewBox="0 0 24 24">
-                            <path d="M13.293 6.293 7.586 12l5.707 5.707 1.414-1.414L10.414 12l4.293-4.293z"></path>
-                          </svg>
-                        </div>
-                        <ul className="main-menu" style={{display: 'block', marginLeft: '0px', marginRight: 0 + 'px'}}>
-                          {/* <!-- Start::slide__category --> */}
-                          <li className="slide__category">
-                            <span className="category-name">Main</span>
-                          </li>
-                          {/* <!-- End::slide__category --> */}
-                          {/* <!-- Start::slide --> */}
-                          <MenuItem 
-                              href="/dashboard" 
-                              icon={House} 
-                              label="Dashboard"
-                              isRoute={false} 
-                          />
-                          {/* <!-- End::slide --> */}
-                          {/* <!-- Start::slide__category --> */}
-                          <li className="slide__category">
-                            <span className="category-name">Events</span>
-                          </li>
-                          
-                          <MenuItem 
-                              href="/events" 
-                              icon={CalendarDays } 
-                              label="Events"
-                              isRoute={false} 
-                          />
+          <div className="flex flex-col flex-1 overflow-y-auto">
+            <nav className="flex-1 p-2 space-y-1 bg-gray-800">
+              {menuItems.map(renderMenuItem)}
+            </nav>
+          </div>
+        </div>
 
-                          <MenuItem 
-                              href="event.create" 
-                              icon={CalendarPlus2 } 
-                              label="Create Event"
-                              isRoute={true} 
-                          />
-                        
-                          <li className="slide__category">
-                            <span className="category-name">Subscriptions</span>
-                          </li>
-                          <MenuItem 
-                              href="subscriptions" 
-                              icon={CalendarHeart } 
-                              label="All Subscriptions"
-                              isRoute={true} 
-                          />
-                          <MenuItem 
-                              href="subscriptions" 
-                              icon={SquarePlus } 
-                              label="Create Subscription"
-                              isRoute={true} 
-                          />
-                          
-                        
-                          <li className="slide__category">
-                            <span className="category-name">Profile</span>
-                          </li>
-                          {/* <!-- End::slide__category --> */}
-                          {/* <!-- Start::slide --> */}
-                          <MenuItem 
-                              href="/profile" 
-                              icon={SquareUserRound } 
-                              label="My Profile"
-                              isRoute={false} 
-                          />
-                          <MenuItem 
-                              href="logout" 
-                              icon={LogOut } 
-                              label="Logout"
-                              isRoute={true} 
-                          />
-                         
-                         
-                        </ul>
-                        <div className="slide-right hidden" id="slide-right">
-                          <svg xmlns="http://www.w3.org/2000/svg" fill="#7b8191" width="24" height="24" viewBox="0 0 24 24">
-                            <path d="M10.707 17.707 16.414 12l-5.707-5.707-1.414 1.414L13.586 12l-4.293 4.293z"></path>
-                          </svg>
-                        </div>
-                      </nav>
-                      {/* <!-- End::nav --> */}
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="simplebar-placeholder" style={{width: 'auto', height: '1724px'}}></div>
-            </div>
-            <div className="simplebar-track simplebar-horizontal" style={{visibility: 'hidden'}}>
-              <div className="simplebar-scrollbar" style={{width: '0px', display: 'none'}}></div>
-            </div>
-            <div className="simplebar-track simplebar-vertical" style={{visibility: 'visible'}}>
-              <div className="simplebar-scrollbar" style={{height: '145px', transform: 'translate3d(0px, 0px, 0px)', display: 'block'}}></div>
+        <div className="flex flex-col flex-1 overflow-y-auto">
+          <div className="flex items-center justify-between h-16 bg-white border-b border-gray-200">
+            <div className="flex items-center px-4 md:hidden">
+              <button 
+                onClick={toggleSidebar} 
+                className="text-gray-500 focus:outline-none focus:text-gray-700"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+              </button>
             </div>
           </div>
-          {/* <!-- End::main-sidebar --> */}
-        </aside>
-  )
-}
+        </div>
+      </div>
+    </aside>
+  );
+};
+
+export default Sidebar;

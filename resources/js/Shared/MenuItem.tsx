@@ -50,12 +50,18 @@ const MenuItem: React.FC<MenuItemProps> = ({
     };
 
     return (
-      <li className="slide active">
-        <Link {...linkProps} className={`slide side-menu__item ${className || ''} ${isActive ? 'active' : ''}`}>
-          <Icon size={18} className='mr-3 menu__angle active'/>
-          <span className="menu-text ">{label}</span>
-        </Link>
-      </li>
+      // <li className="slide active">
+      //   <Link {...linkProps} className={`slide side-menu__item ${className || ''} ${isActive ? 'active' : ''}`}>
+      //     <Icon size={18} className='mr-3 menu__angle active'/>
+      //     <span className="menu-text ">{label}</span>
+      //   </Link>
+      // </li>
+
+
+<Link {...linkProps} className={`flex items-center px-4 py-3 text-gray-100 hover:bg-gray-700} ${isActive ? 'bg-gray-700' : ''}`}>
+  <Icon  className="h-5 w-5 mr-2" />
+  <span className="text-sm">{label}</span>
+  </Link>
 
 
 

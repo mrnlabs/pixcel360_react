@@ -2,11 +2,8 @@
 
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Foundation\Application;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\PlanController;
 use App\Http\Controllers\EventController;
-use App\Http\Controllers\PayfastController;
 use App\Http\Controllers\PricingController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CheckoutController;
@@ -38,9 +35,6 @@ Route::get('/subscriptions', [SubscriptionController::class, 'index'])->name('su
 Route::get('/view-subscription', [SubscriptionController::class, 'show']);
 
 
-//plans
-Route::get('/plans', [PlanController::class, 'index'])->name('plans');
-Route::post('/create-plan', [PlanController::class, 'store'])->name('create_plan');
 
 Route::get('/invoice', function () {
     return Inertia::render('Invoices/Invoice');
@@ -57,11 +51,7 @@ Route::get('/add-to-cart', [PricingController::class, 'addToCart'])->name('addTo
 
 Route::get('/checkout', [CheckoutController::class, 'checkout'])->name('checkout');
 
-Route::post('/place-order', [PayfastController::class, 'initiate'])->name('initiate');
-Route::get('/return', [PayfastController::class, 'return'])->name('return');
-Route::get('/cancel', [PayfastController::class, 'cancel'])->name('cancel');
-Route::post('/notify', [PayfastController::class, 'notify'])->name('notify');
-
 require __DIR__.'/auth.php';
 require __DIR__.'/event.php';
 require __DIR__.'/gallery.php';
+require __DIR__.'/plan.php';

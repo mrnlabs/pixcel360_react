@@ -57,7 +57,7 @@ const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
              <Breadcrumb
              items={[
                 { label: 'Home', href: '/' },
-                { label: 'Events', href: '/events' },
+                { label: 'Plans', href: '/plans' },
                 { label: 'Create', active: true }
               ]}
               />
@@ -69,7 +69,7 @@ const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
                   <div className="box">
                     <div className="box-body">
                     <div className="bg-white rounded-lg shadow-sm p-6">
-                            <h2 className="text-xl mb-6">Create Event</h2>
+                            <h2 className="text-xl mb-6">Create New Plan</h2>
                             
                             <div className="grid grid-cols-2 gap-6">
                               <div className="space-y-4">
