@@ -30,7 +30,7 @@ public function getEvents(){
 
     public function getEvent($slug)
     {
-        return Event::with('setting','setting','boomerang_setting','sharing_method','sharing_subject')->whereSlug($slug)->first();
+        return Event::with('setting','boomerang_setting','sharing_method','sharing_subject')->whereSlug($slug)->first();
     }
 
     public function createEvent(array $data)
