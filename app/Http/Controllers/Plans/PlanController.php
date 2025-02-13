@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Plans;
 
 use App\Http\Controllers\Controller;
+use App\Models\PlanCategory;
+use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -15,6 +17,13 @@ class PlanController extends Controller
 
     function create() : Response
     {
-        return Inertia::render('Plans/Create');
+        $planCategories = PlanCategory::all();
+        return Inertia::render('Plans/Create',[
+            'planCategories' => $planCategories
+        ]);
+    }
+
+    function store(Request $request) {
+        dd($request->all());
     }
 }

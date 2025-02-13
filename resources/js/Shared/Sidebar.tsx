@@ -136,7 +136,7 @@ const Sidebar: React.FC = () => {
           key={item.id}
           href={item.path}
           className={`
-            flex items-center px-4 py-2 text-gray-300 rounded-lg
+            flex items-center px-4 py-2 text-gray-300 rounded-xs
             transition-all duration-200 ease-in-out
             ${isExactActive(item.path)
               ? 'bg-gray-700/50 text-white font-medium'
@@ -159,7 +159,7 @@ const Sidebar: React.FC = () => {
       <div key={item.id} className="relative">
         {/* Parent menu item */}
         <Link href={item.path} className={`
-          flex items-center px-4 py-2 text-gray-300 rounded-lg
+          flex items-center px-4 py-2 text-gray-300 rounded-xs
           transition-all duration-200 ease-in-out
           hover:bg-gray-700/30
           ${isExactActive(item.path)
@@ -194,7 +194,7 @@ const Sidebar: React.FC = () => {
                 key={`${item.id}-${index}`}
                 href={subItem.path}
                 className={`
-                  flex items-center pl-10 pr-4 py-2 text-sm text-gray-300 rounded-lg
+                  flex items-center pl-10 pr-4 py-2 text-sm text-gray-300 rounded-xs
                   transition-all duration-200 ease-in-out
                   ${isExactActive(subItem.path)
                     ? 'bg-gray-700/50 text-white font-medium'

@@ -8,18 +8,20 @@ import { Breadcrumb } from '@/Shared/Breadcrumb'
 import CountrySelector from '../Profile/CountrySelector'
 import QuillEditor from '@/Components/Editors/QuillEditor'
 
+type PlanCategory = {
+    planCategories: any;
+}
 
-export default function Create() {
+export default function Create({planCategories}: PlanCategory) {
   const { toast } = useToast();
 
   const [quillValue, setQuillValue] = React.useState('');
 
   const { data, setData, post, processing, errors, reset } = useForm({
     name: "",
-    start_date: "",
-    end_date: "",
-    country: "South Africa",
-    language: "English",
+    price: "",
+    price_per: "",
+    category: "",
     description: "",
 });
 
@@ -30,13 +32,13 @@ const handleQuillChange = (value: string) => {
 
 const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
   e.preventDefault();
-  post(route('events.store'),{
+  post(route('plans.store'),{
     preserveScroll: true,
     onSuccess: () => {
       reset();
       toast({
         title: "Success",
-        description: "Event created successfully",
+        description: "Plan created successfully",
         variant: "default",
     })
     },
@@ -74,58 +76,62 @@ const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
                             <div className="grid grid-cols-2 gap-6">
                               <div className="space-y-4">
                                 <div>
-                                  <label className="block text-sm mb-1">Name of the event <span className='text-red-500'>*</span></label>
+                                  <label className="block text-sm mb-1">Name <span className='text-red-500'>*</span></label>
                                   <Input
                                     value={data.name}
                                     onChange={(e) => setData('name', e.target.value)}
                                     type="text"
-                                    placeholder="Name of the event"
+                                    placeholder="Enter plan title"
                                     className="w-full px-3 py-2 border rounded-lg"
+                                    style={{ height: 2.7 + 'rem' }}
                                   />
                                   <InputError message={errors.name} />
                                 </div>
                                 <div>
-                                  <label className="block text-sm mb-1">Set the start time of the event</label>
+                                  <label className="block text-sm mb-1">Price</label>
                                   <Input
-                                   value={data.start_date}
-                                   onChange={(e) => setData('start_date', e.target.value)}
-                                    type="datetime-local"
+                                    value={data.price}
+                                    onChange={(e) => setData('price', e.target.value)}
+                                    type="text"
+                                    placeholder="Enter price"
                                     className="w-full px-3 py-2 border rounded-lg"
+                                    style={{ height: 2.7 + 'rem' }}
                                   />
+                                  <InputError message={errors.price} />
                                 </div>
-                                <div>
-                                  <label className="block text-sm mb-1">Language</label>
-                                  <select 
-                                  value={data.language} 
-                                  onChange={(e) => setData('language', e.target.value)} 
-                                  className="w-full px-3 py-2 border rounded-lg">
-                                    <option value="English">English</option>
-                                    {/* Add more countries */}
-                                  </select>
-                                </div>
+                                
                               </div>
                     
                               <div className="space-y-4">
-                                <div>
-                                  <label className="block text-sm mb-1">Country</label>
-                                  <CountrySelector 
-                                    value={data.country ?? 'South Africa'} 
-                                    setData={setData} 
-                                  />
-                                </div>
-                                <div>
-                                  <label className="block text-sm mb-1">Set the end time of the event</label>
-                                  <Input
-                                    value={data.end_date}
-                                    onChange={(e) => setData('end_date', e.target.value)}
-                                    type="datetime-local"
-                                    className="w-full px-3 py-2 border rounded-lg"
-                                  />
+                              <div>
+                                  <label className="block text-sm mb-1">Category</label>
+                                  <select 
+                                  value={data.category} 
+                                  onChange={(e) => setData('category', e.target.value)} 
+                                  className="w-full px-3 py-2 border rounded-lg">
+                                    <option value="" selected={true}>Select Category</option>
+                                    {planCategories.map((category: any) => (
+                                      <option key={category.id} value={category.id}>{category.name}</option>
+                                    ))}
+                                  </select>
+                                </div><div>
+                                  <label className="block text-sm mb-1">Price Per</label>
+                                  <select 
+                                  value={data.price_per} 
+                                  onChange={(e) => setData('price_per', e.target.value)} 
+                                  className="w-full px-3 py-2 border rounded-lg">
+                                      <option value="" selected={true}>Price Per</option>
+                                      <option value="Week">Week</option>
+                                      <option value="Month">Month</option>
+                                      <option value="Year">Year</option>
+                                   
+                                  </select>
                                 </div>
                               </div>
                             </div>
 
                             <div className='mt-6'>
+                            <label className="block text-sm mb-1">Plan Description</label>
                             <QuillEditor 
                               quillValue={data.description ?? ''}
                               setQuillValue={handleQuillChange} 

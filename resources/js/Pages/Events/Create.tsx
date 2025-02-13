@@ -126,6 +126,7 @@ const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
                             </div>
 
                             <div className='mt-6'>
+                            <label className="block text-sm mb-1">Event Description</label>
                             <QuillEditor 
                               quillValue={data.description ?? ''}
                               setQuillValue={handleQuillChange} 
