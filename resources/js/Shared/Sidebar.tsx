@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { usePage, Link } from '@inertiajs/react';
-import { Calendar, CircleDollarSign, Home, Plus } from 'lucide-react';
+import { Calendar, CircleDollarSign, Home, LogOut, Plus, SquareUserRound } from 'lucide-react';
 
 interface MenuState {
   [key: string]: boolean;
@@ -110,6 +110,20 @@ const Sidebar: React.FC = () => {
           icon: (<Plus className="h-5 w-5 mr-2" />)
         }
       ]
+    },
+     {
+      id: 'profile',
+      label: 'Profile',
+      path: '/profile',
+      icon: (<SquareUserRound className="h-6 w-6 mr-2" />
+      )
+    },
+    {
+      id: 'logout',
+      label: 'LogOut',
+      path: '/logout',
+      icon: (<LogOut className="h-6 w-6 mr-2" />
+      )
     }
   ];
 
