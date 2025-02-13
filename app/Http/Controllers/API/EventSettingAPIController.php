@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Event;
 use App\Models\EventSetting;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Throwable;
 
 class EventSettingAPIController extends Controller
 {
@@ -56,5 +58,32 @@ class EventSettingAPIController extends Controller
                 'error' => $e->getMessage()
             ], 500);
         }
+    }
+
+    public function uploadAudio(Request $request)
+    {
+
+        try{
+            if($request->hasFile('audioFile')) {
+                $event = Event::with('boomerang_setting')->where('slug', $request->slug)->first();
+                $filePath = Storage::put('audios', $request->file('audioFile'));
+                
+                $url = Storage::url($filePath);
+                $video = $event->boomerang_setting()->update(['add_audio_file' => $filePath]);
+                return response()->json([
+                    'message' => 'Audio uploaded successfully',
+                    'status' => 200,
+                    'path' => $url,
+                    'video' => $event = Event::where('slug', $request->slug)->first()
+                ], 200);
+            }
+          
+        
+            return response()->json(['message' => 'No file uploaded'], 400);
+        } catch (Throwable $th){
+            throw $th;
+        }
+
+
     }
 }

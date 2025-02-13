@@ -16,3 +16,4 @@ Route::get('/clear-cache', function () {
 Route::post('/active-event', [EventAPIController::class, 'activateEvent'])->name('event.activate');
 Route::post('/upload-event-video', [EventAPIController::class, 'uploadVideo'])->name('event.upload.video');
 Route::post('/update-fields', [EventSettingAPIController::class, 'updateField'])->name('event.update.fields');
+Route::post('/upload-audio', [EventSettingAPIController::class, 'uploadAudio'])->name('event.upload.audio');
