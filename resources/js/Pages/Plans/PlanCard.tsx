@@ -3,7 +3,7 @@ import CustomTooltip from '@/Components/CustomTooltip'
 import { Plan, PlanCardProps } from '@/types'
 import { truncateText } from '@/utils/truncateText'
 import { Link } from '@inertiajs/react'
-import { SquarePen, Trash2 } from 'lucide-react'
+import { CreditCard, SquarePen, Trash2 } from 'lucide-react'
 import React, { Suspense, useState } from 'react'
 
 const getRibbonColor = (categoryName: string | undefined) => {
@@ -50,6 +50,9 @@ export default function PlanCard({plan, handleDelete, dialogOpen, setDialogOpen}
               type='button' className="ti-btn ti-btn-icon ti-btn-soft-primary2 btn-wave ti-btn-sm ms-2 waves-effect waves-light">
                 <Trash2/>
               </button>
+              <Link aria-label="anchor" href={route('subscription.checkout', plan?.slug )} className="ti-btn ti-btn-icon ti-btn-soft-primary1 btn-wave ti-btn-sm ms-2 waves-effect waves-light">
+              <CreditCard />
+              </Link>
             </div>
           </div>
       </div>

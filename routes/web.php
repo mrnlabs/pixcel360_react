@@ -7,7 +7,6 @@ use App\Http\Controllers\EventController;
 use App\Http\Controllers\PricingController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CheckoutController;
-use App\Http\Controllers\SubscriptionController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/login', function () {return Inertia::render('Auth/Login');});
@@ -30,11 +29,6 @@ Route::post('/profile', [ProfileController::class, 'update'])->name('update_prof
 Route::post('/update-profile-picture', [ProfileController::class, 'updatePicture'])->name('update_pro_pic');
 Route::delete('/remove-profile-image', [ProfileController::class, 'removePicture'])->name('remove_pro_pic');
 
-//subscriptions
-Route::get('/subscriptions', [SubscriptionController::class, 'index'])->name('subscriptions');
-Route::get('/view-subscription', [SubscriptionController::class, 'show']);
-
-
 
 Route::get('/invoice', function () {
     return Inertia::render('Invoices/Invoice');
@@ -55,3 +49,4 @@ require __DIR__.'/auth.php';
 require __DIR__.'/event.php';
 require __DIR__.'/gallery.php';
 require __DIR__.'/plan.php';
+require __DIR__.'/subscription.php';

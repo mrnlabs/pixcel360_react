@@ -13,6 +13,7 @@ export interface User {
     display_name?: string;
     photo?: string;
     role?: string;
+    stripe_id?: string;
     created_at?: string;
     email_verified_at?: string;
 }
@@ -110,10 +111,17 @@ interface Filters {
     plans?: Plan[];
   }
 
+  interface StripeSetupIntent {
+    client_secret: string;
+}
+
 export type PageProps<
     T extends Record<string, unknown> = Record<string, unknown>,
 > = T & {
     auth: {
         user: User;
     };
+    intent: StripeSetupIntent;
+    plan: App.Plan;
+    stripeKey: string;
 };

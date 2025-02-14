@@ -8,12 +8,13 @@ use App\Traits\HasSlug;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Cashier\Billable;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\DeletedModels\Models\Concerns\KeepsDeletedModels;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasSlug, HasFactory, KeepsDeletedModels, Notifiable;
+    use HasApiTokens, Billable, HasSlug, HasFactory, KeepsDeletedModels, Notifiable;
 
     /**
      * The attributes that are mass assignable.

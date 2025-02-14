@@ -43,6 +43,8 @@ class HandleInertiaRequests extends Middleware
                 'user' => $request->user(),
             ],
             'filePath' => env('AWS_STORAGE_URL'),
+            'stripeKey' => env('STRIPE_KEY'),
+            'stripeSecret' => env('STRIPE_SECRET'),
         ];
     }
 }
