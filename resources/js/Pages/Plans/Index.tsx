@@ -3,18 +3,19 @@ import { Breadcrumb } from '@/Shared/Breadcrumb'
 import { Head, Link, router } from '@inertiajs/react'
 import { SquarePlus } from 'lucide-react'
 import React, { lazy, Suspense, useState } from 'react'
-import { Filters, PlanCardProps, QueryParams } from '@/types'
+import { Filters, Plan, PlanCardProps, QueryParams } from '@/types'
 // @ts-expect-error
 import { debounce } from 'lodash';
 import { Input } from '@/Components/ui/input'
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/Components/ui/select'
 import PlanCard from './PlanCard'
+import { useToast } from '@/hooks/use-toast'
+import { Toaster } from '@/Components/ui/toaster'
 
 export default function Index({plans} : PlanCardProps) {
   
-  const [modalOpen, setModalOpen] = useState(false);
-  const [duplicateModalOpen, setDuplicateModalOpen] = useState(false);
-  const [QRData, setQRData] = useState(null);
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const { toast } = useToast();
 
   const [filters, setFilters] = useState({
     search: '',
@@ -45,6 +46,27 @@ const updateFilters = React.useCallback(
   }, 300),
   [filters]
 );
+
+const handleDelete = (plan: Plan) => {
+  router.delete(route('plans.destroy', plan?.slug), { 
+    preserveScroll: true, 
+    onSuccess: () => {
+      setDialogOpen(false),
+      toast({
+        title: "Success",
+        description: "Plan deleted successfully",
+        variant: "default",
+    })
+     },
+     onError: () => {
+      toast({
+        title: "Error",
+        description: "Something went wrong",
+        variant: "destructive",
+    })
+     }
+ });
+}
 
   return (
     <Authenticated>
@@ -93,7 +115,11 @@ const updateFilters = React.useCallback(
 
                     <div className="grid grid-cols-12 gap-x-6">
                       {plans?.map((plan: any) => (
-                        <PlanCard key={plan.id} plan={plan} />
+                        <PlanCard key={plan.id} 
+                        plan={plan} 
+                        handleDelete={() => handleDelete(plan)} 
+                        dialogOpen={dialogOpen}
+                        setDialogOpen={setDialogOpen} />
                       ))}
                       
                    </div>
@@ -127,7 +153,7 @@ const updateFilters = React.useCallback(
                 </div>
               </div>
 
-            
+            <Toaster />
             
             </div>
           </div>

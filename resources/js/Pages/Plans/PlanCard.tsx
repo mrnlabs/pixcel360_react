@@ -1,9 +1,10 @@
+import ConfirmDialog from '@/Components/ConfirmDialog'
 import CustomTooltip from '@/Components/CustomTooltip'
-import { PlanCardProps } from '@/types'
+import { Plan, PlanCardProps } from '@/types'
 import { truncateText } from '@/utils/truncateText'
 import { Link } from '@inertiajs/react'
 import { SquarePen, Trash2 } from 'lucide-react'
-import React from 'react'
+import React, { Suspense, useState } from 'react'
 
 const getRibbonColor = (categoryName: string | undefined) => {
     switch (categoryName?.toLowerCase()) {
@@ -16,7 +17,14 @@ const getRibbonColor = (categoryName: string | undefined) => {
     }
   };
 
-export default function PlanCard({plan}: PlanCardProps) {
+export default function PlanCard({plan, handleDelete, dialogOpen, setDialogOpen}: {
+    plan: PlanCardProps['plan'] | undefined; 
+    handleDelete: () => void; 
+    dialogOpen: boolean
+    setDialogOpen: React.Dispatch<React.SetStateAction<boolean>>
+    }
+    ) {
+
   return (
     <div className="xxl:col-span-3 xl:col-span-6 lg:col-span-6 md:col-span-6 sm:col-span-12 col-span-12">
     <div className="box">
@@ -28,7 +36,7 @@ export default function PlanCard({plan}: PlanCardProps) {
           {truncateText(plan?.name ?? '', 40, '...')}
           </CustomTooltip>
         </h6>
-        <Link href="#!">
+        <div>
             <span className="mb-2 text-[11px] badge leading-none bg-primary font-medium">
                 R {plan?.price}/{plan?.price_per}
             </span>
@@ -38,13 +46,22 @@ export default function PlanCard({plan}: PlanCardProps) {
               <Link aria-label="anchor" href={route('plans.edit', plan?.slug )} className="ti-btn ti-btn-icon ti-btn-soft-primary1 btn-wave ti-btn-sm ms-2 waves-effect waves-light">
               <SquarePen />
               </Link>
-              <a aria-label="anchor" href="javascript:void(0);" className="ti-btn ti-btn-icon ti-btn-soft-primary2 btn-wave ti-btn-sm ms-2 waves-effect waves-light">
+              <button  onClick={() => setDialogOpen(true)} aria-label="anchor"
+              type='button' className="ti-btn ti-btn-icon ti-btn-soft-primary2 btn-wave ti-btn-sm ms-2 waves-effect waves-light">
                 <Trash2/>
-              </a>
+              </button>
             </div>
-          </Link>
+          </div>
       </div>
     </div>
+    <Suspense fallback={""}>
+              <ConfirmDialog 
+                message="Are you sure you want to remove this plan ?"
+                dialogOpen={dialogOpen} 
+                setDialogOpen={setDialogOpen}
+                onContinue={handleDelete}
+             />
+        </Suspense>
   </div>
   )
 }

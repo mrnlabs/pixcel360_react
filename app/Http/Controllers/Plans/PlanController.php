@@ -89,4 +89,10 @@ class PlanController extends Controller
         }
         return back()->with('error', 'Something went wrong');
     }
+
+    function destroy(string $slug){
+        $plan = Plan::where('slug', $slug)->first();
+        $plan->delete();
+        return back()->with('success', 'Plan deleted successfully');
+    }
 }
