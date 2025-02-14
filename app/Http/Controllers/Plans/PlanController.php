@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\Plans;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\PlanRequest;
+use App\Models\Plan;
 use App\Models\PlanCategory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -23,7 +26,24 @@ class PlanController extends Controller
         ]);
     }
 
-    function store(Request $request) {
-        dd($request->all());
+    function store(PlanRequest $request) {
+        
+        if ($request->file('photo')) {
+            $filePath = Storage::put('plans', $request->file('photo'));
+            $url = Storage::url($filePath);
+            $plan = Plan::create([
+                'name' => $request->name,
+                'price' => $request->price,
+                'price_per' => $request->price_per,
+                'category_id' => $request->category,
+                'photo' => $url,
+                'description' => $request->description
+            ]);
+       }
+
+        if($plan) {
+            return back()->with('success', 'Plan created successfully');
+        }
+        return back()->with('error', 'Something went wrong');
     }
 }

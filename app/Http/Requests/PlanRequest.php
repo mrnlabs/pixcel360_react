@@ -22,8 +22,11 @@ class PlanRequest extends FormRequest
     public function rules(): array
     {
              return [
-                 'title' => 'required',
-                 'amount' => 'required',
+                 'name' => 'required',
+                 'price' => 'required',
+                 'price_per' => 'required|in:Month,Year,Week',
+                 'category' => 'required|exists:plan_categories,id',
+                 'photo' => 'required|image|mimes:jpeg,png,jpg|max:2048',
                  'description' => 'required|string|min:20'
              ];
     }
