@@ -91,12 +91,14 @@ interface Filters {
   interface Plan {
     id: number;
     name: string;
-    price: number;
+    price: string;
     price_per: string;
     photo: string;
     description: string;
     slug: string;
+    category_id?: number;
     category?: {
+      id: number;
       name: string;
     }
     created_at: string;

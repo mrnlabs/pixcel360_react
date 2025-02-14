@@ -10,26 +10,45 @@ import QuillEditor from '@/Components/Editors/QuillEditor'
 import { Toaster } from '@/Components/ui/toaster'
 import { CircleCheck, Loader } from 'lucide-react'
 import FileUpload from '@/Components/FileUpload'
+import { Plan, PlanCardProps } from '@/types'
 
-type PlanCategory = {
-    planCategories: any;
-}
 
-export default function Create({planCategories}: PlanCategory) {
+export default function Create({
+  planCategories = [],
+  plan
+}: {
+  planCategories: any,
+  plan: Plan
+}) {
   const { toast } = useToast();
 
   const [quillValue, setQuillValue] = React.useState('');
 
   const [photo, setPhoto] = React.useState<File | null>(null);
+  const [showUploader, setShowUploader] = React.useState(!plan);
 
   const { data, setData, post, processing, errors, reset } = useForm({
     name: "",
     price: "",
     price_per: "",
     category: "",
-    photo: null as File | null,
+    photo: null as File | string | null,
     description: "",
 });
+
+useEffect(() => {
+  if (plan) {
+    setData({
+      name: plan.name,
+      price: plan.price,
+      price_per: plan.price_per,
+      category: String(plan.category_id),
+      photo: '',
+      description: plan.description
+    });
+  }
+  console.log(data)
+}, [plan]);
 
 const handleQuillChange = (value: string) => {
   setQuillValue(value);
@@ -50,21 +69,46 @@ const handleQuillChange = (value: string) => {
         setData('photo', null);
     };
 
+
     const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
       e.preventDefault();
-      // console.log(data);return
+  
+      const config = {
+          create: {
+              url: route('plans.store'),
+              method: post,
+              successMessage: "Plan created successfully",
+              shouldReset: true
+          },
+          update: {
+              url: route('plans.update', plan?.slug),
+              method: post,
+              successMessage: "Plan updated successfully",
+              shouldReset: false
+          }
+      };
+  
+      const mode = plan ? 'update' : 'create';
+      const { url, method, successMessage, shouldReset } = config[mode];
+  
       const formData = new FormData();
-      if(data.photo){formData.append('photo', data.photo);}
-      post(route('plans.store'), {
+      if(data.photo){
+          formData.append('photo', data.photo);
+      }
+
+      method(url, {
           forceFormData: true,
           preserveScroll: true,
           onSuccess: () => {
-              reset();
-              setData('photo', null);
-              setPhoto(null);
+              if (shouldReset) {
+                  reset();
+                  setData('photo', null);
+                  setPhoto(null);
+              }
+              
               toast({
                   title: "Success",
-                  description: "Plan created successfully",
+                  description: successMessage,
                   variant: "default",
               })
           },
@@ -75,7 +119,6 @@ const handleQuillChange = (value: string) => {
                   variant: "destructive",
               })
           }
-          
       });
   }
   return (
@@ -161,21 +204,52 @@ const handleQuillChange = (value: string) => {
 
                             <div className='mt-6'>
                             <label className="block text-sm mb-1">Plan Image <span className='text-red-500'>*</span></label>
-                            <Suspense fallback={<Loader className="mx-auto" size={20} />}>
-                                <FileUpload
-                                    onFilesSelected={handleFileSelect}
-                                    onFileRemove={handleFileRemove}
-                                    multiple={false}
-                                    acceptedTypes={['image/*']}
-                                    maxSize={10 * 1024 * 1024} // 10MB
-                                    showPreview={false} 
+
+                            {plan?.photo && !showUploader ? (
+                              <div className="relative group w-fit">
+                                <img
+                                  src={typeof plan.photo === 'string' ? plan.photo : URL.createObjectURL(plan.photo)}
+                                  alt="Selected"
+                                  className='max-h-60 min-h-60 rounded-lg'
                                 />
-                                {photo && <p className="font-medium mt-2 text-sm flex">Selected File: <span className='text-primary ml-1'> {photo.name}</span>
-                                <CircleCheck size={18} className='ml-2 text-success mt-[1px]' />
-                                </p>}
-                            </Suspense>
-                             <InputError message={errors.description} />
-                            </div>
+                                <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/50 rounded-lg">
+                                  <button 
+                                    className="px-4 w-50 py-2 bg-white text-gray-800 rounded-md hover:bg-gray-100 transition-colors"
+                                    onClick={() => setShowUploader(true)}
+                                  >
+                                    Change Image
+                                  </button>
+                                </div>
+                              </div>
+                            ) : (
+                              <Suspense fallback={<Loader className="mx-auto" size={20} />}>
+                                <FileUpload
+                                  onFilesSelected={handleFileSelect}
+                                  onFileRemove={handleFileRemove}
+                                  multiple={false}
+                                  acceptedTypes={['image/*']}
+                                  maxSize={10 * 1024 * 1024} // 10MB
+                                  showPreview={false} 
+                                />
+                                {photo && (
+                                  <div className="flex items-center mt-2">
+                                    <p className="font-medium text-sm flex">
+                                      Selected File: <span className='text-primary ml-1'>{photo.name}</span>
+                                      <CircleCheck size={18} className='ml-2 text-success mt-[1px]' />
+                                    </p>
+                                    <button 
+                                      className="ml-4 text-sm text-gray-600 hover:text-gray-800"
+                                      onClick={() => plan?.photo && setShowUploader(false)}
+                                    >
+                                      Cancel
+                                    </button>
+                                  </div>
+                                )}
+                              </Suspense>
+                            )}
+                            
+                            <InputError message={errors.description} />
+                          </div>
                              <div className='mt-6'>
                             <label className="block text-sm mb-1">Plan Description <span className='text-red-500'>*</span></label>
                             <QuillEditor 

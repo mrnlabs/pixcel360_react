@@ -21,12 +21,14 @@ class PlanRequest extends FormRequest
      */
     public function rules(): array
     {
+        $isCreate = $this->route()->getName() == 'plans.store' ? 'required|image|mimes:jpeg,png,jpg|max:2048' : 'nullable|image|mimes:jpeg,png,jpg|max:2048';
+    //    dd(request());
              return [
                  'name' => 'required',
                  'price' => 'required',
                  'price_per' => 'required|in:Month,Year,Week',
                  'category' => 'required|exists:plan_categories,id',
-                 'photo' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+                 'photo' => $isCreate,
                  'description' => 'required|string|min:20'
              ];
     }

@@ -35,7 +35,7 @@ export default function PlanCard({plan}: PlanCardProps) {
             {/* set dangerous html */}
             <p dangerouslySetInnerHTML={{__html: truncateText(plan?.description ?? '', 100, '...') ?? ''}} className="text-textmuted dark:text-textmuted/50 text-xs mb-4"></p>
             <div className="flex justify-center">
-              <Link aria-label="anchor" href={route('plans.create', {plan: plan?.slug} )} className="ti-btn ti-btn-icon ti-btn-soft-primary1 btn-wave ti-btn-sm ms-2 waves-effect waves-light">
+              <Link aria-label="anchor" href={route('plans.edit', plan?.slug )} className="ti-btn ti-btn-icon ti-btn-soft-primary1 btn-wave ti-btn-sm ms-2 waves-effect waves-light">
               <SquarePen />
               </Link>
               <a aria-label="anchor" href="javascript:void(0);" className="ti-btn ti-btn-icon ti-btn-soft-primary2 btn-wave ti-btn-sm ms-2 waves-effect waves-light">

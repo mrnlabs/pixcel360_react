@@ -49,4 +49,44 @@ class PlanController extends Controller
         }
         return back()->with('error', 'Something went wrong');
     }
+
+    function edit($slug) : Response
+    {
+        $plan = Plan::where('slug', $slug)->first();
+        $planCategories = PlanCategory::all();
+        return Inertia::render('Plans/Create',[
+            'plan' => $plan,
+            'planCategories' => $planCategories
+        ]);
+    }
+
+    function update(PlanRequest $request, $slug) {
+        
+        $plan = Plan::where('slug', $slug)->first();
+        if ($request->file('photo')) {
+            $filePath = Storage::put('plans', $request->file('photo'));
+            $url = Storage::url($filePath);
+            $plan->update([
+                'name' => $request->name,
+                'price' => $request->price,
+                'price_per' => $request->price_per,
+                'category_id' => $request->category,
+                'photo' => $url,
+                'description' => $request->description
+            ]);
+        } else {
+            $plan->update([
+                'name' => $request->name,
+                'price' => $request->price,
+                'price_per' => $request->price_per,
+                'category_id' => $request->category,
+                'description' => $request->description
+            ]);
+        }
+
+        if($plan) {
+            return back()->with('success', 'Plan updated successfully');
+        }
+        return back()->with('error', 'Something went wrong');
+    }
 }
