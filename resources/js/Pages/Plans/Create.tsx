@@ -69,7 +69,7 @@ const handleQuillChange = (value: string) => {
         setData('photo', null);
     };
 
-
+    const isEditing = !!plan;
     const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
       e.preventDefault();
   
@@ -80,15 +80,16 @@ const handleQuillChange = (value: string) => {
               successMessage: "Plan created successfully",
               shouldReset: true
           },
-          update: {
-              url: route('plans.update', plan?.slug),
-              method: post,
-              successMessage: "Plan updated successfully",
-              shouldReset: false
-          }
+          update: isEditing ? {
+            url: route('plans.update', plan.slug), // Now safe to access plan.slug
+            method: post,
+            successMessage: "Plan updated successfully",
+            shouldReset: false
+        } : null
       };
   
       const mode = plan ? 'update' : 'create';
+      // @ts-ignore
       const { url, method, successMessage, shouldReset } = config[mode];
   
       const formData = new FormData();
