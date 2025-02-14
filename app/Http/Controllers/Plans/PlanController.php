@@ -15,7 +15,10 @@ class PlanController extends Controller
 {
     function index() : Response
     {
-        return Inertia::render('Plans/Index');
+        $plans = Plan::with('category')->get();
+        return Inertia::render('Plans/Index',[
+            'plans' => $plans
+        ]);
     }
 
     function create() : Response

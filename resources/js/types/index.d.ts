@@ -88,6 +88,26 @@ interface Filters {
     [key: string]: string;
   }
 
+  interface Plan {
+    id: number;
+    name: string;
+    price: number;
+    price_per: string;
+    photo: string;
+    description: string;
+    slug: string;
+    category?: {
+      name: string;
+    }
+    created_at: string;
+    updated_at: string;
+  }
+
+  interface PlanCardProps {
+    plan?: Plan;
+    plans?: Plan[];
+  }
+
 export type PageProps<
     T extends Record<string, unknown> = Record<string, unknown>,
 > = T & {

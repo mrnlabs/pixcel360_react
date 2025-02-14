@@ -15,11 +15,11 @@ const CustomTooltip: React.FC<CustomTooltipProps> = ({ children, content }) => {
   return (
     <TooltipProvider>
       <Tooltip>
-        <TooltipTrigger asChild>
+        <TooltipTrigger>
           {children}
         </TooltipTrigger>
         <TooltipContent>
-          {content}
+          <p>{content}</p>
         </TooltipContent>
       </Tooltip>
     </TooltipProvider>

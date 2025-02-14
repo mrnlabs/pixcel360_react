@@ -3,13 +3,14 @@ import { Breadcrumb } from '@/Shared/Breadcrumb'
 import { Head, Link, router } from '@inertiajs/react'
 import { SquarePlus } from 'lucide-react'
 import React, { lazy, Suspense, useState } from 'react'
-import { Filters, QueryParams } from '@/types'
+import { Filters, PlanCardProps, QueryParams } from '@/types'
 // @ts-expect-error
 import { debounce } from 'lodash';
 import { Input } from '@/Components/ui/input'
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/Components/ui/select'
+import PlanCard from './PlanCard'
 
-export default function Index({events} : any) {
+export default function Index({plans} : PlanCardProps) {
   
   const [modalOpen, setModalOpen] = useState(false);
   const [duplicateModalOpen, setDuplicateModalOpen] = useState(false);
@@ -69,7 +70,7 @@ const updateFilters = React.useCallback(
                         <div>
                           <Input 
                           onChange={(e) => updateFilters({ search: e.target.value })}
-                          className="form-control form-control-sm" type="search" placeholder="Search Events" aria-label=".form-control-sm example"/>
+                          className="form-control form-control-sm" type="search" placeholder="Search" aria-label=".form-control-sm example"/>
                         </div>
                         <div className="ti-dropdown hs-dropdown">
                           <Select onValueChange={(e) => updateFilters({ sort: e })}>
@@ -89,7 +90,14 @@ const updateFilters = React.useCallback(
                       </div>
                     </div>
                     <div className="box-body">
-                      {/* Data here */}
+
+                    <div className="grid grid-cols-12 gap-x-6">
+                      {plans?.map((plan: any) => (
+                        <PlanCard key={plan.id} plan={plan} />
+                      ))}
+                      
+                   </div>
+
                     </div>
                     <div className="box-footer">
                       <div className="flex flex-wrap items-center">

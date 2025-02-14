@@ -24,7 +24,11 @@ export default {
     			md: 'calc(var(--radius) - 2px)',
     			sm: 'calc(var(--radius) - 4px)'
     		},
-    		colors: {}
+    		colors: {
+                'duo-pass': '#FFCC00',
+                'photo-pass': '#FF6666',
+                'other-pass': '#6699FF',
+            }
     	}
     },
 
