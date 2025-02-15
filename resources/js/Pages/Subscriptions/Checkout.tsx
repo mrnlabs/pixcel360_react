@@ -20,7 +20,8 @@ export default function Checkout({ auth, intent, plan, stripeKey }: PageProps) {
     
     const { data, setData, post, processing } = useForm<FormData>({
         payment_method: '',
-        plan_id: plan.id
+        plan_id: plan.id,
+        price: plan.price
     });
 
     useEffect(() => {

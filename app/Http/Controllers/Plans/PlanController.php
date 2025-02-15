@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Plans;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PlanRequest;
 use App\Models\Plan;
+use Stripe\Stripe;
+use Stripe\Price;
+use Stripe\Product;
 use App\Models\PlanCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -30,7 +33,7 @@ class PlanController extends Controller
     }
 
     function store(PlanRequest $request) {
-        
+
         if ($request->file('photo')) {
             $filePath = Storage::put('plans', $request->file('photo'));
             $url = Storage::url($filePath);

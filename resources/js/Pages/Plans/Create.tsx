@@ -249,7 +249,7 @@ const handleQuillChange = (value: string) => {
                               </Suspense>
                             )}
                             
-                            <InputError message={errors.description} />
+                            <InputError message={errors.photo} />
                           </div>
                              <div className='mt-6'>
                             <label className="block text-sm mb-1">Plan Description <span className='text-red-500'>*</span></label>
