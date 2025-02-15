@@ -107,7 +107,7 @@ export default function Welcome() {
                 </div>
                <div className="text-center">
                   <p className="text-textmuted dark:text-textmuted/50 mt-3 mb-0">Dont have an account? 
-                  <Link href="/register" className="text-primary">Sign Up</Link>
+                  <Link href="/register" className="text-primary"> Sign Up</Link>
                   </p>
                </div>
             </div>

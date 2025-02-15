@@ -6,7 +6,7 @@ import GuestLayout from '@/Layouts/GuestLayout';
 import { Head, Link, useForm, usePage } from '@inertiajs/react';
 import { FormEventHandler, useState } from 'react';
 import ThemeTextInput from '@/Components/Form/ThemeTextInput';
-import { Eye, EyeOff } from 'lucide-react';
+import { Eye, EyeOff, Loader } from 'lucide-react';
 
 export default function Register() {
     const registerError = usePage().props.errors;
@@ -147,15 +147,19 @@ export default function Register() {
             </div>
           </div>
           <div className="grid mt-4">
-            <button type="button" onClick={submit} disabled={processing} className="ti-btn ti-btn-primary">Create Account</button>
+            <button type="button" onClick={submit} disabled={processing} className="ti-btn ti-btn-primary">
+              {processing && <Loader className="mr-2 h-4 w-4 animate-spin" />}{processing ? 'Loading...' : 'Create Account'}</button>
           </div>
           <div className="text-center">
             <p className="text-textmuted dark:text-textmuted/50 mt-3 mb-0">Already have an account? 
-            <Link href="/login" className="text-primary">Sign In</Link>
+            <Link href="/login" className="text-primary"> Sign In</Link>
             </p>
           </div>
+          
         </div>
+        <p className="text-center p-2 text-danger">After submitting the registration form, you will be automatically logged in. An email with a link to set your password will be sent to your email address.</p>
       </div>
+      
     </div>
   </div>
 </div>

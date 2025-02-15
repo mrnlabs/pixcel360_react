@@ -4,15 +4,18 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\CreateUserRequest;
+use App\Mail\WelcomeEmail;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\Rules;
 use Inertia\Inertia;
 use Inertia\Response;
+use Spatie\Permission\Models\Permission;
 
 class RegisteredUserController extends Controller
 {
@@ -29,9 +32,10 @@ class RegisteredUserController extends Controller
      *
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function store(CreateUserRequest $createUserRequest): RedirectResponse
+    public function store(CreateUserRequest $createUserRequest)
     {
         $createUserRequest->validated();
+        $plainPassword = $createUserRequest->password;
         $user = User::create([
             'firstname' => $createUserRequest->firstname,
             'lastname' => $createUserRequest->lastname,
@@ -40,10 +44,18 @@ class RegisteredUserController extends Controller
             'password' => Hash::make($createUserRequest->password),
         ]);
 
-        event(new Registered($user));
+        $user->assignRole('Account Owner');
+        $permissions = Permission::all();
+        $user->syncPermissions($permissions);
+
+        // event(new Registered($user));
+         // Send welcome email
+    Mail::to($user->email)->send(new WelcomeEmail($user, $plainPassword));
 
         Auth::login($user);
 
-        return redirect(route('dashboard', absolute: false));
+        return Inertia::location(route('dashboard', absolute: false));
+
+        // return redirect(route('dashboard', absolute: false));
     }
 }

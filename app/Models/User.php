@@ -11,10 +11,11 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Cashier\Billable;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\DeletedModels\Models\Concerns\KeepsDeletedModels;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, Billable, HasSlug, HasFactory, KeepsDeletedModels, Notifiable;
+    use HasApiTokens, Billable, HasSlug, HasFactory, KeepsDeletedModels, Notifiable, HasRoles;
 
     /**
      * The attributes that are mass assignable.
