@@ -3,6 +3,7 @@ import Footer from '@/Shared/Footer';
 import Header from '@/Shared/Header';
 import { PropsWithChildren, ReactNode} from 'react';
 import AdminSidebar from '@/Shared/AdminSidebar';
+import { AuthGuard } from '@/guards/authGuard';
 
 export default function Authenticated({
     header,
@@ -11,7 +12,14 @@ export default function Authenticated({
     return (
        <div className="page">              
         <Header/>
-        <AdminSidebar/>
+        <AuthGuard 
+          roles={["Account Owner"]} 
+          permissions={["*"]}
+          requireAll={true}>
+          <AdminSidebar/>
+      </AuthGuard>
+
+        
         {children}
         <Footer/>
       </div>

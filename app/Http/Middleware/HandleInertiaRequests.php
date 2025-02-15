@@ -41,6 +41,7 @@ class HandleInertiaRequests extends Middleware
             ...parent::share($request),
             'auth' => [
                 'user' => $request->user(),
+                'roles' => $request->user() ? $request->user()->roles->pluck('name') : [],
             ],
             'filePath' => env('AWS_STORAGE_URL'),
             'stripeKey' => env('STRIPE_KEY'),

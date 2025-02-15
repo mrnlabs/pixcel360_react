@@ -52,8 +52,11 @@ class RoleAndPermissionSeeder extends Seeder
         }
 
         // Create roles and assign permissions
-        $systemAdmin = Role::create(['name' => 'Account Owner']);
+        $systemAdmin = Role::create(['name' => 'System Admin']);
         $systemAdmin->givePermissionTo(Permission::all());
+
+        $accountOwner = Role::create(['name' => 'Account Owner']);
+        $accountOwner->givePermissionTo(Permission::all());
 
         $eventOrganizer = Role::create(['name' => 'Account Manager']);
         $eventOrganizer->givePermissionTo([

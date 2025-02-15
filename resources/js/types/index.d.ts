@@ -12,7 +12,8 @@ export interface User {
     company_name?: string;
     display_name?: string;
     photo?: string;
-    role?: string;
+    roles?: Role[];
+    permissions?: Permission[];
     stripe_id?: string;
     created_at?: string;
     email_verified_at?: string;
@@ -113,6 +114,37 @@ interface Filters {
 
   interface StripeSetupIntent {
     client_secret: string;
+}
+
+export interface Permission {
+  name: string;
+  description?: string;
+}
+export type Role = {
+  id: number;
+  name: string;
+  guard_name: string;
+  created_at: string;
+  updated_at: string;
+  users_count?: number;
+  pivot: {
+    model_type: string;
+    model_id: number;
+    role_id: number;
+  };
+  permissions?: Permission[];
+}
+
+export type RolesIndexProps = {
+  roles: PaginatedRoles;
+  categories?: Category[];
+  auth: {
+      user: {
+      id: number;
+      name: string;
+      // Add other user properties
+      };
+  };
 }
 
 export type PageProps<
