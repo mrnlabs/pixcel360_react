@@ -88,8 +88,8 @@ const handleDelete = (plan: Plan) => {
                       <div className="box-title"> Plans </div>
                       <div className="flex flex-wrap gap-2">
                         <Link href={route('plans.create')} className="ti-btn ti-btn-primary !m-0 btn-wave ti-btn-sm waves-effect waves-light">
-                          <SquarePlus className="align-middle" />Create </Link>
-                        <div>
+                          <SquarePlus className="align-middle" />Create New Plan </Link>
+                        {/* <div>
                           <Input 
                           onChange={(e) => updateFilters({ search: e.target.value })}
                           className="form-control form-control-sm" type="search" placeholder="Search" aria-label=".form-control-sm example"/>
@@ -108,7 +108,7 @@ const handleDelete = (plan: Plan) => {
                           </SelectContent>
                         </Select>
 
-                        </div>
+                        </div> */}
                       </div>
                     </div>
                     <div className="box-body">

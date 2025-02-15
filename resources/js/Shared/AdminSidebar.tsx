@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { usePage, Link } from '@inertiajs/react';
 import { Calendar, CircleDollarSign, Home, LogOut, Plus, SquareUserRound } from 'lucide-react';
+import SidebarLogo from './SidebarLogo';
 
 interface MenuState {
   [key: string]: boolean;
@@ -20,7 +21,7 @@ interface SubItem {
   path: string;
 }
 
-const Sidebar: React.FC = () => {
+const AdminSidebar: React.FC = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(true);
   const sidebarRef = useRef<HTMLDivElement>(null);
   const [isMobile, setIsMobile] = useState<boolean>(false);
@@ -230,15 +231,7 @@ const Sidebar: React.FC = () => {
             flex flex-col w-64 bg-gray-800
           `}
         >
-          <div className="flex items-center justify-center h-16 bg-gray-900">
-            <span className="text-white font-bold uppercase">
-              <img 
-                src="https://pixcel360.com/wp-content/uploads/2024/01/Backup_of_PIXEL360-LOGO-with-grey.png"
-                alt="logo" 
-                className="w-14 h-14"
-              />
-            </span>
-          </div>
+          <SidebarLogo/>
           <div className="flex flex-col flex-1 overflow-y-auto">
             <nav className="flex-1 p-2 space-y-1 bg-gray-800">
               {menuItems.map(renderMenuItem)}
@@ -265,4 +258,4 @@ const Sidebar: React.FC = () => {
   );
 };
 
-export default Sidebar;
+export default AdminSidebar;

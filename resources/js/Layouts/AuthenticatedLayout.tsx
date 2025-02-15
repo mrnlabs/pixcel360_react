@@ -1,8 +1,8 @@
 
 import Footer from '@/Shared/Footer';
 import Header from '@/Shared/Header';
-import Sidebar from '@/Shared/Sidebar';
-import { PropsWithChildren, ReactNode, useEffect, useState } from 'react';
+import { PropsWithChildren, ReactNode} from 'react';
+import AdminSidebar from '@/Shared/AdminSidebar';
 
 export default function Authenticated({
     header,
@@ -11,7 +11,7 @@ export default function Authenticated({
     return (
        <div className="page">              
         <Header/>
-        <Sidebar/>
+        <AdminSidebar/>
         {children}
         <Footer/>
       </div>

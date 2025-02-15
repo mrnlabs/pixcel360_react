@@ -1,7 +1,7 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import Footer from '@/Shared/Footer';
 import Header from '@/Shared/Header';
-import Sidebar from '@/Shared/Sidebar';
+import Sidebar from '@/Shared/AdminSidebar';
 import { Head } from '@inertiajs/react';
 import HeaderCard from './Dashboard/HeaderCard';
 import { DBarChart } from './Charts/DBarChart';
