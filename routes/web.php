@@ -50,3 +50,4 @@ require __DIR__.'/event.php';
 require __DIR__.'/gallery.php';
 require __DIR__.'/plan.php';
 require __DIR__.'/subscription.php';
+require __DIR__.'/payment_method.php';
