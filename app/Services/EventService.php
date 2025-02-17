@@ -8,9 +8,10 @@ use Illuminate\Support\HtmlString;
 class EventService
 {
 public function getEvents(){
+    $events = [];
     $search = request('search');
     $sort = request()->input('sort', 'latest'); // default to latest
-
+  if(isInternalPortalUser()){
     $events = Event::with('setting')
         ->when($search, function ($query) use ($search) {
             $query->where('name', 'like', "%{$search}%");
@@ -22,8 +23,21 @@ public function getEvents(){
             $query->oldest();
         })
         ->get();
+  }else{
+    $events = Event::with('setting')
+        ->when($search, function ($query) use ($search) {
+            $query->where('name', 'like', "%{$search}%");
+        })
+        ->when($sort === 'latest', function ($query) {
+            $query->latest();
+        })
+        ->when($sort === 'oldest', function ($query) {
+            $query->oldest();
+        })
+        ->where('user_id', auth()->user()->id)
+        ->get();
 
-
+    }
     return $events;
 }
 
