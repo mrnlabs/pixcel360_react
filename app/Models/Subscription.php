@@ -2,14 +2,15 @@
 
 namespace App\Models;
 
+use App\Traits\HasSlug;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Subscription extends Model
 {
-    use HasFactory;
+    use HasFactory, HasSlug;
 
-    protected $fillable = ['user_id', 'plan_id', 'started_at', 'expires_at'];
+    protected $fillable = ['user_id', 'plan_id', 'started_at', 'expires_at', 'slug'];
     
     protected $casts = [
         'started_at' => 'datetime',

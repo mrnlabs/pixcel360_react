@@ -1,9 +1,11 @@
+import { SubscriptionCardProps } from '@/types';
+import { Link } from '@inertiajs/react';
 import { format, formatDistanceToNow, isAfter, parseISO } from 'date-fns';
 
-export default function SubscriptionCard({subscription}: any) {
+export default function SubscriptionCard({subscription}: SubscriptionCardProps) {
 
-    const startDate = parseISO(subscription?.started_at);
-    const expiryDate = parseISO(subscription?.expires_at);
+    const startDate = parseISO(subscription?.started_at ?? '');
+    const expiryDate = parseISO(subscription?.expires_at ?? '');
     const today = new Date();
   
     // Check if subscription is expired
@@ -22,14 +24,14 @@ export default function SubscriptionCard({subscription}: any) {
   <div className="box-body">
     <div className="grid grid-cols-12 gap-y-3">
     <div className="xl:col-span-12 col-span-12">
-      <p className="text-[14px] font-medium mb-4">{subscription?.plan.name}</p>
+      <p className="text-[14px] font-medium mb-4">{subscription?.plan?.name}</p>
       {/* <p className="mb-4">
         <span className="font-medium text-textmuted dark:text-textmuted/50 text-xs">Name On Card :</span> Henry Milo
       </p> */}
       <p className="mb-4">
         <span className="font-medium text-textmuted dark:text-textmuted/50 text-xs">Total :</span>
         <span className="text-success font-medium text-[14px]">
-          ${subscription?.plan.price} <span className='text-textmuted'> / {subscription?.plan.price_per}</span>
+          ${subscription?.plan?.price} <span className='text-textmuted'> / {subscription?.plan?.price_per}</span>
         </span>
       </p>
       <p className="mb-4">
@@ -51,7 +53,7 @@ export default function SubscriptionCard({subscription}: any) {
         </span>
       </p>
      
-      <button type="submit" className="ti-btn ti-btn-primary w-full">View</button>
+      <Link href={route('subscriptions.show', subscription?.slug)} className="ti-btn ti-btn-primary w-full">View</Link>
      
     </div>
     </div>

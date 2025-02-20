@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreignId('plan_id')->constrained()->onDelete('cascade');
             $table->timestamp('started_at')->useCurrent();
             $table->timestamp('expires_at')->nullable();
+            $table->string('slug')->unique();
             $table->timestamps();
         });
     }

@@ -3,8 +3,9 @@ import { Breadcrumb } from '@/Shared/Breadcrumb'
 import { Head } from '@inertiajs/react'
 import React from 'react'
 import SubscriptionCard from './SubscriptionCard'
+import { SubscriptionCardProps } from '@/types'
 
-export default function Index({subscriptions}: any) {
+export default function Index({subscriptions}: SubscriptionCardProps) {
   return (
     <Authenticated>
         <Head title="Dashboard" />

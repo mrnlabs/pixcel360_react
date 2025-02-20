@@ -14,6 +14,7 @@ export interface User {
     photo?: string;
     roles?: Role[];
     permissions?: Permission[];
+    current_subscription?: Subscription;
     stripe_id?: string;
     created_at?: string;
     email_verified_at?: string;
@@ -112,6 +113,21 @@ interface Filters {
     plans?: Plan[];
   }
 
+  interface SubscriptionCardProps {
+    subscription?: Subscription;
+    subscriptions?: Subscription[];
+  }
+
+  interface Subscription {
+    id: number;
+    plan_id: number;
+    user_id: number;
+    started_at: string;
+    expires_at: string;
+    slug: string;
+    plan?: Plan;
+  }
+
   interface StripeSetupIntent {
     client_secret: string;
 }
@@ -152,6 +168,7 @@ export type PageProps<
 > = T & {
     auth: {
         user: User;
+        current_subscription?: Subscription;
     };
     intent: StripeSetupIntent;
     plan: App.Plan;

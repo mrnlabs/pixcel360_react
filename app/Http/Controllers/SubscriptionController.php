@@ -14,4 +14,12 @@ class SubscriptionController extends Controller
         ]);
     }
 
+    function show($slug) {
+        $subscription = auth()->user()->subscriptions()->with('plan')->where('slug', $slug)->first();
+        return Inertia::render('Subscriptions/ViewInvoice',[
+            'subscription' => $subscription
+        ]);
+        
+    }
+
 }
