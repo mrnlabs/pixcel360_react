@@ -114,7 +114,7 @@ const AdminSidebar: React.FC = () => {
     },
 
     {
-      id: 'plans',
+      id: 'payment-methods',
       label: 'Payment Methods',
       path: '/payment-methods',
       icon: (<IdCard className="h-6 w-6 mr-2" />

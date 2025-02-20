@@ -21,7 +21,7 @@ export default function Dashboard() {
                   <nav>
                     <ol className="breadcrumb mb-0">
                       <li className="breadcrumb-item">
-                        <a href="javascript:void(0);"> Dashboards </a>
+                        <a href="#!"> Dashboards </a>
                       </li>
                       <li className="breadcrumb-item active" aria-current="page">HRM</li>
                     </ol>
@@ -64,7 +64,7 @@ export default function Dashboard() {
                   <div className="box overflow-hidden">
                     <div className="box-header justify-between">
                       <div className="box-title">Employee's Leave</div>
-                      <a href="javascript:void(0);" className="ti-btn ti-btn-sm ti-btn-light">View All</a>
+                      <a href="#!" className="ti-btn ti-btn-sm ti-btn-light">View All</a>
                     </div>
                     <div className="box-body p-0">
                       <div className="table-responsive">
@@ -88,7 +88,7 @@ export default function Dashboard() {
                                   </span>
                                   <div className="flex-1 ms-2">
                                     <p className="mb-0 text-xs font-medium">Socrates Itumay</p>
-                                    <a href="javascript:void(0);" className="text-[11px] text-textmuted dark:text-textmuted/50">Team Lead</a>
+                                    <a href="#!" className="text-[11px] text-textmuted dark:text-textmuted/50">Team Lead</a>
                                   </div>
                                 </div>
                               </td>
@@ -107,14 +107,14 @@ export default function Dashboard() {
                               <td>
                                 {/* <div className="btn-list">
                                   <div className="hs-tooltip ti-main-tooltip">
-                                    <a href="javascript:void(0);" className="ti-btn ti-btn-icon ti-btn-sm !rounded-full ti-btn-soft-info !mb-0">
+                                    <a href="#!" className="ti-btn ti-btn-icon ti-btn-sm !rounded-full ti-btn-soft-info !mb-0">
                                       <i className="ti ti-pencil"></i>
                                       <span className="hs-tooltip-content  ti-main-tooltip-content py-1 px-2 !bg-black !text-xs !font-medium !text-white shadow-sm " role="tooltip" data-popper-reference-hidden="" data-popper-escaped="" data-popper-placement="top" 
                                       style="position: fixed; inset: auto auto 0px 0px; margin: 0px; transform: translate(835px, 531px);"> Edit </span>
                                     </a>
                                   </div>
                                   <div className="hs-tooltip ti-main-tooltip">
-                                    <a href="javascript:void(0);" className="ti-btn ti-btn-icon ti-btn-sm !rounded-full ti-btn-soft-primary2 !m-0">
+                                    <a href="#!" className="ti-btn ti-btn-icon ti-btn-sm !rounded-full ti-btn-soft-primary2 !m-0">
                                       <i className="ti ti-trash"></i>
                                       <span className="hs-tooltip-content  ti-main-tooltip-content py-1 px-2 !bg-black !text-xs !font-medium !text-white shadow-sm " role="tooltip" data-popper-reference-hidden="" data-popper-escaped="" data-popper-placement="top" style="position: fixed; inset: auto auto 0px 0px; margin: 0px; transform: translate(860px, 535px);"> Delete </span>
                                     </a>
@@ -133,7 +133,7 @@ export default function Dashboard() {
                     <div className="box-header justify-between">
                       <div className="box-title"> Today's Interviews </div>
                       <div>
-                        <a href="javascript:void(0);" className="ti-btn ti-btn-light ti-btn-sm">View All</a>
+                        <a href="#!" className="ti-btn ti-btn-light ti-btn-sm">View All</a>
                       </div>
                     </div>
                     <div className="box-body py-3">
@@ -166,7 +166,7 @@ export default function Dashboard() {
                     <div className="box-header justify-between">
                       <div className="box-title"> Site Visitors </div>
                       <div>
-                        <a href="javascript:void(0);" className="ti-btn ti-btn-light ti-btn-sm">View All</a>
+                        <a href="#!" className="ti-btn ti-btn-light ti-btn-sm">View All</a>
                       </div>
                     </div>
                     <div className="box-body text-center mx-auto">
@@ -234,17 +234,17 @@ export default function Dashboard() {
                           <input className="form-control form-control-sm" type="text" placeholder="Search Here" aria-label=" example"/>
                         </div>
                         <div className="ti-dropdown hs-dropdown my-1">
-                          <a href="javascript:void(0);" className="ti-btn ti-btn-sm ti-btn-primary ti-dropdown-toggle hs-dropdown-toggle !m-0" data-bs-toggle="dropdown" aria-expanded="false"> Sort By <i className="ri-arrow-down-s-line align-middle ms-1"></i>
+                          <a href="#!" className="ti-btn ti-btn-sm ti-btn-primary ti-dropdown-toggle hs-dropdown-toggle !m-0" data-bs-toggle="dropdown" aria-expanded="false"> Sort By <i className="ri-arrow-down-s-line align-middle ms-1"></i>
                           </a>
                           <ul className="ti-dropdown-menu hs-dropdown-menu hidden" role="menu">
                             <li>
-                              <a className="ti-dropdown-item" href="javascript:void(0);">New</a>
+                              <a className="ti-dropdown-item" href="#!">New</a>
                             </li>
                             <li>
-                              <a className="ti-dropdown-item" href="javascript:void(0);">Popular</a>
+                              <a className="ti-dropdown-item" href="#!">Popular</a>
                             </li>
                             <li>
-                              <a className="ti-dropdown-item" href="javascript:void(0);">Relevant</a>
+                              <a className="ti-dropdown-item" href="#!">Relevant</a>
                             </li>
                           </ul>
                         </div>
@@ -278,7 +278,7 @@ export default function Dashboard() {
                                   <img src="../assets/images/faces/1.jpg" className="avatar avatar-sm" alt=""/>
                                   <div className="flex-1 flex-between pos-relative ms-2">
                                     <div className="">
-                                      <a href="javascript:void(0);" className="text-[13px] font-medium">Richard Dom</a>
+                                      <a href="#!" className="text-[13px] font-medium">Richard Dom</a>
                                     </div>
                                   </div>
                                 </div>
@@ -290,7 +290,7 @@ export default function Dashboard() {
                                 <span className="">Backend</span>
                               </td>
                               <td>
-                                <a href="javascript:void(0);">richard116@demo.com</a>
+                                <a href="#!">richard116@demo.com</a>
                               </td>
                               <td>
                                 <span className="badge bg-success/10 text-success leading-none">Active</span>
@@ -304,14 +304,14 @@ export default function Dashboard() {
                               <td>
                                 {/* <div className="btn-list">
                                   <div className="hs-tooltip ti-main-tooltip [--placement:top]">
-                                    <a aria-label="anchor" href="javascript:void(0);" className="hs-tooltip-toggle ti-btn ti-btn-icon me-2 ti-btn-soft-primary !mb-0">
+                                    <a aria-label="anchor" href="#!" className="hs-tooltip-toggle ti-btn ti-btn-icon me-2 ti-btn-soft-primary !mb-0">
                                       <span className="ri-pencil-line text-[14px]"></span>
                                       <span className="hs-tooltip-content ti-main-tooltip-content py-1 px-2 !bg-black !text-xs !font-medium !text-white shadow-sm dark:bg-slate-700" role="tooltip" data-popper-reference-hidden="" data-popper-escaped="" data-popper-placement="top" 
                                       style={{ position: 'fixed', inset: 'auto auto 0px 0px', margin: '0px', transform: 'translate(1719px, 1074px)'}}> Edit </span>
                                     </a>
                                   </div>
                                   <div className="hs-tooltip ti-main-tooltip [--placement:top]">
-                                    <a aria-label="anchor" href="javascript:void(0);" className="hs-tooltip-toggle ti-btn ti-btn-icon me-2 ti-btn-soft-danger !mb-0">
+                                    <a aria-label="anchor" href="#!" className="hs-tooltip-toggle ti-btn ti-btn-icon me-2 ti-btn-soft-danger !mb-0">
                                       <span className="ri-delete-bin-7-line text-[14px]"></span>
                                       <span className="hs-tooltip-content ti-main-tooltip-content py-1 px-2 !bg-black !text-xs !font-medium !text-white shadow-sm dark:bg-slate-700" role="tooltip" data-popper-reference-hidden="" data-popper-escaped="" data-popper-placement="top" 
                                       style={{position: 'fixed', inset: 'auto auto 0px 0px; margin: 0px; transform: translate(1756px, 1074px)' }}> Delete </span>
@@ -333,16 +333,16 @@ export default function Dashboard() {
                           <nav aria-label="Page navigation" className="pagination-style-4">
                             <ul className="ti-pagination mb-0 flex-wrap">
                               <li className="page-item disabled">
-                                <a className="page-link" href="javascript:void(0);"> Prev </a>
+                                <a className="page-link" href="#!"> Prev </a>
                               </li>
                               <li className="page-item ">
-                                <a className="page-link active" href="javascript:void(0);">1</a>
+                                <a className="page-link active" href="#!">1</a>
                               </li>
                               <li className="page-item">
-                                <a className="page-link" href="javascript:void(0);">2</a>
+                                <a className="page-link" href="#!">2</a>
                               </li>
                               <li className="page-item">
-                                <a className="page-link !text-primary" href="javascript:void(0);"> next </a>
+                                <a className="page-link !text-primary" href="#!"> next </a>
                               </li>
                             </ul>
                           </nav>

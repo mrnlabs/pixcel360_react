@@ -7,7 +7,7 @@ export default function NotificationCard() {
                       <div className="box">
                         <div className="box-header justify-between">
                           <div className="box-title">Upcoming Events</div>
-                          <a aria-label="anchor" href="javascript:void(0);" className="ti-btn ti-btn-sm bg-primary/10 !text-primary"> View All </a>
+                          <a aria-label="anchor" href="#!" className="ti-btn ti-btn-sm bg-primary/10 !text-primary"> View All </a>
                         </div>
                         <div className="box-body">
                           <ul className="list-none timeline-widget1 mb-0">
@@ -26,18 +26,18 @@ export default function NotificationCard() {
                                     </p>
                                   </div>
                                   <div className="ti-dropdown hs-dropdown">
-                                    <a  aria-label="anchor" href="javascript:void(0);" className="ti-btn ti-btn-light ti-btn-icon" data-bs-toggle="dropdown">
+                                    <a  aria-label="anchor" href="#!" className="ti-btn ti-btn-light ti-btn-icon" data-bs-toggle="dropdown">
                                     <EllipsisVertical />
                                     </a>
                                     <ul className="ti-dropdown-menu hs-dropdown-menu hidden" role="menu">
                                       <li>
-                                        <a className="ti-dropdown-item" href="javascript:void(0);">Action</a>
+                                        <a className="ti-dropdown-item" href="#!">Action</a>
                                       </li>
                                       <li>
-                                        <a className="ti-dropdown-item" href="javascript:void(0);">Another action</a>
+                                        <a className="ti-dropdown-item" href="#!">Another action</a>
                                       </li>
                                       <li>
-                                        <a className="ti-dropdown-item" href="javascript:void(0);">Something else here</a>
+                                        <a className="ti-dropdown-item" href="#!">Something else here</a>
                                       </li>
                                     </ul>
                                   </div>
@@ -60,18 +60,18 @@ export default function NotificationCard() {
                                     </p>
                                   </div>
                                   <div className="ti-dropdown hs-dropdown">
-                                    <a aria-label="anchor" href="javascript:void(0);" className="ti-btn ti-btn-light ti-btn-icon" data-bs-toggle="dropdown">
+                                    <a aria-label="anchor" href="#!" className="ti-btn ti-btn-light ti-btn-icon" data-bs-toggle="dropdown">
                                       <EllipsisVertical />
                                     </a>
                                     <ul className="ti-dropdown-menu hs-dropdown-menu hidden" role="menu">
                                       <li>
-                                        <a className="ti-dropdown-item" href="javascript:void(0);">Action</a>
+                                        <a className="ti-dropdown-item" href="#!">Action</a>
                                       </li>
                                       <li>
-                                        <a className="ti-dropdown-item" href="javascript:void(0);">Another action</a>
+                                        <a className="ti-dropdown-item" href="#!">Another action</a>
                                       </li>
                                       <li>
-                                        <a className="ti-dropdown-item" href="javascript:void(0);">Something else here</a>
+                                        <a className="ti-dropdown-item" href="#!">Something else here</a>
                                       </li>
                                     </ul>
                                   </div>
@@ -93,18 +93,18 @@ export default function NotificationCard() {
                                     </p>
                                   </div>
                                   <div className="ti-dropdown hs-dropdown">
-                                    <a aria-label="anchor" href="javascript:void(0);" className="ti-btn ti-btn-light ti-btn-icon" data-bs-toggle="dropdown">
+                                    <a aria-label="anchor" href="#!" className="ti-btn ti-btn-light ti-btn-icon" data-bs-toggle="dropdown">
                                       <EllipsisVertical />
                                     </a>
                                     <ul className="ti-dropdown-menu hs-dropdown-menu hidden" role="menu">
                                       <li>
-                                        <a className="ti-dropdown-item" href="javascript:void(0);">Action</a>
+                                        <a className="ti-dropdown-item" href="#!">Action</a>
                                       </li>
                                       <li>
-                                        <a className="ti-dropdown-item" href="javascript:void(0);">Another action</a>
+                                        <a className="ti-dropdown-item" href="#!">Another action</a>
                                       </li>
                                       <li>
-                                        <a className="ti-dropdown-item" href="javascript:void(0);">Something else here</a>
+                                        <a className="ti-dropdown-item" href="#!">Something else here</a>
                                       </li>
                                     </ul>
                                   </div>
@@ -127,18 +127,18 @@ export default function NotificationCard() {
                                     </p>
                                   </div>
                                   <div className="ti-dropdown hs-dropdown">
-                                    <a aria-label="anchor" href="javascript:void(0);" className="ti-btn ti-btn-light ti-btn-icon" data-bs-toggle="dropdown">
+                                    <a aria-label="anchor" href="#!" className="ti-btn ti-btn-light ti-btn-icon" data-bs-toggle="dropdown">
                                       <EllipsisVertical />
                                     </a>
                                     <ul className="ti-dropdown-menu hs-dropdown-menu hidden" role="menu">
                                       <li>
-                                        <a className="ti-dropdown-item" href="javascript:void(0);">Action</a>
+                                        <a className="ti-dropdown-item" href="#!">Action</a>
                                       </li>
                                       <li>
-                                        <a className="ti-dropdown-item" href="javascript:void(0);">Another action</a>
+                                        <a className="ti-dropdown-item" href="#!">Another action</a>
                                       </li>
                                       <li>
-                                        <a className="ti-dropdown-item" href="javascript:void(0);">Something else here</a>
+                                        <a className="ti-dropdown-item" href="#!">Something else here</a>
                                       </li>
                                     </ul>
                                   </div>
@@ -160,18 +160,18 @@ export default function NotificationCard() {
                                     </p>
                                   </div>
                                   <div className="ti-dropdown hs-dropdown">
-                                    <a aria-label="anchor" href="javascript:void(0);" className="ti-btn ti-btn-light ti-btn-icon" data-bs-toggle="dropdown">
+                                    <a aria-label="anchor" href="#!" className="ti-btn ti-btn-light ti-btn-icon" data-bs-toggle="dropdown">
                                       <EllipsisVertical />
                                     </a>
                                     <ul className="ti-dropdown-menu hs-dropdown-menu hidden" role="menu">
                                       <li>
-                                        <a className="ti-dropdown-item" href="javascript:void(0);">Action</a>
+                                        <a className="ti-dropdown-item" href="#!">Action</a>
                                       </li>
                                       <li>
-                                        <a className="ti-dropdown-item" href="javascript:void(0);">Another action</a>
+                                        <a className="ti-dropdown-item" href="#!">Another action</a>
                                       </li>
                                       <li>
-                                        <a className="ti-dropdown-item" href="javascript:void(0);">Something else here</a>
+                                        <a className="ti-dropdown-item" href="#!">Something else here</a>
                                       </li>
                                     </ul>
                                   </div>
@@ -193,18 +193,18 @@ export default function NotificationCard() {
                                     </p>
                                   </div>
                                   <div className="ti-dropdown hs-dropdown">
-                                    <a aria-label="anchor" href="javascript:void(0);" className="ti-btn ti-btn-light ti-btn-icon" data-bs-toggle="dropdown">
+                                    <a aria-label="anchor" href="#!" className="ti-btn ti-btn-light ti-btn-icon" data-bs-toggle="dropdown">
                                       <EllipsisVertical />
                                     </a>
                                     <ul className="ti-dropdown-menu hs-dropdown-menu hidden" role="menu">
                                       <li>
-                                        <a className="ti-dropdown-item" href="javascript:void(0);">Action</a>
+                                        <a className="ti-dropdown-item" href="#!">Action</a>
                                       </li>
                                       <li>
-                                        <a className="ti-dropdown-item" href="javascript:void(0);">Another action</a>
+                                        <a className="ti-dropdown-item" href="#!">Another action</a>
                                       </li>
                                       <li>
-                                        <a className="ti-dropdown-item" href="javascript:void(0);">Something else here</a>
+                                        <a className="ti-dropdown-item" href="#!">Something else here</a>
                                       </li>
                                     </ul>
                                   </div>

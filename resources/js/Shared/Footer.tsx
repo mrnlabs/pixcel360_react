@@ -27,7 +27,7 @@ function scrollFunction() {
     <footer className="mt-auto py-4 bg-white dark:bg-bodybg text-center border-t border-defaultborder dark:border-defaultborder/10">
     <div className="container">
       <span className="text-textmuted dark:text-textmuted/50"> Copyright © <span id="year">2025</span>
-        <Link href="javascript:void(0);" className="text-dark font-medium"> <span className='text-primary'>Pixcel360</span></Link>. All rights reserved </span>
+        <Link href="/" className="text-dark font-medium"> <span className='text-primary'>Pixcel360</span></Link>. All rights reserved </span>
     </div>
   </footer>
   <div onClick={() => window.scrollTo(0, 0)} className="scrollToTop cursor-pointer" > 

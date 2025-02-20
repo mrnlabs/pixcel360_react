@@ -107,16 +107,16 @@ const updateFilters = React.useCallback(
                           <nav aria-label="Page navigation" className="pagination-style-4">
                             <ul className="ti-pagination mb-0 flex-wrap">
                               <li className="page-item disabled">
-                                <a className="page-link" href="javascript:void(0);"> Prev </a>
+                                <a className="page-link" href="#!"> Prev </a>
                               </li>
                               <li className="page-item ">
-                                <a className="page-link active" href="javascript:void(0);">1</a>
+                                <a className="page-link active" href="#!">1</a>
                               </li>
                               <li className="page-item">
-                                <a className="page-link" href="javascript:void(0);">2</a>
+                                <a className="page-link" href="#!">2</a>
                               </li>
                               <li className="page-item">
-                                <a className="page-link !text-primary" href="javascript:void(0);"> next </a>
+                                <a className="page-link !text-primary" href="#!"> next </a>
                               </li>
                             </ul>
                           </nav>

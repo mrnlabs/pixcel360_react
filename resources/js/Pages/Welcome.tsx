@@ -78,7 +78,7 @@ export default function Welcome() {
                         placeholder="Password"
                         className="form-control create-password-input" 
                         /> 
-                        <a onClick={() => setShowPassword(!showPassword)} aria-label="anchor" href="javascript:void(0);" className="show-password-button text-textmuted dark:text-textmuted/50" 
+                        <a onClick={() => setShowPassword(!showPassword)} aria-label="anchor" href="#!" className="show-password-button text-textmuted dark:text-textmuted/50" 
                          id="button-addon2">
                             {showPassword ? <EyeOff className='align-middle' /> : <Eye className='align-middle' />}
                             

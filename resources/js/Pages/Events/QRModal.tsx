@@ -41,11 +41,11 @@ function QRModal({
                 <ul className="mb-0 list-none hire-list">
                     <li>
                     <div className="flex items-center">
-                        <a aria-label="anchor" href="javascript:void(0);" className="me-2">
+                        <a aria-label="anchor" href="#!" className="me-2">
                         <span className="avatar avatar-lg bg-primary/10 !text-primary">UD</span>
                         </a>
                         <div className="flex-auto truncate">
-                        <a href="javascript:void(0);" className="font-medium text-[14px] w-75 truncate block"> Event Name</a>
+                        <a href="#!" className="font-medium text-[14px] w-75 truncate block"> Event Name</a>
                         <p className="text-textmuted dark:text-textmuted/50 mb-0 text-xs w-75 truncate">Event: <span className="text-success">NR</span>
                         </p>
                         </div>

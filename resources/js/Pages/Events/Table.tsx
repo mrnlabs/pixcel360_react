@@ -69,7 +69,7 @@ export default function Table({events, setModalOpen, setQRData, setDuplicateModa
                 <div className="flex items-center">
                   <div className="flex-1 flex-between pos-relative ms-2">
                     <div className="">
-                      <a href="javascript:void(0);" className="text-[13px] font-medium">{event.name}</a>
+                      <a href="#!" className="text-[13px] font-medium">{event.name}</a>
                     </div>
                   </div>
                 </div>

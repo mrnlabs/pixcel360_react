@@ -47,7 +47,7 @@ export default function NotificationBell() {
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem className='cursor-pointer'>
-            <a href="javascript:void(0);" className="ti-btn ti-btn-primary w-full ">View All</a>
+            <a href="#!" className="ti-btn ti-btn-primary w-full ">View All</a>
         </DropdownMenuItem>
       </DropdownMenuGroup>
     </DropdownMenuContent>
