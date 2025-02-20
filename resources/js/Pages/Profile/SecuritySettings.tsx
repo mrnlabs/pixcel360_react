@@ -1,14 +1,12 @@
 import ThemeTextInput from '@/Components/Form/ThemeTextInput';
 import InputError from '@/Components/InputError';
 import { Button } from '@/Components/ui/button';
-import { Toaster } from '@/Components/ui/toaster';
-import { useToast } from '@/hooks/use-toast';
+import showToast from '@/utils/showToast';
 import {  useForm } from '@inertiajs/react';
 import { Eye, EyeOff } from 'lucide-react';
 import React, { FormEventHandler, useState } from 'react'
 
 export default function SecuritySettings() {
-      const { toast } = useToast();
       const [showPassword, setShowPassword] = useState(false);
       const { data, setData, patch, processing, errors, reset, isDirty } = useForm({
           password: "",
@@ -20,18 +18,10 @@ export default function SecuritySettings() {
           patch(route("password.update"), {
               onSuccess: () => {
                 reset("password")
-                toast({
-                  title: "Success",
-                  description: "Password updated successfully",
-                  variant: "default",
-              })
+                showToast('success', 'Password updated successfully!', {position: 'bottom-right'});
               },
               onError: () => {
-                toast({
-                  title: "Error",
-                  description: "Something went wrong",
-                  variant: "destructive",
-              })
+               showToast('error', 'Error updating password', {position: 'bottom-right'});
               }
           });
       };
@@ -111,7 +101,6 @@ export default function SecuritySettings() {
       </div>
       <div className="xxl:col-span-4 xl:col-span-4 lg:col-span-3 md:col-span-3 sm:col-span-2 col-span-12"></div>
    </div>
-    <Toaster />
      </div>
   )
 }

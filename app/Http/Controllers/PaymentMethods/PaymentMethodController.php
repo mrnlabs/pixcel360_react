@@ -11,9 +11,9 @@ class PaymentMethodController extends Controller
     public function index()
     {
         return Inertia::render('PaymentMethods/Index', [
-            'paymentMethods' => auth()->user()->paymentMethods(),
-            'defaultPaymentMethod' => auth()->user()->defaultPaymentMethod(),
-            'setupIntent' => auth()->user()->createSetupIntent(),
+            // 'paymentMethods' => auth()->user()->paymentMethods(),
+            // 'defaultPaymentMethod' => auth()->user()->defaultPaymentMethod(),
+            // 'setupIntent' => auth()->user()->createSetupIntent(),
         ]);
     }
 

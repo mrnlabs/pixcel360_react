@@ -2,20 +2,16 @@ import Authenticated from '@/Layouts/AuthenticatedLayout'
 import { Breadcrumb } from '@/Shared/Breadcrumb'
 import { Head, Link, router } from '@inertiajs/react'
 import { SquarePlus } from 'lucide-react'
-import React, { lazy, Suspense, useState } from 'react'
+import React, { useState } from 'react'
 import { Filters, Plan, PlanCardProps, QueryParams } from '@/types'
 // @ts-expect-error
 import { debounce } from 'lodash';
-import { Input } from '@/Components/ui/input'
-import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/Components/ui/select'
 import PlanCard from './PlanCard'
-import { useToast } from '@/hooks/use-toast'
-import { Toaster } from '@/Components/ui/toaster'
+import showToast from '@/utils/showToast'
 
 export default function Index({plans} : PlanCardProps) {
   
   const [dialogOpen, setDialogOpen] = useState(false);
-  const { toast } = useToast();
 
   const [filters, setFilters] = useState({
     search: '',
@@ -52,18 +48,10 @@ const handleDelete = (plan: Plan) => {
     preserveScroll: true, 
     onSuccess: () => {
       setDialogOpen(false),
-      toast({
-        title: "Success",
-        description: "Plan deleted successfully",
-        variant: "default",
-    })
+      showToast('success', 'Plan deleted successfully!', {position: 'bottom-right'});
      },
      onError: () => {
-      toast({
-        title: "Error",
-        description: "Something went wrong",
-        variant: "destructive",
-    })
+      showToast('error', 'Something went wrong', {position: 'bottom-right'});
      }
  });
 }
@@ -152,8 +140,6 @@ const handleDelete = (plan: Plan) => {
                   </div>
                 </div>
               </div>
-
-            <Toaster />
             
             </div>
           </div>

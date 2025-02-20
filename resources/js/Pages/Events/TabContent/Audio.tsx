@@ -2,16 +2,14 @@ import ConfirmDialog from '@/Components/ConfirmDialog';
 import CustomTooltip from '@/Components/CustomTooltip';
 import FileUpload from '@/Components/FileUpload'
 import { Button } from '@/Components/ui/button';
-import { Toaster } from '@/Components/ui/toaster';
-import { useToast } from '@/hooks/use-toast';
 import { formatFileSize } from '@/utils/formatFileSize';
 import { isAudioFile } from '@/utils/isAudioFile';
+import showToast from '@/utils/showToast';
 import { router, useForm, usePage } from '@inertiajs/react';
 import { Loader, Play, Pause, ArrowUpFromLine, Trash2 } from 'lucide-react'
 import React, { Suspense, useState, useRef, useEffect } from 'react'
 
 export default function Audio({event}: any) {
-    const { toast } = useToast();
     const filePath = usePage().props.filePath;
     const [dbAudio, setDbAudio] = useState(null);
 
@@ -32,11 +30,7 @@ export default function Audio({event}: any) {
     const handleFileSelect = (files: File[]) => {
         // if file is not audio return
         if (!isAudioFile(files[0])) { 
-            toast({
-                title: "Error",
-                description: "Please select an audio file.",
-                variant: "destructive",
-            })
+            showToast('error', 'Please select an audio file.', {position: 'bottom-right'});
             return;
          }
 
@@ -99,18 +93,10 @@ export default function Audio({event}: any) {
         onSuccess: () => {
             setAudioFile(null);
             setData('audioFile', null);
-          toast({
-            title: "Success",
-            description: "Audio updated successfully",
-            variant: "default",
-          })
+            showToast('success', 'Audio updated successfully.', {position: 'bottom-right'});
         },
         onError: () => {
-          toast({
-            title: "Error",
-            description: "Something went wrong",
-            variant: "destructive",
-          })
+            showToast('error', 'Something went wrong.', {position: 'bottom-right'});
       }
     });
       
@@ -120,18 +106,10 @@ export default function Audio({event}: any) {
         router.delete(route('event.update.audio', event.slug), {
             preserveScroll: true,
             onSuccess: () => {
-                toast({
-                    title: "Success",
-                    description: "Audio deleted successfully",
-                    variant: "default",
-                })
+                showToast('success', 'Audio deleted successfully.', {position: 'bottom-right'});
             },
             onError: () => {
-                toast({
-                    title: "Error",
-                    description: "Something went wrong",
-                    variant: "destructive",
-                })
+                showToast('error', 'Something went wrong.', {position: 'bottom-right'});
             }
         })
     }
@@ -193,7 +171,6 @@ export default function Audio({event}: any) {
             )}
               {progress && (<progress value={progress.percentage} max="100">{progress.percentage}%</progress>)}
               <Suspense fallback={""}>
-              <Toaster />
               <ConfirmDialog 
                 message="Do you want to delete this file from database ?"
                 dialogOpen={dialogOpen} 

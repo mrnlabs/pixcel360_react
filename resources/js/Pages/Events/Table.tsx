@@ -1,18 +1,15 @@
 import { Copy, Image, QrCode, SquarePen, Trash2 } from 'lucide-react'
 import { format } from "date-fns";
 import CustomTooltip from '@/Components/CustomTooltip';
-import DuplicateModal from './DuplicateModal';
 import React, { Suspense, useState } from 'react';
-import { Toaster } from '@/Components/ui/toaster';
 import ConfirmDialog from '@/Components/ConfirmDialog';
 import { Link, router } from '@inertiajs/react';
 import { useToast } from '@/hooks/use-toast';
+import showToast from '@/utils/showToast';
 
 export default function Table({events, setModalOpen, setQRData, setDuplicateModalOpen}: any) {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [event, setEvent] = useState<{ slug: string } | null>(null);
-
-  const { toast } = useToast();
 
   const handleDelete = () => {
     if(!event) return;
@@ -20,19 +17,11 @@ export default function Table({events, setModalOpen, setQRData, setDuplicateModa
       preserveScroll: true,
       onSuccess: () => {
         setDialogOpen(false);
-        toast({
-          title: "Success",
-          description: "Event deleted successfully",
-          variant: "default",
-      })
+        showToast('success', 'Event deleted successfully!', {position: 'bottom-right'});
       },
       onError: () => {
         setDialogOpen(false);
-        toast({
-          title: "Error",
-          description: "Profile image updated successfully",
-          variant: "destructive",
-      })
+        showToast('error', 'Something went wrong!', {position: 'bottom-right'});
       }
     })
   }
@@ -148,7 +137,6 @@ export default function Table({events, setModalOpen, setQRData, setDuplicateModa
       </tbody>
     </table>
     <Suspense fallback={""}>
-              <Toaster />
               <ConfirmDialog 
                 message="Are you sure you want to remove this event ?"
                 dialogOpen={dialogOpen} 

@@ -9,18 +9,15 @@ import {
 } from "@/Components/ui/dialog";
 import { useForm, usePage } from "@inertiajs/react";
 import { useState } from "react";
-import { PaymentMethod } from '@stripe/stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 import { CardElement, Elements, useStripe, useElements } from '@stripe/react-stripe-js';
-import { useToast } from "@/hooks/use-toast";
+import showToast from "@/utils/showToast";
 
 // Separate the form into its own component
 function PaymentForm() {
     const stripe = useStripe();
     const elements = useElements();
     const [error, setError] = useState<string | null>(null);
-
-    const { toast } = useToast();
 
     const {data, setData, post, processing } = useForm({
         payment_method: '',
@@ -62,18 +59,10 @@ function PaymentForm() {
             post(route('payment-methods.store'), {
                onSuccess: () => {
                    setData('payment_method', '');
-                   toast({
-                    title: "Success",
-                    description: "Payment method added successfully",
-                    variant: "default",
-                })
+                   showToast('success', 'Payment method added successfully!', {position: 'bottom-right'});
             },
             onError: () => {
-                toast({
-                    title: "Error",
-                    description: "Something went wrong",
-                    variant: "destructive",
-                })
+                showToast('error', 'Something went wrong', {position: 'bottom-right'});
             }
             });
             // setProcessing(false);

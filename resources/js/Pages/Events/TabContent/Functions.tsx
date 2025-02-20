@@ -2,15 +2,12 @@ import CustomToggle from '@/Components/Form/CustomToggle'
 import { Button } from '@/Components/ui/button'
 import { Input } from '@/Components/ui/input'
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/Components/ui/select'
-import { Toaster } from '@/Components/ui/toaster'
-import { useToast } from '@/hooks/use-toast'
+import showToast from '@/utils/showToast'
 import { useForm } from '@inertiajs/react'
 import { Loader } from 'lucide-react'
 import React, { useEffect } from 'react'
 
 export default function Functions({event} : any) {
-
-  const { toast } = useToast();
   const { data, setData, post, processing, errors, reset } = useForm({
     boomerang: event?.boomerang_setting?.boomerang,
     slomo: event?.boomerang_setting?.slomo,
@@ -41,18 +38,10 @@ const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
     preserveScroll: true,
     onSuccess: () => {
       reset();
-      toast({
-        title: "Success",
-        description: "Settings updated successfully",
-        variant: "default",
-    })
+      showToast('success', 'Settings updated successfully!', {position: 'bottom-right'});
     },
     onError: () => {
-      toast({
-        title: "Error",
-        description: "Something went wrong",
-        variant: "destructive",
-    })
+      showToast('error', 'Something went wrong!', {position: 'bottom-right'});
     }
   });
 };
@@ -152,7 +141,6 @@ const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
   </div>
   <Button onClick={handleSubmit} disabled={processing} className='mt-4 ti-btn ti-btn-primary w-full'>
     {processing && <Loader className='mr-2 h-4 w-4 animate-spin'/>}Save</Button>
-    <Toaster />
 </div>
   )
 }

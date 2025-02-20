@@ -1,18 +1,14 @@
 import React, { useEffect } from 'react'
 import { Input } from '@/Components/ui/input'
-import { Head, useForm } from '@inertiajs/react'
-import { useToast } from '@/hooks/use-toast'
+import { useForm } from '@inertiajs/react'
 import InputError from '@/Components/InputError'
-import Authenticated from '@/Layouts/AuthenticatedLayout'
-import { Breadcrumb } from '@/Shared/Breadcrumb'
 import CountrySelector from '../../Profile/CountrySelector'
 import QuillEditor from '@/Components/Editors/QuillEditor'
 import { Loader } from 'lucide-react'
-import { Toaster } from '@/Components/ui/toaster'
+import showToast from '@/utils/showToast'
 
 
 export default function EditDetails({event} : any) {
-  const { toast } = useToast();
 
   useEffect(() => {
     setData('name', event.name);
@@ -46,18 +42,10 @@ const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
     preserveScroll: true,
     onSuccess: () => {
       reset();
-      toast({
-        title: "Success",
-        description: "Event updated successfully",
-        variant: "default",
-    })
+      showToast('success', 'Event details updated successfully!', {position: 'bottom-right'});
     },
     onError: () => {
-      toast({
-        title: "Error",
-        description: "Something went wrong",
-        variant: "destructive",
-    })
+      showToast('error', 'Something went wrong!', {position: 'bottom-right'});
     }
   });
 };
@@ -130,7 +118,6 @@ const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
               <button disabled={processing} onClick={handleSubmit} type="button" className="ti-btn ti-btn-primary w-full">
                 {processing && <Loader className="animate-spin mr-2" /> }Save</button>
             </div>
-            <Toaster />
           </div>
   )
 }

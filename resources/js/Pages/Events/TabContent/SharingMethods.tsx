@@ -1,14 +1,11 @@
 import CustomToggle from '@/Components/Form/CustomToggle'
 import { Button } from '@/Components/ui/button'
-import { Toaster } from '@/Components/ui/toaster'
-import { useToast } from '@/hooks/use-toast'
+import showToast from '@/utils/showToast'
 import { useForm } from '@inertiajs/react'
 import { Loader } from 'lucide-react'
 import { useEffect } from 'react'
 
 export default function SharingMethods({event} : any) {
-
-      const { toast } = useToast();
 
       const { data, setData, patch, processing, errors, reset } = useForm({
             email: event?.sharing_method?.email,
@@ -38,18 +35,10 @@ export default function SharingMethods({event} : any) {
           preserveScroll: true,
           onSuccess: () => {
             reset();
-            toast({
-              title: "Success",
-              description: "Settings updated successfully",
-              variant: "default",
-          })
+            showToast('success', 'Settings updated successfully!', {position: 'bottom-right'});
           },
           onError: () => {
-            toast({
-              title: "Error",
-              description: "Something went wrong",
-              variant: "destructive",
-          })
+            showToast('error', 'Something went wrong!', {position: 'bottom-right'});
           }
         });
       };
@@ -118,7 +107,6 @@ export default function SharingMethods({event} : any) {
   <Button onClick={handleSubmit} disabled={processing} 
    className='mt-4 ti-btn ti-btn-primary w-full'>
   {processing && <Loader className='mr-2 h-4 w-4 animate-spin'/>}Save</Button>
-  <Toaster/>
 </div>
   )
 }

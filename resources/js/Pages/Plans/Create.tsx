@@ -1,16 +1,14 @@
 import React, { Suspense, useEffect } from 'react'
 import { Input } from '@/Components/ui/input'
 import { Head, useForm } from '@inertiajs/react'
-import { useToast } from '@/hooks/use-toast'
 import InputError from '@/Components/InputError'
 import Authenticated from '@/Layouts/AuthenticatedLayout'
 import { Breadcrumb } from '@/Shared/Breadcrumb'
-import CountrySelector from '../Profile/CountrySelector'
 import QuillEditor from '@/Components/Editors/QuillEditor'
-import { Toaster } from '@/Components/ui/toaster'
 import { CircleCheck, Loader } from 'lucide-react'
 import FileUpload from '@/Components/FileUpload'
-import { Plan, PlanCardProps } from '@/types'
+import { Plan } from '@/types'
+import showToast from '@/utils/showToast'
 
 
 export default function Create({
@@ -20,7 +18,6 @@ export default function Create({
   planCategories: any,
   plan: Plan
 }) {
-  const { toast } = useToast();
 
   const [quillValue, setQuillValue] = React.useState('');
 
@@ -106,19 +103,10 @@ const handleQuillChange = (value: string) => {
                   setData('photo', null);
                   setPhoto(null);
               }
-              
-              toast({
-                  title: "Success",
-                  description: successMessage,
-                  variant: "default",
-              })
+              showToast('success', successMessage, {position: 'bottom-right'});
           },
           onError: () => {
-              toast({
-                  title: "Error",
-                  description: "Something went wrong",
-                  variant: "destructive",
-              })
+            showToast('error', 'Something went wrong', {position: 'bottom-right'});
           }
       });
   }
@@ -273,7 +261,6 @@ const handleQuillChange = (value: string) => {
             
             </div>
           </div>
-          <Toaster/>
         </Authenticated>
   )
 }

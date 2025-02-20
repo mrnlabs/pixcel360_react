@@ -1,16 +1,13 @@
 import React, { useState, useRef, Suspense } from 'react';
 import { Trash2, Upload } from 'lucide-react';
 import { router, usePage } from '@inertiajs/react';
-import { useToast } from '@/hooks/use-toast';
-import { Toaster } from '@/Components/ui/toaster';
 import ConfirmDialog from '@/Components/ConfirmDialog';
 import InputError from '@/Components/InputError';
+import showToast from '@/utils/showToast';
 
 export default function ProfileImage() {
-  const filePath = usePage().props.filePath;
   const {errors } = usePage().props;
   const user = usePage().props.auth.user;
-  const { toast } = useToast();
 
   const [dialogOpen, setDialogOpen] = useState(false);
 
@@ -23,11 +20,7 @@ export default function ProfileImage() {
     if (!file) return;
 
     if (!file.type.startsWith('image/')) {
-      toast({
-        title: "Error",
-        description: "Please select an image file.",
-        variant: "destructive",
-    })
+      showToast('error', 'Please select an image file.', {position: 'bottom-right'});
       return;
     }
 
@@ -44,19 +37,11 @@ export default function ProfileImage() {
       forceFormData: true,
       onSuccess: () => {
         setUploading(false);
-        toast({
-          title: "Success",
-          description: "Profile image updated successfully",
-          variant: "default",
-      })
+        showToast('success', 'Profile image updated successfully!', {position: 'bottom-right'});
       },
       onError: () => {
         setUploading(false);
-        toast({
-          title: "Error",
-          description: "Something went wrong",
-          variant: "destructive",
-      })
+        showToast('error', 'Something went wrong!', {position: 'bottom-right'});
         setPreview('profile_placeholder.jpg');
       },
       onFinish: () => {
@@ -74,19 +59,11 @@ export default function ProfileImage() {
     router.delete('/remove-profile-image', {
       onSuccess: () => {
         setUploading(false);
-        toast({
-          title: "Success",
-          description: "Profile removed successfully",
-          variant: "default",
-      })
+        showToast('success', 'Profile removed successfully!', {position: 'bottom-right'});
       },
       onError: () => {
         setUploading(false);
-        toast({
-          title: "Error",
-          description: "Something went wrong",
-          variant: "destructive",
-      })
+        showToast('error', 'Something went wrong!', {position: 'bottom-right'});
     }
     });
   };
@@ -146,7 +123,6 @@ export default function ProfileImage() {
       </div>
       
       <Suspense fallback={""}>
-              <Toaster />
               <ConfirmDialog 
                 message="Are you sure you want to remove your profile photo ?"
                 dialogOpen={dialogOpen} 

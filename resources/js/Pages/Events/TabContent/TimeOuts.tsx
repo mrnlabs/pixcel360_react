@@ -1,16 +1,12 @@
-import CustomToggle from '@/Components/Form/CustomToggle'
 import { Button } from '@/Components/ui/button'
 import { Input } from '@/Components/ui/input'
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/Components/ui/select'
-import { Toaster } from '@/Components/ui/toaster'
-import { useToast } from '@/hooks/use-toast'
+import showToast from '@/utils/showToast'
 import { useForm } from '@inertiajs/react'
 import { Loader } from 'lucide-react'
 import React, { useEffect } from 'react'
 
 export default function TimeOuts({event} : any) {
-
-  const { toast } = useToast();
   const { data, setData, patch, processing, errors, reset } = useForm({
     editing: event?.boomerang_setting?.editing ?? 0,
     sharing: event?.boomerang_setting?.sharing ?? 0,
@@ -36,18 +32,10 @@ useEffect(() => {
       preserveScroll: true,
       onSuccess: () => {
         reset();
-        toast({
-          title: "Success",
-          description: "Settings updated successfully",
-          variant: "default",
-      })
+        showToast('success', 'Settings updated successfully!', {position: 'bottom-right'});
       },
       onError: () => {
-        toast({
-          title: "Error",
-          description: "Something went wrong",
-          variant: "destructive",
-      })
+        showToast('error', 'Something went wrong', {position: 'bottom-right'});
       }
     });
   };
@@ -135,7 +123,6 @@ useEffect(() => {
     <label className="block text-sm mb-1">Slomo Speed</label>
     <Input value={data.boomerang_speed} onChange={(e) => setData('boomerang_speed', e.target.value)} type="number" min={0} className="form-control" id="input-text" />
   </div>
-<Toaster/>
     
   </div>
   <Button onClick={handleSubmit} disabled={processing} className='mt-4 ti-btn ti-btn-primary w-full'>

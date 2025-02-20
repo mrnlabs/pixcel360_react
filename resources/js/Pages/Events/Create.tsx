@@ -1,16 +1,15 @@
 import React, { useEffect } from 'react'
 import { Input } from '@/Components/ui/input'
 import { Head, useForm } from '@inertiajs/react'
-import { useToast } from '@/hooks/use-toast'
 import InputError from '@/Components/InputError'
 import Authenticated from '@/Layouts/AuthenticatedLayout'
 import { Breadcrumb } from '@/Shared/Breadcrumb'
 import CountrySelector from '../Profile/CountrySelector'
 import QuillEditor from '@/Components/Editors/QuillEditor'
+import showToast from '@/utils/showToast'
 
 
 export default function Create() {
-  const { toast } = useToast();
 
   const [quillValue, setQuillValue] = React.useState('');
 
@@ -34,18 +33,10 @@ const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
     preserveScroll: true,
     onSuccess: () => {
       reset();
-      toast({
-        title: "Success",
-        description: "Event created successfully",
-        variant: "default",
-    })
+      showToast('success', 'Event created successfully!', {position: 'bottom-right'});
     },
     onError: () => {
-      toast({
-        title: "Error",
-        description: "Something went wrong",
-        variant: "destructive",
-    })
+      showToast('error', 'Something went wrong!', {position: 'bottom-right'});
     }
   });
 };

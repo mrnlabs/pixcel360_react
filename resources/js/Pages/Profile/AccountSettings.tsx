@@ -3,13 +3,11 @@ import ProfileImage from './ProfileImage'
 import { Input } from '@/Components/ui/input'
 import CountrySelector from './CountrySelector'
 import { useForm } from '@inertiajs/react'
-import { useToast } from '@/hooks/use-toast'
 import InputError from '@/Components/InputError'
-import { Toaster } from '@/Components/ui/toaster'
+import showToast from '@/utils/showToast'
 
 
 export default function AccountSettings({user} : any) {
-  const { toast } = useToast();
 
   useEffect(() => {
     if(user){
@@ -49,18 +47,10 @@ const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     preserveScroll: true,
     onSuccess: () => {
       reset();
-      toast({
-        title: "Success",
-        description: "Profile updated successfully",
-        variant: "default",
-    })
+      showToast('success', 'Profile updated successfully!', {position: 'bottom-right'});
     },
     onError: () => {
-      toast({
-        title: "Error",
-        description: "Something went wrong",
-        variant: "destructive",
-    })
+      showToast('error', 'Something went wrong', {position: 'bottom-right'});
     }
   });
 };
@@ -161,7 +151,6 @@ const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
             </div>
             <button disabled={processing} type="submit" className="ti-btn ti-btn-primary">{ processing ? 'Saving...' : 'Save'}</button>
           </form>
-          <Toaster />
         </div>
   )
 }

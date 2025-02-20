@@ -3,13 +3,10 @@ import Logo from './Logo'
 import { Button } from '@/Components/ui/button'
 import { EventProps } from '@/types';
 import { useEffect } from 'react';
-import { useToast } from '@/hooks/use-toast';
-import { Toaster } from '@/Components/ui/toaster';
 import { useForm } from '@inertiajs/react';
 import { Loader } from 'lucide-react';
+import showToast from '@/utils/showToast';
 export default function Branding({event} : EventProps) {
-
-   const { toast } = useToast();
 
    useEffect(() => {
      setData('gallery_name', event?.setting?.gallery_name ?? '');
@@ -23,23 +20,14 @@ export default function Branding({event} : EventProps) {
 
  const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
    e.preventDefault();
-   console.log(data);
    patch(route('event.update.vedio.branding', event?.slug),{
      preserveScroll: true,
      onSuccess: () => {
        reset();
-       toast({
-         title: "Success",
-         description: "Event updated successfully",
-         variant: "default",
-     })
+       showToast('success', 'Event updated successfully!', {position: 'bottom-right'});
      },
      onError: () => {
-       toast({
-         title: "Error",
-         description: "Something went wrong",
-         variant: "destructive",
-     })
+       showToast('error', 'Something went wrong!', {position: 'bottom-right'});
      }
    });
  };
@@ -62,7 +50,7 @@ export default function Branding({event} : EventProps) {
   </div>
      <Button onClick={handleSubmit} disabled={processing} className='mt-4 ti-btn ti-btn-primary w-full'>
      {processing && <Loader className="animate-spin mr-2" /> }Save</Button>
-     <Toaster/>
+    
 </div>
   )
 }
