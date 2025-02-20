@@ -43,6 +43,7 @@ function PaymentForm() {
       
 
         const { setupIntent: response, error } = await stripe.confirmCardSetup(
+            // @ts-ignore
             setupIntent.client_secret,
             {
                 payment_method: {
@@ -56,6 +57,7 @@ function PaymentForm() {
             // setProcessing(false);
             setData('payment_method', '');
         } else if (response) {
+            // @ts-ignore
             setData('payment_method', response.payment_method);
             post(route('payment-methods.store'), {
                onSuccess: () => {

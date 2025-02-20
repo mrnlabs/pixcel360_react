@@ -10,4 +10,14 @@ export default defineConfig({
         }),
         react(),
     ],
+
+    server: {
+        host: true, // Allows external access
+        port: 3000,
+        strictPort: true,
+        allowedHosts: [
+          'https://04a6-197-185-169-117.ngrok-free.app', // Add your ngrok domain here
+          '.ngrok.io', // (Optional) Allows all ngrok subdomains
+        ],
+      },
 });
