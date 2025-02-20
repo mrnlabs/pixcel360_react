@@ -27,7 +27,7 @@ export default function Header() {
                 </div>
               </div>
             
-              <ToggleNav />
+              {/* <ToggleNav /> */}
               <HeaderSearch/>
             </div>
           
