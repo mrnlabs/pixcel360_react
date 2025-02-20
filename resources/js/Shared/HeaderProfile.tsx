@@ -10,6 +10,10 @@ export default function HeaderProfile() {
     const goToProfile = () => {
         router.get('/profile')
     }
+
+    const handleLogout = () => {
+        router.get('/logout');
+    }
   return (
 
     <DropdownMenu>
@@ -31,7 +35,7 @@ export default function HeaderProfile() {
           <span>Profile</span>
           <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
         </DropdownMenuItem>
-        <DropdownMenuItem className='cursor-pointer'>
+        <DropdownMenuItem onClick={handleLogout} className='cursor-pointer'>
           <Settings />
           <span>Logout</span>
           <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>

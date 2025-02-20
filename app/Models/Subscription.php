@@ -9,13 +9,20 @@ class Subscription extends Model
 {
     use HasFactory;
 
-    public function plan()
-    {
-        return $this->hasOne(Plan::class);
-    }
-
+    protected $fillable = ['user_id', 'plan_id', 'started_at', 'expires_at'];
+    
+    protected $casts = [
+        'started_at' => 'datetime',
+        'expires_at' => 'datetime',
+    ];
+    
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+    
+    public function plan()
+    {
+        return $this->belongsTo(Plan::class);
     }
 }

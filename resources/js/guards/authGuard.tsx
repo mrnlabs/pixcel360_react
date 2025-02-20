@@ -20,7 +20,7 @@ export const AuthGuard = ({
     const checkRoles = (): boolean => {
         if (!roles) return true;
         const roleArray = Array.isArray(roles) ? roles : [roles];
-        return (user.roles ?? []).some((userRole: Role) => 
+        return (user?.roles ?? []).some((userRole: Role) => 
             roleArray.includes(userRole.name)
         );
     };
@@ -32,7 +32,7 @@ export const AuthGuard = ({
         // Collect all permissions from user's roles and direct permissions
         const userPermissions = new Set([
             ...(user.permissions?.map(p => p.name) || []),
-            ...(user.roles ?? []).flatMap(role => role.permissions?.map(p => p.name) || [])
+            ...(user?.roles ?? []).flatMap(role => role.permissions?.map(p => p.name) || [])
         ]);
 
         if (requireAll) {
