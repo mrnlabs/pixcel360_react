@@ -10,9 +10,7 @@ export default function ViewInvoice({otherSubscriptions}: any) {
     console.log(current_subscription);
 
     const generateInvoice = () => {
-      if(!current_subscription) return
-      // router.visit(route('invoice.generate', current_subscription.slug));
-      //window open the invoice in a new tab
+      if(!current_subscription) return;
       window.open(route('invoice.generate', current_subscription.slug), '_blank');
     }
   return (
@@ -41,9 +39,6 @@ export default function ViewInvoice({otherSubscriptions}: any) {
           </div>
         </div>
         <div className="ms-auto mt-md-0 mt-2">
-          <button className="ti-btn ti-btn-sm bg-primarytint1color text-white me-1" >Print 
-            <Printer size={20} className="ms-1 align-middle inline-block" />
-          </button>
           <button onClick={generateInvoice} className="ti-btn ti-btn-sm bg-primary text-white">Save As PDF 
             <FileText size={20} className="ms-1 align-middle inline-block" />
           </button>

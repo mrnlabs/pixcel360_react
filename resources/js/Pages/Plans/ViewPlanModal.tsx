@@ -58,9 +58,9 @@ function ViewPlanModal({
             </p>
             <div className="mb-0 text-textmuted dark:text-textmuted/50 text-xs">
               <p className="mb-0">
-                Per
+              {plan?.interval == 'semi_annual' ? 'Every' : 'Per'}
               </p>
-              <p className="mb-0 text-info font-medium text-[15px]">{plan?.interval}</p>
+              <p className="mb-0 text-info font-medium text-[15px]">{plan?.interval == 'semi_annual' ? '6 months' : plan?.interval}</p>
             </div>
           </div>
           <div className="mb-3">

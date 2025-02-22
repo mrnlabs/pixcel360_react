@@ -182,9 +182,10 @@ const handleQuillChange = (value: string) => {
                                   onChange={(e) => setData('interval', e.target.value)} 
                                   className="w-full px-3 py-2 border rounded-lg">
                                       <option value="" selected={true}>Price Per</option>
-                                      <option value="Week">Week</option>
-                                      <option value="Month">Month</option>
-                                      <option value="Year">Year</option>
+                                      <option value="week">Week</option>
+                                      <option value="month">Month</option>
+                                      <option value="semi_annual">6 Months</option>
+                                      <option value="year">Year</option>
                                   </select>
                                   <InputError message={errors.interval} />
                                 </div>

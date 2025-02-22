@@ -1,5 +1,6 @@
 import { useSubscriptionStatus } from '@/hooks/useSubscriptionStatus';
 import { SubscriptionCardProps } from '@/types';
+import { getNextPaymentDate } from '@/utils/getNextPaymentDate';
 import { Link } from '@inertiajs/react';
 import { format, formatDistanceToNow, isAfter, parseISO } from 'date-fns';
 
@@ -9,8 +10,8 @@ export default function SubscriptionCard({subscription}: SubscriptionCardProps) 
     return null;
   }
 
-  const { isExpired, timeRemaining, formattedExpiryDate } = useSubscriptionStatus(subscription);
-  
+  const { isExpired} = useSubscriptionStatus(subscription);
+
   return (
     <div className="xxl:col-span-3 lg:col-span-6 col-span-12">
     <div className="box">
@@ -29,10 +30,10 @@ export default function SubscriptionCard({subscription}: SubscriptionCardProps) 
         </span>
       </p>
       <p className="mb-4">
-        <span className="font-medium text-textmuted dark:text-textmuted/50 text-xs">Next Payment Date :</span> {formattedExpiryDate} - 
-        <span className={`text-xs font-medium ${isExpired ? 'text-danger' : 'text-warning'}`}>
+        <span className="font-medium text-textmuted dark:text-textmuted/50 text-xs">Next Payment Date :</span> {getNextPaymentDate(subscription)}
+        {/* <span className={`text-xs font-medium ${isExpired ? 'text-danger' : 'text-warning'}`}>
           {timeRemaining}
-        </span>
+        </span> */}
       </p>
       <p className="mb-4">
         <span className="font-medium text-textmuted dark:text-textmuted/50 text-xs">

@@ -54,14 +54,14 @@ export default function PlanCard({plan, handleDelete, dialogOpen, setDialogOpen}
         </div>
       <div className="box-body">
       <div className={`ribbon-2 ${getRibbonColor(plan?.category?.name)} ribbon-right`}>{plan?.category?.name}</div>
-        <h6 className="box-title font-medium">
+        <h6 onClick={() => setModalOpen(true)} className="box-title font-medium">
           <CustomTooltip content={plan?.name ?? ''}>
           {truncateText(plan?.name ?? '', 40, '...')}
           </CustomTooltip>
         </h6>
         <div>
             <span className="mb-2 text-[11px] badge leading-none bg-primary font-medium">
-                R {plan?.price}/{plan?.interval}
+                $ {plan?.price}/{plan?.interval}
             </span>
             {/* set dangerous html */}
             <p dangerouslySetInnerHTML={{__html: truncateText(plan?.description ?? '', 100, '...') ?? ''}} className="text-textmuted dark:text-textmuted/50 text-xs mb-4"></p>
@@ -74,7 +74,7 @@ export default function PlanCard({plan, handleDelete, dialogOpen, setDialogOpen}
               <Link aria-label="anchor" href={route('plans.edit', plan?.slug )} className="ti-btn ti-btn-icon ti-btn-soft-primary1 btn-wave ti-btn-sm ms-2 waves-effect waves-light">
               <SquarePen />
               </Link>
-              <button  onClick={() => setDialogOpen(true)} aria-label="anchor"
+              <button onClick={() => setDialogOpen(true)} aria-label="anchor"
               type='button' className="ti-btn ti-btn-icon ti-btn-soft-primary2 btn-wave ti-btn-sm ms-2 waves-effect waves-light">
                 <Trash2/>
               </button>

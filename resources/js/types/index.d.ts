@@ -100,6 +100,7 @@ interface Filters {
     description: string;
     slug: string;
     category_id?: number;
+    duration_in_days?: number;
     category?: {
       id: number;
       name: string;

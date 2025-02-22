@@ -26,7 +26,7 @@ class PlanRequest extends FormRequest
              return [
                  'name' => 'required',
                  'price' => 'required',
-                 'interval' => 'required|in:Month,Year,Week',
+                 'interval' => 'required|in:month,year,week,semi_annual',
                  'category' => 'required|exists:plan_categories,id',
                  'photo' => $isCreate,
                  'description' => 'required|string|min:20'
