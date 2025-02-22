@@ -11,12 +11,31 @@ const QRModal = lazy(() => import("./QRModal"));
 import { debounce } from 'lodash';
 import { Input } from '@/Components/ui/input'
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/Components/ui/select'
+import Paginator from '@/Shared/Paginator'
 
 export default function Index({events} : any) {
   
   const [modalOpen, setModalOpen] = useState(false);
   const [duplicateModalOpen, setDuplicateModalOpen] = useState(false);
   const [QRData, setQRData] = useState(null);
+
+  // {
+  //   "total": 3,
+  //   "per_page": 10,
+  //   "current_page": 1,
+  //   "last_page": 1
+  // }
+  const totalItems = events?.original?.pagination?.total;
+  const itemsPerPage = events?.original?.pagination?.per_page;
+  const currentPage = events?.original?.pagination?.current_page;
+
+
+  const handlePageChange  = (page: number) => {
+   router.get(route('events'), {page}, {
+    preserveState: true,
+    replace: true
+   })
+  }
 
   const [filters, setFilters] = useState({
     search: '',
@@ -27,10 +46,8 @@ const updateFilters = React.useCallback(
   debounce((newFilters: Partial<Filters>) => {
     const queryParams: QueryParams = {};
     
-    // Merge new filters with existing filters
     const updatedFilters = { ...filters, ...newFilters };
     
-    // Add non-empty filter values to query params
     Object.keys(updatedFilters).forEach(key => {
       if (updatedFilters[key as keyof Filters]) {
         queryParams[key] = updatedFilters[key as keyof Filters] as string;
@@ -95,33 +112,19 @@ const updateFilters = React.useCallback(
                       <Table 
                       setModalOpen={setModalOpen} 
                       setDuplicateModalOpen={setDuplicateModalOpen}
-                      events={events}
+                      events={events?.original?.data}
                       setQRData={setQRData}
                        />
                     </div>
                     <div className="box-footer">
-                      <div className="flex flex-wrap items-center">
-                        <div> Showing 6 Entries <i className="bi bi-arrow-right ms-2 font-medium"></i>
-                        </div>
-                        <div className="ms-auto">
-                          <nav aria-label="Page navigation" className="pagination-style-4">
-                            <ul className="ti-pagination mb-0 flex-wrap">
-                              <li className="page-item disabled">
-                                <a className="page-link" href="#!"> Prev </a>
-                              </li>
-                              <li className="page-item ">
-                                <a className="page-link active" href="#!">1</a>
-                              </li>
-                              <li className="page-item">
-                                <a className="page-link" href="#!">2</a>
-                              </li>
-                              <li className="page-item">
-                                <a className="page-link !text-primary" href="#!"> next </a>
-                              </li>
-                            </ul>
-                          </nav>
-                        </div>
-                      </div>
+                    <Paginator
+                      totalItems={totalItems}
+                      itemsPerPage={itemsPerPage}
+                      currentPage={currentPage}
+                      onPageChange={handlePageChange}
+                      showingText="Displaying"
+                      maxVisiblePages={5}
+                    />
                     </div>
                   </div>
                 </div>

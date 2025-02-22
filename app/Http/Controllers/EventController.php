@@ -33,7 +33,17 @@ class EventController extends Controller
     {
         try{
            $events =  $this->eventService->getEvents();
-            return Inertia::render('Events/Index', ['events' => $events]);
+           $response = response()->json([
+            'data' => $events->items(),
+            'pagination' => [
+                'total' => $events->total(),
+                'per_page' => $events->perPage(),
+                'current_page' => $events->currentPage(),
+                'last_page' => $events->lastPage()
+            ]
+        ]);
+        
+            return Inertia::render('Events/Index', ['events' => $response]);
         } catch (\Exception $e){
             //return Inertia::render('Error', ['message' => $e->getMessage()]);
         }
