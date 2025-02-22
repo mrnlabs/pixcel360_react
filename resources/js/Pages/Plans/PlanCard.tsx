@@ -92,7 +92,7 @@ export default function PlanCard({plan, handleDelete, dialogOpen, setDialogOpen}
           roles={["Account Owner"]} 
           permissions={["*"]}
           requireAll={true}>
-          <button aria-label="anchor" type='button' className="w-full ti-btn ti-btn-primary btn-wave mt-4 waves-effect waves-light">Subscribe</button>
+          <button onClick={handleSubscribe} aria-label="anchor" type='button' className="w-full ti-btn ti-btn-primary btn-wave mt-4 waves-effect waves-light">Subscribe</button>
       </AuthGuard>
 
              

@@ -1,6 +1,6 @@
 import Authenticated from '@/Layouts/AuthenticatedLayout'
 import { Breadcrumb } from '@/Shared/Breadcrumb'
-import { Head, usePage } from '@inertiajs/react'
+import { Head, router, usePage } from '@inertiajs/react'
 import { format } from 'date-fns'
 import { ArrowDownToLine, FileText, Printer } from 'lucide-react'
 import React from 'react'
@@ -8,6 +8,13 @@ import React from 'react'
 export default function ViewInvoice({otherSubscriptions}: any) {
     const { current_subscription } = usePage().props.auth;
     console.log(current_subscription);
+
+    const generateInvoice = () => {
+      if(!current_subscription) return
+      // router.visit(route('invoice.generate', current_subscription.slug));
+      //window open the invoice in a new tab
+      window.open(route('invoice.generate', current_subscription.slug), '_blank');
+    }
   return (
     <Authenticated>
          <Head title="Dashboard" />
@@ -37,7 +44,7 @@ export default function ViewInvoice({otherSubscriptions}: any) {
           <button className="ti-btn ti-btn-sm bg-primarytint1color text-white me-1" >Print 
             <Printer size={20} className="ms-1 align-middle inline-block" />
           </button>
-          <button className="ti-btn ti-btn-sm bg-primary text-white">Save As PDF 
+          <button onClick={generateInvoice} className="ti-btn ti-btn-sm bg-primary text-white">Save As PDF 
             <FileText size={20} className="ms-1 align-middle inline-block" />
           </button>
         </div>

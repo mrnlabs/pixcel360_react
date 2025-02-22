@@ -52,3 +52,4 @@ require __DIR__.'/plan.php';
 require __DIR__.'/subscription.php';
 require __DIR__.'/payment_method.php';
 require __DIR__.'/payfast.php';
+require __DIR__.'/invoice.php';

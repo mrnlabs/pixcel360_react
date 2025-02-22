@@ -19,6 +19,21 @@ class Plan extends Model
 
     protected $guarded = [];
 
+    protected static function boot(){
+        parent::boot();
+
+    static::creating(function ($plan) {
+        $plan->duration_in_days = match($plan->interval) {
+            'week' => 7,
+            'month' => 30,
+            'semi_annual' => 180,
+            'annual' => 365,
+            default => throw new \InvalidArgumentException("Invalid interval: {$plan->interval}")
+        };
+    });
+}
+
+
     public function subscriptions()
     {
         return $this->hasMany(Subscription::class);

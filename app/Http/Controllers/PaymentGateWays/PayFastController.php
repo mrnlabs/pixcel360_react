@@ -79,7 +79,7 @@ $plan->subscriptions()->create([
     'user_id' => auth()->id(),
     'plan_id' => $plan->id,
     'started_at' => now(),
-    'ends_at' => $plan->getEndDate(),
+    'expires_at' => $plan->getEndDate(),
 ]);
 return back()->with('success', 'Plan subscribed successfully');
         
