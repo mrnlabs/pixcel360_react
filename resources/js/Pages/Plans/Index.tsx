@@ -9,6 +9,7 @@ import { debounce } from 'lodash';
 import PlanCard from './PlanCard'
 import showToast from '@/utils/showToast'
 import Paginator from '@/Shared/Paginator'
+import { AuthGuard } from '@/guards/authGuard'
 
 export default function Index({plans} : any) {
   
@@ -88,8 +89,15 @@ const handleDelete = (plan: Plan) => {
                     <div className="box-header justify-between">
                       <div className="box-title"> Plans </div>
                       <div className="flex flex-wrap gap-2">
-                        <Link href={route('plans.create')} className="ti-btn ti-btn-primary !m-0 btn-wave ti-btn-sm waves-effect waves-light">
+                      <AuthGuard 
+                          roles={["System Admin", "System SuperAdmin"]} 
+                          permissions={["*"]}
+                          requireAll={true}>
+                          <Link href={route('plans.create')} className="ti-btn ti-btn-primary !m-0 btn-wave ti-btn-sm waves-effect waves-light">
                           <SquarePlus className="align-middle" />Create New Plan </Link>
+                      </AuthGuard>
+
+                        
                         {/* <div>
                           <Input 
                           onChange={(e) => updateFilters({ search: e.target.value })}

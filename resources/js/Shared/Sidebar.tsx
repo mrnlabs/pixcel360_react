@@ -129,7 +129,7 @@ const Sidebar: React.FC = () => {
     },
     {
       id: 'logout',
-      label: 'LogOut',
+      label: 'Log Out',
       path: '/logout',
       icon: (<LogOut className="h-6 w-6 mr-2" />
       )
