@@ -24,9 +24,9 @@ class PayFastController extends Controller
 
 
 
-    public function showCheckout($slug)
+    public function subscribe($slug)
     {
-       
+        /*
         try {
 
             $data = array(
@@ -72,7 +72,16 @@ class PayFastController extends Controller
             logger()->error('PayFast API Error: ' . $e->getMessage());
             throw $e;
         }
+*/
 
+$plan = Plan::where('slug', $slug)->first();
+$plan->subscriptions()->create([
+    'user_id' => auth()->id(),
+    'plan_id' => $plan->id,
+    'started_at' => now(),
+    'ends_at' => $plan->getEndDate(),
+]);
+return back()->with('success', 'Plan subscribed successfully');
         
     }
 

@@ -28,7 +28,7 @@ class EventService
             $query->where('user_id', auth()->user()->id);
         }
     
-        return $query->paginate($perPage);
+        return $query->paginate($perPage)->queryString();
     }
 
 

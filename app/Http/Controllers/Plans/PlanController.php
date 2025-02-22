@@ -18,9 +18,24 @@ class PlanController extends Controller
 {
     function index() : Response
     {
-        $plans = Plan::with('category')->latest()->get();
+        $search = request('search');
+        $sort = request()->input('sort', 'latest');
+        $perPage = request()->input('per_page', 10); 
+
+        $plans = Plan::with('category')->latest()->paginate($perPage)->withQueryString();
+
+        $response = response()->json([
+            'data' => $plans->items(),
+            'pagination' => [
+                'total' => $plans->total(),
+                'per_page' => $plans->perPage(),
+                'current_page' => $plans->currentPage(),
+                'last_page' => $plans->lastPage()
+            ]
+        ]);
+
         return Inertia::render('Plans/Index',[
-            'plans' => $plans
+            'plans' => $response
         ]);
     }
 
@@ -40,7 +55,7 @@ class PlanController extends Controller
             $plan = Plan::create([
                 'name' => $request->name,
                 'price' => $request->price,
-                'price_per' => $request->price_per,
+                'interval' => $request->interval,
                 'category_id' => $request->category,
                 'photo' => $url,
                 'description' => $request->description
@@ -72,7 +87,7 @@ class PlanController extends Controller
             $plan->update([
                 'name' => $request->name,
                 'price' => $request->price,
-                'price_per' => $request->price_per,
+                'interval' => $request->interval,
                 'category_id' => $request->category,
                 'photo' => $url,
                 'description' => $request->description
@@ -81,7 +96,7 @@ class PlanController extends Controller
             $plan->update([
                 'name' => $request->name,
                 'price' => $request->price,
-                'price_per' => $request->price_per,
+                'interval' => $request->interval,
                 'category_id' => $request->category,
                 'description' => $request->description
             ]);

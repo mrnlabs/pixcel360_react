@@ -8,15 +8,28 @@ import { Filters, Plan, PlanCardProps, QueryParams } from '@/types'
 import { debounce } from 'lodash';
 import PlanCard from './PlanCard'
 import showToast from '@/utils/showToast'
+import Paginator from '@/Shared/Paginator'
 
-export default function Index({plans} : PlanCardProps) {
+export default function Index({plans} : any) {
   
   const [dialogOpen, setDialogOpen] = useState(false);
+
+    const totalItems = plans?.original?.pagination?.total;
+    const itemsPerPage = plans?.original?.pagination?.per_page;
+    const currentPage = plans?.original?.pagination?.current_page;
 
   const [filters, setFilters] = useState({
     search: '',
     sort: ''
 });
+
+ const handlePageChange  = (page: number) => {
+   router.get(route('plans'), {page}, {
+    preserveState: true,
+    replace: true
+   })
+  }
+
 
 const updateFilters = React.useCallback(
   debounce((newFilters: Partial<Filters>) => {
@@ -102,7 +115,7 @@ const handleDelete = (plan: Plan) => {
                     <div className="box-body">
 
                     <div className="grid grid-cols-12 gap-x-6">
-                      {plans?.map((plan: any) => (
+                      {plans?.original?.data?.map((plan: any) => (
                         <PlanCard key={plan.id} 
                         plan={plan} 
                         handleDelete={() => handleDelete(plan)} 
@@ -114,28 +127,14 @@ const handleDelete = (plan: Plan) => {
 
                     </div>
                     <div className="box-footer">
-                      <div className="flex flex-wrap items-center">
-                        <div> Showing 6 Entries <i className="bi bi-arrow-right ms-2 font-medium"></i>
-                        </div>
-                        <div className="ms-auto">
-                          <nav aria-label="Page navigation" className="pagination-style-4">
-                            <ul className="ti-pagination mb-0 flex-wrap">
-                              <li className="page-item disabled">
-                                <a className="page-link" href="#!"> Prev </a>
-                              </li>
-                              <li className="page-item ">
-                                <a className="page-link active" href="#!">1</a>
-                              </li>
-                              <li className="page-item">
-                                <a className="page-link" href="#!">2</a>
-                              </li>
-                              <li className="page-item">
-                                <a className="page-link !text-primary" href="#!"> next </a>
-                              </li>
-                            </ul>
-                          </nav>
-                        </div>
-                      </div>
+                    <Paginator
+                      totalItems={totalItems}
+                      itemsPerPage={itemsPerPage}
+                      currentPage={currentPage}
+                      onPageChange={handlePageChange}
+                      showingText="Displaying"
+                      maxVisiblePages={5}
+                    />
                     </div>
                   </div>
                 </div>

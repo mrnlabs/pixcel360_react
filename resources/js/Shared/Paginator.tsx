@@ -107,7 +107,7 @@ const Paginator: React.FC<PaginatorProps> = ({
                     onClick={() => handlePageChange(page as number)}
                     className={`px-3 py-2 text-sm font-medium rounded-sm transition-colors
                       ${currentPage === page
-                        ? 'bg-blue-600 text-white'
+                        ? 'bg-primary text-white'
                         : 'text-gray-700 bg-white border border-gray-300 hover:bg-gray-50'
                       }`}
                     aria-label={`Page ${page}`}
@@ -124,7 +124,7 @@ const Paginator: React.FC<PaginatorProps> = ({
               <button
                 onClick={() => handlePageChange(currentPage + 1)}
                 disabled={currentPage === totalPages}
-                className={`flex items-center px-3 py-1 text-sm font-medium border rounded-sm transition-colors
+                className={`flex items-center px-3 py-2 text-sm font-medium border rounded-sm transition-colors
                   ${currentPage === totalPages 
                     ? 'opacity-50 cursor-not-allowed bg-gray-100 text-gray-400' 
                     : 'text-gray-700 bg-white border-gray-300 hover:bg-gray-50'

@@ -95,7 +95,7 @@ interface Filters {
     id: number;
     name: string;
     price: string;
-    price_per: string;
+    interval: string;
     photo: string;
     description: string;
     slug: string;
@@ -111,6 +111,18 @@ interface Filters {
   interface PlanCardProps {
     plan?: Plan;
     plans?: Plan[];
+    original?: Original;
+  }
+
+  interface Original {
+    data: Plan[];
+    pagination: Pagination;
+  }
+
+  interface Pagination {
+    total: number;
+    per_page: number;
+    current_page: number;
   }
 
   interface SubscriptionCardProps {

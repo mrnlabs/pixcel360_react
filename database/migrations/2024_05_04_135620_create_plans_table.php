@@ -13,10 +13,14 @@ return new class extends Migration
     {
         Schema::create('plans', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('owner_id')->constrained()->onDelete('cascade');
             $table->string('name');
-            $table->decimal('amount', 10, 2);
+            $table->decimal('price', 10, 2);
             $table->integer('duration_in_days');
+            $table->enum('interval', ['weekly', 'monthly', 'semi_annual', 'annual']);
             $table->text('description')->nullable();
+            $table->string('photo')->nullable();
+            $table->string('slug')->unique();
             $table->timestamps();
         });
     }

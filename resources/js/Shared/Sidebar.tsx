@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { usePage, Link } from '@inertiajs/react';
-import { Calendar, CircleDollarSign, Home, IdCard, LogOut, Plus, SquareUserRound } from 'lucide-react';
+import { BellPlus, Calendar, CircleDollarSign, Home, IdCard, LogOut, Plus, SquareUserRound } from 'lucide-react';
 import SidebarLogo from './SidebarLogo';
 
 interface MenuState {
@@ -89,20 +89,13 @@ const Sidebar: React.FC = () => {
       id: 'events',
       label: 'Events',
       path: '/events',
-      icon: (<Calendar className="h-6 w-6 mr-2" />),
-      subItems: [
-        {
-          label: 'Create Event',
-          path: '/events/create',
-          icon: (<Plus className="h-5 w-5 mr-2" />)
-        }
-      ]
+      icon: (<Calendar className="h-6 w-6 mr-2" />)
     },
     {
       id: 'subscriptions',
       label: 'Subscriptions',
       path: '/subscriptions',
-      icon: (<CircleDollarSign className="h-6 w-6 mr-2" />
+      icon: (<BellPlus className="h-6 w-6 mr-2" />
       ),
     },
 
@@ -120,6 +113,13 @@ const Sidebar: React.FC = () => {
         }
       ]
     },
+    {
+          id: 'plans',
+          label: 'Plans',
+          path: '/plans',
+          icon: (<CircleDollarSign className="h-6 w-6 mr-2" />
+          )
+        },
      {
       id: 'profile',
       label: 'Profile',

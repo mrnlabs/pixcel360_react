@@ -27,7 +27,7 @@ export default function Create({
   const { data, setData, post, processing, errors, reset } = useForm({
     name: "",
     price: "",
-    price_per: "",
+    interval: "",
     category: "",
     photo: null as File | string | null,
     description: "",
@@ -38,7 +38,7 @@ useEffect(() => {
     setData({
       name: plan.name,
       price: plan.price,
-      price_per: plan.price_per,
+      interval: plan.interval,
       category: String(plan.category_id),
       photo: '',
       description: plan.description
@@ -178,15 +178,15 @@ const handleQuillChange = (value: string) => {
                                 <div>
                                   <label className="block text-sm mb-1">Price Per <span className='text-red-500'>*</span></label>
                                   <select 
-                                  value={data.price_per} 
-                                  onChange={(e) => setData('price_per', e.target.value)} 
+                                  value={data.interval} 
+                                  onChange={(e) => setData('interval', e.target.value)} 
                                   className="w-full px-3 py-2 border rounded-lg">
                                       <option value="" selected={true}>Price Per</option>
                                       <option value="Week">Week</option>
                                       <option value="Month">Month</option>
                                       <option value="Year">Year</option>
                                   </select>
-                                  <InputError message={errors.price_per} />
+                                  <InputError message={errors.interval} />
                                 </div>
                               </div>
                             </div>

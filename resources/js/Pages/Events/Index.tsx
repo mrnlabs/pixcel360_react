@@ -19,12 +19,7 @@ export default function Index({events} : any) {
   const [duplicateModalOpen, setDuplicateModalOpen] = useState(false);
   const [QRData, setQRData] = useState(null);
 
-  // {
-  //   "total": 3,
-  //   "per_page": 10,
-  //   "current_page": 1,
-  //   "last_page": 1
-  // }
+
   const totalItems = events?.original?.pagination?.total;
   const itemsPerPage = events?.original?.pagination?.per_page;
   const currentPage = events?.original?.pagination?.current_page;

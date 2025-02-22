@@ -25,7 +25,7 @@ export default function SubscriptionCard({subscription}: SubscriptionCardProps) 
       <p className="mb-4">
         <span className="font-medium text-textmuted dark:text-textmuted/50 text-xs">Total :</span>
         <span className="text-success font-medium text-[14px]">
-          ${subscription?.plan?.price} <span className='text-textmuted'> / {subscription?.plan?.price_per}</span>
+          ${subscription?.plan?.price} <span className='text-textmuted'> / {subscription?.plan?.interval}</span>
         </span>
       </p>
       <p className="mb-4">
