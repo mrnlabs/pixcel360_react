@@ -16,7 +16,9 @@ return Application::configure(basePath: dirname(__DIR__))
             \App\Http\Middleware\HandleInertiaRequests::class,
             \Illuminate\Http\Middleware\AddLinkHeadersForPreloadedAssets::class,
         ]);
-
+        $middleware->alias([
+            'subscription' => \App\Http\Middleware\CheckSubscription::class,
+        ]);
         $middleware->validateCsrfTokens(except: [
             'subscriptions/*',
             // 'http://example.com/foo/bar',

@@ -14,7 +14,7 @@ export default function Header() {
             {/* <!-- Start::header-content-left --> */}
             <div className="header-content-left">
               {/* <!-- Start::header-element --> */}
-              <div className="header-element">
+              {/* <div className="header-element">
                 <div className="horizontal-logo">
                   <a href="index.html" className="header-logo">
                     <img src="https://pixcel360.com/wp-content/uploads/2024/01/Backup_of_PIXEL360-LOGO-with-grey.png" alt="logo" className="desktop-logo"/>
@@ -25,7 +25,7 @@ export default function Header() {
                     <img src="https://pixcel360.com/wp-content/uploads/2024/01/Backup_of_PIXEL360-LOGO-with-grey.png" alt="logo" className="desktop-white"/>
                   </a>
                 </div>
-              </div>
+              </div> */}
             
               {/* <ToggleNav /> */}
               <HeaderSearch/>

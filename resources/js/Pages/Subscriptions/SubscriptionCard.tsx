@@ -1,22 +1,16 @@
+import { useSubscriptionStatus } from '@/hooks/useSubscriptionStatus';
 import { SubscriptionCardProps } from '@/types';
 import { Link } from '@inertiajs/react';
 import { format, formatDistanceToNow, isAfter, parseISO } from 'date-fns';
 
 export default function SubscriptionCard({subscription}: SubscriptionCardProps) {
 
-    const startDate = parseISO(subscription?.started_at ?? '');
-    const expiryDate = parseISO(subscription?.expires_at ?? '');
-    const today = new Date();
-  
-    // Check if subscription is expired
-    const isExpired = !isAfter(expiryDate, today);
-  
-    // Calculate remaining days or days since expiration
-    const timeDistance = formatDistanceToNow(expiryDate, { addSuffix: true });
-  
-    // Format the expiry date
-    const formattedExpiryDate = format(expiryDate, 'd,MMMM yyyy');
+  if (!subscription) {
+    return null;
+  }
 
+  const { isExpired, timeRemaining, formattedExpiryDate } = useSubscriptionStatus(subscription);
+  
   return (
     <div className="xxl:col-span-3 lg:col-span-6 col-span-12">
     <div className="box">
@@ -37,7 +31,7 @@ export default function SubscriptionCard({subscription}: SubscriptionCardProps) 
       <p className="mb-4">
         <span className="font-medium text-textmuted dark:text-textmuted/50 text-xs">Next Payment Date :</span> {formattedExpiryDate} - 
         <span className={`text-xs font-medium ${isExpired ? 'text-danger' : 'text-warning'}`}>
-          {timeDistance}
+          {timeRemaining}
         </span>
       </p>
       <p className="mb-4">

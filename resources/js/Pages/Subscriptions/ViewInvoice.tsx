@@ -1,10 +1,11 @@
 import Authenticated from '@/Layouts/AuthenticatedLayout'
 import { Breadcrumb } from '@/Shared/Breadcrumb'
 import { Head, usePage } from '@inertiajs/react'
+import { format } from 'date-fns'
 import { ArrowDownToLine, FileText, Printer } from 'lucide-react'
 import React from 'react'
 
-export default function ViewInvoice() {
+export default function ViewInvoice({otherSubscriptions}: any) {
     const { current_subscription } = usePage().props.auth;
     console.log(current_subscription);
   return (
@@ -72,69 +73,28 @@ export default function ViewInvoice() {
               <table className="ti-custom-table ti-custom-table-head mt-3 border border-defaultborder dark:border-defaultborder/10">
                 <thead>
                   <tr className="border-b !border-defaultborder dark:!border-defaultborder/10">
-                    <th>BRAND NAME</th>
-                    <th>DESCRIPTION</th>
-                    <th>QUANTITY</th>
-                    <th>PRICE PER UNIT</th>
+                    <th>ORDER</th>
+                    <th>DATE</th>
+                    <th></th>
+                    <th>STATUS</th>
                     <th>TOTAL</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr className="border-b !border-defaultborder dark:!border-defaultborder/10">
+                  {otherSubscriptions.map((subscription: any) => (
+                    <tr className="border-b !border-defaultborder dark:!border-defaultborder/10">
                     <td>
-                      <div className="font-medium"> Cresta &amp; Co (Headphones) </div>
+                      <div className="font-medium"> {subscription?.plan?.name} </div>
                     </td>
                     <td>
-                      <div className="text-textmuted dark:text-textmuted/50"> Noise-cancelling technology, Bluetooth connectivity </div>
+                      <div className="text-textmuted dark:text-textmuted/50"> {format(subscription?.created_at,'MMMM d, yyyy')} </div>
                     </td>
-                    <td className="product-quantity-container"> 3 </td>
-                    <td> $84 </td>
-                    <td> $251 </td>
+                    <td className="product-quantity-container"> </td>
+                    <td> To BE Determined </td>
+                    <td> ${subscription?.plan?.price} </td>
                   </tr>
-                  <tr className="border-b !border-defaultborder dark:!border-defaultborder/10">
-                    <td>
-                      <div className="font-medium"> Zephyr &amp; Sons (Sneakers) </div>
-                    </td>
-                    <td>
-                      <div className="text-textmuted dark:text-textmuted/50"> Lightweight mesh upper, durable rubber outsole. </div>
-                    </td>
-                    <td className="product-quantity-container"> 2 </td>
-                    <td> $503 </td>
-                    <td> $503 </td>
-                  </tr>
-                  <tr className="border-b !border-defaultborder dark:!border-defaultborder/10">
-                    <td>
-                      <div className="font-medium"> Nova &amp; Nexus (Watch) </div>
-                    </td>
-                    <td>
-                      <div className="text-textmuted dark:text-textmuted/50"> scratch-resistant sapphire crystal </div>
-                    </td>
-                    <td className="product-quantity-container"> 1 </td>
-                    <td> $689 </td>
-                    <td> $689 </td>
-                  </tr>
-                  <tr className="border-b !border-defaultborder dark:!border-defaultborder/10">
-                    <td>
-                      <div className="font-medium"> Everglow &amp; Essentials (Skincare Set) </div>
-                    </td>
-                    <td>
-                      <div className="text-textmuted dark:text-textmuted/50"> Complete daily regimen </div>
-                    </td>
-                    <td className="product-quantity-container"> 3 </td>
-                    <td> $486 </td>
-                    <td> $939 </td>
-                  </tr>
-                  <tr className="border-b !border-defaultborder dark:!border-defaultborder/10">
-                    <td>
-                      <div className="font-medium"> Azure &amp; Attire (Dress) </div>
-                    </td>
-                    <td>
-                      <div className="text-textmuted dark:text-textmuted/50"> Flowy chiffon fabric, adjustable </div>
-                    </td>
-                    <td className="product-quantity-container"> 2 </td>
-                    <td> $648 </td>
-                    <td> $648 </td>
-                  </tr>
+                  ))}
+                  
                   <tr className="border-b !border-defaultborder dark:!border-defaultborder/10">
                     <td colSpan={3}></td>
                     <td colSpan={2}>
