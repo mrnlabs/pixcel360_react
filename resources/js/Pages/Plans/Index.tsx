@@ -77,7 +77,7 @@ const handleDelete = (plan: Plan) => {
             <div className="container-fluid">
              <Breadcrumb
              items={[
-                { label: 'Home', href: '/' },
+                { label: 'Home', href: '/dashboard' },
                 { label: 'Plans', href: '/plans' },
                 { label: 'All', active: true }
               ]}

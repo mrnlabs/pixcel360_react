@@ -11,6 +11,7 @@ use App\Services\SharingSettingsService;
 use App\Http\Requests\CreateEventRequest;
 use App\Http\Requests\UpdateEventRequest;
 use Inertia\Response;
+use Throwable;
 
 class EventController extends Controller
 {
@@ -44,7 +45,8 @@ class EventController extends Controller
         ]);
         
             return Inertia::render('Events/Index', ['events' => $response]);
-        } catch (\Exception $e){
+        } catch (Throwable $th){
+            throw $th;
             //return Inertia::render('Error', ['message' => $e->getMessage()]);
         }
 

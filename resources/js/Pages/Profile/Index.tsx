@@ -21,7 +21,7 @@ export default function Index({user} : any) {
             <div className="container-fluid">
              <Breadcrumb
              items={[
-                { label: 'Home', href: '/' },
+                { label: 'Home', href: '/dashboard' },
                 { label: 'Profile', href: '/profile' },
                 { label: 'Details', active: true }
               ]}

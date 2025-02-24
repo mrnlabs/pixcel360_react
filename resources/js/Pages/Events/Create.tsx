@@ -47,7 +47,7 @@ const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
             <div className="container-fluid">
              <Breadcrumb
              items={[
-                { label: 'Home', href: '/' },
+                { label: 'Home', href: '/dashboard' },
                 { label: 'Events', href: '/events' },
                 { label: 'Create', active: true }
               ]}

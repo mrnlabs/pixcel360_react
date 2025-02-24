@@ -13,7 +13,7 @@ export default function Index({subscriptions}: SubscriptionCardProps) {
             <div className="container-fluid">
              <Breadcrumb
              items={[
-                { label: 'Home', href: '/' },
+                { label: 'Home', href: '/dashboard' },
                 { label: 'Subscriptions', href: '/subscriptions' },
                 { label: 'All', active: true }
               ]}

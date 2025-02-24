@@ -1,13 +1,10 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import Footer from '@/Shared/Footer';
-import Header from '@/Shared/Header';
-import Sidebar from '@/Shared/AdminSidebar';
 import { Head } from '@inertiajs/react';
 import HeaderCard from './Dashboard/HeaderCard';
 import { DBarChart } from './Charts/DBarChart';
 import { DPieChart } from './Charts/DPieChart';
-import { EllipsisVertical } from 'lucide-react';
 import NotificationCard from './Dashboard/NotificationCard';
+import { Breadcrumb } from '@/Shared/Breadcrumb';
 
 export default function Dashboard() {
     return (
@@ -17,23 +14,13 @@ export default function Dashboard() {
             <div className="container-fluid">
               {/* <!-- Start::page-header --> */}
               <div className="flex items-center justify-between page-header-breadcrumb flex-wrap gap-2">
-                <div>
-                  <nav>
-                    <ol className="breadcrumb mb-0">
-                      <li className="breadcrumb-item">
-                        <a href="#!"> Dashboards </a>
-                      </li>
-                      <li className="breadcrumb-item active" aria-current="page">HRM</li>
-                    </ol>
-                  </nav>
-                  <h1 className="page-title font-medium text-lg mb-0">HRM</h1>
-                </div>
-                <div className="btn-list">
-                  <button type="button" className="ti-btn bg-white dark:bg-bodybg border border-defaultborder dark:border-defaultborder/10 btn-wave !my-0 waves-effect waves-light">
-                    <i className="ri-filter-3-line align-middle me-1 leading-none"></i> Filter </button>
-                  <button type="button" className="ti-btn ti-btn-primary !border-0 btn-wave me-0 waves-effect waves-light">
-                    <i className="ri-share-forward-line me-1"></i> Share </button>
-                </div>
+              <Breadcrumb
+             items={[
+                { label: 'Dashboard', href: '/dashboard' },
+                { label: 'Metrics', active: true }
+              ]}
+              />
+                
               </div>
              
                  <HeaderCard/>
