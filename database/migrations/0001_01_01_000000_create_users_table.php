@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('owner_id')->nullable();
             $table->string('firstname');
             $table->string('lastname');
+            $table->string('google_id')->nullable();
             $table->enum('role', ['admin', 'user'])->default('admin');
             $table->string('display_name')->nullable();
             $table->string('company_name')->nullable();

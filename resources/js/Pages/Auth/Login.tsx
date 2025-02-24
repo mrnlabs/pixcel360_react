@@ -1,13 +1,17 @@
 import ThemeTextInput from '@/Components/Form/ThemeTextInput';
 import InputError from '@/Components/InputError';
 import Guest from '@/Layouts/GuestLayout';
-import { Head, Link, useForm, usePage } from '@inertiajs/react';
+import showToast from '@/utils/showToast';
+import { Head, Link, router, useForm, usePage } from '@inertiajs/react';
 import { Eye, EyeOff, Loader } from 'lucide-react';
 import { FormEventHandler, useState } from 'react';
 
 export default function Welcome() {
     const loginError = usePage().props.errors;
     const [showPassword, setShowPassword] = useState(false);
+
+    const [isLoading, setIsLoading] = useState(false);
+
     const { data, setData, post, processing, errors, reset } = useForm({
         email: "",
         password: "",
@@ -19,6 +23,20 @@ export default function Welcome() {
             onFinish: () => reset("password"),
         });
     };
+
+
+
+const handleGoogleLogin = async () => {
+   try {
+       const response = await fetch('/auth/google');
+       const data = await response.json();
+       showToast('success', 'You have logged in successfully!', {position: 'bottom-right'});
+       window.location.href = data.url;
+   } catch (error) {
+      showToast('error', 'We could not initiate Google login. Please try again.', {position: 'bottom-right'});
+       console.error('Error initiating Google login:', error);
+   }
+};
     return (
         <Guest>
             <Head title="Welcome" />
@@ -35,12 +53,16 @@ export default function Welcome() {
                     </Link> 
                     </div>
                <p className="h5 mb-2 text-center">Sign In</p>
-               <p className="mb-4 text-textmuted dark:text-textmuted/50 opacity-70 font-normal text-center">Welcome back Henry !</p>
                <div className="flex mb-3 justify-between gap-2 flex-wrap flex-lg-nowrap"> 
-                <button type="button" className="ti-btn ti-btn-lg border border-defaultborder dark:border-defaultborder/10 flex items-center justify-center flex-auto bg-light">
+                <button disabled={isLoading} 
+                 onClick={handleGoogleLogin} 
+                 type="button" className="ti-btn ti-btn-lg border border-defaultborder dark:border-defaultborder/10 flex items-center justify-center flex-auto bg-light">
                  <span className="avatar avatar-xs flex-shrink-0"> 
                     <img src="google.PNG" alt=""/> 
-                    </span> <span className="leading-[1.2rem] ms-2 text-[13px] text-defaulttextcolor">Signup with Google</span> </button> </div>
+                    </span> <span className="leading-[1.2rem] ms-2 text-[13px] text-defaulttextcolor">
+                    {isLoading ? 'Signing in...' : 'Signup with Google'}</span> 
+               </button> 
+                  </div>
                <div className="text-center my-3 authentication-barrier"> <span>OR</span> </div>
                {loginError && loginError.email && (
                     <div className="mb-4 text-sm font-medium text-red-500 text-center">
