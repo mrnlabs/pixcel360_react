@@ -26265,10 +26265,10 @@ select.tabulator-page-size option:is(.dark *){
   inset-inline-start: 0px;
   top: 0px;
   z-index: 103;
-  width: 15rem;
-  border-inline-end-width: 1px;
-  border-style: solid;
-  border-inline-end-color: rgb(var(--menu-border-color));
+  /* width: 15rem; */
+  /* border-inline-end-width: 1px; */
+  /* border-style: solid; */
+  /* border-inline-end-color: rgb(var(--menu-border-color)); */
   background-color: rgb(var(--menu-bg));
   transition-property: all;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);

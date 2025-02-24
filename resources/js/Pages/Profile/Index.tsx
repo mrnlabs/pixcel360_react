@@ -30,7 +30,7 @@ export default function Index({user} : any) {
              
         
              <div className="">
-  <div className="max-w-[75%] mx-auto">
+  <div className=" mx-auto">
     <div className="box">
       <ul className="nav nav-tabs tab-style-8 scaleX rounded m-4 profile-settings-tab gap-2 flex flex-wrap" id="myTab4" role="tablist">
       {tabs.map((tab) => (

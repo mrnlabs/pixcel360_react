@@ -149,7 +149,10 @@ const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
               type="text" className="form-control" id="postalCode" placeholder="Enter Your Postal Code"  />
               <InputError message={errors.post_code} />
             </div>
-            <button disabled={processing} type="submit" className="ti-btn ti-btn-primary">{ processing ? 'Saving...' : 'Save'}</button>
+            <div className="xl:col-span-12 col-span-12">
+            <button disabled={processing} type="submit" className="ti-btn ti-btn-primary w-full">{ processing ? 'Saving...' : 'Save'}</button>
+            </div>
+            
           </form>
         </div>
   )
