@@ -3,6 +3,7 @@
 use App\Http\Controllers\API\EventAPIController;
 use App\Http\Controllers\API\EventSettingAPIController;
 use Illuminate\Http\Request;
+use App\Models\Plan;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 
@@ -17,3 +18,8 @@ Route::post('/active-event', [EventAPIController::class, 'activateEvent'])->name
 Route::post('/upload-event-video', [EventAPIController::class, 'uploadVideo'])->name('event.upload.video');
 Route::post('/update-fields', [EventSettingAPIController::class, 'updateField'])->name('event.update.fields');
 Route::post('/upload-audio', [EventSettingAPIController::class, 'uploadAudio'])->name('event.upload.audio');
+
+
+// Get Plans
+Route::get('/plans', function() {$plans = Plan::with('category')->latest()->get();return response()->json($plans);});
+
