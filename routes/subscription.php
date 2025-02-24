@@ -8,4 +8,5 @@ Route::middleware(['auth', 'subscription'])->prefix('subscriptions')->group(func
     Route::get('/', [SubscriptionController::class, 'index'])->name('subscriptions');
     Route::get('/show/{slug}', [SubscriptionController::class, 'show'])->name('subscriptions.show');
     Route::post('/subscribe/{slug}', [PayFastController::class, 'subscribe'])->name('subscribe');
+    Route::post('/subscribe/{slug}', [PayFastController::class, 'subscribtionExpired'])->name('subscription.expired');
 });

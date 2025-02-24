@@ -5,7 +5,7 @@ Hi {{ $user->firstname }},
 
 Your account has been successfully created. Here are your login credentials:
 
-Email: {{ $user->email }}
+Email: {{ $user->email }}<br>
 Password: {{ $password }}
 
 <x-mail::button :url="route('login')">

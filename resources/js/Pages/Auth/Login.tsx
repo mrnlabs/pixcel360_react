@@ -69,6 +69,11 @@ const handleGoogleLogin = async () => {
                         {loginError.email}
                     </div>
                 )}
+                 {status && (
+                        <p className="mb-4 text-sm font-medium text-green-600">
+                            {status}
+                        </p>
+                )}
                <div className="grid grid-cols-12 gap-y-3">
                 
                   <div className="xl:col-span-12 col-span-12"> 
@@ -88,7 +93,7 @@ const handleGoogleLogin = async () => {
                   </div>
                   <div className="xl:col-span-12 col-span-12 mb-2">
                      <label htmlFor="signin-password" className="form-label text-defaulttextcolor block">Password<sup className="text-xs text-danger">*</sup>
-                     <a href="#!" className="float-end font-normal text-textmuted dark:text-textmuted/50">Forgot password ?</a>
+                     <Link href={route("password.request")} className="float-end font-normal text-textmuted dark:text-textmuted/50">Forgot password ?</Link>
                      </label> 
                      <div className="relative"> 
                         <ThemeTextInput 
