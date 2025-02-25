@@ -9,6 +9,7 @@ interface MetricsCardProps {
     percentageChange?: string | number;
     isPositive?: boolean;
     iconBgColor: string;
+    outerBgColor: string;
     route: string;
   }
   
@@ -18,6 +19,7 @@ interface MetricsCardProps {
     route, 
     value,
     iconBgColor,
+    outerBgColor,
     percentageChange, 
     isPositive = true 
   }) => {
@@ -28,7 +30,7 @@ interface MetricsCardProps {
   <div className="box-body">
     <div className="">
       <div className="flex justify-between mb-2">
-        <div className="p-2 border border-primary/10 bg-primary/10 rounded-full">
+        <div className={`p-2 border ${outerBgColor} rounded-full`}>
           <span className={`avatar avatar-md avatar-rounded ${iconBgColor}  svg-white mb-0`}>
           {icon}
           </span>

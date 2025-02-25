@@ -1,13 +1,13 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/react';
 import HeaderCard from './Dashboard/HeaderCard';
-import { DBarChart } from './Charts/DBarChart';
 import { DPieChart } from './Charts/DPieChart';
 import NotificationCard from './Dashboard/NotificationCard';
 import { Breadcrumb } from '@/Shared/Breadcrumb';
-import { PageProps } from '@/types';
+import { DashboardProps, PageProps } from '@/types';
+import DBarChart from './Charts/DBarChart';
 
-export default function Dashboard({ metrics }: PageProps) {
+export default function Dashboard({ metrics: { metrics, userAnalytics } }: DashboardProps) {
     return (
         <AuthenticatedLayout>
           <Head title="Dashboard" />
@@ -25,26 +25,17 @@ export default function Dashboard({ metrics }: PageProps) {
               </div>
              
                  <HeaderCard 
-                 metrics={metrics}
+                //  @ts-ignore
+                   metrics={metrics}
                  />
-                 
+
               <div className="grid grid-cols-12 gap-x-6 col-span-12">
                 <div className="xxl:col-span-8 col-span-12">
-                  <div className="box">
-                    <div className="box-header justify-between">
-                      <div className="box-title">Project Analysis</div>
-                      <div className="flex gap-2">
-                        <div className="ti-btn ti-btn-sm ti-btn-outline-light">Today</div>
-                        <div className="ti-btn ti-btn-sm ti-btn-outline-light">Weakly</div>
-                        <div className="ti-btn ti-btn-sm ti-btn-light">Yearly</div>
-                      </div>
-                    </div>
-                    <div className="box-body pb-1">
-                      <div style={{minHeight: 345 + 'px'}} className="">
-                        <DBarChart/>
-                      </div>
-                    </div>
-                  </div>
+                <div style={{minHeight: 345 + 'px'}} className="">
+                        <DBarChart 
+                        // @ts-ignore
+                        userAnalytics={userAnalytics}/>
+                </div>
                 </div>
                 <NotificationCard/>
               </div>

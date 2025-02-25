@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('firstname');
             $table->string('lastname');
             $table->string('google_id')->nullable();
+            $table->timestamp('last_login_at')->nullable();
             $table->enum('role', ['admin', 'user'])->default('admin');
             $table->string('display_name')->nullable();
             $table->string('company_name')->nullable();

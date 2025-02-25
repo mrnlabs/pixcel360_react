@@ -1,4 +1,4 @@
-import { PageProps } from '@/types';
+import { DashboardProps, PageProps } from '@/types';
 import MetricsCard from './MetricsCard'
 import { Link } from '@inertiajs/react'
 
@@ -36,11 +36,11 @@ const iconMap: Record<string, React.FC> = {
 };
 
 
-export default function HeaderCard({ metrics }: PageProps) {
+export default function HeaderCard({ metrics }: DashboardProps) {
   return (
     <div className="grid xl:grid-cols-5 lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-x-6" style={{marginTop: -2+'rem'}}>
 
-          {metrics.map((metric, index) => {
+          {metrics.metrics?.map((metric, index) => {
                 const IconComponent = iconMap[metric.icon] || ChartBarIcon;
                 
                 return (
@@ -51,6 +51,7 @@ export default function HeaderCard({ metrics }: PageProps) {
                     icon={<IconComponent  />}
                     label={metric.label}
                     iconBgColor={metric.iconBgColor}
+                    outerBgColor={metric.outerBgColor}
                     value={metric.value}
                     percentageChange={metric.percentageChange}
                     isPositive={metric.isPositive}

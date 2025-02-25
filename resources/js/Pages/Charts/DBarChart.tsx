@@ -1,108 +1,149 @@
-"use client"
+import React, { useState, useEffect } from "react";
+import { Bar, BarChart, CartesianGrid, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer } from "recharts";
 
-import * as React from "react"
-import { Bar, BarChart, CartesianGrid, XAxis } from "recharts"
+// Define types
+type TimePeriod = "daily" | "weekly" | "monthly";
 
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/Components/ui/card"
-import {
-  ChartConfig,
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
-} from "@/Components/ui/chart";
+interface UserData {
+  date: string;
+  fullDate: string;
+  newUsers: number;
+  activeUsers: number;
+}
 
+interface UserAnalyticsData {
+  data: UserData[];
+  totals: {
+    newUsers: number;
+    activeUsers: number;
+    retentionRate: number;
+  };
+}
 
+interface UserAnalytics {
+  daily: UserAnalyticsData;
+  weekly: UserAnalyticsData;
+  monthly: UserAnalyticsData;
+}
 
-const chartData = [
-  { month: "Jan", desktop: 1200, mobile: 800 },
-  { month: "Feb", desktop: 1500, mobile: 1000 },
-  { month: "Mar", desktop: 1300, mobile: 900 },
-  { month: "Apr", desktop: 1800, mobile: 1200 },
-  { month: "May", desktop: 2000, mobile: 1500 },
-  { month: "Jun", desktop: 1700, mobile: 1300 },
-  { month: "Jul", desktop: 1900, mobile: 1400 },
-  { month: "Aug", desktop: 2200, mobile: 1600 },
-  { month: "Sep", desktop: 1600, mobile: 1100 },
-  { month: "Oct", desktop: 1400, mobile: 1000 },
-  { month: "Nov", desktop: 1800, mobile: 1300 },
-  { month: "Dec", desktop: 2100, mobile: 1500 }
-];
+interface PageProps {
+  metrics: {
+    cards: any[];
+    userAnalytics: UserAnalytics;
+  };
+}
 
-const chartConfig = {
-  views: {
-    label: "Page Views",
-  },
-  desktop: {
-    label: "Desktop",
-    color: "hsl(var(--chart-1))",
-  },
-  mobile: {
-    label: "Mobile",
-    color: "hsl(var(--chart-2))",
-  },
-} satisfies ChartConfig
+const DBarChart: React.FC = ({userAnalytics}: any) => {
+  const [timePeriod, setTimePeriod] = useState<TimePeriod>("monthly");
+  const [chartData, setChartData] = useState<UserData[]>([]);
+  const [totals, setTotals] = useState({
+    newUsers: 0,
+    activeUsers: 0,
+    retentionRate: 0
+  });
 
-export function DBarChart() {
-  const [activeChart, setActiveChart] =
-    React.useState<keyof typeof chartConfig>("desktop")
-
-  const total = React.useMemo(
-    () => ({
-      desktop: chartData.reduce((acc, curr) => acc + curr.desktop, 0),
-      mobile: chartData.reduce((acc, curr) => acc + curr.mobile, 0),
-    }),
-    []
-  )
+  // Update chart data when time period changes
+  useEffect(() => {
+    const analyticsData = userAnalytics[timePeriod];
+    setChartData(analyticsData.data);
+    setTotals(analyticsData.totals);
+  }, [timePeriod, userAnalytics]);
 
   return (
-    <Card>
-      <CardHeader className="flex flex-col items-stretch space-y-0 border-b p-0 sm:flex-row">
-        <div className="flex flex-1 flex-col justify-center gap-1 px-6 py-5 sm:py-6">
-          <CardTitle></CardTitle>
-          <CardDescription>
-          </CardDescription>
-        </div>
-      </CardHeader>
-      <CardContent className="px-2 sm:p-6">
-        <ChartContainer
-          config={chartConfig}
-          className="aspect-auto h-[250px] w-full"
-        >
-          <BarChart
-            accessibilityLayer
-            data={chartData}
-            margin={{
-              left: 12,
-              right: 12,
-            }}
+    <div className="box">
+      <div className="box-header justify-between">
+        <div className="box-title">User Analytics</div>
+        <div className="flex gap-2">
+          <button
+            className={`ti-btn ti-btn-sm ${timePeriod === "daily" ? "ti-btn-light" : "ti-btn-outline-light"}`}
+            onClick={() => setTimePeriod("daily")}
           >
-            <CartesianGrid vertical={false} />
-            <XAxis
-              dataKey="month"
-              tickLine={false}
-              axisLine={false}
-              tickMargin={8}
-              minTickGap={32}
-            />
-            <ChartTooltip
-              content={
-                <ChartTooltipContent
-                  className="w-[150px]"
-                  nameKey="views"
-                  labelFormatter={(value) => value}
-                />
-              }
-            />
-            <Bar dataKey={activeChart} fill={`var(--color-${activeChart})`} />
-          </BarChart>
-        </ChartContainer>
-      </CardContent>
-    </Card>
-  )
-}
+            Daily
+          </button>
+          <button
+            className={`ti-btn ti-btn-sm ${timePeriod === "weekly" ? "ti-btn-light" : "ti-btn-outline-light"}`}
+            onClick={() => setTimePeriod("weekly")}
+          >
+            Weekly
+          </button>
+          <button
+            className={`ti-btn ti-btn-sm ${timePeriod === "monthly" ? "ti-btn-light" : "ti-btn-outline-light"}`}
+            onClick={() => setTimePeriod("monthly")}
+          >
+            Monthly
+          </button>
+        </div>
+      </div>
+      <div className="box-body pb-1">
+        <div style={{ minHeight: "345px" }} className="w-full">
+          <ResponsiveContainer width="100%" height={300}>
+            <BarChart
+              data={chartData}
+              margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
+            >
+              <CartesianGrid strokeDasharray="3 3" vertical={false} />
+              <XAxis dataKey="date" />
+              <YAxis />
+              <Tooltip
+                contentStyle={{
+                  backgroundColor: "rgba(255, 255, 255, 0.9)",
+                  border: "1px solid #ccc",
+                  borderRadius: "4px",
+                  padding: "10px",
+                }}
+                formatter={(value, name) => [
+                  value.toLocaleString(),
+                  name === "newUsers" ? "New Users" : "Active Users",
+                ]}
+                labelFormatter={(label, items) => {
+                  // Find the corresponding data item to get the full date
+                  const item = chartData.find(d => d.date === label);
+                  return item ? `Date: ${item.fullDate}` : `Date: ${label}`;
+                }}
+              />
+              <Legend
+                verticalAlign="top"
+                height={36}
+                formatter={(value) =>
+                  value === "newUsers" ? "New Users" : "Active Users"
+                }
+              />
+              <Bar
+                dataKey="newUsers"
+                fill="#4f46e5"
+                radius={[4, 4, 0, 0]}
+                name="newUsers"
+                barSize={timePeriod === "monthly" ? 16 : 24}
+              />
+              <Bar
+                dataKey="activeUsers"
+                fill="#06b6d4"
+                radius={[4, 4, 0, 0]}
+                name="activeUsers"
+                barSize={timePeriod === "monthly" ? 16 : 24}
+              />
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
+        
+        {/* Totals summary */}
+        <div className="flex justify-between mt-6 px-4">
+          <div className="text-center">
+            <p className="text-sm text-textmuted">Total New Users</p>
+            <h4 className="font-semibold">{totals.newUsers.toLocaleString()}</h4>
+          </div>
+          <div className="text-center">
+            <p className="text-sm text-textmuted">Total Active Users</p>
+            <h4 className="font-semibold">{totals.activeUsers.toLocaleString()}</h4>
+          </div>
+          <div className="text-center">
+            <p className="text-sm text-textmuted">Average Retention</p>
+            <h4 className="font-semibold">{totals.retentionRate.toFixed(1)}%</h4>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default DBarChart;

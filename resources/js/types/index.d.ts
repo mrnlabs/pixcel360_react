@@ -183,11 +183,19 @@ interface Metric {
   isPositive: boolean;
   icon: string;
   iconBgColor: string;
+  outerBgColor: string;
   route: string;
 }
 
 interface PageProps {
   metrics: Metric[];
+}
+
+interface DashboardProps {
+  metrics: {
+    metrics: MetricCard[];
+    userAnalytics: UserAnalytics;
+  };
 }
 
 export type PageProps<
