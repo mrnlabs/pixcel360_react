@@ -176,6 +176,20 @@ export type RolesIndexProps = {
   };
 }
 
+interface Metric {
+  label: string;
+  value: string;
+  percentageChange: number;
+  isPositive: boolean;
+  icon: string;
+  iconBgColor: string;
+  route: string;
+}
+
+interface PageProps {
+  metrics: Metric[];
+}
+
 export type PageProps<
     T extends Record<string, unknown> = Record<string, unknown>,
 > = T & {

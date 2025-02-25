@@ -5,8 +5,9 @@ import { DBarChart } from './Charts/DBarChart';
 import { DPieChart } from './Charts/DPieChart';
 import NotificationCard from './Dashboard/NotificationCard';
 import { Breadcrumb } from '@/Shared/Breadcrumb';
+import { PageProps } from '@/types';
 
-export default function Dashboard() {
+export default function Dashboard({ metrics }: PageProps) {
     return (
         <AuthenticatedLayout>
           <Head title="Dashboard" />
@@ -23,7 +24,10 @@ export default function Dashboard() {
                 
               </div>
              
-                 <HeaderCard/>
+                 <HeaderCard 
+                 metrics={metrics}
+                 />
+                 
               <div className="grid grid-cols-12 gap-x-6 col-span-12">
                 <div className="xxl:col-span-8 col-span-12">
                   <div className="box">
