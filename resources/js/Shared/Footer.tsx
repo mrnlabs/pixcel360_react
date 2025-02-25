@@ -30,11 +30,11 @@ function scrollFunction() {
         <Link href="/" className="text-dark font-medium"> <span className='text-primary'>Pixcel360</span></Link>. All rights reserved </span>
     </div>
   </footer>
-  <div onClick={() => window.scrollTo(0, 0)} className="scrollToTop cursor-pointer" > 
+  {/* <div onClick={() => window.scrollTo(0, 0)} className="scrollToTop cursor-pointer" > 
     <span className="arrow">
     <MoveUp className='text-xl' />
     </span> 
-    </div>
+    </div> */}
     </>
   )
 }

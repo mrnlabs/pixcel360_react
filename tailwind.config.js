@@ -27,7 +27,7 @@ export default {
     		colors: {
                 'duo-pass': '#FFCC00',
                 'photo-pass': '#FF6666',
-                'other-pass': '#6699FF',
+                'other-pass': '#394dff',
             }
     	}
     },

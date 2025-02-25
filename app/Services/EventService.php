@@ -1,9 +1,7 @@
 <?php
 
 namespace App\Services;
-use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use App\Models\Event;
-use Illuminate\Support\HtmlString;
 
 class EventService
 {

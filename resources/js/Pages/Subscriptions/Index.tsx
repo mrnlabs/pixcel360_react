@@ -8,7 +8,7 @@ import { SubscriptionCardProps } from '@/types'
 export default function Index({subscriptions}: SubscriptionCardProps) {
   return (
     <Authenticated>
-        <Head title="Dashboard" />
+        <Head title="Subscriptions" />
           <div className="main-content app-content">
             <div className="container-fluid">
              <Breadcrumb

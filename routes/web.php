@@ -55,3 +55,4 @@ require __DIR__.'/payment_method.php';
 require __DIR__.'/payfast.php';
 require __DIR__.'/invoice.php';
 require __DIR__.'/google_auth.php';
+require __DIR__.'/user.php';

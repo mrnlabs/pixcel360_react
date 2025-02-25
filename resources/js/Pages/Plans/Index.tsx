@@ -72,7 +72,7 @@ const handleDelete = (plan: Plan) => {
 
   return (
     <Authenticated>
-          <Head title="Dashboard" />
+          <Head title="Plans" />
           <div className="main-content app-content">
             <div className="container-fluid">
              <Breadcrumb

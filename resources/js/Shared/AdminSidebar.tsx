@@ -22,7 +22,7 @@ interface SubItem {
 }
 
 const AdminSidebar: React.FC = () => {
-  const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(true);
+  const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
   const sidebarRef = useRef<HTMLDivElement>(null);
   const [isMobile, setIsMobile] = useState<boolean>(false);
   
@@ -83,6 +83,15 @@ const AdminSidebar: React.FC = () => {
       path: '/dashboard',
       icon: (
         <Home className="h-6 w-6 mr-2" />
+      )
+    },
+    
+    {
+      id: 'users',
+      label: 'Users',
+      path: '/users',
+      icon: (
+        <SquareUserRound className="h-6 w-6 mr-2" />
       )
     },
     {
@@ -235,41 +244,51 @@ const AdminSidebar: React.FC = () => {
 
   return (
     <aside className="app-sidebar" id="sidebar">
-      <div className="flex h-screen bg-gray-100">
-        <div 
-          ref={sidebarRef} 
-          className={`
-            fixed inset-y-0 left-0 transform 
-            ${isMobile ? (isSidebarOpen ? 'translate-x-0' : '-translate-x-full') : 'translate-x-0'}
-            transition-transform duration-300 
-            md:relative md:translate-x-0 
-            flex flex-col w-64 bg-gray-800
-          `}
-        >
-          <SidebarLogo/>
-          <div className="flex flex-col flex-1 overflow-y-auto">
-            <nav className="flex-1 p-2 space-y-1 bg-gray-800">
-              {menuItems.map(renderMenuItem)}
-            </nav>
+        <div className="flex h-screen bg-gray-100">
+          {/* Mobile Menu Button */}
+          <div className="fixed top-0 left-0 z-20 md:hidden">
+            <button 
+              onClick={toggleSidebar}
+              className="p-4 text-gray-500 focus:outline-none focus:text-gray-700"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            </button>
           </div>
-        </div>
-
-        <div className="flex flex-col flex-1 overflow-y-auto">
-          <div className="flex items-center justify-between h-16 bg-white border-b border-gray-200">
-            <div className="flex items-center px-4 md:hidden">
-              <button 
-                onClick={toggleSidebar} 
-                className="text-gray-500 focus:outline-none focus:text-gray-700"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
-                </svg>
-              </button>
+    
+          {/* Sidebar */}
+          <div 
+            ref={sidebarRef}
+            className={`
+              fixed inset-y-0 left-0 z-30 transform 
+              ${isMobile ? (isSidebarOpen ? 'translate-x-0' : '-translate-x-full') : 'translate-x-0'}
+              transition-transform duration-300 ease-in-out
+              md:relative md:translate-x-0 
+              flex flex-col w-64 bg-[#181B2F]
+            `}
+          >
+            <SidebarLogo />
+            <div className="flex flex-col flex-1 overflow-y-auto">
+              <nav className="flex-1 p-2 space-y-1 bg-gray-800">
+                {menuItems.map(renderMenuItem)}
+              </nav>
             </div>
           </div>
+    
+          {/* Overlay for mobile */}
+          {isMobile && isSidebarOpen && (
+            <div 
+              className="fixed inset-0 z-20 bg-black bg-opacity-50"
+              onClick={() => setIsSidebarOpen(false)}
+            />
+          )}
+    
+          <div className="flex flex-col flex-1 overflow-y-auto">
+            <div className="h-16 bg-white border-b border-gray-200" />
+          </div>
         </div>
-      </div>
-    </aside>
+      </aside>
   );
 };
 

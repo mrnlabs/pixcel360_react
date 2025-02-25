@@ -24,7 +24,6 @@ export const AuthGuard = ({
             roleArray.includes(userRole.name)
         );
     };
-
     const checkPermissions = (): boolean => {
         if (!permissions) return true;
         const permissionArray = Array.isArray(permissions) ? permissions : [permissions];

@@ -16,7 +16,7 @@ export default function Index({user} : any) {
   ];
   return (
     <Authenticated>
-          <Head title="Dashboard" />
+          <Head title="My Profile" />
           <div className="main-content app-content">
             <div className="container-fluid">
              <Breadcrumb

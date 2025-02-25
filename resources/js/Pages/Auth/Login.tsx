@@ -128,7 +128,7 @@ const handleGoogleLogin = async () => {
                   </div>
                </div>
                <div className="grid mt-4"> 
-                <button type="button" onClick={submit} 
+                <button type="button" onClick={submit} onKeyDown={(e) => { if (e.key === 'Enter') submit(e); }}
                   disabled={processing} className="cursor-pointer ti-btn ti-btn-primary">
                      {processing && <Loader className="mr-2 animate-spin" />}Sign In</button> 
                 </div>

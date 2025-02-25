@@ -1,48 +1,46 @@
 import Authenticated from '@/Layouts/AuthenticatedLayout'
 import { Breadcrumb } from '@/Shared/Breadcrumb'
 import { Head, Link, router } from '@inertiajs/react'
-import { Copy, QrCode, SquarePen, SquarePlus, Trash2 } from 'lucide-react'
-import React, { lazy, Suspense, useState } from 'react'
-import Table from './Table'
-import DuplicateModal from './DuplicateModal'
-import { Filters, QueryParams } from '@/types'
-const QRModal = lazy(() => import("./QRModal"));
+import { SquarePlus } from 'lucide-react'
+import React, { useState } from 'react'
+import { Filters, Plan, PlanCardProps, QueryParams } from '@/types'
 // @ts-expect-error
 import { debounce } from 'lodash';
-import { Input } from '@/Components/ui/input'
-import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/Components/ui/select'
+import PlanCard from './UserCard'
+import showToast from '@/utils/showToast'
 import Paginator from '@/Shared/Paginator'
+import { AuthGuard } from '@/guards/authGuard'
+import UserCard from './UserCard'
 
-export default function Index({events} : any) {
+export default function Index({plans} : any) {
   
-  const [modalOpen, setModalOpen] = useState(false);
-  const [duplicateModalOpen, setDuplicateModalOpen] = useState(false);
-  const [QRData, setQRData] = useState(null);
+  const [dialogOpen, setDialogOpen] = useState(false);
 
-
-  const totalItems = events?.original?.pagination?.total;
-  const itemsPerPage = events?.original?.pagination?.per_page;
-  const currentPage = events?.original?.pagination?.current_page;
-
-
-  const handlePageChange  = (page: number) => {
-   router.get(route('events'), {page}, {
-    preserveState: true,
-    replace: true
-   })
-  }
+    const totalItems = plans?.original?.pagination?.total;
+    const itemsPerPage = plans?.original?.pagination?.per_page;
+    const currentPage = plans?.original?.pagination?.current_page;
 
   const [filters, setFilters] = useState({
     search: '',
     sort: ''
 });
 
+ const handlePageChange  = (page: number) => {
+   router.get(route('plans'), {page}, {
+    preserveState: true,
+    replace: true
+   })
+  }
+
+
 const updateFilters = React.useCallback(
   debounce((newFilters: Partial<Filters>) => {
     const queryParams: QueryParams = {};
     
+    // Merge new filters with existing filters
     const updatedFilters = { ...filters, ...newFilters };
     
+    // Add non-empty filter values to query params
     Object.keys(updatedFilters).forEach(key => {
       if (updatedFilters[key as keyof Filters]) {
         queryParams[key] = updatedFilters[key as keyof Filters] as string;
@@ -60,15 +58,28 @@ const updateFilters = React.useCallback(
   [filters]
 );
 
+const handleDelete = (plan: Plan) => {
+  router.delete(route('plans.destroy', plan?.slug), { 
+    preserveScroll: true, 
+    onSuccess: () => {
+      setDialogOpen(false),
+      showToast('success', 'Plan deleted successfully!', {position: 'bottom-right'});
+     },
+     onError: () => {
+      showToast('error', 'Something went wrong', {position: 'bottom-right'});
+     }
+ });
+}
+
   return (
     <Authenticated>
-          <Head title="Events" />
+          <Head title="Plans" />
           <div className="main-content app-content">
             <div className="container-fluid">
              <Breadcrumb
              items={[
                 { label: 'Home', href: '/dashboard' },
-                { label: 'Events', href: '/events' },
+                { label: 'Users', href: '/users' },
                 { label: 'All', active: true }
               ]}
               />
@@ -77,14 +88,13 @@ const updateFilters = React.useCallback(
                 <div className="xxl:col-span-12 col-span-12">
                   <div className="box">
                     <div className="box-header justify-between">
-                      <div className="box-title"> Events </div>
+                      <div className="box-title"> Users </div>
                       <div className="flex flex-wrap gap-2">
-                        <Link href={route('event.create')} className="ti-btn ti-btn-primary !m-0 btn-wave ti-btn-sm waves-effect waves-light">
-                          <SquarePlus className="align-middle" />Create </Link>
-                        <div>
+                        
+                        {/* <div>
                           <Input 
                           onChange={(e) => updateFilters({ search: e.target.value })}
-                          className="form-control form-control-sm" type="search" placeholder="Search Events" aria-label=".form-control-sm example"/>
+                          className="form-control form-control-sm" type="search" placeholder="Search" aria-label=".form-control-sm example"/>
                         </div>
                         <div className="ti-dropdown hs-dropdown">
                           <Select onValueChange={(e) => updateFilters({ sort: e })}>
@@ -100,35 +110,36 @@ const updateFilters = React.useCallback(
                           </SelectContent>
                         </Select>
 
-                        </div>
+                        </div> */}
                       </div>
                     </div>
                     <div className="box-body">
-                      <Table 
-                      setModalOpen={setModalOpen} 
-                      setDuplicateModalOpen={setDuplicateModalOpen}
-                      events={events?.original?.data}
-                      setQRData={setQRData}
-                       />
+
+                    <div className="grid grid-cols-12 gap-x-6">
+                      {/* {plans?.original?.data?.map((plan: any) => (
+                        <PlanCard key={plan.id} 
+                        plan={plan} 
+                        handleDelete={() => handleDelete(plan)} 
+                        dialogOpen={dialogOpen}
+                        setDialogOpen={setDialogOpen} />
+                      ))} */}
+                      <UserCard/>
+                   </div>
+
                     </div>
                     <div className="box-footer">
-                    <Paginator
+                    {/* <Paginator
                       totalItems={totalItems}
                       itemsPerPage={itemsPerPage}
                       currentPage={currentPage}
                       onPageChange={handlePageChange}
                       showingText="Displaying"
                       maxVisiblePages={5}
-                    />
+                    /> */}
                     </div>
                   </div>
                 </div>
               </div>
-
-              <Suspense fallback={""}>
-              <QRModal open={modalOpen} setOpen={setModalOpen} QRData={QRData}/>
-              <DuplicateModal open={duplicateModalOpen} setDuplicateModalOpen={setDuplicateModalOpen} event={QRData}/>
-             </Suspense>
             
             </div>
           </div>
