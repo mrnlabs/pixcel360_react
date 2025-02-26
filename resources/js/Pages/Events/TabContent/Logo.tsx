@@ -106,15 +106,17 @@ export default function Logo() {
                 disabled={uploading || !preview}
               />
             </label>
-            <button 
-              type="button" 
-              className={`ti-btn ti-btn-sm ti-btn-soft-primary1 btn-wave waves-effect waves-light ${uploading ? 'opacity-50 cursor-not-allowed' : ''}`}
-              onClick={() => setDialogOpen(true)}
-              disabled={uploading}
-            >
-              <Trash2 size={16} className="me-1"/>
-              Remove 
-            </button>
+            {user?.photo && (
+             <button 
+             type="button" 
+             className={`ti-btn ti-btn-sm ti-btn-soft-primary1 btn-wave waves-effect waves-light ${uploading ? 'opacity-50 cursor-not-allowed' : ''}`}
+             onClick={() => setDialogOpen(true)}
+             disabled={uploading}
+           >
+             <Trash2 size={16} className="me-1"/>
+             Remove 
+           </button>
+            )}
           </div>
           <span className="block text-xs text-textmuted dark:text-textmuted/50">
             Use JPEG, PNG, or JPG. Best size: 200x200 pixels. Keep it under 5MB
