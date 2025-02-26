@@ -2,6 +2,7 @@ import { Link, usePage } from "@inertiajs/react";
 
 export default function SubscriptionStatus() {
     const { auth } = usePage().props;
+    // @ts-ignore
     const subscription = auth.user?.current_subscription;
 
     if (!subscription) {

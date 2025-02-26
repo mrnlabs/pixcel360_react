@@ -21,40 +21,42 @@ const getRibbonColor = (categoryName: string | undefined) => {
     }
   };
 
-export default function PlanCard({plan, handleDelete, dialogOpen, setDialogOpen}: {
+export default function PlanCard({plan, handleDelete, dialogOpen, setDialogOpen, setModalOpen, handleSubscribe, setPlan}: {
     plan: PlanCardProps['plan'] | undefined; 
     handleDelete: () => void; 
     dialogOpen: boolean
     setDialogOpen: React.Dispatch<React.SetStateAction<boolean>>
+    setModalOpen: React.Dispatch<React.SetStateAction<boolean>>
+    handleSubscribe: () => void
+    setPlan: (plan: Plan) => void
     }
     ) {
 
-      const { data, setData, post, processing } = useForm({slug: plan?.slug});
-
-      const [modalOpen, setModalOpen] = useState(false);
-
-
-      const handleSubscribe = () => {
-        post(route('subscribe', plan?.slug), {
-            onSuccess: () => {
-                showToast('success', 'You have subscribed successfully!', {position: 'bottom-right'});
-                setModalOpen(false);
-            },
-            onError: () => {
-                showToast('error', 'Something went wrong', {position: 'bottom-right'});
-            }
-        })
-    }
+     
 
   return (
     <div className="xxl:col-span-3 xl:col-span-6 lg:col-span-6 md:col-span-6 sm:col-span-12 col-span-12">
     <div className="box">
-      <div className='cursor-pointer' onClick={() => setModalOpen(true)}>
+      <div className='cursor-pointer' onClick={() => {
+         if (plan) {
+          setPlan(plan);
+        }
+        setModalOpen(true)
+      }
+      }
+      >
         <img src={plan?.photo} className="card-img-top max-h-60 min-h-60" alt="..."/>
         </div>
       <div className="box-body">
       <div className={`ribbon-2 ${getRibbonColor(plan?.category?.name)} ribbon-right`}>{plan?.category?.name}</div>
-        <h6 onClick={() => setModalOpen(true)} className="box-title font-medium">
+        <h6 onClick={() => {
+          setModalOpen(true);
+          if (plan) {
+            setPlan(plan);
+          }
+        } 
+      }
+        className="box-title font-medium">
           <CustomTooltip content={plan?.name ?? ''}>
           {truncateText(plan?.name ?? '', 40, '...')}
           </CustomTooltip>
@@ -99,21 +101,7 @@ export default function PlanCard({plan, handleDelete, dialogOpen, setDialogOpen}
           </div>
       </div>
     </div>
-    <Suspense fallback={""}>
-    <ViewPlanModal 
-         open={modalOpen} 
-         setOpen={setModalOpen} 
-         plan={plan}
-         handleSubscribe={handleSubscribe}
-         processing={processing}
-          />
-              <ConfirmDialog 
-                message="Are you sure you want to remove this plan ?"
-                dialogOpen={dialogOpen} 
-                setDialogOpen={setDialogOpen}
-                onContinue={handleDelete}
-             />
-        </Suspense>
+    
   </div>
   )
 }

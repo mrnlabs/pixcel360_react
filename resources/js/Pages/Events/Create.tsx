@@ -62,7 +62,7 @@ const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
                     <div className="bg-white rounded-lg shadow-sm p-6">
                             <h2 className="text-xl mb-6">Create Event</h2>
                             
-                            <div className="grid grid-cols-2 gap-6">
+                            <div className="grid grid-cols-1 w-full md:gap-6 gap-6">
                               <div className="space-y-4">
                                 <div>
                                   <label className="block text-sm mb-1">Name of the event <span className='text-red-500'>*</span></label>

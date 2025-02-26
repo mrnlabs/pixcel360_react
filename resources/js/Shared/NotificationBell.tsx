@@ -6,6 +6,7 @@ import React, { useState } from 'react'
 
 export default function NotificationBell() {
   const filePath = usePage().props.filePath;
+  // @ts-ignore
   const user = usePage().props.auth.user;
   const [preview, setPreview] = useState(user?.photo ? filePath+user?.photo : 'profile_placeholder.jpg');
     const goToProfile = () => {

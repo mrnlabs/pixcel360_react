@@ -36,12 +36,6 @@ export default function UserInfoSidebar({user} : {user: User | null}) {
                   </li>
                   <li className="ti-list-group-item pt-2 border-0">
                     <div>
-                      <span className="font-medium me-2">Designation :</span>
-                      <span className="text-textmuted dark:text-textmuted/50">Software Development Manager</span>
-                    </div>
-                  </li>
-                  <li className="ti-list-group-item pt-2 border-0">
-                    <div>
                       <span className="font-medium me-2">Email :</span>
                       <span className="text-textmuted dark:text-textmuted/50">{user?.email}</span>
                     </div>

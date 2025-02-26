@@ -7,6 +7,7 @@ import showToast from '@/utils/showToast';
 
 export default function Logo() {
   const {errors } = usePage().props;
+  // @ts-ignore
   const user = usePage().props.auth.user;
 
   const [dialogOpen, setDialogOpen] = useState(false);

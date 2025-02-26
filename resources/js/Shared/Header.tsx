@@ -9,37 +9,13 @@ import NotificationBell from './NotificationBell'
 export default function Header() {
   return (
     <header className="app-header sticky" id="header">
-          {/* <!-- Start::main-header-container --> */}
+          
           <div className="main-header-container container-fluid">
-            {/* <!-- Start::header-content-left --> */}
             <div className="header-content-left">
-              {/* <!-- Start::header-element --> */}
-              {/* <div className="header-element">
-                <div className="horizontal-logo">
-                  <a href="index.html" className="header-logo">
-                    <img src="https://pixcel360.com/wp-content/uploads/2024/01/Backup_of_PIXEL360-LOGO-with-grey.png" alt="logo" className="desktop-logo"/>
-                    <img src="https://pixcel360.com/wp-content/uploads/2024/01/Backup_of_PIXEL360-LOGO-with-grey.png" alt="logo" className="toggle-dark"/>
-                    <img src="https://pixcel360.com/wp-content/uploads/2024/01/Backup_of_PIXEL360-LOGO-with-grey.png" alt="logo" className="desktop-dark"/>
-                    <img src="https://pixcel360.com/wp-content/uploads/2024/01/Backup_of_PIXEL360-LOGO-with-grey.png" alt="logo" className="toggle-logo"/>
-                    <img src="https://pixcel360.com/wp-content/uploads/2024/01/Backup_of_PIXEL360-LOGO-with-grey.png" alt="logo" className="toggle-white"/>
-                    <img src="https://pixcel360.com/wp-content/uploads/2024/01/Backup_of_PIXEL360-LOGO-with-grey.png" alt="logo" className="desktop-white"/>
-                  </a>
-                </div>
-              </div> */}
-            
-              {/* <ToggleNav /> */}
               <HeaderSearch/>
             </div>
           
             <ul className="header-content-right">
-              {/* <!-- Start::header-element --> */}
-              <li className="header-element md:!hidden block">
-                <a aria-label="anchor" href="#!" className="header-link" data-bs-toggle="modal" data-hs-overlay="#header-responsive-search">
-                  {/* <!-- Start::header-link-icon --> */}
-                  <i className="bi bi-search header-link-icon"></i>
-                  {/* <!-- End::header-link-icon --> */}
-                </a>
-              </li>
             
               <li className="header-element header-theme-mode hidden !items-center sm:block md:!px-[0.5rem] px-2">
                 <a aria-label="anchor" className="hs-dark-mode-active:hidden flex hs-dark-mode group flex-shrink-0 justify-center items-center gap-2  rounded-full font-medium transition-all text-xs dark:bg-bgdark dark:hover:bg-black/20 text-textmuted dark:text-textmuted/50 dark:hover:text-white dark:focus:ring-white/10 dark:focus:ring-offset-white/10" href="#!" data-hs-theme-click-value="dark">
@@ -54,8 +30,7 @@ export default function Header() {
                 </a>
               </li>
             
-              {/* <!-- End::header-element --> */}
-              {/* <!-- Start::header-element --> */}
+              
               <li className="header-element notifications-dropdown !hidden xl:!block hs-dropdown ti-dropdown [--auto-close:inside]">
                 <NotificationBell/>
               </li>
@@ -66,9 +41,8 @@ export default function Header() {
               <HeaderProfile />
              
             </ul>
-            {/* <!-- End::header-content-right --> */}
+          
           </div>
-          {/* <!-- End::main-header-container --> */}
         </header>
   )
 }

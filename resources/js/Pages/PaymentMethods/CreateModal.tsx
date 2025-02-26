@@ -113,7 +113,7 @@ function CreateModal({
     setOpen: React.Dispatch<React.SetStateAction<boolean>>,
 }) {
     // Initialize Stripe outside of the component
-    const stripePromise = loadStripe(usePage().props.stripeKey);
+    // const stripePromise = loadStripe(usePage().props.stripeKey);
 
     return (
         <Dialog open={open} onOpenChange={setOpen}>
@@ -123,9 +123,9 @@ function CreateModal({
                     <DialogDescription></DialogDescription>
                 </DialogHeader>
                 <div className="box-body">
-                    <Elements stripe={stripePromise}>
+                    {/* <Elements stripe={stripePromise}>
                         <PaymentForm />
-                    </Elements>
+                    </Elements> */}
                 </div>
                 <Button 
                     onClick={() => setOpen(false)} 

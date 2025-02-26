@@ -3,6 +3,7 @@ import { User, Role, Permission } from '../types';
 
 export const useAuth = () => {
     const { auth } = usePage().props;
+    // @ts-expect-error
     const user: User = auth.user;
 
     const hasRole = (roles: string | string[]): boolean => {

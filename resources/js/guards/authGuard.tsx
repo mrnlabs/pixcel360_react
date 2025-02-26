@@ -15,6 +15,7 @@ export const AuthGuard = ({
     children 
 }: AuthGuardProps) => {
     const { auth } = usePage().props;
+    // @ts-expect-error
     const user: User = auth.user;
 
     const checkRoles = (): boolean => {

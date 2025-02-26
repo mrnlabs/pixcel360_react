@@ -39,7 +39,7 @@ export default function UserCard({user, setUser, setDialogOpen}:
           </div>
         
           <div className="flex gap-2 mb-0 flex-wrap flex-xxl-nowrap">
-            <Link href={route('users.show',user?.slug)} className="ti-btn ti-btn-secondary ti-btn-sm mb-0 flex-auto"> View More </Link>
+            <Link href={route('users.show',user?.slug)} className="ti-btn ti-btn-primary ti-btn-sm mb-0 flex-auto"> View More </Link>
             <div onClick={handleDelete} className="ti-btn ti-btn-danger ti-btn-sm mb-0 flex-auto"> Delete </div>
           </div>
         </div>

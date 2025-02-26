@@ -6,6 +6,7 @@ import { ArrowDownToLine, FileText, Printer } from 'lucide-react'
 import React from 'react'
 
 export default function ViewInvoice({otherSubscriptions}: any) {
+  // @ts-ignore
     const { current_subscription } = usePage().props.auth;
     console.log(current_subscription);
 

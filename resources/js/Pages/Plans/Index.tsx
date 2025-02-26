@@ -1,19 +1,22 @@
 import Authenticated from '@/Layouts/AuthenticatedLayout'
 import { Breadcrumb } from '@/Shared/Breadcrumb'
-import { Head, Link, router } from '@inertiajs/react'
+import { Head, Link, router, useForm } from '@inertiajs/react'
 import { SquarePlus } from 'lucide-react'
-import React, { useState } from 'react'
-import { Filters, Plan, PlanCardProps, QueryParams } from '@/types'
+import React, { Suspense, useState } from 'react'
+import { Filters, Plan, QueryParams } from '@/types'
 // @ts-expect-error
 import { debounce } from 'lodash';
 import PlanCard from './PlanCard'
 import showToast from '@/utils/showToast'
 import Paginator from '@/Shared/Paginator'
 import { AuthGuard } from '@/guards/authGuard'
+import ViewPlanModal from './ViewPlanModal'
+import ConfirmDialog from '@/Components/ConfirmDialog'
 
 export default function Index({plans} : any) {
   
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
 
     const totalItems = plans?.original?.pagination?.total;
     const itemsPerPage = plans?.original?.pagination?.per_page;
@@ -57,7 +60,7 @@ const updateFilters = React.useCallback(
   [filters]
 );
 
-const handleDelete = (plan: Plan) => {
+const handleDelete = () => {
   router.delete(route('plans.destroy', plan?.slug), { 
     preserveScroll: true, 
     onSuccess: () => {
@@ -68,6 +71,22 @@ const handleDelete = (plan: Plan) => {
       showToast('error', 'Something went wrong', {position: 'bottom-right'});
      }
  });
+}
+const [plan, setPlan] = useState<Plan | null>(null);
+const { data, setData, post, processing } = useForm({slug: plan?.slug});
+
+const handleSubscribe = () => {
+  if (plan) {
+    post(route('subscribe', plan.slug), {
+      onSuccess: () => {
+          showToast('success', 'You have subscribed successfully!', {position: 'bottom-right'});
+          setModalOpen(false);
+      },
+      onError: () => {
+          showToast('error', 'Something went wrong', {position: 'bottom-right'});
+      }
+  })
+}
 }
 
   return (
@@ -126,9 +145,12 @@ const handleDelete = (plan: Plan) => {
                       {plans?.original?.data?.map((plan: any) => (
                         <PlanCard key={plan.id} 
                         plan={plan} 
-                        handleDelete={() => handleDelete(plan)} 
+                        setPlan={(e) => {setPlan(e); console.log(e)}}
+                        handleDelete={handleDelete} 
                         dialogOpen={dialogOpen}
-                        setDialogOpen={setDialogOpen} />
+                        setDialogOpen={setDialogOpen}
+                        setModalOpen={setModalOpen}
+                        handleSubscribe={handleSubscribe} />
                       ))}
                       
                    </div>
@@ -147,7 +169,23 @@ const handleDelete = (plan: Plan) => {
                   </div>
                 </div>
               </div>
-            
+
+              <Suspense fallback={""}>
+              <ViewPlanModal 
+                  open={modalOpen} 
+                  setOpen={setModalOpen} 
+                  plan={plan}
+                  handleSubscribe={handleSubscribe}
+                  processing={processing}
+                    />
+                        <ConfirmDialog 
+                          message="Are you sure you want to remove this plan ?"
+                          dialogOpen={dialogOpen} 
+                          setDialogOpen={setDialogOpen}
+                          onContinue={handleDelete}
+                      />
+                  </Suspense>
+
             </div>
           </div>
         </Authenticated>
