@@ -29,16 +29,37 @@ const AdminSidebar: React.FC = () => {
   const { url } = usePage();
 
   // Check if exactly matches the current route
-  const isExactActive = (path: string): boolean => {
-    // Remove trailing slash for comparison
-    const currentPath = url.endsWith('/') ? url.slice(0, -1) : url;
-    const targetPath = path.endsWith('/') ? path.slice(0, -1) : path;
-    return currentPath === targetPath;
+  const isExactActive = (sectionPath: string): boolean => {
+    // Extract just the path part without query parameters
+    const currentPathWithoutQuery = url.split('?')[0];
+    
+    // Remove trailing slashes for comparison
+    const currentPath = currentPathWithoutQuery.endsWith('/') 
+      ? currentPathWithoutQuery.slice(0, -1) 
+      : currentPathWithoutQuery;
+      
+    const targetPath = sectionPath.endsWith('/') 
+      ? sectionPath.slice(0, -1) 
+      : sectionPath;
+      
+    return currentPath === targetPath || currentPath.startsWith(targetPath + '/');
   };
 
   // Check if we're in a section (for showing submenu)
-  const isInSection = (parentPath: string): boolean => {
-    return url.startsWith(parentPath);
+  const isInSection = (sectionPath: string): boolean => {
+    // Extract just the path part without query parameters
+    const currentPathWithoutQuery = url.split('?')[0];
+    
+    // Remove trailing slashes for comparison
+    const currentPath = currentPathWithoutQuery.endsWith('/') 
+      ? currentPathWithoutQuery.slice(0, -1) 
+      : currentPathWithoutQuery;
+      
+    const targetPath = sectionPath.endsWith('/') 
+      ? sectionPath.slice(0, -1) 
+      : sectionPath;
+      
+    return currentPath == targetPath || currentPath.startsWith(targetPath + '/');
   };
 
   useEffect(() => {

@@ -9,19 +9,31 @@ use Inertia\Inertia;
 class UserController extends Controller
 {
     function index() {
-        // if not internal portal user abort 
+        // if not internal portal user abort
         if(!isInternalPortalUser()) {
             abort(403);
         }
+        
+        $query = User::query();
+        
+        // Handle search
         if(request()->has('search')) {
-            $users = User::where('firstname', 'like', '%'.request('search').'%')
+            $query->where('firstname', 'like', '%'.request('search').'%')
                 ->orWhere('email', 'like', '%'.request('search').'%')
-                ->orWhere('lastname', 'like', '%'.request('search').'%')
-                ->paginate(10);
-        } else {
-            $users = User::paginate(10);
+                ->orWhere('lastname', 'like', '%'.request('search').'%');
         }
-        // dd($users);
+        
+        // Handle sorting
+        if(request()->has('sort')) {
+            $sortDirection = request('sort') === 'oldest' ? 'asc' : 'desc';
+            $query->orderBy('created_at', $sortDirection);
+        } else {
+            // Default sorting if no sort parameter is provided
+            $query->orderBy('created_at', 'desc');
+        }
+        
+        $users = $query->paginate(10);
+        
         return Inertia::render('Users/Index', [
             'users' => $users,
         ]);
@@ -36,5 +48,13 @@ class UserController extends Controller
         return Inertia::render('Users/Show', [
             'user' => $user,
         ]);
+    }
+
+    function destroy($slug) {
+        if(!isInternalPortalUser()) { abort(403); }
+        
+        $user = User::where('slug', $slug)->first();
+        $user->delete();
+        return redirect()->route('users');
     }
 }

@@ -5,6 +5,7 @@ import { Breadcrumb } from "@/Shared/Breadcrumb";
 import { User } from "@/types";
 import { Head } from "@inertiajs/react";
 import UserInfoSidebar from "./UserInfoSidebar";
+import { format } from "date-fns";
 
 export default function Show({user}: {user: User | null}) {
 
@@ -58,11 +59,11 @@ export default function Show({user}: {user: User | null}) {
                           
                           <div className="xl:col-span-3 col-span-12">
                             <div className="leading-none">
-                              <span className="font-medium">Designation :</span>
+                              <span className="font-medium">Last Login :</span>
                             </div>
                           </div>
                           <div className="xl:col-span-9 col-span-12">
-                            <input type="text" className="form-control" value="Software Development Manager"/>
+                            <input type="text" className="form-control" value={ user?.last_login_at ? format(new Date(user.last_login_at), 'dd-MM-yyyy') : '' }/>
                           </div>
                         </div>
                       </li>

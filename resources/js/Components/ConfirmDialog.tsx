@@ -34,7 +34,7 @@ import {
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel className="bg-neutral-200 ti-btn-warning" onClick={() => setDialogOpen(false)}>Cancel</AlertDialogCancel>
+            <AlertDialogCancel className="bg-[#FF4F84] text-white hover:bg-[#FF4F84] hover:text-white" onClick={() => setDialogOpen(false)}>Cancel</AlertDialogCancel>
             <AlertDialogAction onClick={() => {
               onContinue();
               setDialogOpen(false);

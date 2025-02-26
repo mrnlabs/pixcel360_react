@@ -44,14 +44,10 @@ class RegisteredUserController extends Controller
         $permissions = Permission::all();
         $user->syncPermissions($permissions);
 
-        // event(new Registered($user));
-         // Send welcome email
         Mail::to($user->email)->send(new WelcomeEmail($user, $plainPassword));
 
         Auth::login($user);
 
-        return Inertia::location(route('dashboard', absolute: false));
-
-        // return redirect(route('dashboard', absolute: false));
+        return Inertia::location(route('dashboard', ['success' => 'Account created successfully'], absolute: false));
     }
 }

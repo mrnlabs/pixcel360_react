@@ -93,7 +93,7 @@ const handleGoogleLogin = async () => {
                   </div>
                   <div className="xl:col-span-12 col-span-12 mb-2">
                      <label htmlFor="signin-password" className="form-label text-defaulttextcolor block">Password<sup className="text-xs text-danger">*</sup>
-                     <Link href={route("password.request")} className="float-end font-normal text-textmuted dark:text-textmuted/50">Forgot password ?</Link>
+                     <Link href={route("password.request")} className="float-end font-normal text-primary dark:text-primary/50">Forgot password ?</Link>
                      </label> 
                      <div className="relative"> 
                         <ThemeTextInput 

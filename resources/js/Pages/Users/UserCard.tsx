@@ -1,11 +1,18 @@
+import { User } from "@/types";
 import isMyAccount from "@/utils/isMyAccount";
 import isRecentlyLogin from "@/utils/isRecentlyLogin";
 import { Link } from "@inertiajs/react";
 
-export default function UserCard({user}:
-  {user: any
+export default function UserCard({user, setUser, setDialogOpen}:
+  {user: User | null, 
+    setUser: (user: User | null) => void,
+    setDialogOpen: (open: boolean) => void
   }) {
 
+    const handleDelete = () => {
+      setUser(user);
+      setDialogOpen(true);
+    }
 
   return (
     <div className="xxl:col-span-3 lg:col-span-6 col-span-12">
@@ -19,7 +26,7 @@ export default function UserCard({user}:
           </div>
           <div className="main-profile-info">
             <div className="font-semibold mb-1 h6 align-middle">
-              {user?.firstname} {user?.lastname} <span className="text-textmuted">{ isMyAccount(user) ? '(You)' : ''}</span>
+              {user?.firstname} {user?.lastname} <span className="text-textmuted">{user && isMyAccount(user) ? '(You)' : ''}</span>
             </div>
             <p className="text-textmuted dark:text-textmuted/50 mb-1">
             {user?.email}
@@ -32,8 +39,8 @@ export default function UserCard({user}:
           </div>
         
           <div className="flex gap-2 mb-0 flex-wrap flex-xxl-nowrap">
-            <div className="ti-btn ti-btn-primary ti-btn-sm mb-0 flex-auto"> Message </div>
             <Link href={route('users.show',user?.slug)} className="ti-btn ti-btn-secondary ti-btn-sm mb-0 flex-auto"> View More </Link>
+            <div onClick={handleDelete} className="ti-btn ti-btn-danger ti-btn-sm mb-0 flex-auto"> Delete </div>
           </div>
         </div>
       </div>

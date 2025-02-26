@@ -10,11 +10,16 @@ import Paginator from '@/Shared/Paginator'
 import { Input } from '@/Components/ui/input'
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/Components/ui/select'
 import UserCard from './UserCard'
+import ConfirmDialog from '@/Components/ConfirmDialog'
 
 export default function Index({users} : any) {
     const totalItems = users?.total;
     const itemsPerPage = users?.per_page;
     const currentPage = users?.current_page;
+
+    const [user, setUser] = useState<User | null>(null);
+
+    const [dialogOpen, setDialogOpen] = useState(false);
 
   const [filters, setFilters] = useState({
     search: '',
@@ -43,7 +48,7 @@ const updateFilters = React.useCallback(
       }
     });
 
-    router.get(route('events'), queryParams, {
+    router.get(route('users'), queryParams, {
       preserveState: true,
       replace: true
     });
@@ -54,16 +59,19 @@ const updateFilters = React.useCallback(
   [filters]
 );
 
-const handleDelete = (plan: User) => {
-  router.delete(route('plans.destroy', plan?.slug), { 
-    preserveScroll: true, 
-    onSuccess: () => {
-      showToast('success', 'Plan deleted successfully!', {position: 'bottom-right'});
-     },
-     onError: () => {
-      showToast('error', 'Something went wrong', {position: 'bottom-right'});
-     }
- });
+const handleDelete = () => {
+  
+  if (user) {
+    router.delete(route('users.destroy', user?.slug), { 
+      preserveScroll: true, 
+      onSuccess: () => {
+        showToast('success', 'User deleted successfully!', {position: 'bottom-right'});
+       },
+       onError: () => {
+        showToast('error', 'Something went wrong', {position: 'bottom-right'});
+       }
+     });
+  }
 }
 
   return (
@@ -114,6 +122,8 @@ const handleDelete = (plan: User) => {
                        {users?.data?.map((user: any) => (
                         <UserCard key={user.id} 
                         user={user} 
+                        setUser={setUser}
+                        setDialogOpen={setDialogOpen}
                         />
                       ))}
                    </div>
@@ -134,12 +144,12 @@ const handleDelete = (plan: User) => {
               </div>
 
               <Suspense fallback={""}>
-                        {/* <ConfirmDialog 
-                          message="Are you sure you want to remove this plan ?"
-                          dialogOpen={dialogOpen} 
-                          setDialogOpen={setDialogOpen}
-                          onContinue={handleDelete}
-                      /> */}
+              <ConfirmDialog 
+                message="Are you sure you want to remove this plan ?"
+                dialogOpen={dialogOpen} 
+                setDialogOpen={setDialogOpen}
+                onContinue={handleDelete}
+             />
         </Suspense>
             
             </div>

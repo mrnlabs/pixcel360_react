@@ -35,8 +35,8 @@ class GoogleController extends Controller
             $user = User::updateOrCreate(
                 ['google_id' => $googleUser->id],
                 [
-                    'firstname' => $googleUser->name,
-                    'lastname' => $googleUser->name,
+                    'firstname' => explode(' ', $googleUser->name), 
+                    'lastname' => explode(' ', $googleUser->name).slice(1).join(' ') ,
                     'email' => $googleUser->email,
                     'google_id' => $googleUser->id,
                     'photo' => $googleUser->avatar,

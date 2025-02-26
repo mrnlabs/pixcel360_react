@@ -35,7 +35,7 @@ class AuthenticatedSessionController extends Controller
 
         auth()->user()->update(['last_login_at' => now()]);
 
-        return Inertia::location(route('dashboard', absolute: false));
+        return Inertia::location(route('dashboard', ['success' => 'Logged in success'], absolute: false));
     }
 
     /**
