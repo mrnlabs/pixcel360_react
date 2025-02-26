@@ -21,7 +21,7 @@ class NewUserRegistered extends Notification
     {
         return [
             'title' => 'New User Registration',
-            'message' => "New user {$this->newUser->firstname} {$this->newUser->lastname} has registered",
+            'message' => "New user {$this->newUser->firstname} {$this->newUser->lastname} has registered.",
             'user_id' => $this->newUser->id,
             'model_route' => 'users.show',
             'model_slug' => $this->newUser->slug,

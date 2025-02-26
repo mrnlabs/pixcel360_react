@@ -27,14 +27,14 @@ class NotificationController extends Controller
         if (isInternalPortalUser()) {
             $notifications = auth()->user()->notifications;
             $unreadCount = auth()->user()->unreadNotifications->count();
-            return Inertia::render('Dashboard/Notifications/Index', [
+            return Inertia::render('Notifications/Index', [
                 'notifications' => $notifications,
                 'unreadCount' => $unreadCount,
             ]);
         }
         $notifications =auth()->user()->store->notifications;
         $unreadCount = auth()->user()->store->unreadNotifications->count();
-        return Inertia::render('Dashboard/Notifications/Index', [
+        return Inertia::render('Notifications/Index', [
             'notifications' => $notifications,
             'unreadCount' => $unreadCount,
         ]);
