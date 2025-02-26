@@ -145,7 +145,7 @@ const handleDelete = () => {
 
               <Suspense fallback={""}>
               <ConfirmDialog 
-                message="Are you sure you want to remove this plan ?"
+                message="Are you sure you want to remove this user ?"
                 dialogOpen={dialogOpen} 
                 setDialogOpen={setDialogOpen}
                 onContinue={handleDelete}

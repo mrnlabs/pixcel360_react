@@ -51,6 +51,7 @@ class UserController extends Controller
     }
 
     function destroy($slug) {
+        
         if(!isInternalPortalUser()) { abort(403); }
         
         $user = User::where('slug', $slug)->first();
