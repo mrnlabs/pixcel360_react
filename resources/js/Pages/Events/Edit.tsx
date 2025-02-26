@@ -113,7 +113,7 @@ export default function Edit({event} : EventProps) {
             <div className="flex-auto">
               <h6 className="font-medium mb-0">{getHeader()}</h6>
             </div>
-            <div className="flex gap-2 lg:nowrap justify-end flex-wrap justify-content-sm-end sm:w-[80%]">
+            <div className=" gap-2 lg:nowrap justify-end flex-wrap justify-content-sm-end sm:w-[80%] hidden">
               
               <Link href={route('event.create')} aria-label="button" type="button" className="ti-btn ti-btn-primary !m-0 btn-w-md flex items-center  btn-wave waves-light text-nowrap waves-effect waves-light">
                 <SquarePlus className="align-middle" />Create New Event </Link>

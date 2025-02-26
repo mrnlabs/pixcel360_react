@@ -43,7 +43,7 @@ export default function VedioSettings({event} : any) {
 
   return (
     <div className=" rounded-lg p-6">
-    <div className="grid grid-cols-2 gap-6">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
       <div className="space-y-4">
         <div>
           <label className="block text-sm mb-1">Countdown</label>
