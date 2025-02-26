@@ -8,16 +8,18 @@ export interface User {
     address2?: string;
     city?: string;
     province?: string;
+    country?: string;
     post_code?: string;
     company_name?: string;
     display_name?: string;
     photo?: string;
     roles?: Role[];
+    slug?: string;
     permissions?: Permission[];
     current_subscription?: Subscription;
-    stripe_id?: string;
     created_at?: string;
     email_verified_at?: string;
+    last_login_at?: string;
 }
 
 export interface EventProps {

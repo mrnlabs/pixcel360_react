@@ -9,4 +9,5 @@ use App\Http\Controllers\SubscriptionController;
 
 Route::middleware(['auth'])->prefix('users')->group(function () {
     Route::get('/', [UserController::class, 'index'])->name('users');
+    Route::get('/{slug}', [UserController::class, 'show'])->name('users.show');
 });
