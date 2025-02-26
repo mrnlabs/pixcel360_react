@@ -12,7 +12,7 @@ export default function Logo() {
 
   const [dialogOpen, setDialogOpen] = useState(false);
 
-  const [preview, setPreview] = useState(user?.photo ? user?.photo : 'profile_placeholder.jpg');
+  const [preview, setPreview] = useState(user?.photo ? user?.photo : 'https://picxel-bucket.s3.af-south-1.amazonaws.com/placeholders/profile_placeholder.jpg');
   const [uploading, setUploading] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -43,7 +43,7 @@ export default function Logo() {
       onError: () => {
         setUploading(false);
         showToast('error', 'Something went wrong!', {position: 'bottom-right'});
-        setPreview('profile_placeholder.jpg');
+        setPreview('https://picxel-bucket.s3.af-south-1.amazonaws.com/placeholders/profile_placeholder.jpg');
       },
       onFinish: () => {
         setUploading(false);
@@ -55,7 +55,7 @@ export default function Logo() {
     if (fileInputRef.current) {
       fileInputRef.current.value = '';
     }
-    setPreview('profile_placeholder.jpg');
+    setPreview('https://picxel-bucket.s3.af-south-1.amazonaws.com/placeholders/profile_placeholder.jpg');
     
     router.delete('/remove-profile-image', {
       onSuccess: () => {

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\CreateUserRequest;
 use App\Mail\WelcomeEmail;
 use App\Models\User;
+use App\Notifications\NewUserRegistered;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
@@ -37,13 +38,19 @@ class RegisteredUserController extends Controller
             'lastname' => $createUserRequest->lastname,
             'email' => $createUserRequest->email,
             'phone' => $createUserRequest->phone,
+            'last_login_at' => now(),
             'password' => Hash::make($createUserRequest->password),
         ]);
 
         $user->assignRole('Account Owner');
         $permissions = Permission::all();
         $user->syncPermissions($permissions);
-
+        
+        $admins = User::getSystemAdmins();
+        
+        foreach($admins as $admin) {
+            $admin->notify(new NewUserRegistered($user));
+        }
         Mail::to($user->email)->send(new WelcomeEmail($user, $plainPassword));
 
         Auth::login($user);

@@ -43,7 +43,11 @@ class UserController extends Controller
         if(!isInternalPortalUser()) {
             abort(403);
         }
-        
+        if(request()->has('ref')) {
+            $id = request('ref');
+            $notification = auth()->user()->notifications()->findOrFail($id);
+            $notification->markAsRead();
+        }
         $user = User::where('slug', $slug)->first();
         return Inertia::render('Users/Show', [
             'user' => $user,

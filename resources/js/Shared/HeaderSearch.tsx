@@ -10,9 +10,9 @@ export function HeaderSearch() {
         autoComplete="off" />
         <ul id="autoComplete_list_1" role="listbox" hidden={false}></ul>
       </div>
-      <a aria-label="anchor" href="#!" className="header-search-icon border-0">
+      <button aria-label="anchor" className="header-search-icon border-0">
       <Search size={16} />
-      </a>
+      </button>
     </div>
     )
 }

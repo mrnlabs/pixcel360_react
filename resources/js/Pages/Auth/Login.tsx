@@ -58,7 +58,7 @@ const handleGoogleLogin = async () => {
                  onClick={handleGoogleLogin} 
                  type="button" className="ti-btn ti-btn-lg border border-defaultborder dark:border-defaultborder/10 flex items-center justify-center flex-auto bg-light">
                  <span className="avatar avatar-xs flex-shrink-0"> 
-                    <img src="google.PNG" alt=""/> 
+                    <img src="https://picxel-bucket.s3.af-south-1.amazonaws.com/placeholders/google.png" alt=""/> 
                     </span> <span className="leading-[1.2rem] ms-2 text-[13px] text-defaulttextcolor">
                     {isLoading ? 'Signing in...' : 'Signup with Google'}</span> 
                </button> 

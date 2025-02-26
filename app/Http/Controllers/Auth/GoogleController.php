@@ -9,6 +9,7 @@ use Inertia\Inertia;
 use App\Mail\WelcomeEmail;
 use Illuminate\Support\Str;
 use App\Http\Controllers\Controller;
+use App\Notifications\NewUserRegistered;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
@@ -30,7 +31,7 @@ class GoogleController extends Controller
     {
         try {
             $googleUser = Socialite::driver('google')->stateless()->user();
-            // dd($googleUser);
+            
             $plainPassword = Str::random(8);
             $user = User::updateOrCreate(
                 ['google_id' => $googleUser->id],
@@ -40,6 +41,7 @@ class GoogleController extends Controller
                     'email' => $googleUser->email,
                     'google_id' => $googleUser->id,
                     'photo' => $googleUser->avatar,
+                    'last_login_at' => now(),
                     'password' => Hash::make('password')
                 ]
             );
@@ -47,6 +49,11 @@ class GoogleController extends Controller
                 $user->assignRole('Account Owner');
                 $permissions = Permission::all();
                 $user->syncPermissions($permissions);
+                $admins = User::getSystemAdmins();
+        
+                foreach($admins as $admin) {
+                    $admin->notify(new NewUserRegistered($user));
+                }
 
                 Mail::to($user->email)->send(new WelcomeEmail($user, $plainPassword));
             }

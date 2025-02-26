@@ -5,7 +5,7 @@ import { Breadcrumb } from "@/Shared/Breadcrumb";
 import { User } from "@/types";
 import { Head } from "@inertiajs/react";
 import UserInfoSidebar from "./UserInfoSidebar";
-import { format } from "date-fns";
+import { format, formatDistanceToNow } from "date-fns";
 
 export default function Show({user}: {user: User | null}) {
 
@@ -63,7 +63,7 @@ export default function Show({user}: {user: User | null}) {
                             </div>
                           </div>
                           <div className="xl:col-span-9 col-span-12">
-                            <input type="text" className="form-control" value={ user?.last_login_at ? format(new Date(user.last_login_at), 'dd-MM-yyyy') : '' }/>
+                            <input type="text" className="form-control" value={user?.last_login_at ? formatDistanceToNow(user?.last_login_at,{ addSuffix: true }) : ''}/>
                           </div>
                         </div>
                       </li>

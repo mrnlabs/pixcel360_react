@@ -8,7 +8,6 @@ use App\Traits\HasSlug;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Laravel\Cashier\Billable;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\DeletedModels\Models\Concerns\KeepsDeletedModels;
 use Spatie\Permission\Traits\HasRoles;
@@ -48,5 +47,12 @@ class User extends Authenticatable
         return $this->hasOne(Subscription::class)
             ->where('expires_at', '>', now())
             ->latest();
+    }
+
+    public static function getSystemAdmins()
+    {
+        return self::whereHas('roles', function($query) {
+            $query->whereIn('name', ['System SuperAdmin', 'System Admin']);
+        })->get();
     }
 }
