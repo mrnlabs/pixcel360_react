@@ -28,13 +28,17 @@ export default function Welcome() {
 
 const handleGoogleLogin = async () => {
    try {
+         setIsLoading(true);
        const response = await fetch('/auth/google');
        const data = await response.json();
        showToast('success', 'You have logged in successfully!', {position: 'bottom-right'});
        window.location.href = data.url;
    } catch (error) {
+         setIsLoading(false);
       showToast('error', 'We could not initiate Google login. Please try again.', {position: 'bottom-right'});
        console.error('Error initiating Google login:', error);
+   } finally {
+         setIsLoading(false);
    }
 };
     return (
