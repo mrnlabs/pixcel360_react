@@ -51,7 +51,9 @@ class RegisteredUserController extends Controller
         foreach($admins as $admin) {
             $admin->notify(new NewUserRegistered($user));
         }
-        Mail::to($user->email)->send(new WelcomeEmail($user, $plainPassword));
+        // Mail::to($user->email)->send(new WelcomeEmail($user, $plainPassword));
+        Mail::to($user->email)
+        ->queue(new WelcomeEmail($user, $plainPassword));
 
         Auth::login($user);
 
