@@ -41,4 +41,10 @@ return [
         'redirect' => env('GOOGLE_REDIRECT_URI'),
     ],
 
+    'video_processing' => [
+        'endpoint' => env('VIDEO_PROCESSING_API_ENDPOINT', 'https://api.example.com/process-video'),
+        'api_key' => env('VIDEO_PROCESSING_API_KEY'),
+        'timeout' => env('VIDEO_PROCESSING_TIMEOUT', 300), // 5 minutes
+    ],
+
 ];

@@ -17,8 +17,8 @@ class NotificationController extends Controller
         }
         
         return response()->json([
-            'notifications' => auth()->user()->store->unreadNotifications,
-            'unreadCount' => auth()->user()->store->unreadNotifications->count(),
+            'notifications' => auth()->user()->unreadNotifications,
+            'unreadCount' => auth()->user()->unreadNotifications->count(),
         ]);
         
     }

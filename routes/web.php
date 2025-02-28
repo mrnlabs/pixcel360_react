@@ -2,12 +2,21 @@
 
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\PricingController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\DashboardController;
+
+
+Route::get('/clear-cache', function () {
+    Artisan::call('optimize:clear');
+    Artisan::call('storage:link');
+    Artisan::call('config:clear');
+    return "success";
+});
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/login', function () {return Inertia::render('Auth/Login');});

@@ -13,12 +13,16 @@ return new class extends Migration
     {
         Schema::create('videos', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('event_id');
             $table->string('name');
             $table->string('path');
-            $table->integer('size');
+            $table->integer('size')->nullable();
             $table->timestamps();
-            $table->foreign('event_id')->references('id')->on('events')->onDelete('cascade');
+            $table->foreignId('event_id')->constrained()->onDelete('cascade');
+            $table->string('processed_video_path')->nullable();
+            $table->boolean('is_processed')->default(false);
+            $table->timestamp('processed_at')->nullable();
+            $table->boolean('processing_failed')->default(false);
+            $table->text('processing_error')->nullable();
         });
     }
 
