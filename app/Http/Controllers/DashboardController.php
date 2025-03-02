@@ -34,9 +34,15 @@ class DashboardController extends Controller
      */
     public function index()
     {
+        if(isInternalPortalUser()) {
+            $events = Event::latest()->limit(5)->get();
+        }else{
+            $events = Event::where('user_id', auth()->id())->latest()->limit(5)->get();
+        }
+        
         return Inertia::render('Dashboard', [
             'metrics' => $this->metricsService->getDashboardMetrics(),
-            'events' => Event::latest()->limit(5)->get(),
+            'events' => $events,
         ]);
     }
 }
