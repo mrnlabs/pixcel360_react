@@ -49,7 +49,7 @@ export default function EventSidebar({activeTab,setActiveTab, scrollToDiv,event}
                     <div className="me-2">
                       <SquareFunction size={16} className="ri-share-forward-line text-[1rem]"/>
                     </div>
-                    <span className="flex-auto text-nowrap"> Functions </span>
+                    <span className="flex-auto text-nowrap"> Video Functions </span>
                   </div>
                 </div>
               </li>

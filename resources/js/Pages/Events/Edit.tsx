@@ -45,7 +45,7 @@ export default function Edit({event} : EventProps) {
           case 'event-settings':
               return 'Vedio settings';
           case 'event-functions':
-              return 'Functions';
+              return 'Video Functions';
           case 'audio':
                return 'Audio';
           case 'timeouts':

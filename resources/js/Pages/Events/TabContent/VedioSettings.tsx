@@ -45,16 +45,22 @@ export default function VedioSettings({event} : any) {
     <div className=" rounded-lg p-6">
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
       <div className="space-y-4">
-        <div>
-          <label className="block text-sm mb-1">Countdown</label>
-          <Input
-            value={data.count_down}
-            onChange={(e) => setData('count_down', e.target.value)}
-            type="number"
-            min={0}
-            className="w-full px-3 py-2 border rounded-lg"
-        />
-        </div>
+        <div className="xl:col-span-6 lg:col-span-6 md:col-span-6 sm:col-span-12 col-span-12">
+        <label className="block text-sm mb-1">Countdown Video</label>
+              <Select value={String(data.count_down)} onValueChange={(value) => setData('count_down', value)}>
+            <SelectTrigger className="w-[180px] form-control border rounded-lg">
+              <SelectValue placeholder="Select" />
+              </SelectTrigger>
+              <SelectContent className='form-control'>
+                  <SelectGroup>
+                  <SelectLabel>Select </SelectLabel>
+                  {[...Array(11).keys()].map((i) => (
+                    <SelectItem key={i} value={String(i + 1)}>{i + 1}s</SelectItem>
+                  ))}
+                  </SelectGroup>
+              </SelectContent>
+          </Select>
+  </div>
         <CustomToggle 
         label="Mirror overlay preview" 
         initialValue={data.mirror_overlay} 

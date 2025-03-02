@@ -84,28 +84,48 @@ const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
         <SelectContent className='form-control'>
             <SelectGroup>
             <SelectLabel>Boomerang repeats</SelectLabel>
-            <SelectItem value="1">1</SelectItem>
-            <SelectItem value="2">2</SelectItem>
+            {[...Array(7).keys()].map((i) => (
+              <SelectItem key={i} value={String(i + 1)}>{i + 1} repeats</SelectItem>
+            ))}
             </SelectGroup>
         </SelectContent>
     </Select>
   </div>
+ 
   <div className="xl:col-span-6 lg:col-span-6 md:col-span-6 sm:col-span-12 col-span-12">
-    <label className="block text-sm mb-1">Boomerang speeds</label>
-    <Input 
-    value={data.boomerang_speed}
-    onChange={(e) => setData('boomerang_speed', e.target.value)}
-     type="number" min={0} className="form-control" id="input-text" />
-  </div>
+  <label className="block text-sm mb-1">Boomerang speed</label>
+                  <Select value={String(data.boomerang_speed)} onValueChange={(value) => setData('boomerang_speed', value)}>
+                <SelectTrigger className="w-[180px] form-control border rounded-lg">
+                  <SelectValue placeholder="Select" />
+                  </SelectTrigger>
+                  <SelectContent className='form-control'>
+                      <SelectGroup>
+                      <SelectLabel>Select Boomerang Speed</SelectLabel>
+                      {[...Array(7).keys()].map((i) => (
+                        <SelectItem key={i} value={String(i + 1)}>{i + 1}x</SelectItem>
+                      ))}
+                      </SelectGroup>
+                  </SelectContent>
+              </Select>
+      </div>
 
 
 
   <div className="xl:col-span-6 lg:col-span-6 md:col-span-6 sm:col-span-12 col-span-12">
   <label className="block text-sm mb-1"> Bounce duration</label>
-  <Input 
-  value={data.boomerang_bounce}
-  onChange={(e) => setData('boomerang_bounce', e.target.value)}
-  type="number" min={0} className="form-control" id="input-text" />
+  <Select value={data.boomerang_bounce} onValueChange={(value) => setData('boomerang_bounce', value)}>
+      <SelectTrigger className="w-[180px] form-control border rounded-lg">
+        <SelectValue placeholder="Select" />
+        </SelectTrigger>
+        <SelectContent className='form-control'>
+            <SelectGroup>
+            {/* <SelectLabel>Boomerang repeats</SelectLabel> */}
+            {[...Array(7).keys()].map((i) => (
+              <SelectItem key={i} value={String(i + 1)}>{i + 1} s</SelectItem>
+            ))}
+            </SelectGroup>
+        </SelectContent>
+    </Select>
   </div>
   <div className="xl:col-span-6 lg:col-span-6 md:col-span-6 sm:col-span-12 col-span-12">
     <label className="block text-sm mb-1">Slomo recording time</label>
