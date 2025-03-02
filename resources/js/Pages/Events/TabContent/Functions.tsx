@@ -51,13 +51,13 @@ const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
       <div className="space-y-4">
         <div>
           <CustomToggle 
-            label="Boomerang" 
+            label="Enable Boomerang" 
             initialValue={data.boomerang} 
             onChange={(value) => setData('boomerang', value)} 
             />
         </div>
         <CustomToggle 
-        label="Slomo" 
+        label="Enable Slomo" 
         initialValue={data.slomo} 
         onChange={(value) => setData('slomo', value)} 
         />

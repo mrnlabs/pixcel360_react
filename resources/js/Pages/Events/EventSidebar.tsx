@@ -18,7 +18,7 @@ export default function EventSidebar({activeTab,setActiveTab, scrollToDiv,event}
           <div className="box-body !pt-0 !p-3">
             <ul className="list-none files-main-nav" id="files-main-nav">
               <li className="px-0 pt-0">
-                <span className="text-xs text-textmuted dark:text-textmuted/50">Event Details</span>
+                <span className="text-xs text-textmuted dark:text-textmuted/50">Event Settings</span>
               </li>
               <li className={`${activeTab === 'event-details' ? 'active' : ''} files-type`}> 
                 <div className="cursor-pointer" onClick={() => {
@@ -29,7 +29,7 @@ export default function EventSidebar({activeTab,setActiveTab, scrollToDiv,event}
                     <div className="me-2">
                       <SquarePen size={16} />
                     </div>
-                    <span className="flex-auto text-nowrap"> Edit </span>
+                    <span className="flex-auto text-nowrap"> Edit Event </span>
                   </div>
                 </div>
               </li>
@@ -39,7 +39,7 @@ export default function EventSidebar({activeTab,setActiveTab, scrollToDiv,event}
                     <div className="me-2">
                     <Settings size={16} />
                     </div>
-                    <span className="flex-auto text-nowrap"> Event Settings </span>
+                    <span className="flex-auto text-nowrap"> Video Settings </span>
                   </div>
                 </div>
               </li>

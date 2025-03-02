@@ -43,7 +43,7 @@ export default function Edit({event} : EventProps) {
           case 'event-details':
               return 'Event details';
           case 'event-settings':
-              return 'Event settings';
+              return 'Vedio settings';
           case 'event-functions':
               return 'Functions';
           case 'audio':

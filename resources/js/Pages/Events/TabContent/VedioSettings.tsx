@@ -64,7 +64,7 @@ export default function VedioSettings({event} : any) {
 
       <div className="space-y-4">
         <CustomToggle 
-        label="Beep sounds" 
+        label="Enable Beep sounds" 
         initialValue={data.beep_sounds} 
         onChange={(value) => setData('beep_sounds', value ? 1 : 0)} 
         />
@@ -74,14 +74,14 @@ export default function VedioSettings({event} : any) {
     <div className="grid grid-cols-12 sm:gap-x-6 gap-y-6">
   <div className="xl:col-span-6 lg:col-span-6 md:col-span-6 sm:col-span-12 col-span-12">
     <CustomToggle 
-        label="Camera exposure menu" 
+        label="Enable Camera exposure menu" 
         initialValue={data.camera_exposure} 
         onChange={(value) => setData('camera_exposure', value ? 1 : 0)} 
         />
   </div>
   <div className="xl:col-span-6 lg:col-span-6 md:col-span-6 sm:col-span-12 col-span-12">
      <CustomToggle 
-        label="QR app protection" 
+        label="Enable QR app protection" 
         initialValue={data.qr_app_protection} 
         onChange={(value) => setData('qr_app_protection', value ? 1 : 0)} 
         />
