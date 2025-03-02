@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Event;
 use App\Services\MetricsService;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -34,7 +35,8 @@ class DashboardController extends Controller
     public function index()
     {
         return Inertia::render('Dashboard', [
-            'metrics' => $this->metricsService->getDashboardMetrics()
+            'metrics' => $this->metricsService->getDashboardMetrics(),
+            'events' => Event::latest()->limit(5)->get(),
         ]);
     }
 }

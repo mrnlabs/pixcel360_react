@@ -30,6 +30,8 @@ export interface EventProps {
 export interface Event {
     id?: number;
     name: string;
+    start_date?: string;
+    end_date?: string;
     language: string;
     country: string;
     countdown: string;
@@ -198,6 +200,7 @@ interface DashboardProps {
     metrics: MetricCard[];
     userAnalytics: UserAnalytics;
   };
+  events: Event[];
 }
 
 export type NotificationsProps = {

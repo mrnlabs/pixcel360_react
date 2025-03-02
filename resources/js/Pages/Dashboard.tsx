@@ -1,15 +1,15 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, usePage } from '@inertiajs/react';
 import HeaderCard from './Dashboard/HeaderCard';
-import { DPieChart } from './Charts/DPieChart';
-import NotificationCard from './Dashboard/NotificationCard';
 import { Breadcrumb } from '@/Shared/Breadcrumb';
-import { DashboardProps, PageProps } from '@/types';
+import { DashboardProps } from '@/types';
 import DBarChart from './Charts/DBarChart';
 import showToast from '@/utils/showToast';
-import { useEffect } from 'react';
+import { Suspense, useEffect } from 'react';
+import { Loader } from 'lucide-react';
+import EventCard from './Dashboard/EventCard';
 
-export default function Dashboard({ metrics: { metrics, userAnalytics } }: DashboardProps) {
+export default function Dashboard({ metrics: { metrics, userAnalytics },events }: DashboardProps) {
   // @ts-ignore
   const user = usePage().props.auth.user;
 
@@ -55,12 +55,17 @@ export default function Dashboard({ metrics: { metrics, userAnalytics } }: Dashb
               <div className="grid grid-cols-12 gap-x-6 col-span-12">
                 <div className="xxl:col-span-8 col-span-12">
                 <div style={{minHeight: 345 + 'px'}} className="">
+                  <Suspense fallback={<Loader className='mr-2 h-4 w-4 animate-spin'/>}>
                         <DBarChart 
                         // @ts-ignore
                         userAnalytics={userAnalytics}/>
+                        </Suspense>
                 </div>
                 </div>
-                <NotificationCard/>
+                <Suspense fallback={<Loader className='mr-2 h-4 w-4 animate-spin'/>}>
+                    <EventCard events={events} />
+                 </Suspense>
+                
               </div>
           
             
