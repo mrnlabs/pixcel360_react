@@ -32,58 +32,60 @@ class MetricsService
         $customerQueries = $this->calculateMonthOverMonthChange('CustomerQuery', 100);
         
         return [
-            'metrics' => [
-            [
-                'label' => 'Total Events',
-                'value' => number_format($totalEvents),
-                'percentageChange' => $eventsChange,
-                'isPositive' => $eventsChange >= 0,
-                'icon' => 'chart-bar',
-                'iconBgColor' => 'bg-primary',
-                'route' => 'events',
-                'outerBgColor' => 'border-primary/10 bg-primary/10',
-            ],
-            [
-                'label' => 'Active Users',
-                'value' => number_format($totalUsers),
-                'percentageChange' => $usersChange,
-                'isPositive' => $usersChange >= 0,
-                'icon' => 'users',
-                'iconBgColor' => 'bg-primarytint1color',
-                'outerBgColor' => 'border-primarytint1color/10 bg-primarytint1color/10',
-                'route' => 'users'
-            ],
-            [
-                'label' => 'Subscriptions',
-                'value' => number_format($totalSubscriptions),
-                'percentageChange' => $subscriptionsChange,
-                'isPositive' => $subscriptionsChange >= 0,
-                'icon' => 'credit-card',
-                'iconBgColor' => 'bg-primarytint2color',
-                'outerBgColor' => 'border-primarytint2color/10 bg-primarytint2color/10',
-                'route' => 'subscriptions'
-            ],
-            [
-                'label' => 'Orders',
-                'value' => number_format($totalOrders),
-                'percentageChange' => $ordersChange,
-                'isPositive' => $ordersChange >= 0,
-                'icon' => 'shopping-cart',
-                'iconBgColor' => 'bg-primarytint3color',
-                'outerBgColor' => 'border-primarytint3color/10 bg-primarytint3color/10',
-                'route' => 'orders'
-            ],
-            [
-                'label' => 'Customer Queries',
-                'value' => number_format($customerQueries),
-                'percentageChange' => $customerQueries,
-                'isPositive' => $customerQueries >= 0,
-                'icon' => 'bug-report',
-                'iconBgColor' => 'bg-secondary',
-                'outerBgColor' => 'border-secondary/10 bg-secondary/10',
-                'route' => 'customer-queries'
-            ],
-        ],
+            'metrics' => collect([
+                [
+                    'label' => 'Total Events',
+                    'value' => number_format($totalEvents),
+                    'percentageChange' => $eventsChange,
+                    'isPositive' => $eventsChange >= 0,
+                    'icon' => 'chart-bar',
+                    'iconBgColor' => 'bg-primary',
+                    'route' => 'events',
+                    'outerBgColor' => 'border-primary/10 bg-primary/10',
+                ],
+                // Only include Users metric for superadmin
+                isInternalPortalUser() ? [
+                    'label' => 'Active Users',
+                    'value' => number_format($totalUsers),
+                    'percentageChange' => $usersChange,
+                    'isPositive' => $usersChange >= 0,
+                    'icon' => 'users',
+                    'iconBgColor' => 'bg-primarytint1color',
+                    'outerBgColor' => 'border-primarytint1color/10 bg-primarytint1color/10',
+                    'route' => 'users'
+                ] : null,
+                [
+                    'label' => 'Subscriptions',
+                    'value' => number_format($totalSubscriptions),
+                    'percentageChange' => $subscriptionsChange,
+                    'isPositive' => $subscriptionsChange >= 0,
+                    'icon' => 'credit-card',
+                    'iconBgColor' => 'bg-primarytint2color',
+                    'outerBgColor' => 'border-primarytint2color/10 bg-primarytint2color/10',
+                    'route' => 'subscriptions'
+                ],
+                [
+                    'label' => 'Orders',
+                    'value' => number_format($totalOrders),
+                    'percentageChange' => $ordersChange,
+                    'isPositive' => $ordersChange >= 0,
+                    'icon' => 'shopping-cart',
+                    'iconBgColor' => 'bg-primarytint3color',
+                    'outerBgColor' => 'border-primarytint3color/10 bg-primarytint3color/10',
+                    'route' => 'orders'
+                ],
+                isInternalPortalUser() ? [
+                    'label' => 'Customer Queries',
+                    'value' => number_format($customerQueries),
+                    'percentageChange' => $customerQueries,
+                    'isPositive' => $customerQueries >= 0,
+                    'icon' => 'bug-report',
+                    'iconBgColor' => 'bg-secondary',
+                    'outerBgColor' => 'border-secondary/10 bg-secondary/10',
+                    'route' => 'customer-queries'
+                ] : null,
+            ])->filter()->values()->all(),
+            
             'userAnalytics' => [
                 'daily' => $this->getDailyUserAnalytics(),
                 'weekly' => $this->getWeeklyUserAnalytics(),
