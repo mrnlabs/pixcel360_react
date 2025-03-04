@@ -42,8 +42,7 @@ return [
     ],
 
     'video_processing' => [
-        'endpoint' => env('VIDEO_PROCESSING_API_ENDPOINT', 'https://api.example.com/process-video'),
-        'api_key' => env('VIDEO_PROCESSING_API_KEY'),
+        'endpoint' => env('VIDEO_PROCESSING_API_ENDPOINT', 'http://13.247.60.142/process-video-s3'),
         'timeout' => env('VIDEO_PROCESSING_TIMEOUT', 300), // 5 minutes
     ],
 

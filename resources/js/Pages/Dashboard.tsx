@@ -31,12 +31,73 @@ export default function Dashboard({ metrics: { metrics, userAnalytics },events }
     }
   }, []); 
 
+
+const sendData = () => {
+    // Define your endpoint URL (you'll need to get this from your config in a real implementation)
+const videoProcessingEndpoint = 'http://13.247.60.142/process-video-s3'; // Replace with your actual endpoint
+
+// Set request timeout (300 seconds = 5 minutes)
+const timeoutDuration = 300 * 1000; // Convert to milliseconds
+
+// Create an AbortController to handle the timeout
+const controller = new AbortController();
+const timeoutId = setTimeout(() => controller.abort(), timeoutDuration);
+
+// Request data
+const requestData = {
+  trim_start: 0,
+  play_to_sec: 3,
+  slow_factor: 0.7,
+  effect: 'slomo_boomerang',
+  video_url: 'https://picxel-bucket.s3.af-south-1.amazonaws.com/video_uploads/VID_20230902_161643.mp4',
+  audio_url: 'https://picxel-bucket.s3.af-south-1.amazonaws.com/audios/zZS7hqBit3KFs4IPh1YRp2c7NipIsG720Mo9NYfq.mp3',
+  overlay_url: 'https://picxel-bucket.s3.af-south-1.amazonaws.com/logos/112742_slomo_1739267223751.png'
+};
+
+// Make the request with fetch
+fetch(videoProcessingEndpoint, {
+  method: 'POST',
+  headers: {
+    'Accept': 'application/json',
+    'Content-Type': 'application/x-www-form-urlencoded'
+ 
+  },
+  body: JSON.stringify(requestData),
+  signal: controller.signal
+})
+  .then(response => {
+    // Clear the timeout since we got a response
+    clearTimeout(timeoutId);
+    
+    // Check if the response is successful
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+    
+    // Parse JSON response
+    return response.json();
+  })
+  .then(data => {
+    // Handle successful response
+    console.log('Processing successful:', data);
+    // Do something with the processed video data
+  })
+  .catch(error => {
+    // Handle errors, including timeout
+    if (error.name === 'AbortError') {
+      console.error('Request timed out after', timeoutDuration / 1000, 'seconds');
+    } else {
+      console.error('Error processing video:', error.message);
+    }
+  });
+}
+
     return (
         <AuthenticatedLayout>
           <Head title="Dashboard" />
           <div className="main-content app-content">
             <div className="container-fluid">
-             
+            <button onClick={sendData} className="btn bg-success">Click me</button>
               <div className="flex items-center justify-between page-header-breadcrumb flex-wrap gap-2">
               <Breadcrumb
               items={[

@@ -23,3 +23,5 @@ Route::post('/upload-audio', [EventSettingAPIController::class, 'uploadAudio'])-
 // Get Plans
 Route::get('/plans', function() {$plans = Plan::with('category')->latest()->get();return response()->json($plans);});
 
+require __DIR__.'/wordpress.php';
+

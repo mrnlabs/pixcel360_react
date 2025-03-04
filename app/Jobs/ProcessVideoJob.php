@@ -51,17 +51,15 @@ class ProcessVideoJob implements ShouldQueue
             // Get video details
             $videoPath = $this->video->path;
             $videoSettings = $this->video->event->boomerang_setting;
-            Log::info($videoSettings);
+            // Log::info($videoSettings);
             $response = Http::timeout(300)->post(config('services.video_processing.endpoint'), [
-                'video_id' => $this->video->id,
-                'video_path' => $videoPath,
-                'boomerang' => $videoSettings->boomerang,
-                'slomo' => $videoSettings->slomo,
-                'boomerang_repeats' => $videoSettings->boomerang_repeats,
-                'boomerang_repeats' => $videoSettings->boomerang_repeats,
-                'boomerang_bounce' => $videoSettings->boomerang_bounce,
-                'speed' => $videoSettings->speed,
-                'add_audio_file' => $videoSettings->add_audio_file
+                'trim_start' => 0,
+                'play_to_sec' => 3,
+                'slow_factor' => 0.7,
+                'effect' => 'slomo_boomerang',
+                'video_url' => 'https://picxel-bucket.s3.af-south-1.amazonaws.com/video_uploads/VID_20230902_161643.mp4',
+                'audio_url' => "https://picxel-bucket.s3.af-south-1.amazonaws.com/audios/zZS7hqBit3KFs4IPh1YRp2c7NipIsG720Mo9NYfq.mp3",
+                'overlay_url' => "https://picxel-bucket.s3.af-south-1.amazonaws.com/logos/112742_slomo_1739267223751.png"
             ]);
             
             if ($response->successful()) {
@@ -79,6 +77,7 @@ class ProcessVideoJob implements ShouldQueue
                     'processed_path' => $processedData['processed_path'] ?? null
                 ]);
             } else {
+                
                 Log::error('Video processing API error', [
                     'video_id' => $this->video->id,
                     'status' => $response->status(),
