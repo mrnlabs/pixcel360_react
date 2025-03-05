@@ -10,7 +10,8 @@ export default function OverLayCard({overlay, setModalOpen}:
 }) {
   
   return (
-    <div className="col">
+    // on hover zoom in
+    <div className="col hover:scale-105 transition duration-300">
             <div className="box">
               <img src={overlay?.path} className="object-fill h-80 card-img-top" alt="..."/>
               <div className="box-body">

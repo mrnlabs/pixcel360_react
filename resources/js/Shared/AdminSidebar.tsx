@@ -147,14 +147,7 @@ const AdminSidebar: React.FC = () => {
       label: 'Overlays',
       path: '/admin-overlays',
       icon: (<Layers className="h-6 w-6 mr-2" />
-      ),
-      subItems: [
-        {
-          label: 'New Overlay',
-          path: '/admin-overlays/create',
-          icon: <Layers2 className="h-5 w-5 mr-2" />
-        }
-      ]
+      )
     },
 
     {
