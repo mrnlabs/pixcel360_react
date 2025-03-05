@@ -66,4 +66,6 @@ require __DIR__.'/invoice.php';
 require __DIR__.'/google_auth.php';
 require __DIR__.'/user.php';
 require __DIR__.'/notify.php';
+require __DIR__.'/user_overlay.php';
+require __DIR__.'/admin_overlay.php';
 

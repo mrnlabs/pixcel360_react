@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Route;
             Route::post('/notifications/{id}/read', [NotificationController::class, 'markAsRead'])->name('notifications.markAsRead');
             Route::post('/mark-all-as-read', [NotificationController::class, 'markAllAsRead'])->name('notifications.markAllAsRead');
             Route::post('/notifications/mark-all-read', [NotificationController::class, 'markAllAsRead'])->name('notifications.markAllAsRead');
+            Route::post('/deleted-selected', [NotificationController::class, 'deleteSelected'])->name('notifications.deleteSelected');
     });
 
 

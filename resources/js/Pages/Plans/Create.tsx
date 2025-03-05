@@ -214,6 +214,7 @@ const handleQuillChange = (value: string) => {
                             ) : (
                               <Suspense fallback={<Loader className="mx-auto" size={20} />}>
                                 <FileUpload
+                                  dropzoneText="Drag and drop an image file here or click to browse"
                                   onFilesSelected={handleFileSelect}
                                   onFileRemove={handleFileRemove}
                                   multiple={false}

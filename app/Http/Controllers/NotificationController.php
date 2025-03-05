@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class NotificationController extends Controller
 {
@@ -25,10 +26,10 @@ class NotificationController extends Controller
 
     function viewAllNotifications() {
         if (isInternalPortalUser()) {
-            $notifications = auth()->user()->notifications;
+            $notifications = auth()->user()->unreadNotifications;
             $unreadCount = auth()->user()->unreadNotifications->count();
             return Inertia::render('Notifications/Index', [
-                'notifications' => $notifications,
+                'initialNotifications' => $notifications,
                 'unreadCount' => $unreadCount,
             ]);
         }
@@ -39,7 +40,7 @@ class NotificationController extends Controller
             'unreadCount' => $unreadCount,
         ]);
     }
-    public function markAsRead(Request $request, $id)
+    public function markAsRead($id)
     {
         $notification = auth()->user()->notifications()->findOrFail($id);
         $notification->markAsRead();
@@ -47,17 +48,29 @@ class NotificationController extends Controller
         return response()->json(['success' => true]);
     }
 
-    public function markAllAsRead()
+    public function markAllAsRead(Request $request)
     {
-        auth()->user()->store->unreadNotifications->markAsRead();
-        
-        return back()->with('success', 'All notifications marked as read');
+        $notifications = $request->notifications;
+
+        if (empty($notifications)) {
+            return back()->with('error', "No notifications selected.");
+        }
+
+        DB::table('notifications')->whereIn('id', $notifications)->update(['read_at' => now()]);
+        return back()->with('success', "All selected notifications marked as read.");
     }
+    
 
     function redirectToModel($id) {
-        $notification = auth()->user()->store->notifications->findOrFail($id);
+        $notification = auth()->user()->notifications()->findOrFail($id);
         $notification->markAsRead();
         return redirect($notification->data['url']);
         
+    }
+
+    function deleteSelected(Request $request){
+        $ids = $request->notifications;
+        DB::table('notifications')->whereIn('id', $ids)->delete();
+        return back()->with('success', "Selected notifications deleted successfully.");
     }
 }

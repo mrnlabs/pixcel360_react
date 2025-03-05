@@ -1,4 +1,4 @@
-import { Copy, Image, QrCode, SquarePen, Trash2 } from 'lucide-react'
+import { Copy, Image, Layers, QrCode, SquarePen, Trash2 } from 'lucide-react'
 import { format } from "date-fns";
 import CustomTooltip from '@/Components/CustomTooltip';
 import React, { Suspense, useState, useEffect } from 'react';
@@ -144,11 +144,11 @@ export default function Table({events, setModalOpen, setQRData, setDuplicateModa
           <tr className="border-b border-defaultborder dark:border-defaultborder/10">
             <th scope="col" className="text-center">NR.</th>
             <th scope="col">Event Name</th>
-            <th scope="col">Created</th>
+            <th scope="col">Start Date</th>
             <th scope="col">Status</th>
             <th scope="col">Expires</th>
             <th scope="col">QR Code</th>
-            <th scope="col">Data</th>
+            {/* <th scope="col">Data</th> */}
             <th scope="col">GALLERY</th>
             <th scope="col">Overlays</th>
             <th scope="col">Manage</th>			
@@ -174,7 +174,7 @@ export default function Table({events, setModalOpen, setQRData, setDuplicateModa
                   </div>
                 </div>
               </td>
-              <td className=""> {format(new Date(event.created_at), 'dd-MM-yyyy')} </td>
+              <td className=""> {format(new Date(event.start_date), 'dd-MM-yyyy')} </td>
               <td>
                 {event.status == 1 ? (
                   <span className="badge bg-success/10 text-success leading-none">Active</span>
@@ -195,14 +195,14 @@ export default function Table({events, setModalOpen, setQRData, setDuplicateModa
                   <QrCode />
                 </div>
               </td>
-              <td>
+              {/* <td>
                 <span className="badge bg-success/10 text-success leading-none">Active</span>
-              </td>
+              </td> */}
               <td>
                 <Link href={route('gallery',event.slug)}><span><Image/></span></Link>
               </td>
               <td>
-                <span className="font-medium">$15,000</span>
+              <Link href={route('overlays',event.slug)}><span className="font-medium cursor-pointer"><Layers /></span></Link>
               </td>
               <td>
                 <div className="btn-list">

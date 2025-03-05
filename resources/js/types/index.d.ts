@@ -204,7 +204,7 @@ interface DashboardProps {
 }
 
 export type NotificationsProps = {
-  notifications: Notification[];
+  initialNotifications: Notification[];
 }
 
 export type Notification = {
@@ -212,7 +212,7 @@ export type Notification = {
   type: string;
   title: string;
   message: string;
-  read_at: boolean;
+  read_at: string | null;
   data: {
       title: string;
       message: string;

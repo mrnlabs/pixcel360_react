@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { usePage, Link } from '@inertiajs/react';
-import { Calendar, CircleDollarSign, Home, IdCard, LogOut, Plus, SquareUserRound } from 'lucide-react';
+import { Calendar, CircleDollarSign, Home, IdCard, Layers, Layers2, LogOut, Plus, SquareUserRound } from 'lucide-react';
 import SidebarLogo from './SidebarLogo';
 
 interface MenuState {
@@ -122,7 +122,7 @@ const AdminSidebar: React.FC = () => {
       icon: (<Calendar className="h-6 w-6 mr-2" />),
       subItems: [
         {
-          label: 'Create Event',
+          label: 'New Event',
           path: '/events/create',
           icon: (<Plus className="h-5 w-5 mr-2" />)
         }
@@ -139,6 +139,20 @@ const AdminSidebar: React.FC = () => {
           label: 'New Plan',
           path: '/plans/create',
           icon: (<Plus className="h-5 w-5 mr-2" />)
+        }
+      ]
+    },
+    {
+      id: 'overlays',
+      label: 'Overlays',
+      path: '/admin-overlays',
+      icon: (<Layers className="h-6 w-6 mr-2" />
+      ),
+      subItems: [
+        {
+          label: 'New Overlay',
+          path: '/admin-overlays/create',
+          icon: <Layers2 className="h-5 w-5 mr-2" />
         }
       ]
     },

@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use function Pest\Laravel\json;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 
@@ -20,10 +19,10 @@ class WordpressUserController extends Controller
        try{
         $validatedData = $this->validateUserData($request);
         $user = $this->createUserInWordPress($validatedData);
-        return response()->json(['user' => $user]);
+        return response()->json(['status' => 'success', 'user' => $user]);
        } catch (\Exception $e) {
         Log::error($e->getMessage());
-        return response()->json(['error' => $e->getMessage()], 500);
+        return response()->json(['error' => 'An error occurred while registering the user.'], 500);
        }
       
     }
@@ -32,7 +31,7 @@ class WordpressUserController extends Controller
     {
         $request->validate([
             "email" => "required|email|unique:users,email",
-            'password' => 'required|min:8'
+            'password' => 'required'
         ]);
 
         $validatedData = $request->only(['email', 'password']);

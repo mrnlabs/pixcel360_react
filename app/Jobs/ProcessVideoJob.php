@@ -46,56 +46,67 @@ class ProcessVideoJob implements ShouldQueue
      * Execute the job.
      */
     public function handle(): void
-    {
-        try {
-            // Get video details
-            $videoPath = $this->video->path;
-            $videoSettings = $this->video->event->boomerang_setting;
-            // Log::info($videoSettings);
-            $response = Http::timeout(300)->post(config('services.video_processing.endpoint'), [
-                'trim_start' => 0,
-                'play_to_sec' => 3,
-                'slow_factor' => 0.7,
-                'effect' => 'slomo_boomerang',
-                'video_url' => 'https://picxel-bucket.s3.af-south-1.amazonaws.com/video_uploads/VID_20230902_161643.mp4',
-                'audio_url' => "https://picxel-bucket.s3.af-south-1.amazonaws.com/audios/zZS7hqBit3KFs4IPh1YRp2c7NipIsG720Mo9NYfq.mp3",
-                'overlay_url' => "https://picxel-bucket.s3.af-south-1.amazonaws.com/logos/112742_slomo_1739267223751.png"
+{
+    try {
+        // Get video details
+        $videoPath = $this->video->path;
+        $videoSettings = $this->video->event->boomerang_setting;
+        
+        // Create data array
+        $data = [
+            'trim_start' => 0,
+            'play_to_sec' => 3,
+            'slow_factor' => 0.7,
+            'effect' => 'slomo_boomerang',
+            'video_url' => 'https://picxel-bucket.s3.af-south-1.amazonaws.com/video_uploads/VID_20230902_161643.mp4',
+            'audio_url' => "https://picxel-bucket.s3.af-south-1.amazonaws.com/audios/zZS7hqBit3KFs4IPh1YRp2c7NipIsG720Mo9NYfq.mp3",
+            'overlay_url' => "https://picxel-bucket.s3.af-south-1.amazonaws.com/logos/112742_slomo_1739267223751.png"
+        ];
+        
+        $stringifiedData = http_build_query($data);
+        
+        $response = Http::withHeaders([
+              'Accept' => 'application/json',
+              'Content-Type' => 'application/x-www-form-urlencoded',
+        ])
+        ->timeout(300)
+        ->withBody($stringifiedData, 'application/x-www-form-urlencoded')
+        ->post(config('services.video_processing.endpoint'));
+        
+        if ($response->successful()) {
+            $processedData = $response->json();
+            
+            // Update the video with processed path and status
+            $this->video->update([
+                'processed_video_path' => $processedData['processed_path'] ?? null,
+                'is_processed' => true,
+                'processed_at' => now(),
             ]);
             
-            if ($response->successful()) {
-                $processedData = $response->json();
-                
-                // Update the video with processed path and status
-                $this->video->update([
-                    'processed_video_path' => $processedData['processed_path'] ?? null,
-                    'is_processed' => true,
-                    'processed_at' => now(),
-                ]);
-                
-                Log::info('Video processed successfully', [
-                    'video_id' => $this->video->id,
-                    'processed_path' => $processedData['processed_path'] ?? null
-                ]);
-            } else {
-                
-                Log::error('Video processing API error', [
-                    'video_id' => $this->video->id,
-                    'status' => $response->status(),
-                    'response' => $response->body()
-                ]);
-                
-                throw new \Exception('Video processing API error: ' . $response->body());
-            }
-        } catch (\Exception $exception) {
-            Log::error('Video processing job failed', [
+            Log::info('Video processed successfully', [
                 'video_id' => $this->video->id,
-                'exception' => $exception->getMessage()
+                'processed_path' => $processedData['processed_path'] ?? null
+            ]);
+        } else {
+            
+            Log::error('Video processing API error', [
+                'video_id' => $this->video->id,
+                'status' => $response->status(),
+                'response' => $response->body()
             ]);
             
-            // This will trigger a retry if we haven't exceeded $tries
-            throw $exception;
+            throw new \Exception('Video processing API error: ' . $response->body());
         }
+    } catch (\Exception $exception) {
+        Log::error('Video processing job failed', [
+            'video_id' => $this->video->id,
+            'exception' => $exception->getMessage()
+        ]);
+        
+        // This will trigger a retry if we haven't exceeded $tries
+        throw $exception;
     }
+}
 
     public function failed(\Throwable $exception)
     {
