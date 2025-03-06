@@ -3,17 +3,17 @@ import { Breadcrumb } from '@/Shared/Breadcrumb'
 import { Head, router, useForm } from '@inertiajs/react'
 import { Loader } from 'lucide-react'
 import React, { Suspense, useState } from 'react';
-import VideoCard from './OverLayCard';
+import VideoCard from './UserOverLayCard';
 import { EventProps, Filters, QueryParams } from '@/types';
 // @ts-expect-error
 import { debounce } from 'lodash';
 import { Input } from '@/Components/ui/input';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/Components/ui/select';
-import OverLayCard from './OverLayCard';
+import OverLayCard from './UserOverLayCard';
 import OverLayModal from './UserOverLayModal';
 import showToast from '@/utils/showToast';
 
-export default function Index({overlays=[], isAdmin} : any) {
+export default function UserOverLay({overlays=[]} : any) {
 
   const [modalOpen, setModalOpen] = useState(false);
   const [overlay, setOverlay] = useState(null);
@@ -112,6 +112,7 @@ const handleSubmit = () => {
               
                  {overlays?.data?.map((overlay: any) => ( 
                   <OverLayCard 
+                    isAdmin={false}
                     key={overlay.id}
                     setModalOpen={setModalOpen}
                     overlay={overlay}

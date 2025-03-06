@@ -77,7 +77,7 @@ const updateFilters = React.useCallback(
                 <div className="xxl:col-span-12 col-span-12">
                   <div className="box">
                     <div className="box-header justify-between">
-                      <div className="box-title"> Events </div>
+                      <div className="box-title"> Events <span className="text-primary">({totalItems})</span></div>
                       <div className="flex flex-wrap gap-2">
                         <Link href={route('event.create')} className="ti-btn ti-btn-primary !m-0 btn-wave ti-btn-sm waves-effect waves-light">
                           <SquarePlus className="align-middle" />Create </Link>

@@ -78,7 +78,7 @@ function OverLayModal({
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogContent className="sm:max-w-[425px] max-h-[90vh] overflow-y-auto top-[5%] sm:top-[10%]  translate-y-0" style={{ maxWidth: "50rem" }}>
                 <DialogHeader className="border-b sticky top-0  dark:bg-gray-900 z-10">
-                    <DialogTitle className="card-title">View Overlay</DialogTitle>
+                    <DialogTitle className="card-title">Upload Overlay</DialogTitle>
                     <DialogDescription></DialogDescription>
                 </DialogHeader>
                 <div className="box-body">

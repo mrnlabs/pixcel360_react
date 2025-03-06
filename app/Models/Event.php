@@ -39,6 +39,10 @@ class Event extends Model
         return $this->hasOne(SharingMethod::class, 'event_id', 'id');
     }
  
+    public function overlay()
+{
+    return $this->belongsTo(Overlay::class);
+}
 
 }
 

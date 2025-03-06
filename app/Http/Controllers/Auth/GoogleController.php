@@ -31,20 +31,37 @@ class GoogleController extends Controller
     {
         try {
             $googleUser = Socialite::driver('google')->stateless()->user();
-            
-            $plainPassword = Str::random(8);
-            $user = User::updateOrCreate(
-                ['google_id' => $googleUser->id],
-                [
-                    'firstname' => explode(' ', $googleUser->name)[0], 
-                    'lastname' => isset($googleUser->name) ? implode(' ', array_slice(explode(' ', $googleUser->name), 1)) : '',
-                    'email' => $googleUser->email,
-                    'google_id' => $googleUser->id,
-                    'photo' => $googleUser->avatar,
-                    'last_login_at' => now(),
-                    'password' => Hash::make('password')
-                ]
-            );
+$plainPassword = Str::random(8);
+
+// First check if user exists with this Google ID
+$user = User::where('google_id', $googleUser->id)->first();
+
+// If not found by Google ID, try to find by email
+if (!$user) {
+    $user = User::where('email', $googleUser->email)->first();
+    
+    // If user found by email, update their Google ID
+    if ($user) {
+        $user->update([
+            'google_id' => $googleUser->id,
+            'photo' => $googleUser->avatar,
+            'last_login_at' => now(),
+        ]);
+    }
+}
+
+// If user still not found, create a new one
+if (!$user) {
+    $user = User::create([
+        'firstname' => explode(' ', $googleUser->name)[0], 
+        'lastname' => isset($googleUser->name) ? implode(' ', array_slice(explode(' ', $googleUser->name), 1)) : '',
+        'email' => $googleUser->email,
+        'google_id' => $googleUser->id,
+        'photo' => $googleUser->avatar,
+        'last_login_at' => now(),
+        'password' => Hash::make($plainPassword)
+    ]);
+}
             if($user->wasRecentlyCreated) {
                 $user->assignRole('Account Owner');
                 $permissions = Permission::all();

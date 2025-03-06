@@ -14,9 +14,27 @@ class OverlayController extends Controller
   
     public function index()
     {
-        $overlays = Overlay::admin()->latest()->paginate(15);
+        $query = Overlay::query();
+
+        $query->where('is_admin', true);
+        
+        if(request()->has('search')) {
+            $query->where('name', 'like', '%'.request('search').'%');
+        }
+        
+      
+        if(request()->has('sort')) {
+            $sortDirection = request('sort') === 'oldest' ? 'asc' : 'desc';
+            $query->orderBy('created_at', $sortDirection);
+        } else {
+            $query->orderBy('created_at', 'desc');
+        }
+        
+        $overlays = $query->paginate(10);
+
         return Inertia::render('OverLays/Index', [
             'overlays' => $overlays,
+            'isAdmin' => isInternalPortalUser()
         ]);
     }
 

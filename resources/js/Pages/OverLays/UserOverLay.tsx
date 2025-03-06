@@ -13,7 +13,7 @@ import OverLayCard from './OverLayCard';
 import OverLayModal from './UserOverLayModal';
 import showToast from '@/utils/showToast';
 
-export default function Index({overlays=[], isAdmin} : any) {
+export default function UserOverLay({overlays=[]} : any) {
 
   const [modalOpen, setModalOpen] = useState(false);
   const [overlay, setOverlay] = useState(null);
@@ -112,6 +112,7 @@ const handleSubmit = () => {
               
                  {overlays?.data?.map((overlay: any) => ( 
                   <OverLayCard 
+                    isAdmin={false}
                     key={overlay.id}
                     setModalOpen={setModalOpen}
                     overlay={overlay}

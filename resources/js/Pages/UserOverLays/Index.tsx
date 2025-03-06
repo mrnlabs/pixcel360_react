@@ -2,21 +2,36 @@ import Authenticated from '@/Layouts/AuthenticatedLayout'
 import { Breadcrumb } from '@/Shared/Breadcrumb'
 import { Head, router, useForm } from '@inertiajs/react'
 import { Loader } from 'lucide-react'
-import React, { Suspense, useState } from 'react';
-import VideoCard from './OverLayCard';
+import React, { Suspense, useEffect, useState } from 'react';
+import VideoCard from './UserOverLayCard';
 import { EventProps, Filters, QueryParams } from '@/types';
 // @ts-expect-error
 import { debounce } from 'lodash';
 import { Input } from '@/Components/ui/input';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/Components/ui/select';
-import OverLayCard from './OverLayCard';
+import OverLayCard from './UserOverLayCard';
 import OverLayModal from './UserOverLayModal';
 import showToast from '@/utils/showToast';
+import UserOverLayCard from './UserOverLayCard';
+import UserOverLayModal from './UserOverLayModal';
 
-export default function Index({overlays=[], isAdmin} : any) {
+export default function Index({userOverlays=[], adminOverlays=[], isAdmin} : any) {
 
   const [modalOpen, setModalOpen] = useState(false);
-  const [overlay, setOverlay] = useState(null);
+  const [overlay, setOverlay] = useState<any>(null);
+
+  const [activeOverlay, setActiveOverlay] = useState<any>(null);
+  const [showPresets, setShowPresets] = useState(false);
+
+  useEffect(() => {
+    setOverlays(showPresets ? adminOverlays : userOverlays);
+  }, [showPresets, adminOverlays, userOverlays]);
+
+  const [overlays, setOverlays] = useState(showPresets ? adminOverlays : userOverlays);
+
+  const handleOverlaySelect = (overlay: any) => {
+    setActiveOverlay(overlay);
+  };
 
   const [filters, setFilters] = useState({
     search: '',
@@ -54,11 +69,12 @@ const updateFilters = React.useCallback(
 );
 
 const handleSubmit = () => {
-  post(route('admin.overlays.store'), {
+  post(route('user.overlays.store'), {
     preserveState: true,
     onSuccess: () => {
       setModalOpen(false);
       setData('pngFile', null);
+      showToast('success', 'Overlay uploaded successfully', {position: 'bottom-right'});
       reset();
     },
     onError: () => {
@@ -70,7 +86,7 @@ const handleSubmit = () => {
 
   return (
     <Authenticated>
-          <Head title="Pixcel360 - Overlays" />
+          <Head title="Overlays" />
           <div className="main-content app-content">
             <div className="container-fluid">
              <Breadcrumb
@@ -85,11 +101,13 @@ const handleSubmit = () => {
             <div className="box">
               <div className="box-body p-4">
                 <div className="flex items-center justify-between flex-wrap gap-4">
-               <button onClick={() => setModalOpen(true)} className='ti-btn ti-btn-primary !m-0 btn-wave ti-btn-sm waves-effect waves-light'>Upload New Overlay</button>
+               <button onClick={() => setShowPresets(true)} className='ti-btn ti-btn-primary !m-0 btn-wave ti-btn-sm waves-effect waves-light'>Load Presets</button>
                   <div className="flex" role="search">
+                  <button onClick={() => setModalOpen(true)} className='ti-btn ti-btn-primary !m-0 btn-wave ti-btn-sm waves-effect waves-light w-full'>Upload Overlay</button>
+
                     <Input 
-                    onChange={(e) => updateFilters({ search: e.target.value })} className="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
-                     <Select onValueChange={(e) => updateFilters({ sort: e })}>
+                    onChange={(e) => updateFilters({ search: e.target.value })} className="form-control me-2 ml-3 " type="search" placeholder="Search" aria-label="Search"/>
+                     <Select onValueChange={(e) => updateFilters({ sort: e })} >
                           <SelectTrigger className="w-[180px] form-control">
                             <SelectValue placeholder="Sort By"></SelectValue>
                           </SelectTrigger>
@@ -108,18 +126,21 @@ const handleSubmit = () => {
           </div>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+          
         <Suspense fallback={<Loader className="align-middle animate-spin"/>}>
               
                  {overlays?.data?.map((overlay: any) => ( 
-                  <OverLayCard 
+                  <UserOverLayCard 
+                    isAdmin={isAdmin}
                     key={overlay.id}
                     setModalOpen={setModalOpen}
                     overlay={overlay}
-                    
+                    isActive={activeOverlay?.id === overlay.id}
+                    onSelect={handleOverlaySelect}
                   />
                ))}
 
-              <OverLayModal 
+              <UserOverLayModal 
               data={data}
                  setData={setData}
                   open={modalOpen} 
@@ -127,6 +148,7 @@ const handleSubmit = () => {
                   overlay={overlay}
                   handleSubmit={handleSubmit}
                   processing={processing}
+                  
                 />
 
               </Suspense>

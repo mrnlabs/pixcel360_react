@@ -37,16 +37,10 @@ export default function PlanCard({plan, handleDelete, dialogOpen, setDialogOpen,
   return (
     <div className="xxl:col-span-3 xl:col-span-6 lg:col-span-6 md:col-span-6 sm:col-span-12 col-span-12">
     <div className="box">
-      <div className='cursor-pointer' onClick={() => {
-         if (plan) {
-          setPlan(plan);
-        }
-        setModalOpen(true)
-      }
-      }
+      <Link className='cursor-pointer' href={route('plans.show', plan?.slug )}
       >
         <img src={plan?.photo} className="card-img-top max-h-60 min-h-60" alt="..."/>
-        </div>
+        </Link>
       <div className="box-body">
       <div className={`ribbon-2 ${getRibbonColor(plan?.category?.name)} ribbon-right`}>{plan?.category?.name}</div>
         <h6 onClick={() => {

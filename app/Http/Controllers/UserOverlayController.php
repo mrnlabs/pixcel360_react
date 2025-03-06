@@ -7,6 +7,7 @@ use App\Models\Overlay;
 use Illuminate\Http\Request;
 use App\Rules\PNGHasTransparency;
 use Illuminate\Support\Facades\Storage;
+use Inertia\Inertia;
 
 class UserOverlayController extends Controller
 {
@@ -14,43 +15,80 @@ class UserOverlayController extends Controller
     public function index()
     {
         $userOverlays = Overlay::user(auth()->id())->latest()->get();
-        $adminOverlays = Overlay::admin()->latest()->get();
+        $userQuery = Overlay::query()->user(auth()->id());
+        $userOverlays = $this->applyFiltersToQuery($userQuery)->paginate(10);
+        $userOverlays->appends(request()->query());
         
-        return view('overlays.index', compact('userOverlays', 'adminOverlays'));
+        $adminQuery = Overlay::query()->admin();
+        $adminOverlays = $this->applyFiltersToQuery($adminQuery)->paginate(10);
+        $adminOverlays->appends(request()->query());
+        
+        return Inertia::render('UserOverLays/Index', [
+            'userOverlays' => $userOverlays,
+            'adminOverlays' => $adminOverlays,
+            'isAdmin' => isInternalPortalUser()
+        ]);
     }
 
+    private function applyFiltersToQuery($query)
+{
+    // Handle search
+    if(request()->has('search')) {
+        $query->where('name', 'like', '%'.request('search').'%');
+    }
     
-    public function create()
-    {
-        return view('overlays.create');
+    // Handle sorting
+    if(request()->has('sort')) {
+        $sortDirection = request('sort') === 'oldest' ? 'asc' : 'desc';
+        $query->orderBy('created_at', $sortDirection);
+    } else {
+        $query->latest();
+    }
+    
+    // Additional filters
+    if(request()->has('type')) {
+        $query->where('type', request('type'));
+    }
+    
+    return $query;
+}
+
+    
+
+    public function addOverlayToEvent(Request $request, $overlayId){
+        $request->validate([
+            'eventSlug' => 'required|string|exists:events,slug',
+        ]);
+        $event = Event::whereSlug($request->eventSlug)->first();
+        $event->update([
+            'overlay_id' => $overlayId,
+        ]);
+        return redirect()->route('user.overlays', $event->slug)->with('success', 'Overlay added successfully');
     }
 
    
     public function store(Request $request)
     {
+        
         $request->validate([
             'name' => 'required|string|max:255',
-            'image' => ['required', 'image', 'mimes:png', new PNGHasTransparency()],
+            'pngFile' => ['required', 'image', 'mimes:png', new PNGHasTransparency()],
         ]);
 
         // Store the overlay image
-        $path = $request->file('image')->store('user/overlays/' . auth()->id(), 'public');
-
+        $filePath = Storage::put('video_overlays', $request->file('pngFile'));
+                
+        $url = Storage::url($filePath);
         Overlay::create([
             'name' => $request->name,
-            'path' => $path,
-            'type' => 'image',
+            'path' => $url,
             'is_admin' => false,
-            'user_id' => auth()->id(),
+            'user_id' => auth()->id(), // Admin overlays don't belong to any specific user
         ]);
 
-        if ($request->wantsJson()) {
-            return response()->json(['message' => 'Overlay created successfully']);
-        }
-
-        return redirect()->route('overlays.index')
-            ->with('success', 'Overlay created successfully');
+        return back()->with('success', 'Overlay created successfully');
     }
+
 
  
     public function edit(Overlay $overlay)

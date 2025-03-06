@@ -1,7 +1,3 @@
-import React from 'react'
-import VideoPlayer from './VideoPlayer'
-import { Event, EventProps } from '@/types';
-import { usePage } from '@inertiajs/react';
 
 export default function OverLayCard({overlay, setModalOpen}: 
   {
@@ -13,10 +9,18 @@ export default function OverLayCard({overlay, setModalOpen}:
     // on hover zoom in
     <div className="col hover:scale-105 transition duration-300">
             <div className="box">
-              <img src={overlay?.path} className="object-fill h-80 card-img-top" alt="..."/>
+              <img 
+                // onClick={() => setModalOpen(true)} 
+                src={overlay?.path} className="object-fill h-80 card-img-top cursor-pointer" alt={overlay?.name}/>
               <div className="box-body">
-                <h6 className="font-medium mb-3">{overlay?.name}</h6>
-                <p className="card-text"> If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. </p>
+                <h6 className="font-medium mb-3 text-center">{overlay?.name}</h6>
+                <div className='text-center'>
+                  
+                <button className="ti-btn ti-btn-outline-danger ti-btn-wave w-full btn-wave font-medium waves-effect waves-light table-icon">
+                  Delete
+                  </button>
+                </div>
+               
               </div>
             </div>
           </div>

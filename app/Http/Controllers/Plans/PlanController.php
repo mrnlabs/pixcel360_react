@@ -74,6 +74,20 @@ class PlanController extends Controller
         ]);
     }
 
+    function show($slug) : Response
+    {
+        if(!request('wordpress') && !auth()->id()) return abort(404);
+        $plan = Plan::where('slug', $slug)->first();
+        if(request('wordpress')){
+            return Inertia::render('Plans/WordpressShow',[
+                'plan' => $plan
+            ]);
+        }
+        return Inertia::render('Plans/Show',[
+            'plan' => $plan
+        ]);
+    }
+
     function update(PlanRequest $request, $slug) {
         
         $plan = Plan::where('slug', $slug)->first();

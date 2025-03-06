@@ -14,10 +14,7 @@ class Overlay extends Model
         return $this->belongsTo(Event::class);
     }
 
-    public function user(): BelongsTo
-    {
-        return $this->belongsTo(User::class);
-    }
+
 
     public function scopeAdmin($query)
     {
@@ -38,4 +35,9 @@ class Overlay extends Model
                   ->orWhere('user_id', $userId);
         });
     }
+
+    public function events()
+{
+    return $this->hasMany(Event::class);
+}
 }

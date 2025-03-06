@@ -6,6 +6,7 @@ import ConfirmDialog from '@/Components/ConfirmDialog';
 import { Link, router } from '@inertiajs/react';
 import { useToast } from '@/hooks/use-toast';
 import showToast from '@/utils/showToast';
+import { AuthGuard } from '@/guards/authGuard';
 
 export default function Table({events, setModalOpen, setQRData, setDuplicateModalOpen}: any) {
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -150,7 +151,12 @@ export default function Table({events, setModalOpen, setQRData, setDuplicateModa
             <th scope="col">QR Code</th>
             {/* <th scope="col">Data</th> */}
             <th scope="col">GALLERY</th>
-            <th scope="col">Overlays</th>
+            <AuthGuard 
+                roles={["Account Owner"]} permissions={["*"]}
+                requireAll={true}>
+                <th scope="col">Overlays</th>
+           </AuthGuard>
+            
             <th scope="col">Manage</th>			
           </tr>
         </thead>
@@ -201,9 +207,14 @@ export default function Table({events, setModalOpen, setQRData, setDuplicateModa
               <td>
                 <Link href={route('gallery',event.slug)}><span><Image/></span></Link>
               </td>
-              <td>
-              <Link href={route('overlays',event.slug)}><span className="font-medium cursor-pointer"><Layers /></span></Link>
-              </td>
+              
+                <AuthGuard roles={["Account Owner"]} permissions={["*"]}>
+                <td>
+                  <Link href={route('user.overlays',event.slug)}><span className="font-medium cursor-pointer"><Layers /></span></Link>
+                  </td>
+                </AuthGuard>
+              
+              
               <td>
                 <div className="btn-list">
                   <div className="hs-tooltip ti-main-tooltip">

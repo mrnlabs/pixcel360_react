@@ -9,7 +9,7 @@ use App\Http\Controllers\PricingController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\DashboardController;
-
+use App\Http\Controllers\Plans\PlanController;
 
 Route::get('/clear-cache', function () {
     Artisan::call('optimize:clear');
@@ -54,6 +54,9 @@ Route::get('/pricing', [PricingController::class, 'index'])->name('pricing');
 Route::get('/add-to-cart', [PricingController::class, 'addToCart'])->name('addToCart');
 
 Route::get('/checkout', [CheckoutController::class, 'checkout'])->name('checkout');
+
+// This one is also viewable from wordpress side so keep it unprotected
+Route::get('/plans/show/{slug}', [PlanController::class, 'show'])->name('plans.show');
 
 require __DIR__.'/auth.php';
 require __DIR__.'/event.php';
