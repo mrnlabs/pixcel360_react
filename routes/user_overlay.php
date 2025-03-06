@@ -11,4 +11,5 @@ Route::middleware(['auth'])->prefix('overlays')->group(function () {
     Route::delete('/{slug}', [UserOverlayController::class, 'destroy'])->name('user.overlays.destroy');
     Route::post('/store', [UserOverlayController::class, 'store'])->name('user.overlays.store');
     Route::post('/addOverlayToEvent/{overlayId}', [UserOverlayController::class, 'addOverlayToEvent'])->name('user.overlays.addOverlayToEvent');
+    
 });

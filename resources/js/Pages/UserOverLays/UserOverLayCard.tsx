@@ -61,18 +61,13 @@ export default function UserOverLayCard({
         <div className="box-body">
           <h6 className="font-medium mb-3 text-center">{overlay?.name}</h6>
           <div className='text-center'>
-            {isAdmin ? (
-              <button className="ti-btn ti-btn-outline-danger ti-btn-wave w-full btn-wave font-medium waves-effect waves-light table-icon">
-              Delete
-              </button>
-            ) : (
               <button 
                 onClick={setAsTemplate} 
                 className={`ti-btn ${isActive ? 'ti-btn-primary' : 'ti-btn-outline-primary'} ti-btn-wave w-full btn-wave font-medium waves-effect waves-light table-icon`}
               >
                 {isActive ? 'Add to event' : 'Choose this template'}
               </button>
-            )}
+          
           </div>
         </div>
       </div>

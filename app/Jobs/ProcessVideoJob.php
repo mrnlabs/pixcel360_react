@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Models\Overlay;
 use App\Models\Video;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Http;
@@ -51,21 +52,25 @@ class ProcessVideoJob implements ShouldQueue
         // Get video details
         $videoPath = $this->video->path;
         $videoSettings = $this->video->event->boomerang_setting;
-        
+        $event = $this->video->event;
+        $eventOverlay = Overlay::find($event->overlay_id);
+        Log::info('Processing video: ' . $videoSettings);
+        Log::info('Event: ' . $event);
+        Log::info('Overlay: ' . $eventOverlay);
         // Create data array
         $data = [
             'trim_start' => 0,
             'play_to_sec' => 3,
             'slow_factor' => 0.7,
             'effect' => 'slomo_boomerang',
-            'video_url' => 'https://picxel-bucket.s3.af-south-1.amazonaws.com/video_uploads/VID_20230902_161643.mp4',
-            'audio_url' => "https://picxel-bucket.s3.af-south-1.amazonaws.com/audios/zZS7hqBit3KFs4IPh1YRp2c7NipIsG720Mo9NYfq.mp3",
-            'overlay_url' => "https://picxel-bucket.s3.af-south-1.amazonaws.com/logos/112742_slomo_1739267223751.png"
+            'video_url' => $videoPath,
+            'audio_url' => $videoSettings->add_audio_file,
+            'overlay_url' => $eventOverlay->path
         ];
         
         $stringifiedData = http_build_query($data);
         
-        $response = Http::withHeaders([
+       $response = Http::withHeaders([
               'Accept' => 'application/json',
               'Content-Type' => 'application/x-www-form-urlencoded',
         ])
@@ -97,6 +102,7 @@ class ProcessVideoJob implements ShouldQueue
             
             throw new \Exception('Video processing API error: ' . $response->body());
         }
+           
     } catch (\Exception $exception) {
         Log::error('Video processing job failed', [
             'video_id' => $this->video->id,

@@ -144,12 +144,12 @@ class UserOverlayController extends Controller
     /**
      * Remove the specified user overlay from storage
      */
-    public function destroy(Overlay $overlay)
+    public function destroy($overlay)
     {
+        $overlay = Overlay::findOrFail($overlay);
         // Ensure the overlay belongs to the authenticated user
         if ($overlay->user_id !== auth()->id()) {
-            return redirect()->route('overlays.index')
-                ->with('error', 'You can only delete your own overlays.');
+            abort(403, 'You can only delete your own overlays.');
         }
 
         // Delete the image file
@@ -157,11 +157,6 @@ class UserOverlayController extends Controller
         
         // Delete the overlay
         $overlay->delete();
-
-        if (request()->wantsJson()) {
-            return response()->json(['message' => 'Overlay deleted successfully']);
-        }
-
         return redirect()->route('overlays.index')
             ->with('success', 'Overlay deleted successfully');
     }

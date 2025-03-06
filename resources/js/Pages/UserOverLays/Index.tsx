@@ -83,6 +83,24 @@ const handleSubmit = () => {
   });
 }
 
+const togglePresets = () => {
+  setShowPresets(!showPresets);
+};
+
+const handleDeleteSelected = () => {
+  if (activeOverlay) {
+    if(!window.confirm('Are you sure you want to delete this overlay?')) return;
+    router.delete(route('user.overlays.destroy', activeOverlay.id), {
+      preserveState: true,
+      onSuccess: () => {
+        showToast('success', 'Overlay deleted successfully', {position: 'bottom-right'});
+      },
+      onError: () => {
+        showToast('error', 'Something went wrong', {position: 'bottom-right'});
+      }
+    });
+  }
+}
 
   return (
     <Authenticated>
@@ -101,7 +119,13 @@ const handleSubmit = () => {
             <div className="box">
               <div className="box-body p-4">
                 <div className="flex items-center justify-between flex-wrap gap-4">
-               <button onClick={() => setShowPresets(true)} className='ti-btn ti-btn-primary !m-0 btn-wave ti-btn-sm waves-effect waves-light'>Load Presets</button>
+              <div className='!space-x-3'>
+              <button onClick={togglePresets} className='ti-btn ti-btn-primary !m-0 btn-wave ti-btn-sm waves-effect waves-light'>
+                {showPresets ? 'Show My Overlays' : 'Load Presets'}</button>
+              {/* if showPresets is false, its my overlays show delete */}
+              {(!showPresets && activeOverlay) && <button onClick={handleDeleteSelected} className='ti-btn ti-btn-danger !m-0 btn-wave ti-btn-sm waves-effect waves-light p-3'>Delete Selected</button>}
+              
+              </div>
                   <div className="flex" role="search">
                   <button onClick={() => setModalOpen(true)} className='ti-btn ti-btn-primary !m-0 btn-wave ti-btn-sm waves-effect waves-light w-full'>Upload Overlay</button>
 
