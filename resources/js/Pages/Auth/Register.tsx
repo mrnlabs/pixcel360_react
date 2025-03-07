@@ -147,7 +147,7 @@ export default function Register() {
             </div>
           </div>
           <div className="grid mt-4">
-            <button type="button" onClick={submit} disabled={processing} className="ti-btn ti-btn-primary">
+            <button type="button" onClick={submit} disabled={processing} className="ti-btn bg-[linear-gradient(243deg,#FF4F84_0%,#394DFF_100%)] text-white">
               {processing && <Loader className="mr-2 h-4 w-4 animate-spin" />}{processing ? 'Loading...' : 'Create Account'}</button>
           </div>
           <div className="text-center">

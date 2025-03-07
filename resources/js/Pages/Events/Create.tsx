@@ -125,7 +125,7 @@ const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
                             </div>
                     
                             <div className="flex justify-between mt-6">
-                              <button disabled={processing} onClick={handleSubmit} type="button" className="ti-btn ti-btn-primary w-full">
+                              <button disabled={processing} onClick={handleSubmit} type="button" className="ti-btn bg-[linear-gradient(243deg,#FF4F84_0%,#394DFF_100%)] text-white w-full">
                                 {processing ? 'Creating...' : 'Create Event'}</button>
                             </div>
                           </div>

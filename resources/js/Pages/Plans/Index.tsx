@@ -22,6 +22,8 @@ export default function Index({plans} : any) {
     const itemsPerPage = plans?.original?.pagination?.per_page;
     const currentPage = plans?.original?.pagination?.current_page;
 
+    const [plan, setPlan] = useState<Plan | null>(null);
+
   const [filters, setFilters] = useState({
     search: '',
     sort: ''
@@ -72,7 +74,7 @@ const handleDelete = () => {
      }
  });
 }
-const [plan, setPlan] = useState<Plan | null>(null);
+
 const { data, setData, post, processing } = useForm({slug: plan?.slug});
 
 const handleSubscribe = () => {
@@ -145,7 +147,7 @@ const handleSubscribe = () => {
                       {plans?.original?.data?.map((plan: any) => (
                         <PlanCard key={plan.id} 
                         plan={plan} 
-                        setPlan={(e) => {setPlan(e); console.log(e)}}
+                        setPlan={(e) => setPlan(e)}
                         handleDelete={handleDelete} 
                         dialogOpen={dialogOpen}
                         setDialogOpen={setDialogOpen}

@@ -69,7 +69,7 @@ export default function Show({plan}: PlanCardProps) {
                     </div>
                 </div>
                 <div className=" bottom-0 pt-4 pb-2 bg-white dark:bg-gray-900 z-10">
-                    <Button onClick={() => {showToast('success', 'Will plugin Payment gateway here!', {position: 'bottom-right'});}} disabled={processing} className="w-full ti-btn ti-btn-primary btn-wave waves-effect waves-light">
+                    <Button onClick={() => {showToast('success', 'Will plugin Payment gateway here!', {position: 'bottom-right'});}} disabled={processing} className="w-full ti-btn bg-[linear-gradient(243deg,#FF4F84_0%,#394DFF_100%)] text-white btn-wave waves-effect waves-light">
                         {processing && <Loader className="mr-2 h-4 w-4 animate-spin" />} Subscribe
                     </Button>
                 </div>

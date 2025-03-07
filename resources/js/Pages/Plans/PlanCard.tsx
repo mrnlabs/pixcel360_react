@@ -70,7 +70,7 @@ export default function PlanCard({plan, handleDelete, dialogOpen, setDialogOpen,
               <Link aria-label="anchor" href={route('plans.edit', plan?.slug )} className="ti-btn ti-btn-icon ti-btn-soft-primary1 btn-wave ti-btn-sm ms-2 waves-effect waves-light">
               <SquarePen />
               </Link>
-              <button onClick={() => setDialogOpen(true)} aria-label="anchor"
+              <button onClick={() => {if (plan) { setPlan(plan); setDialogOpen(true); }}} aria-label="anchor"
               type='button' className="ti-btn ti-btn-icon ti-btn-soft-primary2 btn-wave ti-btn-sm ms-2 waves-effect waves-light">
                 <Trash2/>
               </button>
@@ -88,7 +88,7 @@ export default function PlanCard({plan, handleDelete, dialogOpen, setDialogOpen,
           roles={["Account Owner"]} 
           permissions={["*"]}
           requireAll={true}>
-          <button onClick={handleSubscribe} aria-label="anchor" type='button' className="w-full ti-btn ti-btn-primary btn-wave mt-4 waves-effect waves-light">Subscribe</button>
+          <button onClick={handleSubscribe} aria-label="anchor" type='button' className="w-full ti-btn bg-[linear-gradient(243deg,#FF4F84_0%,#394DFF_100%)] text-white btn-wave mt-4 waves-effect waves-light">Subscribe</button>
       </AuthGuard>
 
              

@@ -116,7 +116,7 @@ export default function ForgotPassword({ token,email, }: { token: string;email: 
                </div>
                <div className="grid mt-4"> 
                 <button type="button" onClick={submit} 
-                  disabled={processing} className="cursor-pointer ti-btn ti-btn-primary">
+                  disabled={processing} className="cursor-pointer ti-btn bg-[linear-gradient(243deg,#FF4F84_0%,#394DFF_100%)] text-white">
                      {processing && <Loader className="mr-2 animate-spin" />} Reset Password</button> 
                 </div>
                <div className="text-center">

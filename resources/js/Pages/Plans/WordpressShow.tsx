@@ -1,5 +1,6 @@
 import { Button } from '@/Components/ui/button';
 import Authenticated from '@/Layouts/AuthenticatedLayout';
+import WordPressLayout from '@/Layouts/WordPressLayout';
 import { Breadcrumb } from '@/Shared/Breadcrumb';
 import { Plan, PlanCardProps } from '@/types';
 import showToast from '@/utils/showToast';
@@ -14,17 +15,17 @@ export default function WordpressShow({plan}: PlanCardProps) {
         });
 
   return (
-    <>
+    <WordPressLayout>
           <Head title="View Plan" />
-          <div className="main-content app-content">
+          <div className="mx-[19rem] mt-3">
             <div className="container-fluid">
-             <Breadcrumb
+             {/* <Breadcrumb
              items={[
                 { label: 'Home', href: '/dashboard' },
                 { label: 'Plans', href: '/plans' },
                 { label: 'View Plan', active: true }
               ]}
-              />
+              /> */}
              
               <div className="grid grid-cols-12 gap-x-6">
                 <div className="xxl:col-span-12 col-span-12">
@@ -65,13 +66,13 @@ export default function WordpressShow({plan}: PlanCardProps) {
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-                <div className=" bottom-0 pt-4 pb-2 bg-white dark:bg-gray-900 z-10">
-                    <Button onClick={() => {showToast('success', 'Will plugin Payment gateway here!', {position: 'bottom-right'});}} disabled={processing} className="w-full ti-btn ti-btn-primary btn-wave waves-effect waves-light">
+                            <Button onClick={() => {showToast('success', 'Will plugin Payment gateway here!', {position: 'bottom-right'});}} disabled={processing} 
+                            className="inline-block px-8 py-3 rounded-sm text-white font-medium bg-[linear-gradient(243deg,#FF4F84_0%,#394DFF_100%)]  w-full shadow-md transition duration-300">
                         {processing && <Loader className="mr-2 h-4 w-4 animate-spin" />} Subscribe
                     </Button>
+                     
+                        </div>
+                    </div>
                 </div>
                   </div>
                 </div>
@@ -79,6 +80,6 @@ export default function WordpressShow({plan}: PlanCardProps) {
 
             </div>
           </div>
-        </>
+        </WordPressLayout>
   )
 }

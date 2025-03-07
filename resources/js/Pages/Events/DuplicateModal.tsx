@@ -68,7 +68,7 @@ function DuplicateModal({
                 </div>
                 <Button 
                 disabled={processing} 
-                onClick={handleSubmit} className=" ti-btn ti-btn-primary btn-wave  waves-effect waves-light">
+                onClick={handleSubmit} className=" ti-btn bg-[linear-gradient(243deg,#FF4F84_0%,#394DFF_100%)] text-white btn-wave  waves-effect waves-light">
                     {processing && <Loader className="animate-spin mr-1" />}Continue</Button>
             </DialogContent>
         </Dialog>

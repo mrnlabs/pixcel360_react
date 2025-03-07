@@ -166,7 +166,7 @@ export default function Audio({event}: any) {
                     <Button 
                     onClick={handleSubmit}
                     disabled={!audioFile || processing} 
-                    className="ti-btn ti-btn-primary w-full">
+                    className="ti-btn bg-[linear-gradient(243deg,#FF4F84_0%,#394DFF_100%)] text-white w-full">
                     <ArrowUpFromLine />Upload</Button>
                 </div>
             )}

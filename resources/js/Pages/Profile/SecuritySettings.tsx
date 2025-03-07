@@ -94,7 +94,7 @@ export default function SecuritySettings() {
                </div>
                <div className="grid mt-4"> 
                 <Button type="button" onClick={submit} 
-                  disabled={processing} className="cursor-pointer ti-btn ti-btn-primary">{processing ? "Saving..." : "Save"}</Button> 
+                  disabled={processing} className="cursor-pointer ti-btn bg-[linear-gradient(243deg,#FF4F84_0%,#394DFF_100%)] text-white">{processing ? "Saving..." : "Save"}</Button> 
                 </div>
             </div>
          </div>

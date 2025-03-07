@@ -105,7 +105,7 @@ export default function SharingMethods({event} : any) {
   </div>
   </div>
   <Button onClick={handleSubmit} disabled={processing} 
-   className='mt-4 ti-btn ti-btn-primary w-full'>
+   className='mt-4 ti-btn bg-[linear-gradient(243deg,#FF4F84_0%,#394DFF_100%)] text-white w-full'>
   {processing && <Loader className='mr-2 h-4 w-4 animate-spin'/>}Save</Button>
 </div>
   )

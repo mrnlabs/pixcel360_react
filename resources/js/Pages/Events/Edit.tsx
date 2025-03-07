@@ -115,7 +115,7 @@ export default function Edit({event} : EventProps) {
             </div>
             <div className=" gap-2 lg:nowrap justify-end flex-wrap justify-content-sm-end sm:w-[80%] hidden">
               
-              <Link href={route('event.create')} aria-label="button" type="button" className="ti-btn ti-btn-primary !m-0 btn-w-md flex items-center  btn-wave waves-light text-nowrap waves-effect waves-light">
+              <Link href={route('event.create')} aria-label="button" type="button" className="ti-btn bg-[linear-gradient(243deg,#FF4F84_0%,#394DFF_100%)] text-white !m-0 btn-w-md flex items-center  btn-wave waves-light text-nowrap waves-effect waves-light">
                 <SquarePlus className="align-middle" />Create New Event </Link>
               
             </div>

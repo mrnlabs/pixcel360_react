@@ -79,7 +79,7 @@ const updateFilters = React.useCallback(
                     <div className="box-header justify-between">
                       <div className="box-title"> Events <span className="text-primary">({totalItems})</span></div>
                       <div className="flex flex-wrap gap-2">
-                        <Link href={route('event.create')} className="ti-btn ti-btn-primary !m-0 btn-wave ti-btn-sm waves-effect waves-light">
+                        <Link href={route('event.create')} className="ti-btn bg-[linear-gradient(243deg,#FF4F84_0%,#394DFF_100%)] text-white !m-0 btn-wave ti-btn-sm waves-effect waves-light">
                           <SquarePlus className="align-middle" />Create </Link>
                         <div>
                           <Input 

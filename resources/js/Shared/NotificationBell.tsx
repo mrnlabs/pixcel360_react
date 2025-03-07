@@ -107,7 +107,7 @@ export default function NotificationBell() {
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem className='cursor-pointer'>
-            <button onClick={viewAllNotifications} className="ti-btn ti-btn-primary w-full ">View All</button>
+            <button onClick={viewAllNotifications} className="ti-btn bg-[linear-gradient(243deg,#FF4F84_0%,#394DFF_100%)] text-white w-full ">View All</button>
         </DropdownMenuItem>
       </DropdownMenuGroup>
     </DropdownMenuContent>

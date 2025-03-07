@@ -48,7 +48,7 @@ export default function Branding({event} : EventProps) {
        type='color' className='p-1 h-10 w-10 block bg-white dark:bg-bodybg border border-gray-200 cursor-pointer rounded-sm'/>
      </div>
   </div>
-     <Button onClick={handleSubmit} disabled={processing} className='mt-4 ti-btn ti-btn-primary w-full'>
+     <Button onClick={handleSubmit} disabled={processing} className='mt-4 ti-btn bg-[linear-gradient(243deg,#FF4F84_0%,#394DFF_100%)] text-white w-full'>
      {processing && <Loader className="animate-spin mr-2" /> }Save</Button>
     
 </div>

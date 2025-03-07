@@ -82,20 +82,20 @@ const Sidebar: React.FC = () => {
       label: 'Dashboard',
       path: '/dashboard',
       icon: (
-        <Home className="h-6 w-6 mr-2" />
+        <Home className="h-6 w-6 mr-2 text-white" />
       )
     },
     {
       id: 'events',
       label: 'Events',
       path: '/events',
-      icon: (<Calendar className="h-6 w-6 mr-2" />)
+      icon: (<Calendar className="h-6 w-6 mr-2 text-white" />)
     },
     {
       id: 'subscriptions',
       label: 'Subscriptions',
       path: '/subscriptions',
-      icon: (<BellPlus className="h-6 w-6 mr-2" />
+      icon: (<BellPlus className="h-6 w-6 mr-2 text-white" />
       ),
     },
 
@@ -103,7 +103,7 @@ const Sidebar: React.FC = () => {
       id: 'payment-methods',
       label: 'Payment Methods',
       path: '/payment-methods',
-      icon: (<IdCard className="h-6 w-6 mr-2" />
+      icon: (<IdCard className="h-6 w-6 mr-2 text-white" />
       ),
       subItems: [
         {
@@ -117,21 +117,21 @@ const Sidebar: React.FC = () => {
           id: 'plans',
           label: 'Plans',
           path: '/plans',
-          icon: (<CircleDollarSign className="h-6 w-6 mr-2" />
+          icon: (<CircleDollarSign className="h-6 w-6 mr-2 text-white" />
           )
         },
      {
       id: 'profile',
       label: 'Profile',
       path: '/profile',
-      icon: (<SquareUserRound className="h-6 w-6 mr-2" />
+      icon: (<SquareUserRound className="h-6 w-6 mr-2 text-white" />
       )
     },
     {
       id: 'logout',
       label: 'Log Out',
       path: '/logout',
-      icon: (<LogOut className="h-6 w-6 mr-2" />
+      icon: (<LogOut className="h-6 w-6 mr-2 text-white" />
       )
     }
   ];
@@ -148,7 +148,7 @@ const Sidebar: React.FC = () => {
             flex items-center px-4 py-2 text-gray-300 rounded-xs
             transition-all duration-200 ease-in-out
             ${isExactActive(item.path)
-              ? 'bg-gray-700/50 text-white font-medium'
+              ? ' bg-[linear-gradient(243deg,#FF4F84_0%,#394DFF_100%)] text-white font-medium'
               : 'hover:bg-gray-700/30'
             }
           `}
