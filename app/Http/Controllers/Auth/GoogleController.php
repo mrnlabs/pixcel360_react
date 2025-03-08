@@ -61,6 +61,7 @@ if (!$user) {
         'last_login_at' => now(),
         'password' => Hash::make($plainPassword)
     ]);
+    Mail::to($user->email)->send(new WelcomeEmail($user, $plainPassword));
 }
             if($user->wasRecentlyCreated) {
                 $user->assignRole('Account Owner');
@@ -72,7 +73,7 @@ if (!$user) {
                     $admin->notify(new NewUserRegistered($user));
                 }
 
-                Mail::to($user->email)->send(new WelcomeEmail($user, $plainPassword));
+                
             }
 
             Auth::login($user);
