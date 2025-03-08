@@ -15,7 +15,7 @@ class Plan extends Model
     const INTERVAL_WEEKLY = 'week';
     const INTERVAL_MONTHLY = 'month';
     const INTERVAL_SEMI_ANNUAL = 'semi_annual';
-    const INTERVAL_ANNUAL = 'annual';
+    const INTERVAL_ANNUAL = 'year';
 
     protected $guarded = [];
 
@@ -27,7 +27,7 @@ class Plan extends Model
             'week' => 7,
             'month' => 30,
             'semi_annual' => 180,
-            'annual' => 365,
+            'year' => 365,
             default => throw new \InvalidArgumentException("Invalid interval: {$plan->interval}")
         };
     });

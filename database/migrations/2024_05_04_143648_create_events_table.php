@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('language')->default('English');
             $table->string('country')->default('South Africa');
             $table->enum('status', ['1', '0'])->default('1');
-            // $table->foreignId('overlay_id')->nullable()->constrained()->onDelete('set null');
+            $table->foreignId('overlay_id')->nullable()->constrained()->onDelete('set null');
             // $table->float('overlay_position_x')->default(0);
             // $table->float('overlay_position_y')->default(0);
             // $table->float('overlay_scale')->default(1.0);

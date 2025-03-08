@@ -42,7 +42,7 @@ export default function PlanCard({plan, handleDelete, dialogOpen, setDialogOpen,
         <img src={plan?.photo} className="card-img-top max-h-60 min-h-60" alt="..."/>
         </Link>
       <div className="box-body">
-      <div className={`ribbon-2 ${getRibbonColor(plan?.category?.name)} ribbon-right`}>{plan?.category?.name}</div>
+      {/* <div className={`ribbon-2 ${getRibbonColor(plan?.category?.name)} ribbon-right`}>{plan?.category?.name}</div> */}
         <h6 onClick={() => {
           setModalOpen(true);
           if (plan) {
@@ -57,10 +57,10 @@ export default function PlanCard({plan, handleDelete, dialogOpen, setDialogOpen,
         </h6>
         <div>
             <span className="mb-2 text-[11px] badge leading-none bg-primary font-medium">
-                $ {plan?.price}/{plan?.interval}
+                $ {plan?.price}/{plan?.interval == 'semi_annual' ? '6 months' : plan?.interval}
             </span>
             {/* set dangerous html */}
-            <p dangerouslySetInnerHTML={{__html: truncateText(plan?.description ?? '', 100, '...') ?? ''}} className="text-textmuted dark:text-textmuted/50 text-xs mb-4"></p>
+            <p dangerouslySetInnerHTML={{__html: truncateText(plan?.description ?? '', 200, '...') ?? ''}} className="text-textmuted dark:text-textmuted/50 text-xs mb-4"></p>
             <div className="flex justify-center">
 
             <AuthGuard 

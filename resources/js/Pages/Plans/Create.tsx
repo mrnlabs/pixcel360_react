@@ -252,7 +252,7 @@ const handleQuillChange = (value: string) => {
                     
                             <div className="flex justify-between mt-6">
                               <button disabled={processing} onClick={handleSubmit} type="button" className="ti-btn bg-[linear-gradient(243deg,#FF4F84_0%,#394DFF_100%)] text-white w-full">
-                                {processing ? 'Creating...' : 'Create Event'}</button>
+                                {processing ? 'Creating...' : 'Create Plan'}</button>
                             </div>
                           </div>
                     </div>

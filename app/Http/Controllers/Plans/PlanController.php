@@ -52,7 +52,7 @@ class PlanController extends Controller
                 'name' => $request->name,
                 'price' => $request->price,
                 'interval' => $request->interval,
-                'category_id' => $request->category,
+                'plan_category_id' => $request->category,
                 'photo' => $url,
                 'description' => $request->description
             ]);
