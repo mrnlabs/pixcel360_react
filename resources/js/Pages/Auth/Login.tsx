@@ -126,7 +126,7 @@ const handleGoogleLogin = async () => {
                                 onChange={(e) => setData("remember",e.target.checked)
                                 }
                             className="form-check-input" type="checkbox" value="" id="remember" /> 
-                            <label className="form-check-label text-textmuted dark:text-textmuted/50 font-normal" htmlFor="remember"> Remember password ? </label> 
+                            <label className="form-check-label text-textmuted dark:text-textmuted/50 font-normal" htmlFor="remember"> Remember me ? </label> 
                             </div>
                      </div>
                   </div>

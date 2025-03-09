@@ -76,11 +76,13 @@ class PlanController extends Controller
 
     function show($slug) : Response
     {
-        if(!request('wordpress') && !auth()->id()) return abort(404);
+        if(!request('wordpress') && !auth()->user()) return abort(404);
         $plan = Plan::where('slug', $slug)->first();
+        $plans = Plan::all();
         if(request('wordpress')){
             return Inertia::render('Plans/WordpressShow',[
-                'plan' => $plan
+                'plan' => $plan,
+                'plans' => $plans
             ]);
         }
         return Inertia::render('Plans/Show',[

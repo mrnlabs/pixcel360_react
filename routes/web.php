@@ -39,17 +39,6 @@ Route::post('/profile', [ProfileController::class, 'update'])->name('update_prof
 Route::post('/update-profile-picture', [ProfileController::class, 'updatePicture'])->name('update_pro_pic');
 Route::delete('/remove-profile-image', [ProfileController::class, 'removePicture'])->name('remove_pro_pic');
 
-
-Route::get('/invoice', function () {
-    return Inertia::render('Invoices/Invoice');
-});
-Route::get('/test', function () {
-    return Inertia::render('Events/CreateEvent_old');
-});
-
-
-
-
 Route::get('/pricing', [PricingController::class, 'index'])->name('pricing');
 Route::get('/add-to-cart', [PricingController::class, 'addToCart'])->name('addToCart');
 

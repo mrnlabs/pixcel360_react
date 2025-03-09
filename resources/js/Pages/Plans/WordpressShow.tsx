@@ -2,13 +2,17 @@ import { Button } from '@/Components/ui/button';
 import Authenticated from '@/Layouts/AuthenticatedLayout';
 import WordPressLayout from '@/Layouts/WordPressLayout';
 import { Breadcrumb } from '@/Shared/Breadcrumb';
+import WordpressFooter from '@/Shared/WordpressFooter';
 import { Plan, PlanCardProps } from '@/types';
 import showToast from '@/utils/showToast';
 import { Head, useForm } from '@inertiajs/react';
 import { Loader } from 'lucide-react';
 import React from 'react'
 
-export default function WordpressShow({plan}: PlanCardProps) {
+export default function WordpressShow({plan, plans}: {
+    plan: Plan
+    plans: PlanCardProps
+}) {
 
     const { data, setData, post, processing, errors, reset } = useForm({
             plan: "",
@@ -80,6 +84,7 @@ export default function WordpressShow({plan}: PlanCardProps) {
 
             </div>
           </div>
+            <WordpressFooter plans={plans} />
         </WordPressLayout>
   )
 }
