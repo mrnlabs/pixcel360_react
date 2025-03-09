@@ -7985,7 +7985,7 @@ typography
   z-index: -1;
   height: 100%;
   width: 100%;
-  background-image: url(../images/media/backgrounds/1.jpg);
+  /* background-image: url(../images/media/backgrounds/1.jpg); */
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -13616,7 +13616,7 @@ ul.analytics-activity li{
   position: relative;
   z-index: 1;
   overflow: hidden;
-  background-image: url(../images/media/backgrounds/1.jpg);
+  /* background-image: url(../images/media/backgrounds/1.jpg); */
   background-size: cover;
   background-position: bottom;
 }
@@ -13946,7 +13946,7 @@ ul.analytics-activity li{
   z-index: -1;
   height: 100%;
   width: 100%;
-  background-image: url(../images/media/media-72.jpg);
+  /* background-image: url(../images/media/media-72.jpg); */
   background-size: cover;
   background-repeat: no-repeat;
   opacity: 0.25;
@@ -14237,7 +14237,7 @@ ul.analytics-activity li{
   --tw-scale-x: -1;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
   border-radius: 0.75rem;
-  background-image: url("../images/media/media-70.jpg");
+  /* background-image: url("../images/media/media-70.jpg"); */
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -14321,7 +14321,7 @@ ul.analytics-activity li{
   width: 100%;
   overflow: hidden;
   border-radius: 0.75rem;
-  background-image: url(../images/podcast/5.jpg);
+  /* background-image: url(../images/podcast/5.jpg); */
   background-size: cover;
   background-repeat: no-repeat;
   --tw-text-opacity: 1;
@@ -14517,7 +14517,7 @@ ul.analytics-activity li{
   width: 100%;
   --tw-scale-x: -1;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
-  background-image: url(../images/media/media-73.png);
+  /* background-image: url(../images/media/media-73.png); */
   background-repeat: no-repeat;
   opacity: 0.075;
   --tw-content: "";
@@ -14622,7 +14622,7 @@ ul.analytics-activity li{
   inset: 0px;
   height: 100%;
   width: 100%;
-  background-image: url(https://spruko.com/demo/tailwind/xintra/dist/assets/images/media/svg/pattern-2.svg);
+  /* background-image: url(https://spruko.com/demo/tailwind/xintra/dist/assets/images/media/svg/pattern-2.svg); */
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -22532,7 +22532,7 @@ input.error.border-primary3.border-opacity-100{
 /* End:: Toastify */
 /* Start:: intl-tel-input */
 .iti__flag{
-  background-image: url(../images/flags/intel-input/flags.png) !important;
+  /* background-image: url(../images/flags/intel-input/flags.png) !important; */
 }
 /* End:: intl-tel-input */
 /* End:: plugins */
@@ -23901,7 +23901,7 @@ select.tabulator-page-size option:is(.dark *){
 .widget-card{
   position: relative;
   z-index: 1;
-  background-image: url(../images/media/media-25.jpg);
+  /* background-image: url(../images/media/media-25.jpg); */
   padding-top: 3.15rem;
   padding-bottom: 3.15rem;
 }
@@ -23921,7 +23921,7 @@ select.tabulator-page-size option:is(.dark *){
 .widget-card2{
   position: relative;
   z-index: 1;
-  background-image: url(../images/media/media-35.jpg);
+  /* background-image: url(../images/media/media-35.jpg); */
   padding-top: 3.735rem;
   padding-bottom: 3.735rem;
 }
@@ -28823,7 +28823,7 @@ ul.files-main-nav li div.filemanager-upgrade-storage img{
   z-index: -1;
   height: 100%;
   width: 100%;
-  background-image: url("../images/media/media-80.jpg");
+  /* background-image: url("../images/media/media-80.jpg"); */
   background-size: cover;
   background-repeat: no-repeat;
   opacity: 0.075;
@@ -28965,7 +28965,7 @@ ul.files-main-nav li div.filemanager-upgrade-storage img{
   z-index: -1;
   height: 100%;
   width: 100%;
-  background-image: url(../images/media/media-88.jpg);
+  /* background-image: url(../images/media/media-88.jpg); */
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -29933,7 +29933,7 @@ ul.files-main-nav li div.filemanager-upgrade-storage img{
   border-radius: 0.3rem;
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
-  background-image: url(https://spruko.com/demo/tailwind/xintra/dist/assets/images/media/media-92.svg);
+  /* background-image: url(https://spruko.com/demo/tailwind/xintra/dist/assets/images/media/media-92.svg); */
   background-size: cover;
   background-position: center;
   --tw-content: "";
@@ -38874,7 +38874,7 @@ input:is(.dark *)::placeholder, textarea:is(.dark *)::placeholder{
   --tw-gradient-to: #6e72a8 var(--tw-gradient-to-position) !important;
 }
 .theme-colors .switch-select .color-input.color-transparent{
-  background-image: url("../images/menu-bg-images/transparent.png") !important;
+  /* background-image: url("../images/menu-bg-images/transparent.png") !important; */
   background-size: cover !important;
   background-position: center !important;
 }
@@ -38916,7 +38916,7 @@ input:is(.dark *)::placeholder, textarea:is(.dark *)::placeholder{
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow) !important;
 }
 .menu-image .bgimage-input.bg-img1{
-  background-image: url("../images/menu-bg-images/bg-img1.jpg") !important;
+  /* background-image: url("../images/menu-bg-images/bg-img1.jpg") !important; */
   background-size: cover !important;
   background-position: center !important;
   background-repeat: no-repeat !important;
@@ -38925,7 +38925,7 @@ input:is(.dark *)::placeholder, textarea:is(.dark *)::placeholder{
   background-image: none !important;
 }
 .menu-image .bgimage-input.bg-img2{
-  background-image: url("../images/menu-bg-images/bg-img2.jpg") !important;
+  /* background-image: url("../images/menu-bg-images/bg-img2.jpg") !important; */
   background-size: cover !important;
   background-position: center !important;
   background-repeat: no-repeat !important;
@@ -38934,7 +38934,7 @@ input:is(.dark *)::placeholder, textarea:is(.dark *)::placeholder{
   background-image: none !important;
 }
 .menu-image .bgimage-input.bg-img3{
-  background-image: url("../images/menu-bg-images/bg-img3.jpg") !important;
+  /* background-image: url("../images/menu-bg-images/bg-img3.jpg") !important; */
   background-size: cover !important;
   background-position: center !important;
   background-repeat: no-repeat !important;
@@ -38943,7 +38943,7 @@ input:is(.dark *)::placeholder, textarea:is(.dark *)::placeholder{
   background-image: none !important;
 }
 .menu-image .bgimage-input.bg-img4{
-  background-image: url("../images/menu-bg-images/bg-img4.jpg") !important;
+  /* background-image: url("../images/menu-bg-images/bg-img4.jpg") !important; */
   background-size: cover !important;
   background-position: center !important;
   background-repeat: no-repeat !important;
@@ -38952,7 +38952,7 @@ input:is(.dark *)::placeholder, textarea:is(.dark *)::placeholder{
   background-image: none !important;
 }
 .menu-image .bgimage-input.bg-img5{
-  background-image: url("../images/menu-bg-images/bg-img5.jpg") !important;
+  /* background-image: url("../images/menu-bg-images/bg-img5.jpg") !important; */
   background-size: cover !important;
   background-position: center !important;
   background-repeat: no-repeat !important;
@@ -49466,108 +49466,7 @@ h6{
 .bg-opacity-75{
   --tw-bg-opacity: 0.75;
 }
-.bg-\[linear-gradient\(to_left\2c light\2c transparent\)\]{
-  background-image: linear-gradient(to left,light,transparent);
-}
-.bg-\[linear-gradient\(to_left\2c transparent\2c light\)\]{
-  background-image: linear-gradient(to left,transparent,light);
-}
-.bg-\[linear-gradient\(to_right_top\2c \#ff9794\2c \#fd8dac\2c \#e58cc6\2c \#bf7cdc\2c \#6f78f4\)\]{
-  background-image: linear-gradient(to right top,#ff9794,#fd8dac,#e58cc6,#bf7cdc,#6f78f4);
-}
-.bg-\[url\(\"\.\.\/images\/media\/media-80\.jpg\"\)\]{
-  background-image: url("../images/media/media-80.jpg");
-}
-.bg-\[url\(\"\.\.\/images\/media\/svg\/pattern-1\.svg\"\)\]{
-  background-image: url("https://spruko.com/demo/tailwind/xintra/dist/assets/images/media/svg/pattern-1.svg");
-}
-.bg-\[url\(\'\.\.\/images\/menu-bg-images\/bg-img1\.jpg\'\)\]{
-  background-image: url('../images/menu-bg-images/bg-img1.jpg');
-}
-.bg-\[url\(\'\.\.\/images\/menu-bg-images\/bg-img2\.jpg\'\)\]{
-  background-image: url('../images/menu-bg-images/bg-img2.jpg');
-}
-.bg-\[url\(\'\.\.\/images\/menu-bg-images\/bg-img3\.jpg\'\)\]{
-  background-image: url('../images/menu-bg-images/bg-img3.jpg');
-}
-.bg-\[url\(\'\.\.\/images\/menu-bg-images\/bg-img4\.jpg\'\)\]{
-  background-image: url('../images/menu-bg-images/bg-img4.jpg');
-}
-.bg-\[url\(\'\.\.\/images\/menu-bg-images\/bg-img5\.jpg\'\)\]{
-  background-image: url('../images/menu-bg-images/bg-img5.jpg');
-}
-.bg-\[url\(\'\.\.\/images\/menu-bg-images\/transparent\.png\'\)\]{
-  background-image: url('../images/menu-bg-images/transparent.png');
-}
-.bg-\[url\(\.\.\/images\/flags\/intel-input\/flags\.png\)\]{
-  background-image: url(../images/flags/intel-input/flags.png);
-}
-.bg-\[url\(\.\.\/images\/media\/backgrounds\/1\.jpg\)\]{
-  background-image: url(../images/media/backgrounds/1.jpg);
-}
-.bg-\[url\(\.\.\/images\/media\/media-25\.jpg\)\]{
-  background-image: url(../images/media/media-25.jpg);
-}
-.bg-\[url\(\.\.\/images\/media\/media-35\.jpg\)\]{
-  background-image: url(../images/media/media-35.jpg);
-}
-.bg-\[url\(\.\.\/images\/media\/media-67\.png\)\]{
-  background-image: url(../images/media/media-67.png);
-}
-.bg-\[url\(\.\.\/images\/media\/media-69\.jpg\)\]{
-  background-image: url(../images/media/media-69.jpg);
-}
-.bg-\[url\(\.\.\/images\/media\/media-70\.jpg\)\]{
-  background-image: url(../images/media/media-70.jpg);
-}
-.bg-\[url\(\.\.\/images\/media\/media-72\.jpg\)\]{
-  background-image: url(../images/media/media-72.jpg);
-}
-.bg-\[url\(\.\.\/images\/media\/media-80\.jpg\)\]{
-  background-image: url(../images/media/media-80.jpg);
-}
-.bg-\[url\(\.\.\/images\/media\/media-82\.jpg\)\]{
-  background-image: url(../images/media/media-82.jpg);
-}
-.bg-\[url\(\.\.\/images\/media\/media-84\.jpg\)\]{
-  background-image: url(../images/media/media-84.jpg);
-}
-.bg-\[url\(\.\.\/images\/media\/media-87\.png\)\]{
-  background-image: url(../images/media/media-87.png);
-}
-.bg-\[url\(\.\.\/images\/media\/media-88\.jpg\)\]{
-  background-image: url(../images/media/media-88.jpg);
-}
-.bg-\[url\(\.\.\/images\/media\/media-89\.png\)\]{
-  background-image: url(../images/media/media-89.png);
-}
-.bg-\[url\(\.\.\/images\/media\/media-92\.svg\)\]{
-  background-image: url(https://spruko.com/demo/tailwind/xintra/dist/assets/images/media/media-92.svg);
-}
-.bg-\[url\(\.\.\/images\/media\/svg\/pattern-2\.svg\)\]{
-  background-image: url(https://spruko.com/demo/tailwind/xintra/dist/assets/images/media/svg/pattern-2.svg);
-}
-.bg-\[url\(\.\.\/images\/menu-bg-images\/bg-img1\.jpg\)\]{
-  background-image: url(../images/menu-bg-images/bg-img1.jpg);
-}
-.bg-\[url\(\.\.\/images\/menu-bg-images\/bg-img2\.jpg\)\]{
-  background-image: url(../images/menu-bg-images/bg-img2.jpg);
-}
-.bg-\[url\(\.\.\/images\/menu-bg-images\/bg-img3\.jpg\)\]{
-  background-image: url(../images/menu-bg-images/bg-img3.jpg);
-}
-.bg-\[url\(\.\.\/images\/menu-bg-images\/bg-img4\.jpg\)\]{
-  background-image: url(../images/menu-bg-images/bg-img4.jpg);
-}
-.bg-\[url\(\.\.\/images\/menu-bg-images\/bg-img5\.jpg\)\]{
-  background-image: url(../images/menu-bg-images/bg-img5.jpg);
-}
-.bg-\[url\(\.\.\/images\/menu-bg-images\/transparent\.png\)\]{
-  background-image: url(../images/menu-bg-images/transparent.png);
-}
-.bg-\[url\(\.\.\/images\/podcast\/5\.jpg\)\]{
-  background-image: url(../images/podcast/5.jpg);
-}
+
 .bg-custom-gradient{
   background-image: linear-gradient(45deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent);
 }

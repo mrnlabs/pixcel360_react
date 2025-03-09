@@ -84,6 +84,7 @@ export default function WordpressShow({plan, plans}: {
 
             </div>
           </div>
+          {/* @ts-ignore */}
             <WordpressFooter plans={plans} />
         </WordPressLayout>
   )

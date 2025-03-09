@@ -112,7 +112,6 @@ const handleSubmit = () => {
               
                  {overlays?.data?.map((overlay: any) => ( 
                   <OverLayCard 
-                    isAdmin={false}
                     key={overlay.id}
                     setModalOpen={setModalOpen}
                     overlay={overlay}
