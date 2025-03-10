@@ -111,11 +111,11 @@ const handleGoogleLogin = async () => {
                         placeholder="Password"
                         className="form-control create-password-input" 
                         /> 
-                        <a onClick={() => setShowPassword(!showPassword)} aria-label="anchor" href="#!" 
-                        className="show-password-button text-textmuted dark:text-textmuted/50" 
+                        <div onClick={() => setShowPassword(!showPassword)} aria-label="anchor"
+                        className="cursor-pointer show-password-button text-textmuted dark:text-textmuted/50" 
                          id="button-addon2">
                             {showPassword ? <EyeOff className='align-middle' /> : <Eye className='align-middle' />}
-                         </a>
+                         </div>
                          <InputError message={errors.password} className="mt-2" />
                          </div>
                      <div className="mt-2">

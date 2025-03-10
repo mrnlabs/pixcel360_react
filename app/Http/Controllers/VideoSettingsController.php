@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Event;
 use App\Models\EventSetting;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Throwable;
 
 class VideoSettingsController extends Controller
 {
@@ -75,15 +77,28 @@ class VideoSettingsController extends Controller
     public function uploadVedioAudio(Request $request, $slug)
     {
         $event = Event::where('slug', $slug)->first();
-
+     
         if($request->isMethod('delete')) {
              $event->boomerang_setting()->update(['add_audio_file' => null]);
             return back()->with('success', 'Audio removed successfully');
         }
-        if($request->hasFile('audioFile')) {
-            $path = $request->file('audioFile')->storeAs('audios',$event->name.'/'. $request->file('audioFile')->getClientOriginalName(), 'public');
-            $event->boomerang_setting()->update(['add_audio_file' => $path]);
-            return back()->with('success', 'Audio uploaded successfully');
+
+        if($request->file('audioFile')) {
+            try {
+                // Validate the file first
+                // $request->validate([
+                //     'audioFile' => 'required|file|mimes:mp3,wav,ogg|max:10240',
+                // ]);
+                
+                $filePath = Storage::put('audios', $request->file('audioFile'));
+                $url = Storage::url($filePath);
+                dd($url);
+                $event->boomerang_setting()->update(['add_audio_file' => $url]);
+                return back()->with('success', 'Audio uploaded successfully');
+            } catch (Throwable $th) {
+                throw $th;
+                // return back()->with('error', 'Upload failed: ' . $e->getMessage());
+            }
         }
     }
 

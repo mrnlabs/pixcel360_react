@@ -103,7 +103,7 @@ export default function Audio({event}: any) {
     }
 
     const deleteDBFile = () => {
-        router.delete(route('event.update.audio', event.slug), {
+        router.delete(route('event.update.delete', event.slug), {
             preserveScroll: true,
             onSuccess: () => {
                 showToast('success', 'Audio deleted successfully.', {position: 'bottom-right'});

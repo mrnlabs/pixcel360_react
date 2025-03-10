@@ -17,7 +17,7 @@ Route::patch('/update-vedio-settings/{slug}', [VideoSettingsController::class, '
 Route::post('/update-vedio-functions/{slug}', [VideoSettingsController::class, 'updateVedioFunctions'])->name('event.update.vedio.functions');
 
 Route::post('/upload-vedio-audio/{slug}', [VideoSettingsController::class, 'uploadVedioAudio'])->name('event.update.audio');
-Route::delete('/upload-vedio-audio/{slug}', [VideoSettingsController::class, 'uploadVedioAudio'])->name('event.update.audio');
+Route::delete('/delete-vedio-audio/{slug}', [VideoSettingsController::class, 'uploadVedioAudio'])->name('event.update.delete');
 Route::patch('/update-vedio-timeouts/{slug}', [VideoSettingsController::class, 'updateVedioTimeouts'])->name('event.update.vedio.timeouts');
 Route::patch('/update-vedio-sharing-method/{slug}', [VideoSettingsController::class, 'updateVedioSharingMethod'])->name('event.update.vedio.sharing.methods');
 Route::patch('/update-vedio-subjects/{slug}', [VideoSettingsController::class, 'updateVedioSubjects'])->name('event.update.vedio.subjects');

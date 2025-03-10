@@ -14,10 +14,11 @@ export default {
     theme: {
     	extend: {
     		fontFamily: {
-    			sans: [
-    				'Figtree',
-                    ...defaultTheme.fontFamily.sans
-                ]
+    			// sans: [
+    			// 	'Figtree',
+                //     ...defaultTheme.fontFamily.sans
+                // ]
+                sans: ["Inter", "sans-serif"]
     		},
     		borderRadius: {
     			lg: 'var(--radius)',
