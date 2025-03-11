@@ -185,7 +185,7 @@ export default function Table({events, setModalOpen, setQRData, setDuplicateModa
                 {event.status == 1 ? (
                   <span className="badge bg-success/10 text-success leading-none">Active</span>
                 ) : (
-                  <span className="badge bg-warning/10 text-warning leading-none">Inactive</span>
+                  <span className="badge bg-danger text-white leading-none">Inactive</span>
                 )}
               </td>
               <td>
