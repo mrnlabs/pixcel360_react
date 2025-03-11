@@ -183,7 +183,7 @@ export default function Table({events, setModalOpen, setQRData, setDuplicateModa
               <td className=""> {format(new Date(event.start_date), 'dd-MM-yyyy')} </td>
               <td>
                 {event.status == 1 ? (
-                  <span className="badge bg-success/10 text-success leading-none">Active</span>
+                  <span className="badge bg-success text-white leading-none">Active</span>
                 ) : (
                   <span className="badge bg-danger text-white leading-none">Inactive</span>
                 )}

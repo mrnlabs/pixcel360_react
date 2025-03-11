@@ -10,7 +10,6 @@ import { Loader, Play, Pause, ArrowUpFromLine, Trash2 } from 'lucide-react'
 import React, { Suspense, useState, useRef, useEffect } from 'react'
 
 export default function Audio({event}: any) {
-    const filePath = usePage().props.filePath;
     const [dbAudio, setDbAudio] = useState(null);
 
     
@@ -23,12 +22,12 @@ export default function Audio({event}: any) {
 
         useEffect(() => {
             if (event?.boomerang_setting?.add_audio_file) {
-                setDbAudio(filePath + event?.boomerang_setting?.add_audio_file);
+                setDbAudio(event?.boomerang_setting?.add_audio_file);
             }
         }, [event]);
     
     const handleFileSelect = (files: File[]) => {
-        // if file is not audio return
+        
         if (!isAudioFile(files[0])) { 
             showToast('error', 'Please select an audio file.', {position: 'bottom-right'});
             return;
@@ -167,7 +166,8 @@ export default function Audio({event}: any) {
                     onClick={handleSubmit}
                     disabled={!audioFile || processing} 
                     className="ti-btn bg-[linear-gradient(243deg,#FF4F84_0%,#394DFF_100%)] text-white w-full">
-                    <ArrowUpFromLine />Upload</Button>
+                    {!processing && <ArrowUpFromLine />}
+                    {processing && <Loader className='mr-2 animate-spin'/>}Upload</Button>
                 </div>
             )}
               {progress && (<progress value={progress.percentage} max="100">{progress.percentage}%</progress>)}

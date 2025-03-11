@@ -120,14 +120,14 @@ const handleDeleteSelected = () => {
               <div className="box-body p-4">
                 <div className="flex items-center justify-between flex-wrap gap-4">
               <div className='!space-x-3'>
-              <button onClick={togglePresets} className='ti-btn ti-btn-primary !m-0 btn-wave ti-btn-sm waves-effect waves-light'>
+              <button onClick={togglePresets} className='ti-btn bg-[linear-gradient(243deg,#FF4F84_0%,#394DFF_100%)] text-white !m-0 btn-wave ti-btn-sm waves-effect waves-light'>
                 {showPresets ? 'Show My Overlays' : 'Load Presets'}</button>
               {/* if showPresets is false, its my overlays show delete */}
               {(!showPresets && activeOverlay) && <button onClick={handleDeleteSelected} className='ti-btn ti-btn-danger !m-0 btn-wave ti-btn-sm waves-effect waves-light p-3'>Delete Selected</button>}
               
               </div>
                   <div className="flex" role="search">
-                  <button onClick={() => setModalOpen(true)} className='ti-btn ti-btn-primary !m-0 btn-wave ti-btn-sm waves-effect waves-light w-full'>Upload Overlay</button>
+                  <button onClick={() => setModalOpen(true)} className='ti-btn bg-[linear-gradient(243deg,#FF4F84_0%,#394DFF_100%)] text-white !m-0 btn-wave ti-btn-sm waves-effect waves-light w-full'>Upload Overlay</button>
 
                     <Input 
                     onChange={(e) => updateFilters({ search: e.target.value })} className="form-control me-2 ml-3 " type="search" placeholder="Search" aria-label="Search"/>

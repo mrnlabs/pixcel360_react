@@ -86,13 +86,12 @@ class VideoSettingsController extends Controller
         if($request->file('audioFile')) {
             try {
                 // Validate the file first
-                // $request->validate([
-                //     'audioFile' => 'required|file|mimes:mp3,wav,ogg|max:10240',
-                // ]);
+                $request->validate([
+                    'audioFile' => 'required|file|mimes:mp3,wav,ogg|max:10240',
+                ]);
                 
                 $filePath = Storage::put('audios', $request->file('audioFile'));
                 $url = Storage::url($filePath);
-                dd($url);
                 $event->boomerang_setting()->update(['add_audio_file' => $url]);
                 return back()->with('success', 'Audio uploaded successfully');
             } catch (Throwable $th) {
