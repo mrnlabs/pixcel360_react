@@ -71,7 +71,34 @@ class UserOverlayController extends Controller
     {
         
         $request->validate([
-            'name' => 'required|string|max:255',
+            'name' => $request->is('api/*') ? '' : 'required|string|max:255',
+            'pngFile' => ['required', 'image', 'mimes:png', new PNGHasTransparency()],
+        ]);
+     
+        if($request->is('api/*')) {
+            $this->uploadOverlayAPI($request);
+        }
+
+        // Store the overlay image
+        $filePath = Storage::put('video_overlays', $request->file('pngFile'));
+                
+        $url = Storage::url($filePath);
+        Overlay::create([
+            // if $request->is('api/*') get name 
+            'name' => $request->name,
+            'path' => $url,
+            'is_admin' => false,
+            'user_id' => auth()->id(), // Admin overlays don't belong to any specific user
+        ]);
+
+        return back()->with('success', 'Overlay created successfully');
+    }
+
+    public function uploadOverlayAPI(Request $request)
+    {
+        
+        $request->validate([
+            'user_id' => 'required|exists:users,id',
             'pngFile' => ['required', 'image', 'mimes:png', new PNGHasTransparency()],
         ]);
 
@@ -80,13 +107,17 @@ class UserOverlayController extends Controller
                 
         $url = Storage::url($filePath);
         Overlay::create([
-            'name' => $request->name,
+            'name' => pathinfo($request->file('pngFile')->getClientOriginalName(), PATHINFO_FILENAME),
             'path' => $url,
             'is_admin' => false,
-            'user_id' => auth()->id(), // Admin overlays don't belong to any specific user
+            'user_id' => $request->user_id,
         ]);
-
-        return back()->with('success', 'Overlay created successfully');
+        
+           return response()->json([
+            'status' => 'success',
+            'message' => 'Overlay created successfully', 
+            'path' => $url]);
+        
     }
 
 

@@ -83,7 +83,28 @@ class EventSettingAPIController extends Controller
         } catch (Throwable $th){
             throw $th;
         }
+    }
 
-
+    function uploadOverlay(Request $request) {
+        try {
+            if($request->hasFile('overlay')) {
+                $event = Event::with('boomerang_setting')->where('slug', $request->slug)->first();
+                $filePath = Storage::put('overlays', $request->file('overlay'));
+                
+                $url = Storage::url($filePath);
+                $video = $event->boomerang_setting()->update(['overlay' => $filePath]);
+                return response()->json([
+                    'message' => 'Overlay uploaded successfully',
+                    'status' => 200,
+                    'path' => $url,
+                    'video' => $event = Event::where('slug', $request->slug)->first()
+                ], 200);
+            }
+          
+        
+            return response()->json(['message' => 'No file uploaded'], 400);
+        } catch (Throwable $th){
+            throw $th;
+        }
     }
 }
