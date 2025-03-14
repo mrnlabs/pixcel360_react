@@ -40,10 +40,10 @@ export default function WordpressShow({plan, plans}: {
                         <div className="xxl:col-span-5 col-span-12">
                             <div className="box">
                                 <div className="box-body">
-                                    <div className="ecommerce-gallery flex text-center">
+                                    {/* <div className="ecommerce-gallery flex text-center">
                                         <span className="badge bg-primarytint2color tag-badge">{plan?.category?.name}</span>
                                         <img src={plan?.photo} alt="image" className="w-full"/>
-                                    </div>
+                                    </div> */}
                                 </div>
                             </div>
                         </div>

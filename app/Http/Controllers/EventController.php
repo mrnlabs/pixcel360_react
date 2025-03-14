@@ -153,4 +153,18 @@ class EventController extends Controller
             return Inertia::render('Error', ['message' => $e->getMessage()]);
         }
     }
+
+    public function searchEventHeader(){
+        $search = request('search');
+    
+        $query = Event::with('setting')
+            ->when($search, function ($query) use ($search) {
+                $query->where('name', 'like', "%{$search}%");
+            });
+        if (!isInternalPortalUser()) {
+            $query->where('user_id', auth()->user()->id);
+        }
+    
+        return response()->json($query->get());
+    }
 }

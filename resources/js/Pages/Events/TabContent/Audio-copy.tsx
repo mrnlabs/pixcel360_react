@@ -147,7 +147,7 @@ export default function Audio({event, setRefresh}: any) {
                 setAudioProcessing(false);
                 
             if(response.data.s3Url) {
-                setRefresh(prev => prev + 1);
+                setRefresh((prev: number) => prev + 1);
                 setAudioProcessing(false);
                 setAudioFile(null);
                 setDbAudio(response.data.s3Url);
