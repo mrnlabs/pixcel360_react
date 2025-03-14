@@ -64,10 +64,11 @@ class ProcessVideoJob implements ShouldQueue
             'slow_factor' => 0.7,
             'effect' => 'slomo_boomerang',
             'video_url' => $videoPath,
+            // 'audio_url' => $videoSettings->add_audio_file,
             'audio_url' => "https://picxel-bucket.s3.af-south-1.amazonaws.com/audios/Someone_Elses_Eyes.mp3",
             'overlay_url' => $eventOverlay->path
         ];
-        
+        // Log::info($data);
         $stringifiedData = http_build_query($data);
         
        $response = Http::withHeaders([

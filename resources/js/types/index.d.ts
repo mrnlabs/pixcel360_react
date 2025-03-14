@@ -69,6 +69,7 @@ export interface Event {
         thanks: number;
         boomerang_speed: number;
         boomerang_bounce: number;
+        add_audio_file: string;
         slomo_recording_time: number;
         slomo_boomerang: number;
         created_at: string;
