@@ -16,11 +16,28 @@ class CreateEventRequest extends FormRequest
 
     public function rules()
     {
-
         return [
             'name' => 'required|string|min:3|max:255',
-            'start_date' => 'nullable|date',
-            'end_date' => 'nullable|date',
+            'start_date' => [
+                'nullable',
+                'date',
+                function ($attribute, $value, $fail) {
+                    // Check if the start date is in the past
+                    if (strtotime($value) < strtotime(now()->toDateTimeString())) {
+                        $fail('The start date cannot be in the past.');
+                    }
+                },
+            ],
+            'end_date' => [
+                'nullable',
+                'date',
+                function ($attribute, $value, $fail) {
+                    // Check if the end date is later than the start date
+                    if (isset($this->start_date) && strtotime($value) <= strtotime($this->start_date)) {
+                        $fail('The end date must be later than the start date.');
+                    }
+                },
+            ],
             'language' => 'required|string',
             'country' => 'required|string',
         ];
