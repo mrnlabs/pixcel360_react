@@ -43,15 +43,15 @@ function UserOverLayModal({
             showToast('error', 'Please select a png file.', {position: 'bottom-right'});
             return;
         }
-        // checkPNGTransparency(files[0]).then((hasTransparency) => {
+        checkPNGTransparency(files[0]).then((hasTransparency) => {
             
-        //     if (!hasTransparency) {
-        //         showToast('error', 'Please select a png file with transparency.', {position: 'bottom-right'});
-        //         setData('pngFile', null);
-        //         setSelectedFile(null);
-        //         return;
-        //     }
-        // });
+            if (!hasTransparency) {
+                showToast('error', 'Please select a png file with transparency.', {position: 'bottom-right'});
+                setData('pngFile', null);
+                setSelectedFile(null);
+                return;
+            }
+        });
 // console.log(files[0]);
 
         if (!isPngFile(files[0])) { 

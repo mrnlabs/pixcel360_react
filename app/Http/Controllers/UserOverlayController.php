@@ -69,16 +69,19 @@ class UserOverlayController extends Controller
    
     public function store(Request $request)
     {
-        
-        $request->validate([
-            'name' => $request->is('api/*') ? '' : 'required|string|max:255',
-            'pngFile' => ['required', 'image', 'mimes:png', new PNGHasTransparency()],
-        ]);
-     
         if($request->is('api/*')) {
-            $this->uploadOverlayAPI($request);
+           return $this->uploadOverlayAPI($request);
         }
 
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'pngFile' => ['required', 'image', 'mimes:png'],
+        ]);
+     
+        // if(!validatePngTransparency($request->file('pngFile'))) {
+        //     return back()->with('error', 'Image has no transparency');
+        // }
+       
         // Store the overlay image
         $filePath = Storage::put('video_overlays', $request->file('pngFile'));
                 
@@ -98,40 +101,41 @@ class UserOverlayController extends Controller
     {
         
         $request->validate([
-            'user_id' => 'required|exists:users,id',
-            'pngFile' => ['required', 'image', 'mimes:png', new PNGHasTransparency()],
+            'slug' => 'required|exists:events,slug',
+            'pngFile' => ['required','mimes:png'],
         ]);
 
-        // Store the overlay image
+        // if(!validatePngTransparency($request->file('pngFile'))) {
+        //     return response()->json([
+        //         'status' => 'error',
+        //         'message' => 'Image has transparency',
+        //     ], 400);
+        // }
+        
+        $event = Event::whereSlug($request->slug)->first();
         $filePath = Storage::put('video_overlays', $request->file('pngFile'));
                 
         $url = Storage::url($filePath);
-        Overlay::create([
+        $overlay = Overlay::create([
             'name' => pathinfo($request->file('pngFile')->getClientOriginalName(), PATHINFO_FILENAME),
             'path' => $url,
             'is_admin' => false,
-            'user_id' => $request->user_id,
+            'user_id' => $event->overlay->user_id,
         ]);
+        if($overlay){
+            $event->overlay_id = $overlay->id;
+            $event->save();
+        }
         
            return response()->json([
             'status' => 'success',
             'message' => 'Overlay created successfully', 
-            'path' => $url]);
+            'path' => $url
+        ], 200);
         
     }
 
 
- 
-    public function edit(Overlay $overlay)
-    {
-        // Ensure the overlay belongs to the authenticated user
-        if ($overlay->user_id !== auth()->id()) {
-            return redirect()->route('overlays.index')
-                ->with('error', 'You can only edit your own overlays.');
-        }
-
-        return view('overlays.edit', compact('overlay'));
-    }
 
     /**
      * Update the specified user overlay in storage
@@ -175,20 +179,17 @@ class UserOverlayController extends Controller
     /**
      * Remove the specified user overlay from storage
      */
-    public function destroy($overlay)
+    public function destroy($overlayId)
     {
-        $overlay = Overlay::findOrFail($overlay);
+        
+        $overlay = Overlay::findOrFail($overlayId);
         // Ensure the overlay belongs to the authenticated user
         if ($overlay->user_id !== auth()->id()) {
             abort(403, 'You can only delete your own overlays.');
         }
 
-        // Delete the image file
-        Storage::disk('public')->delete($overlay->path);
-        
-        // Delete the overlay
+    
         $overlay->delete();
-        return redirect()->route('overlays.index')
-            ->with('success', 'Overlay deleted successfully');
+        return back()->with('success', 'Overlay deleted successfully');
     }
 }

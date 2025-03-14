@@ -1,13 +1,10 @@
 <?php
 
 use App\Models\Plan;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
-use App\Http\Controllers\API\AudioPIController;
 use App\Http\Controllers\UserOverlayController;
 use App\Http\Controllers\API\EventAPIController;
-use App\Http\Controllers\API\VideoAPIController;
 use App\Http\Controllers\API\EventSettingAPIController;
 
 Route::get('/clear-cache', function () {

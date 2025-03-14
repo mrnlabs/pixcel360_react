@@ -34,12 +34,10 @@ export default function HeaderProfile() {
         <DropdownMenuItem onClick={goToProfile} className='cursor-pointer'>
           <User />
           <span>Profile</span>
-          <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
         </DropdownMenuItem>
         <DropdownMenuItem onClick={handleLogout} className='cursor-pointer'>
           <Settings />
           <span>Logout</span>
-          <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
         </DropdownMenuItem>
       </DropdownMenuGroup>
       <DropdownMenuSeparator />
