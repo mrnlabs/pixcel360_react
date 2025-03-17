@@ -52,6 +52,7 @@ class OverlayController extends Controller
             'name' => 'required|string|max:255',
             'pngFile' => ['required', 'image', 'mimes:png', new PNGHasTransparency()],
         ]);
+        
 
         // Store the overlay image
         $filePath = Storage::put('video_overlays', $request->file('pngFile'));

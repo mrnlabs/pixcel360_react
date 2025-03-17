@@ -254,7 +254,7 @@ const Sidebar: React.FC = () => {
       >
         <SidebarLogo />
         <div className="flex flex-col flex-1 overflow-y-auto">
-          <nav className="flex-1 p-2 space-y-1 bg-gray-800">
+          <nav className="flex-1 p-2 space-y-1 bg-[#212542]">
             {menuItems.map(renderMenuItem)}
           </nav>
         </div>

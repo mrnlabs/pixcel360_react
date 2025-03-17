@@ -4,8 +4,6 @@ namespace App\Http\Controllers\Gallery;
 
 use App\Http\Controllers\Controller;
 use App\Models\Event;
-use App\Models\Plan;
-use App\Services\CartService;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -13,37 +11,81 @@ class GalleryController extends Controller
 {
    
     public function index(Request $request, $slug)
-    {
-      $search = $request->input('search', '');
+{
+    $search = $request->input('search', '');
     $sort = $request->input('sort', 'latest'); // default to latest
 
-    $event = Event::with(['videos' => function ($query) use ($search, $sort) {
+    $event = Event::where('slug', $slug)->first();
+
+// Then build your videos query separately
+        $videosQuery = $event->videos();
+
         if ($search) {
-            $query->where('name', 'like', "%{$search}%");
+            $videosQuery->where('name', 'like', "%{$search}%");
         }
-        
+
+        // Apply sort conditions
         switch ($sort) {
             case 'oldest':
-                $query->oldest();
+                $videosQuery->oldest();
                 break;
             case 'name_asc':
-                $query->orderBy('name', 'asc');
+                $videosQuery->orderBy('name', 'asc');
                 break;
             case 'name_desc':
-                $query->orderBy('name', 'desc');
+                $videosQuery->orderBy('name', 'desc');
                 break;
             default: // 'latest'
-                $query->latest();
+                $videosQuery->where('processed_at', '!=', null)->latest();
         }
-    }])->where('slug', $slug)->first();
 
-
-      return Inertia::render('Gallery/Index',[
+        // Now paginate with all conditions applied
+        $videos = $videosQuery->paginate(8);
+    return Inertia::render('Gallery/Index', [
         'event' => $event,
+        'videos' => $videos,
         'filters' => [
             'search' => $search,
             'sort' => $sort
         ]
-      ]);
-    }
+    ]);
+}
+
+public function get_gallery_api(Request $request)
+{
+    $search = $request->input('search', '');
+    $sort = $request->input('sort', 'latest'); // default to latest
+    $event = Event::where('slug', $request->slug)->first();
+    $videosQuery = $event->videos();
+
+if ($search) {
+    $videosQuery->where('name', 'like', "%{$search}%");
+}
+
+// Apply sort conditions
+switch ($sort) {
+    case 'oldest':
+        $videosQuery->oldest();
+        break;
+    case 'name_asc':
+        $videosQuery->orderBy('name', 'asc');
+        break;
+    case 'name_desc':
+        $videosQuery->orderBy('name', 'desc');
+        break;
+    default: // 'latest'
+        $videosQuery->where('processed_at', '!=', null)->latest();
+}
+
+// Now paginate with all conditions applied
+$videos = $videosQuery->paginate(10);
+
+    return response()->json([
+            'videos' => $videos,
+            'filters' => [
+                'search' => $search,
+                'sort' => $sort
+            ]
+            ]);
+}
 }

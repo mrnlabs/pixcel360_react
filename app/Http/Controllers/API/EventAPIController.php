@@ -32,10 +32,11 @@ class EventAPIController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function uploadVideo(VideoUploadRequest $request)
+    public function uploadVideo(Request $request)
     {
         try {
-            if ($request->file('video')) {
+           
+            if ($request->hasFile('video')) {
                 $event = Event::where('slug', $request->slug)->first();
                 $filePath = Storage::put('video_uploads', $request->file('video'));
                 

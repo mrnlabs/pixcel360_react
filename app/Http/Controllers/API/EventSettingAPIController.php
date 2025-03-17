@@ -15,10 +15,14 @@ class EventSettingAPIController extends Controller
     {
         // Validate the incoming request
         $validated = $request->validate([
-            'field' => ['required', 'string', 'in:front_rear_camera,count_down,duration'],
+            'field' => ['required', 'string', 'in:front_rear_camera,count_down,duration,beep_sounds,slomo_recording_time,flash'],
             'value' => ['required'],
             'slug' => ['required', 'exists:events,slug']
         ]);
+        //if validation fails
+        // if ($validated->fails()) {
+        //     return response()->json(['error' => $validated->errors()], 422);
+        // }
     
         try {
             $event = Event::with('setting','boomerang_setting')->whereSlug($request->slug)->first();
@@ -30,10 +34,18 @@ class EventSettingAPIController extends Controller
             case 'count_down':
                 $event->setting()->update(['count_down' => $request->value, 'updated_at' => now()]);
                 break;
+            case 'beep_sounds':
+                $event->setting()->update(['beep_sounds' => $request->value, 'updated_at' => now()]);
+                break;
+            case 'flash':
+                $event->setting()->update(['flash' => $request->value, 'updated_at' => now()]);
+                break;
             case 'duration':
                 $event->boomerang_setting()->update(['duration' => $request->value,'updated_at' => now()]);
                 break;
-            
+            case 'slomo_recording_time':
+                $event->boomerang_setting()->update(['slomo_recording_time' => $request->value,'updated_at' => now()]);
+                break;
             default:
                 return response()->json([
                     'success' => false,
@@ -69,7 +81,7 @@ class EventSettingAPIController extends Controller
                 $filePath = Storage::put('audios', $request->file('audioFile'));
                 
                 $url = Storage::url($filePath);
-                $video = $event->boomerang_setting()->update(['add_audio_file' => $filePath]);
+                $video = $event->boomerang_setting()->update(['add_audio_file' => $url]);
                 return response()->json([
                     'message' => 'Audio uploaded successfully',
                     'status' => 200,
@@ -83,7 +95,28 @@ class EventSettingAPIController extends Controller
         } catch (Throwable $th){
             throw $th;
         }
+    }
 
-
+    function uploadOverlay(Request $request) {
+        try {
+            if($request->hasFile('overlay')) {
+                $event = Event::with('boomerang_setting')->where('slug', $request->slug)->first();
+                $filePath = Storage::put('overlays', $request->file('overlay'));
+                
+                $url = Storage::url($filePath);
+                $video = $event->boomerang_setting()->update(['overlay' => $filePath]);
+                return response()->json([
+                    'message' => 'Overlay uploaded successfully',
+                    'status' => 200,
+                    'path' => $url,
+                    'video' => $event = Event::where('slug', $request->slug)->first()
+                ], 200);
+            }
+          
+        
+            return response()->json(['message' => 'No file uploaded'], 400);
+        } catch (Throwable $th){
+            throw $th;
+        }
     }
 }

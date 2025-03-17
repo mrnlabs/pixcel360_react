@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Input } from '@/Components/ui/input'
 import { Head, useForm } from '@inertiajs/react'
 import InputError from '@/Components/InputError'
@@ -27,18 +27,49 @@ const handleQuillChange = (value: string) => {
   setData('description', value);
 };
 
+const [validationErrors, setValidationErrors] = useState<{ start_date?: string; end_date?: string }>({});
+
+    const validateForm = () => {
+            const errors: { [key: string]: string } = {};
+
+        // Validate start_date
+        if (data.start_date) {
+            const startDate = new Date(data.start_date);
+            const now = new Date();
+
+            if (startDate < now) {
+                errors.start_date = 'The start date cannot be in the past.';
+            }
+        }
+
+        // Validate end_date
+        if (data.end_date && data.start_date) {
+            const startDate = new Date(data.start_date);
+            const endDate = new Date(data.end_date);
+
+            if (endDate <= startDate) {
+                errors.end_date = 'The end date must be later than the start date.';
+            }
+        }
+
+        setValidationErrors(errors);
+        return Object.keys(errors).length === 0; // Return true if no errors
+    };
+
 const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
   e.preventDefault();
-  post(route('events.store'),{
-    preserveScroll: true,
-    onSuccess: () => {
-      reset();
-      showToast('success', 'Event created successfully!', {position: 'bottom-right'});
-    },
-    onError: () => {
-      showToast('error', 'Something went wrong!', {position: 'bottom-right'});
-    }
-  });
+  if (validateForm()) {
+    post(route('events.store'),{
+      preserveScroll: true,
+      onSuccess: () => {
+        reset();
+        showToast('success', 'Event created successfully!', {position: 'bottom-right'});
+      },
+      onError: () => {
+        showToast('error', 'Something went wrong!', {position: 'bottom-right'});
+      }
+    });
+}
 };
   return (
     <Authenticated>
@@ -83,7 +114,24 @@ const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
                                     type="datetime-local"
                                     className="w-full px-3 py-2 border rounded-lg"
                                   />
+                                  {validationErrors.start_date && (
+                                        <p className="text-red-500 text-sm mt-1">{validationErrors.start_date}</p>
+                                    )}
                                 </div>
+
+                                <div>
+                                  <label className="block text-sm mb-1">Set the end time of the event</label>
+                                  <Input
+                                    value={data.end_date}
+                                    onChange={(e) => setData('end_date', e.target.value)}
+                                    type="datetime-local"
+                                    className="w-full px-3 py-2 border rounded-lg"
+                                  />
+                                  {validationErrors.end_date && (
+                                        <p className="text-red-500 text-sm mt-1">{validationErrors.end_date}</p>
+                                    )}
+                                </div>
+                                
                                 <div>
                                   <label className="block text-sm mb-1">Language</label>
                                   <select 
@@ -104,15 +152,7 @@ const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
                                     setData={setData} 
                                   />
                                 </div>
-                                <div>
-                                  <label className="block text-sm mb-1">Set the end time of the event</label>
-                                  <Input
-                                    value={data.end_date}
-                                    onChange={(e) => setData('end_date', e.target.value)}
-                                    type="datetime-local"
-                                    className="w-full px-3 py-2 border rounded-lg"
-                                  />
-                                </div>
+                               
                               </div>
                             </div>
 

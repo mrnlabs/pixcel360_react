@@ -4,18 +4,26 @@ import { Head, router } from '@inertiajs/react'
 import { Loader } from 'lucide-react'
 import React, { Suspense, useState } from 'react';
 import VideoCard from './VideoCard';
-import { EventProps, Filters, QueryParams } from '@/types';
+import { Event, EventProps, Filters, QueryParams } from '@/types';
 // @ts-expect-error
 import { debounce } from 'lodash';
 import { Input } from '@/Components/ui/input';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/Components/ui/select';
+import Paginator from '@/Shared/Paginator';
 
-export default function Index({event} : EventProps) {
+export default function Index({event, videos} : {
+  event: Event,
+  videos: any
+}) {
 
   const [filters, setFilters] = useState({
     search: '',
     sort: ''
 });
+
+  const totalItems = videos?.total;
+  const itemsPerPage = videos?.per_page;
+  const currentPage = videos?.current_page;
 
 const updateFilters = React.useCallback(
   debounce((newFilters: Partial<Filters>) => {
@@ -42,6 +50,13 @@ const updateFilters = React.useCallback(
   [filters]
 );
 
+const handlePageChange  = (page: number) => {
+   router.get(route('gallery',event?.slug), {page}, {
+    preserveState: true,
+    replace: true
+   })
+  }
+
 
   return (
     <Authenticated>
@@ -64,7 +79,7 @@ const updateFilters = React.useCallback(
                 <div className="avatar-list-stacked">
                  <div> Gallery Name: <span className='font-bold'>{event?.name}</span></div>
                  <div> Event nr: <span className='font-bold'><span className='text-primary'>#</span>{event?.id}</span>
-                 <span className='ml-3'>Number of files: {event?.videos?.length ?? 0 }</span></div>
+                 <span className='ml-3'>Number of files: {totalItems ?? 0 }</span></div>
                   </div>
                   <div className="flex" role="search">
                     <Input 
@@ -85,15 +100,27 @@ const updateFilters = React.useCallback(
                 </div>
               </div>
             </div>
+           
           </div>
+          
         </div>
               <Suspense fallback={<Loader className="align-middle animate-spin"/>}>
                 <VideoCard 
-                event={event}
+                videos={videos.data}
                 />
               </Suspense>
-              {!event?.videos?.length && <div className="text-center">No videos found.</div>}
+              {!totalItems && <div className="text-center">No videos found.</div>}
             </div>
+            <div className="box-footer">
+            <Paginator
+                      totalItems={totalItems}
+                      itemsPerPage={itemsPerPage}
+                      currentPage={currentPage}
+                      onPageChange={handlePageChange}
+                      showingText="Displaying"
+                      maxVisiblePages={5}
+                    />
+                    </div>
           </div>
         </Authenticated>
   )

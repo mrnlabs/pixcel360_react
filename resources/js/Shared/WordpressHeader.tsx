@@ -14,13 +14,12 @@ export default function WordpressHeader() {
          {/* Main Navigation */}
         <nav className="hidden md:flex items-center space-x-8">
             <a href="https://pixcel360.com" className="text-gray-900 hover:text-[#F2295B] font-medium">Home</a>
-            <a href="https://pixcel360.com/features/" className="text-gray-900 hover:text-[#F2295B] font-medium">Features</a>
-            <a href="#" className="text-gray-900 hover:text-[#F2295B] font-medium">Pricing</a>
-            <a href="#" className="text-gray-900 hover:text-[#F2295B] font-medium">Support</a>
-            <a href="#" className="text-gray-900 hover:text-[#F2295B] font-medium">Downloads</a>
-            <a href="#" className="text-gray-900 hover:text-[#F2295B] font-medium">Contact</a>
+            <a href="https://pixcel360.com/360-photo-booth-software-features-pixcel360/" className="text-gray-900 hover:text-[#F2295B] font-medium">Features</a>
+            <a href="https://pixcel360.com/pricing-subscriptions-360-photo-booth-app/" className="text-gray-900 hover:text-[#F2295B] font-medium">Pricing</a>
+            <a href="https://pixcel360.com/support-help-pixcel360-app/" className="text-gray-900 hover:text-[#F2295B] font-medium">Support</a>
+            <a href="https://pixcel360.com/contact/" className="text-gray-900 hover:text-[#F2295B] font-medium">Contact</a>
         </nav>
-        
+     
          {/* Right Side - Search and Mobile Menu 
         <div className="flex items-center">
        

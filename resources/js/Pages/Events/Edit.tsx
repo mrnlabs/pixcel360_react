@@ -3,7 +3,7 @@ import { Breadcrumb } from "@/Shared/Breadcrumb";
 import { EventProps } from "@/types";
 import { Head, Link } from "@inertiajs/react";
 
-import React, { useMemo, useRef } from 'react'
+import React, { useMemo, useRef, useState } from 'react'
 import EditDetails from "./TabContent/EditDetails";
 import { QRCodeSVG } from "qrcode.react";
 import EventSidebar from "./EventSidebar";
@@ -37,6 +37,7 @@ export default function Edit({event} : EventProps) {
       break;
   }
   
+  const [refresh, setRefresh] = useState(0)
 
   const getHeader = () => {
       switch (activeTab) {
@@ -70,7 +71,7 @@ export default function Edit({event} : EventProps) {
         case 'event-functions':
             return <Functions event={event} scrollToDiv={scrollToDiv} />;
         case 'audio':
-            return <Audio event={event} scrollToDiv={scrollToDiv} />;
+            return <Audio event={event} scrollToDiv={scrollToDiv} key={refresh} setRefresh={setRefresh} />;
         case 'timeouts':
             return <TimeOuts event={event} scrollToDiv={scrollToDiv} />;
         case 'sharing-methods':

@@ -6,12 +6,11 @@ import { formatFileSize } from '@/utils/formatFileSize';
 import { isAudioFile } from '@/utils/isAudioFile';
 import showToast from '@/utils/showToast';
 import { router, useForm, usePage } from '@inertiajs/react';
+import axios from 'axios';
 import { Loader, Play, Pause, ArrowUpFromLine, Trash2 } from 'lucide-react'
 import React, { Suspense, useState, useRef, useEffect } from 'react'
 
-export default function Audio({event}: any) {
-    const [dbAudio, setDbAudio] = useState(null);
-
+export default function Audio({event, setRefresh}: any) {
     
     const [dialogOpen, setDialogOpen] = useState(false);
 
@@ -20,12 +19,14 @@ export default function Audio({event}: any) {
     const [audioUrl, setAudioUrl] = useState<string | null>(null);
     const audioRef = useRef<HTMLAudioElement | null>(null);
 
+    const [dbAudio, setDbAudio] = useState(event?.boomerang_setting?.add_audio_file || null);
+
         useEffect(() => {
             if (event?.boomerang_setting?.add_audio_file) {
                 setDbAudio(event?.boomerang_setting?.add_audio_file);
             }
         }, [event]);
-    
+        console.log('dbAudio', dbAudio);
     const handleFileSelect = (files: File[]) => {
         
         if (!isAudioFile(files[0])) { 
@@ -37,10 +38,13 @@ export default function Audio({event}: any) {
         setAudioFile(null);
         // console.log(files);
         setData('audioFile', null);
+        
         if (files.length > 0) {
             const file = files[0];
             setAudioFile(file);
             setData('audioFile', file);
+            setData('filename', file.name);
+            setData('contentType', file.type);
             const url = URL.createObjectURL(file);
             setAudioUrl(url);
         }
@@ -76,29 +80,92 @@ export default function Audio({event}: any) {
    
       const { data, setData, post, progress, processing, errors } = useForm({
         audioFile: null as File | null,
+        filename: '',
+        contentType: '',
       })
+
+      const [audioProcessing, setAudioProcessing] = useState(false);
       
  
 
-    function handleSubmit(e: React.MouseEvent<HTMLButtonElement>) {
-        e.preventDefault();
-        const formData = new FormData();
-        if (data.audioFile) {
-            formData.append('audioFile', data.audioFile);
-        }
-      post(route('event.update.audio', event.slug), {
-        preserveScroll: true,
-        forceFormData: true,
-        onSuccess: () => {
-            setAudioFile(null);
-            setData('audioFile', null);
-            showToast('success', 'Audio updated successfully.', {position: 'bottom-right'});
-        },
-        onError: () => {
-            showToast('error', 'Something went wrong.', {position: 'bottom-right'});
-      }
-    });
+    // function handleSubmit(e: React.MouseEvent<HTMLButtonElement>) {
+    //     e.preventDefault();
+    //     const formData = new FormData();
+    //     if (data.audioFile) {
+    //         formData.append('audioFile', data.audioFile);
+    //     }
+    //   post(route('get.presigned.url', event.slug), {
+    //     preserveScroll: true,
+    //     forceFormData: true,
+    //     onSuccess: (res) => {
+    //         console.log('Response',res)
+    //         // Upload file directly to S3
+    //         router.post(route('event.update.audio.s3', event.slug), {
+    //             audioFilePath: data.filename,
+    //             audioFileUrl: data.contentType
+    //         })
+    //         setAudioFile(null);
+    //         setData('audioFile', null);
+    //         showToast('success', 'Audio updated successfully.', {position: 'bottom-right'});
+    //     },
+    //     onError: () => {
+    //         showToast('error', 'Something went wrong.', {position: 'bottom-right'});
+    //   }
+    // });
       
+    // }
+
+    async function handleSubmit(e: React.MouseEvent<HTMLButtonElement>) {
+        e.preventDefault();
+        
+        try {
+            // Get pre-signed URL from server
+            if (!data.audioFile) {
+                showToast('error', 'No audio file selected.', {position: 'bottom-right'});
+                return;
+            }
+            setAudioProcessing(true);
+            const response = await axios.get(route('get.presigned.url', {
+                filename: data.audioFile.name,
+                contentType: data.audioFile.type
+            }));
+          
+            
+            // Upload file directly to S3
+            await axios.put(response.data.url, data.audioFile, {
+                headers: {
+                    'Content-Type': data.audioFile.type
+                }
+            });
+            
+            // Notify your backend that the upload was successful
+            const result = await axios.post(route('event.update.audio.s3', event.slug), {
+                audioFilePath: response.data.filePath,
+                audioFileUrl: response.data.s3Url
+            })
+
+                setAudioProcessing(false);
+                
+            if(response.data.s3Url) {
+                setRefresh((prev: number) => prev + 1);
+                setAudioProcessing(false);
+                setAudioFile(null);
+                setDbAudio(response.data.s3Url);
+                console.log('DB Audio', dbAudio);
+                setData('audioFile', null);
+                showToast('success', 'Audio updated successfully.', {position: 'bottom-right'});
+            }else{
+                setAudioProcessing(false);
+                showToast('error', 'An error occurred. Please try again.', {position: 'bottom-right'});
+            }
+            
+            
+            
+        } catch (error) {
+            setAudioProcessing(false);
+            console.error(error);
+            showToast('error', 'Something went wrong.', {position: 'bottom-right'});
+        }
     }
 
     const deleteDBFile = () => {
@@ -126,8 +193,8 @@ export default function Audio({event}: any) {
                     showPreview={false} 
                 />
             </Suspense>
-           
-            {(event?.boomerang_setting?.add_audio_file || audioFile) && (
+           {dbAudio}
+            {(audioFile || dbAudio) && (
                 <div>
                     <ul className="list-none files-main-nav" id="files-main-nav">
                         <li>
@@ -147,11 +214,11 @@ export default function Audio({event}: any) {
                                         </CustomTooltip>
                                      </span>
                                 </div>
-                                <div className="ms-auto">
+                                {/* <div className="ms-auto">
                                     {audioFile && <span className="font-medium text-textmuted dark:text-textmuted/50">
                                         {formatFileSize(audioFile.size)}
                                     </span>}
-                                </div>
+                                </div> */}
                             </div>
                         </li>
                     </ul>
@@ -164,10 +231,10 @@ export default function Audio({event}: any) {
                     />
                     <Button 
                     onClick={handleSubmit}
-                    disabled={!audioFile || processing} 
+                    disabled={!audioFile || processing || audioProcessing} 
                     className="ti-btn bg-[linear-gradient(243deg,#FF4F84_0%,#394DFF_100%)] text-white w-full">
-                    {!processing && <ArrowUpFromLine />}
-                    {processing && <Loader className='mr-2 animate-spin'/>}Upload</Button>
+                    
+                    {(processing || audioProcessing) && <Loader className='mr-2 animate-spin'/>}Upload</Button>
                 </div>
             )}
               {progress && (<progress value={progress.percentage} max="100">{progress.percentage}%</progress>)}

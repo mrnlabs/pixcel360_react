@@ -18,16 +18,16 @@ export default function WordpressFooter({plans=[]}: PlanCardProps) {
                 <h3 className="text-lg font-semibold mb-3 text-white">Useful links</h3>
                 <ul className="space-y-5">
                     <li><a href="https://pixcel360.com" className="hover:text-gray-400">Home</a></li>
-                    <li><a href="https://pixcel360.com/features/" className="hover:text-gray-400">Features</a></li>
-                    <li><a href="https://pixcel360.com/pricing" className="hover:text-gray-400">Pricing</a></li>
-                    <li><a href="https://pixcel360.com/support" className="hover:text-gray-400">Support</a></li>
+                    <li><a href="https://pixcel360.com/360-photo-booth-software-features-pixcel360/" className="hover:text-gray-400">Features</a></li>
+                    <li><a href="https://pixcel360.com/pricing-subscriptions-360-photo-booth-app/" className="hover:text-gray-400">Pricing</a></li>
+                    <li><a href="https://pixcel360.com/support-help-pixcel360-app/" className="hover:text-gray-400">Support</a></li>
                     <li><a href="https://pixcel360.com/contact" className="hover:text-gray-400">Contact</a></li>
                 </ul>
             </div>
 
             
             <div>
-                <h3 className="text-lg font-semibold mb-3 text-white">Subscription Plans</h3>
+               {/*  <h3 className="text-lg font-semibold mb-3 text-white">Subscription Plans</h3>
                 <ul className="space-y-5">
                     {plans.map((plan) => (
                         <li key={plan.id}>
@@ -36,7 +36,7 @@ export default function WordpressFooter({plans=[]}: PlanCardProps) {
                             </a>
                         </li>
                     ))}
-                </ul>
+                </ul> */}
             </div>
 
             
@@ -58,7 +58,7 @@ export default function WordpressFooter({plans=[]}: PlanCardProps) {
                     <a href="#" className="hover:text-gray-400">Privacy & Policy</a>
                     <a href="#" className="hover:text-gray-400">Terms & Conditions</a>
                 </div>
-                <p>Copyright pixcel360 © {new Date().getFullYear()}. All rights reserved. Developed by <a href="https://mrnlabs.com/" target='_blank' className="font-semibold">MRNLABS</a></p>
+                <p>Copyright pixcel360 © {new Date().getFullYear()}. All rights reserved.</p>
             </div>
         </div>
     </div>

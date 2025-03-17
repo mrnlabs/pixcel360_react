@@ -2,10 +2,12 @@
 
 namespace App\Jobs;
 
-use App\Models\Overlay;
 use App\Models\Video;
+use App\Models\Overlay;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Foundation\Queue\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
@@ -47,72 +49,89 @@ class ProcessVideoJob implements ShouldQueue
      * Execute the job.
      */
     public function handle(): void
-{
-    try {
-        // Get video details
-        $videoPath = $this->video->path;
-        $videoSettings = $this->video->event->boomerang_setting;
-        $event = $this->video->event;
-        $eventOverlay = Overlay::find($event->overlay_id);
-        Log::info('Processing video: ' . $videoSettings);
-        Log::info('Event: ' . $event);
-        Log::info('Overlay: ' . $eventOverlay);
-        // Create data array
-        $data = [
-            'trim_start' => 0,
-            'play_to_sec' => 3,
-            'slow_factor' => 0.7,
-            'effect' => 'slomo_boomerang',
-            'video_url' => $videoPath,
-            'audio_url' => $videoSettings->add_audio_file,
-            'overlay_url' => $eventOverlay->path
-        ];
-        
-        $stringifiedData = http_build_query($data);
-        
-       $response = Http::withHeaders([
-              'Accept' => 'application/json',
-              'Content-Type' => 'application/x-www-form-urlencoded',
-        ])
-        ->timeout(300)
-        ->withBody($stringifiedData, 'application/x-www-form-urlencoded')
-        ->post(config('services.video_processing.endpoint'));
-        
-        if ($response->successful()) {
-            $processedData = $response->json();
-            
-            // Update the video with processed path and status
-            $this->video->update([
-                'processed_video_path' => $processedData['processed_path'] ?? null,
-                'is_processed' => true,
-                'processed_at' => now(),
-            ]);
-            
-            Log::info('Video processed successfully', [
-                'video_id' => $this->video->id,
-                'processed_path' => $processedData['processed_path'] ?? null
-            ]);
-        } else {
-            
-            Log::error('Video processing API error', [
-                'video_id' => $this->video->id,
-                'status' => $response->status(),
-                'response' => $response->body()
-            ]);
-            
-            throw new \Exception('Video processing API error: ' . $response->body());
-        }
+    {
+        try {
+            // Get the current video ID for potential logging
+            $currentVideoId = $this->video->id;
+    
+            // Use a lock to ensure only one job runs at a time
+            $lock = Cache::lock('video_processing_lock', 180);
+    
+            // Attempt to acquire the lock
+            if (!$lock->get()) {
+                Log::info('Skipping video processing - another job is in progress', [
+                    'video_id' => $currentVideoId,
+                ]);
+                return;
+            }
+    
            
-    } catch (\Exception $exception) {
-        Log::error('Video processing job failed', [
-            'video_id' => $this->video->id,
-            'exception' => $exception->getMessage()
-        ]);
-        
-        // This will trigger a retry if we haven't exceeded $tries
-        throw $exception;
+    
+            // Process the video
+            $videoPath = $this->video->path;
+            $videoSettings = $this->video->event->boomerang_setting;
+            $event = $this->video->event;
+            $eventOverlay = Overlay::find($event->overlay_id);
+    
+            $data = [
+                'trim_start' => 0,
+                'play_to_sec' => 3,
+                'slow_factor' => 0.7,
+                'effect' => 'slomo_boomerang',
+                'video_url' => $videoPath,
+                'audio_url' => $videoSettings->add_audio_file,
+                'overlay_url' => $eventOverlay->path,
+            ];
+    
+            $stringifiedData = http_build_query($data);
+    
+            $response = Http::withHeaders([
+                'Accept' => 'application/json',
+                'Content-Type' => 'application/x-www-form-urlencoded',
+            ])
+                ->timeout(300)
+                ->withBody($stringifiedData, 'application/x-www-form-urlencoded')
+                ->post(config('services.video_processing.endpoint'));
+    
+            if ($response->successful()) {
+                $processedData = $response->json();
+    
+                // Update the video with processed path and status
+                $this->video->update([
+                    'processed_video_path' => $processedData['processed_path'] ?? null,
+                    'is_processed' => true,
+                    'processed_at' => now(),
+                ]);
+    
+            }
+        } catch (\Exception $exception) {
+            // If we have a job ID, update its status
+            if (isset($jobId)) {
+                DB::table('video_processing_jobs')
+                    ->where('id', $jobId)
+                    ->update([
+                        'status' => 'failed',
+                        'error_message' => substr($exception->getMessage(), 0, 255),
+                        'updated_at' => now(),
+                    ]);
+            }
+    
+            Log::error('Video processing job failed', [
+                'video_id' => $this->video->id ?? $currentVideoId ?? 'unknown',
+                'job_id' => $jobId ?? 'not_created',
+                'exception' => $exception->getMessage(),
+                'trace' => $exception->getTraceAsString(),
+            ]);
+    
+            // This will trigger a retry if we haven't exceeded $tries
+            throw $exception;
+        } finally {
+            // Release the lock
+            if (isset($lock)) {
+                $lock->release();
+            }
+        }
     }
-}
 
     public function failed(\Throwable $exception)
     {

@@ -23,6 +23,9 @@ Route::patch('/update-vedio-sharing-method/{slug}', [VideoSettingsController::cl
 Route::patch('/update-vedio-subjects/{slug}', [VideoSettingsController::class, 'updateVedioSubjects'])->name('event.update.vedio.subjects');
 Route::patch('/update-vedio-branding/{slug}', [VideoSettingsController::class, 'updateVedioBranding'])->name('event.update.vedio.branding');
 
+// header search
+Route::get('/header-search', [EventController::class, 'searchEventHeader']);
+
 
 
 });
