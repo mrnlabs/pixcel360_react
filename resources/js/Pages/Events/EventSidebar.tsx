@@ -16,7 +16,7 @@ export default function EventSidebar({activeTab,setActiveTab, scrollToDiv,event}
             </div>
           </div>
           <div className="box-body !pt-0 !p-3">
-            <ul className="list-none files-main-nav" id="files-main-nav">
+          <ul className="flex sm:flex md:flex lg:block xl:block list-none files-main-nav" id="files-main-nav">
               <li className="px-0 pt-0">
                 <span className="text-xs text-textmuted dark:text-textmuted/50">Event Settings</span>
               </li>
