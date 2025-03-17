@@ -293,12 +293,12 @@ const AdminSidebar: React.FC = () => {
               ${isMobile ? (isSidebarOpen ? 'translate-x-0' : '-translate-x-full') : 'translate-x-0'}
               transition-transform duration-300 ease-in-out
               md:relative md:translate-x-0 
-              flex flex-col w-64 bg-[#181B2F]
+              flex flex-col w-64 bg-[#212542]
             `}
           >
             <SidebarLogo />
             <div className="flex flex-col flex-1 overflow-y-auto">
-              <nav className="flex-1 p-2 space-y-1 bg-gray-800">
+              <nav className="flex-1 p-2 space-y-1 bg-[#212542]">
                 {menuItems.map(renderMenuItem)}
               </nav>
             </div>

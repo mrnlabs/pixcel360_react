@@ -118,6 +118,20 @@ const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
                                         <p className="text-red-500 text-sm mt-1">{validationErrors.start_date}</p>
                                     )}
                                 </div>
+
+                                <div>
+                                  <label className="block text-sm mb-1">Set the end time of the event</label>
+                                  <Input
+                                    value={data.end_date}
+                                    onChange={(e) => setData('end_date', e.target.value)}
+                                    type="datetime-local"
+                                    className="w-full px-3 py-2 border rounded-lg"
+                                  />
+                                  {validationErrors.end_date && (
+                                        <p className="text-red-500 text-sm mt-1">{validationErrors.end_date}</p>
+                                    )}
+                                </div>
+                                
                                 <div>
                                   <label className="block text-sm mb-1">Language</label>
                                   <select 
@@ -138,18 +152,7 @@ const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
                                     setData={setData} 
                                   />
                                 </div>
-                                <div>
-                                  <label className="block text-sm mb-1">Set the end time of the event</label>
-                                  <Input
-                                    value={data.end_date}
-                                    onChange={(e) => setData('end_date', e.target.value)}
-                                    type="datetime-local"
-                                    className="w-full px-3 py-2 border rounded-lg"
-                                  />
-                                  {validationErrors.end_date && (
-                                        <p className="text-red-500 text-sm mt-1">{validationErrors.end_date}</p>
-                                    )}
-                                </div>
+                               
                               </div>
                             </div>
 

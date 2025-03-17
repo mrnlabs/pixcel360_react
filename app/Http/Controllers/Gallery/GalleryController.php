@@ -13,8 +13,8 @@ class GalleryController extends Controller
 {
    
     public function index(Request $request, $slug)
-    {
-      $search = $request->input('search', '');
+{
+    $search = $request->input('search', '');
     $sort = $request->input('sort', 'latest'); // default to latest
 
     $event = Event::with(['videos' => function ($query) use ($search, $sort) {
@@ -33,17 +33,21 @@ class GalleryController extends Controller
                 $query->orderBy('name', 'desc');
                 break;
             default: // 'latest'
-                $query->latest();
+                $query->where('is_processed', true)->latest();
         }
     }])->where('slug', $slug)->first();
 
+    // Paginate the videos
+    $videos = $event->videos()->paginate(8); // 10 videos per page
 
-      return Inertia::render('Gallery/Index',[
+
+    return Inertia::render('Gallery/Index', [
         'event' => $event,
+        'videos' => $videos,
         'filters' => [
             'search' => $search,
             'sort' => $sort
         ]
-      ]);
-    }
+    ]);
+}
 }

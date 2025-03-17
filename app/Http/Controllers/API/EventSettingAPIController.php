@@ -69,7 +69,7 @@ class EventSettingAPIController extends Controller
                 $filePath = Storage::put('audios', $request->file('audioFile'));
                 
                 $url = Storage::url($filePath);
-                $video = $event->boomerang_setting()->update(['add_audio_file' => $filePath]);
+                $video = $event->boomerang_setting()->update(['add_audio_file' => $url]);
                 return response()->json([
                     'message' => 'Audio uploaded successfully',
                     'status' => 200,
