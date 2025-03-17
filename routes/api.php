@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\UserOverlayController;
 use App\Http\Controllers\API\EventAPIController;
 use App\Http\Controllers\API\EventSettingAPIController;
+use App\Http\Controllers\Gallery\GalleryController;
 
 Route::get('/clear-cache', function () {
     Artisan::call('optimize:clear');
@@ -20,6 +21,9 @@ Route::post('/upload-event-video', [EventAPIController::class, 'uploadVideo'])->
 Route::post('/update-fields', [EventSettingAPIController::class, 'updateField'])->name('event.update.fields');
 
 Route::post('/upload-overlay', [UserOverlayController::class, 'store']);
+
+
+Route::get('/gallery', [GalleryController::class, 'get_gallery_api']);
 
 
 // Get Plans

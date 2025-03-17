@@ -30,6 +30,8 @@ class EventService
     }
 
 
+
+
     public function getEvent($slug)
     {
         return Event::with('setting','boomerang_setting','sharing_method','sharing_subject')->whereSlug($slug)->first();
