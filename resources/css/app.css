@@ -64,3 +64,9 @@
 }
 
 
+@media screen and (min-width: 1024px) and (max-width: 1366px) {
+  ul.files-main-nav {
+      display: flex;
+      flex-wrap: wrap;
+  }
+}

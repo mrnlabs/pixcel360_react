@@ -40,7 +40,8 @@ export default function UserCard({user, setUser, setDialogOpen}:
         
           <div className="flex gap-2 mb-0 flex-wrap flex-xxl-nowrap">
             <Link href={route('users.show',user?.slug)} className="ti-btn bg-[linear-gradient(243deg,#FF4F84_0%,#394DFF_100%)] text-white ti-btn-sm mb-0 flex-auto"> View More </Link>
-            <div onClick={handleDelete} className="ti-btn ti-btn-danger ti-btn-sm mb-0 flex-auto"> Delete </div>
+            <button type="button" disabled={!!user && isMyAccount(user)} onClick={handleDelete} 
+            className={`${!!user && isMyAccount(user) ? 'bg-red-300' : ''} ti-btn ti-btn-danger ti-btn-sm mb-0 flex-auto`}> Delete </button>
           </div>
         </div>
       </div>

@@ -21,6 +21,7 @@ const VideoPlayerComponent = ({ videoSrc }: any) => {
     autoPlay: false,
     loop: false,
     sources: videoSources,
+    poster: 'https://pixcel360.com/wp-content/uploads/2024/01/Backup_of_PIXEL360-LOGO-with-grey.png',
     controlBar: {
       skipButtons: {
         forward: 5,

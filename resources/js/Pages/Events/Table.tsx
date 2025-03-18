@@ -180,7 +180,7 @@ export default function Table({events, setModalOpen, setQRData, setDuplicateModa
                   </div>
                 </div>
               </td>
-              <td className=""> {format(new Date(event.start_date), 'dd-MM-yyyy')} </td>
+              <td className=""> {event.start_date ? format(new Date(event.start_date), 'dd-MM-yyyy') : '-'} </td>
               <td>
                 {event.status == 1 ? (
                   <span className="badge bg-success text-white leading-none">Active</span>
