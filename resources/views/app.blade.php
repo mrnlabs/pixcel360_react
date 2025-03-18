@@ -8,13 +8,13 @@ data-width="fullwidth"  data-vertical-style="overlay" data-icon-overlay="open">
         <title inertia>{{ config('app.name', 'Laravel') }}</title>
 
         <!-- Fonts -->
-        <link rel="preconnect" href="https://fonts.bunny.net">
+        <link rel="preconnect" href="https://fonts.bunny.net"/>
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
-
+        
         <style>
             .authentication-background {
     position: relative !important;
-    background-color: rgb(var(--primary)) !important;
+    background-color: #eef2f5 !important;
 }
         </style>
         @routes

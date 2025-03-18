@@ -26,7 +26,7 @@ class PayFastController extends Controller
 
     public function subscribe($slug)
     {
-        /*
+        
         try {
 
             $data = array(
@@ -57,7 +57,7 @@ class PayFastController extends Controller
            $identifier = $this->generatePaymentIdentifier($data_string);
           
            if($identifier) {
-                return Inertia::render('PaymentMethods/Index', [
+                return Inertia::view('PaymentMethods/Index', [
                     'order' => Plan::where('slug', $slug)->first(),
                     'uuid' => $identifier,
                     "return_url" => $data['return_url'],
@@ -72,7 +72,7 @@ class PayFastController extends Controller
             logger()->error('PayFast API Error: ' . $e->getMessage());
             throw $e;
         }
-*/
+
 
 $plan = Plan::where('slug', $slug)->first();
 $plan->subscriptions()->create([
@@ -101,7 +101,7 @@ return back()->with('success', 'Plan subscribed successfully');
         // Use cURL (if available)
         if( in_array( 'curl', get_loaded_extensions(), true ) ) {
             // Variable initialization
-            $url = 'https://sandbox.payfast.co.za/onsite/process';
+            $url = 'https://payfast.co.za/onsite/process';
     
             // Create default cURL object
             $ch = curl_init();
@@ -182,12 +182,12 @@ return back()->with('success', 'Plan subscribed successfully');
     public function success()
     {
         logger()->error('SUCCESS HIT: ' );
-        return Inertia::render('Payment/Success');
+        return Inertia::render('Subscriptions/Success');
     }
 
     public function cancel()
     {
-        return Inertia::render('Payment/Cancel');
+        return Inertia::render('Subscriptions/Cancel');
     }
 
     public function notify(Request $request)

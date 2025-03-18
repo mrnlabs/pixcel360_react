@@ -1,4 +1,4 @@
-// resources/js/Pages/Payment/Checkout.jsx
+
 import React, { useEffect } from 'react';
 import { Head, usePage } from '@inertiajs/react';
 import { router } from '@inertiajs/react';
@@ -21,7 +21,7 @@ const Index = ({
     }, []);
 
     const initiatePayment = async () => {
-
+        
             // @ts-expect-error
           window.payfast_do_onsite_payment({
             "uuid":uuid,
@@ -51,7 +51,7 @@ const Index = ({
                     <div className="mb-6">
                         <h3 className="text-lg font-semibold mb-2">Order Summary</h3>
                         <p>Order ID: {order.id}</p>
-                        <p>Total: R{order.total}</p>
+                        <p>Total: R{amount}</p>
                     </div>
 
                     {/* Payment Button */}
