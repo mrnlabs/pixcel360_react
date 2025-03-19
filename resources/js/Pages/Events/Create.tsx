@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { Input } from '@/Components/ui/input'
-import { Head, useForm } from '@inertiajs/react'
+import { Head, Link, useForm } from '@inertiajs/react'
 import InputError from '@/Components/InputError'
 import Authenticated from '@/Layouts/AuthenticatedLayout'
 import { Breadcrumb } from '@/Shared/Breadcrumb'
 import CountrySelector from '../Profile/CountrySelector'
 import QuillEditor from '@/Components/Editors/QuillEditor'
 import showToast from '@/utils/showToast'
+import CustomToggle from '@/Components/Form/CustomToggle'
 
 
 export default function Create() {
@@ -15,11 +16,13 @@ export default function Create() {
 
   const { data, setData, post, processing, errors, reset } = useForm({
     name: "",
+    terms_and_conditions: "",
     start_date: "",
     end_date: "",
     country: "South Africa",
     language: "English",
     description: "",
+    enable_start_end_date: 0
 });
 
 const handleQuillChange = (value: string) => {
@@ -106,31 +109,45 @@ const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
                                   />
                                   <InputError message={errors.name} />
                                 </div>
-                                <div>
-                                  <label className="block text-sm mb-1">Set the start time of the event</label>
-                                  <Input
-                                   value={data.start_date}
-                                   onChange={(e) => setData('start_date', e.target.value)}
-                                    type="datetime-local"
-                                    className="w-full px-3 py-2 border rounded-lg"
-                                  />
-                                  {validationErrors.start_date && (
-                                        <p className="text-red-500 text-sm mt-1">{validationErrors.start_date}</p>
-                                    )}
-                                </div>
 
-                                <div>
-                                  <label className="block text-sm mb-1">Set the end time of the event</label>
-                                  <Input
-                                    value={data.end_date}
-                                    onChange={(e) => setData('end_date', e.target.value)}
-                                    type="datetime-local"
-                                    className="w-full px-3 py-2 border rounded-lg"
-                                  />
-                                  {validationErrors.end_date && (
-                                        <p className="text-red-500 text-sm mt-1">{validationErrors.end_date}</p>
-                                    )}
-                                </div>
+                                <div className="space-y-4 flex">
+                                  <CustomToggle 
+                                    label="Enable Start and End Time" 
+                                    initialValue={data.enable_start_end_date} 
+                                    onChange={(value) => setData('enable_start_end_date', value ? 1 : 0)} 
+                                    />
+                                  </div>
+                               {data.enable_start_end_date ? (
+                                 <>
+                                 <div>
+                                 <label className="block text-sm mb-1">Set the start time of the event</label>
+                                 <Input
+                                  value={data.start_date}
+                                  onChange={(e) => setData('start_date', e.target.value)}
+                                   type="datetime-local"
+                                   className="w-full px-3 py-2 border rounded-lg"
+                                 />
+                                 {validationErrors.start_date && (
+                                       <p className="text-red-500 text-sm mt-1">{validationErrors.start_date}</p>
+                                   )}
+                                   <InputError message={errors.start_date} />
+                               </div>
+
+                               <div>
+                                 <label className="block text-sm mb-1">Set the end time of the event</label>
+                                 <Input
+                                   value={data.end_date}
+                                   onChange={(e) => setData('end_date', e.target.value)}
+                                   type="datetime-local"
+                                   className="w-full px-3 py-2 border rounded-lg"
+                                 />
+                                 {validationErrors.end_date && (
+                                       <p className="text-red-500 text-sm mt-1">{validationErrors.end_date}</p>
+                                   )}
+                                   <InputError message={errors.end_date} />
+                               </div>
+                               </>
+                               ): ''}
                                 
                                 <div>
                                   <label className="block text-sm mb-1">Language</label>
@@ -163,6 +180,14 @@ const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
                               setQuillValue={handleQuillChange} 
                              />
                             </div>
+                            <div className="form-check flex items-center gap-2 mt-4">
+                              <input onChange={(e) => setData('terms_and_conditions', e.target.checked ? '1' : '0')} required={true} className="form-check-input" type="checkbox" value="" id="flexCheckChecked" /> 
+                            <label className="form-check-label" htmlFor="flexCheckChecked"> I agree to the <Link target='_blank' href='#!' className='text-primary'>
+                            Privacy Policy</Link> and the General <Link target='_blank' href='#!' className='text-primary'>Terms and Conditions<span className='text-red-500'> *</span>
+                            </Link>
+                            </label>
+                           
+                            </div> <InputError message={errors.terms_and_conditions} className='ml-8' />
                     
                             <div className="flex justify-between mt-6">
                               <button disabled={processing} onClick={handleSubmit} type="button" className="ti-btn bg-[linear-gradient(243deg,#FF4F84_0%,#394DFF_100%)] text-white w-full">

@@ -9,7 +9,6 @@ use Illuminate\Http\Request;
 use App\Services\EventService;
 use App\Services\VideoSettingsService;
 use App\Services\SharingSettingsService;
-use App\Http\Requests\VideoUploadRequest;
 use App\Jobs\ProcessVideoJob;
 use App\Models\Video;
 use Illuminate\Support\Facades\Storage;

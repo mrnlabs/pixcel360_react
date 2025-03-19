@@ -13,6 +13,7 @@ export default function VedioSettings({event} : any) {
       count_down: event?.setting?.count_down,
       mirror_overlay: event?.setting?.mirror_overlay,
       beep_sounds: event?.setting?.beep_sounds,
+      flash: event?.setting?.flash,
       camera_exposure: event?.setting?.camera_exposure,
       qr_app_protection: event?.setting?.qr_app_protection,
       front_rear_camera: event?.setting?.front_rear_camera,
@@ -22,6 +23,7 @@ export default function VedioSettings({event} : any) {
     setData('count_down', event?.setting?.count_down);
     setData('mirror_overlay', event?.setting?.mirror_overlay);
     setData('beep_sounds', event?.setting?.beep_sounds);
+    setData('flash', event?.setting?.flash);
     setData('camera_exposure', event?.setting?.camera_exposure);
     setData('qr_app_protection', event?.setting?.qr_app_protection);
     setData('front_rear_camera', event?.setting?.front_rear_camera);
@@ -61,11 +63,8 @@ export default function VedioSettings({event} : any) {
               </SelectContent>
           </Select>
   </div>
-        <CustomToggle 
-        label="Mirror overlay preview" 
-        initialValue={data.mirror_overlay} 
-        onChange={(value) => setData('mirror_overlay', value ? 1 : 0)} 
-        />
+  
+       
       </div>
 
       <div className="space-y-4">
@@ -75,9 +74,38 @@ export default function VedioSettings({event} : any) {
         onChange={(value) => setData('beep_sounds', value ? 1 : 0)} 
         />
       </div>
+
+      
+
     </div>
 
-    <div className="grid grid-cols-12 sm:gap-x-6 gap-y-6">
+
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
+      <div className="space-y-4">
+        <div className="xl:col-span-6 lg:col-span-6 md:col-span-6 sm:col-span-12 col-span-12">
+        <CustomToggle 
+        label="Mirror overlay preview" 
+        initialValue={data.mirror_overlay} 
+        onChange={(value) => setData('mirror_overlay', value ? 1 : 0)} 
+        />
+  </div>
+      </div>
+
+      <div className="space-y-4">
+        <CustomToggle 
+        label="Enable Flash Light" 
+        initialValue={data.flash} 
+        onChange={(value) => setData('flash', value ? 1 : 0)} 
+        />
+      </div>
+
+      
+
+    </div>
+
+
+
+    <div className="grid grid-cols-12 sm:gap-x-6 gap-y-6 mt-4">
   <div className="xl:col-span-6 lg:col-span-6 md:col-span-6 sm:col-span-12 col-span-12">
     <CustomToggle 
         label="Enable Camera exposure menu" 

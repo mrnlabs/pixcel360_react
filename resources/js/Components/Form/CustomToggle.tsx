@@ -22,7 +22,7 @@ const CustomToggle = ({ label, initialValue = 0, onChange }:
     <div>
       <label className="block text-sm mb-1">{label}</label>
       <div 
-        className={`toggle ${isOn ? 'on' : 'off'} mb-4 cursor-pointer`}
+        className={`toggle ${isOn ? 'on toggle-success' : 'off'} mb-4 cursor-pointer `}
         onClick={handleToggle}
         role="switch"
         aria-checked={isOn}

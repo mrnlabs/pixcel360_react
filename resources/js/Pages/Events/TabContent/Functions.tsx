@@ -17,6 +17,7 @@ export default function Functions({event} : any) {
     boomerang_bounce: event?.boomerang_setting?.boomerang_bounce,
     slomo_recording_time: event?.boomerang_setting?.slomo_recording_time,
     slomo_boomerang: event?.boomerang_setting?.slomo_boomerang,
+    duration: event?.boomerang_setting?.duration,
     speed: event?.boomerang_setting?.speed,
 });
 
@@ -127,6 +128,23 @@ const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
         </SelectContent>
     </Select>
   </div>
+
+  <div className="xl:col-span-6 lg:col-span-6 md:col-span-6 sm:col-span-12 col-span-12">
+  <label className="block text-sm mb-1"> Recording duration</label>
+  <Select value={data.duration} onValueChange={(value) => setData('duration', value)}>
+      <SelectTrigger className="w-[180px] form-control border rounded-lg">
+        <SelectValue placeholder="Select" />
+        </SelectTrigger>
+        <SelectContent className='form-control'>
+            <SelectGroup>
+            {[...Array(30).keys()].map((i) => (
+              <SelectItem key={i} value={String(i + 1)}>{i + 1} s</SelectItem>
+            ))}
+            </SelectGroup>
+        </SelectContent>
+    </Select>
+  </div>
+
   <div className="xl:col-span-6 lg:col-span-6 md:col-span-6 sm:col-span-12 col-span-12">
     <label className="block text-sm mb-1">Slomo recording time</label>
     <Input 

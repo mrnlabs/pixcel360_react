@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('event_id')->constrained()->onDelete('cascade');
             $table->integer('count_down')->default(1);
             $table->boolean('beep_sounds')->default(0);
+            $table->boolean('flash')->default(0);
             // $table->boolean('face_props')->default(0);
             $table->boolean('mirror_overlay')->default(0);
             $table->boolean('front_rear_camera')->default(0);

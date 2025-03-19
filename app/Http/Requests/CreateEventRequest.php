@@ -18,8 +18,8 @@ class CreateEventRequest extends FormRequest
     {
         return [
             'name' => 'required|string|min:3|max:255',
-            'start_date' => [
-                'nullable',
+            'start_date' => request('enable_start_end_date') == 1 ? [
+                'required',
                 'date',
                 function ($attribute, $value, $fail) {
                     // Check if the start date is in the past
@@ -27,9 +27,9 @@ class CreateEventRequest extends FormRequest
                         $fail('The start date cannot be in the past.');
                     }
                 },
-            ],
-            'end_date' => [
-                'nullable',
+            ]: '',
+            'end_date' => request('enable_start_end_date') == 1 ? [
+                'required',
                 'date',
                 function ($attribute, $value, $fail) {
                     // Check if the end date is later than the start date
@@ -37,9 +37,11 @@ class CreateEventRequest extends FormRequest
                         $fail('The end date must be later than the start date.');
                     }
                 },
-            ],
+            ]: '',
             'language' => 'required|string',
             'country' => 'required|string',
+            'enable_start_end_date' => 'required',
+            'terms_and_conditions' => 'required',
         ];
     }
 }
