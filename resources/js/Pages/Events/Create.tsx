@@ -8,6 +8,7 @@ import CountrySelector from '../Profile/CountrySelector'
 import QuillEditor from '@/Components/Editors/QuillEditor'
 import showToast from '@/utils/showToast'
 import CustomToggle from '@/Components/Form/CustomToggle'
+import { Loader } from 'lucide-react'
 
 
 export default function Create() {
@@ -182,8 +183,8 @@ const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
                             </div>
                             <div className="form-check flex items-center gap-2 mt-4">
                               <input onChange={(e) => setData('terms_and_conditions', e.target.checked ? '1' : '0')} required={true} className="form-check-input" type="checkbox" value="" id="flexCheckChecked" /> 
-                            <label className="form-check-label" htmlFor="flexCheckChecked"> I agree to the <Link target='_blank' href='#!' className='text-primary'>
-                            Privacy Policy</Link> and the General <Link target='_blank' href='#!' className='text-primary'>Terms and Conditions<span className='text-red-500'> *</span>
+                            <label className="form-check-label" htmlFor="flexCheckChecked"> I agree to the 
+                            Privacy Policy and the General <Link target='_blank' href='#!' className='underline text-primary'>Terms and Conditions<span className='text-red-500'> *</span>
                             </Link>
                             </label>
                            
@@ -191,7 +192,7 @@ const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
                     
                             <div className="flex justify-between mt-6">
                               <button disabled={processing} onClick={handleSubmit} type="button" className="ti-btn bg-[linear-gradient(243deg,#FF4F84_0%,#394DFF_100%)] text-white w-full">
-                                {processing ? 'Creating...' : 'Create Event'}</button>
+                                {processing && <Loader className='animate-spin mr-2'/>}Create Event</button>
                             </div>
                           </div>
                     </div>
