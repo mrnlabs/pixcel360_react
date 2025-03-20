@@ -155,7 +155,7 @@ const Sidebar: React.FC = () => {
         >
           <span className={`
             flex items-center
-            ${isExactActive(item.path) ? 'text-blue-400' : 'text-gray-400'}
+            ${isExactActive(item.path) ? 'text-blue-400' : 'text-white'}
           `}>
             {item.icon}
           </span>
@@ -176,7 +176,7 @@ const Sidebar: React.FC = () => {
             : 'hover:bg-gray-700/30'
           }
         `}>
-          <span className="flex items-center text-gray-400">
+          <span className="flex items-center text-white">
             {item.icon}
           </span>
           {item.label}
@@ -185,7 +185,7 @@ const Sidebar: React.FC = () => {
             className={`
               h-4 w-4 ml-auto transition-transform duration-200
               ${showSubmenu ? 'rotate-180' : ''}
-              text-gray-400
+              text-white
             `}
             fill="none" 
             viewBox="0 0 24 24" 
@@ -206,14 +206,14 @@ const Sidebar: React.FC = () => {
                   flex items-center pl-10 pr-4 py-2 text-sm text-gray-300 rounded-xs
                   transition-all duration-200 ease-in-out
                   ${isExactActive(subItem.path)
-                    ? 'bg-gray-700/50 text-white font-medium'
-                    : 'hover:bg-gray-700/30'
+                    ? 'bg-[linear-gradient(243deg,#FF4F84_0%,#394DFF_100%)] text-white font-medium'
+                    : 'hover:bg-[linear-gradient(243deg,#FF4F84_0%,#394DFF_100%)] text-white'
                   }
                 `}
               >
                 <span className={`
                   flex items-center
-                  ${isExactActive(subItem.path) ? 'text-blue-400' : 'text-gray-400'}
+                  ${isExactActive(subItem.path) ? 'text-blue-400' : 'text-white'}
                 `}>
                   {subItem.icon}
                 </span>

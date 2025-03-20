@@ -98,7 +98,7 @@ class ProcessVideoJob implements ShouldQueue
     
                 // Update the video with processed path and status
                 $this->video->update([
-                    'processed_video_path' => $processedData['processed_path'] ?? null,
+                    // 'processed_video_path' => $processedData['processed_path'] ?? null,
                     'is_processed' => true,
                     'processed_at' => now(),
                 ]);

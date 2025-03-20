@@ -31,7 +31,7 @@ class GoogleController extends Controller
     {
         try {
             $googleUser = Socialite::driver('google')->stateless()->user();
-$plainPassword = Str::random(8);
+            $plainPassword = Str::random(8);
 
 // First check if user exists with this Google ID
 $user = User::where('google_id', $googleUser->id)->first();

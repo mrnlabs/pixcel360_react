@@ -5,7 +5,7 @@ data-width="fullwidth"  data-vertical-style="overlay" data-icon-overlay="open">
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title inertia>{{ config('app.name', 'Laravel') }}</title>
+        <title inertia>{{ config('app.name', 'Pixcel360') }}</title>
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net"/>
@@ -14,7 +14,7 @@ data-width="fullwidth"  data-vertical-style="overlay" data-icon-overlay="open">
         <style>
             .authentication-background {
     position: relative !important;
-    background-color: #eef2f5 !important;
+    /* background-color: #eef2f5 !important; */
 }
         </style>
         @routes

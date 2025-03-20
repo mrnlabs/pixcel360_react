@@ -21,7 +21,6 @@ const VideoPlayerComponent = ({ videoSrc }: any) => {
     autoPlay: false,
     loop: false,
     sources: videoSources,
-    poster: 'https://pixcel360.com/wp-content/uploads/2024/01/Backup_of_PIXEL360-LOGO-with-grey.png',
     controlBar: {
       skipButtons: {
         forward: 5,
@@ -31,7 +30,7 @@ const VideoPlayerComponent = ({ videoSrc }: any) => {
     playbackRates: [0.5, 1, 1.5, 2],
     disablePictureInPicture: false,
     onReady: () => {
-      console.log("Video player is ready!");
+      // console.log("Video player is ready!");
     },
   };
 

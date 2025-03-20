@@ -188,7 +188,8 @@ const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
                             </Link>
                             </label>
                            
-                            </div> <InputError message={errors.terms_and_conditions} className='ml-8' />
+                            </div> 
+                            <InputError message={errors.terms_and_conditions} className='ml-8' />
                     
                             <div className="flex justify-between mt-6">
                               <button disabled={processing} onClick={handleSubmit} type="button" className="ti-btn bg-[linear-gradient(243deg,#FF4F84_0%,#394DFF_100%)] text-white w-full">
@@ -199,8 +200,7 @@ const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
                    
                   </div>
                 </div>
-              </div>
-            
+              </div>            
             </div>
           </div>
         </Authenticated>
