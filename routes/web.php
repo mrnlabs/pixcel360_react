@@ -9,7 +9,9 @@ use App\Http\Controllers\PricingController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\Gallery\GalleryController;
 use App\Http\Controllers\Plans\PlanController;
+use App\Http\Controllers\TermsAndConditionController;
 
 Route::get('/clear-cache', function () {
     Artisan::call('optimize:clear');
@@ -30,8 +32,11 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+
 //event gallery
 Route::get('/event-gallery/{id}', [EventController::class, 'gallery'])->name('event-gallery');
+Route::get('/support/{id}', [TermsAndConditionController::class, 'support'])->name('support');
 
 //profile
 Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
@@ -46,6 +51,10 @@ Route::get('/checkout', [CheckoutController::class, 'checkout'])->name('checkout
 
 // This one is also viewable from wordpress side so keep it unprotected
 Route::get('/plans/show/{slug}', [PlanController::class, 'show'])->name('plans.show');
+
+// exclude this route from auth
+// its for shared gallery
+Route::get('/shared-gallery/{slug}', [GalleryController::class, 'share_gallery'])->name('shared_gallery');
 
 require __DIR__.'/auth.php';
 require __DIR__.'/event.php';

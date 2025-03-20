@@ -28,7 +28,7 @@ const CountrySelector = ({ value, setData }: any) => {
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="w-full justify-between"
+          className="w-full justify-between shadcn-select"
         >
           {value
             ? countries.find((country) => country === value)
@@ -36,7 +36,7 @@ const CountrySelector = ({ value, setData }: any) => {
           <ChevronsUpDown className="opacity-50" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-full p-0">
+      <PopoverContent className="w-full p-0 ">
         <Command>
           <CommandInput placeholder="Search country..." />
           <CommandList>

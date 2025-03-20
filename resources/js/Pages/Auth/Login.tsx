@@ -68,11 +68,11 @@ const handleGoogleLogin = async () => {
                </button> 
                   </div>
                <div className="text-center my-3 authentication-barrier"> <span>OR</span> </div>
-               {loginError && loginError.email && (
+               {/* {loginError && loginError.email && (
                     <div className="mb-4 text-sm font-medium text-red-500 text-center">
                         {loginError.email}
                     </div>
-                )}
+                )} */}
                  {status && (
                         <p className="mb-4 text-sm font-medium text-green-600">
                             {status}

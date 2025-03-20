@@ -70,3 +70,8 @@
       flex-wrap: wrap;
   }
 }
+
+.shadcn-select {
+  border-radius: 0.25rem !important;
+  border-color: rgb(var(--input-border)) !important;
+}

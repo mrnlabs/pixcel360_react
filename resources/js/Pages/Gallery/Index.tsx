@@ -1,7 +1,7 @@
 import Authenticated from '@/Layouts/AuthenticatedLayout'
 import { Breadcrumb } from '@/Shared/Breadcrumb'
 import { Head, router } from '@inertiajs/react'
-import { Loader } from 'lucide-react'
+import { Copy, CopyCheck, Loader, Share2 } from 'lucide-react'
 import React, { Suspense, useState } from 'react';
 import VideoCard from './VideoCard';
 import { Event, EventProps, Filters, QueryParams } from '@/types';
@@ -10,6 +10,8 @@ import { debounce } from 'lodash';
 import { Input } from '@/Components/ui/input';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/Components/ui/select';
 import Paginator from '@/Shared/Paginator';
+import CustomTooltip from '@/Components/CustomTooltip';
+import showToast from '@/utils/showToast';
 
 export default function Index({event, videos} : {
   event: Event,
@@ -57,10 +59,34 @@ const handlePageChange  = (page: number) => {
    })
   }
 
+  const [copied, setCopied] = useState(false);
+  const [link, setLink] = useState(route('shared_gallery',event?.slug));
 
+const copyLink = () => {
+  navigator.clipboard.writeText(link);
+  setCopied(true)
+  setTimeout(() => {
+    setCopied(false)
+  },2000)
+  showToast('success','Link copied to clipboard', {position: 'bottom-right'});
+}
+
+const handleDelete = (video: any) => {
+  if(!video) return;
+  if(!window.confirm('Are you sure you want to delete this video?')) return;
+  router.delete(route('delete_video', video?.id), {
+    preserveScroll: true,
+    onSuccess: () => {
+      showToast('success', 'Video deleted successfully!', {position: 'bottom-right'});
+    },
+    onError: () => {
+      showToast('error', 'Something went wrong!', {position: 'bottom-right'});
+    }
+  })
+}
   return (
     <Authenticated>
-          <Head title="Dashboard" />
+          <Head title="Gallery" />
           <div className="main-content app-content">
             <div className="container-fluid">
              <Breadcrumb
@@ -80,8 +106,32 @@ const handlePageChange  = (page: number) => {
                  <div> Gallery Name: <span className='font-bold'>{event?.name}</span></div>
                  <div> Event nr: <span className='font-bold'><span className='text-primary'>#</span>{event?.id}</span>
                  <span className='ml-3'>Number of files: {totalItems ?? 0 }</span></div>
+
+
+                 <div className="flex items-center"> 
+                  <div className="me-0 mt-2" onClick={copyLink}> 
+                    <span className="!svg-primary !text-primary"> 
+                    <CustomTooltip content="Copy">
+                      {copied ? <CopyCheck size={17} color='green'/> : <Copy size={17}/>}
+                      </CustomTooltip>
+                    </span> 
+                    </div> 
+                    <div> 
+                  <CustomTooltip content="Copy">
+                  <button className='ml-2'>{link}</button> 
+                  </CustomTooltip>
+                  </div> 
+                  </div>
+
+
+
                   </div>
                   <div className="flex" role="search">
+                  <CustomTooltip content="Share Link">
+                  <button onClick={copyLink} type="button" className="ti-btn ti-btn-sm bg-[linear-gradient(243deg,#FF4F84_0%,#394DFF_100%)] text-white ">
+                    {copied ? <CopyCheck/> : <Share2 />}</button>
+                  </CustomTooltip>
+
                     <Input 
                     onChange={(e) => updateFilters({ search: e.target.value })} className="form-control me-2" type="search" placeholder="Search Video" aria-label="Search"/>
                      <Select onValueChange={(e) => updateFilters({ sort: e })}>
@@ -107,6 +157,7 @@ const handlePageChange  = (page: number) => {
               <Suspense fallback={<Loader className="align-middle animate-spin"/>}>
                 <VideoCard 
                 videos={videos.data}
+                handleDelete={handleDelete}
                 />
               </Suspense>
               {!totalItems && <div className="text-center">No videos found.</div>}

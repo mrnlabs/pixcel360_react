@@ -17,6 +17,7 @@ export default function EditDetails({event} : any) {
     setData('country', event.country);
     setData('language', event.language);
     setData('description', event.description);
+    setData('enable_start_end_date',event.enable_start_end_date)
   }, [event]);
 
   const [quillValue, setQuillValue] = React.useState('');
@@ -28,6 +29,7 @@ export default function EditDetails({event} : any) {
     country: "South Africa",
     language: "English",
     description: "",
+    enable_start_end_date: 0
 });
 
 const handleQuillChange = (value: string) => {
@@ -66,6 +68,7 @@ const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
           />
           <InputError message={errors.name} />
         </div>
+        {data.enable_start_end_date ? (
         <div>
           <label className="block text-sm mb-1">Set the start time of the event</label>
           <Input
@@ -75,6 +78,7 @@ const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
             className="w-full px-3 py-2 border rounded-lg"
           />
         </div>
+        ): ''}
         <div>
           <label className="block text-sm mb-1">Language</label>
           <select 
@@ -95,6 +99,7 @@ const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
             setData={setData} 
           />
         </div>
+        {data.enable_start_end_date ? (
         <div>
           <label className="block text-sm mb-1">Set the end time of the event</label>
           <Input
@@ -104,6 +109,7 @@ const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
             className="w-full px-3 py-2 border rounded-lg"
           />
         </div>
+        ): ''}
       </div>
     </div>
   
