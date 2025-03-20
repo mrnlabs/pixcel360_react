@@ -52,8 +52,8 @@ const handleGoogleLogin = async () => {
             <div className="box-body p-[3rem]">
                <div className="mb-3 flex justify-center"> 
                    <Link href="/"> 
-                    <img src="https://pixcel360.com/wp-content/uploads/2024/01/Backup_of_PIXEL360-LOGO-with-grey.png" alt="logo" className="desktop-logo"/> 
-                    <img src="https://pixcel360.com/wp-content/uploads/2024/01/Backup_of_PIXEL360-LOGO-with-grey.png" alt="logo" className="desktop-white"/> 
+                    <img src="https://pixcel360.com/wp-content/uploads/2023/11/PIXEL360-LOGO.png" alt="logo" className="desktop-logo"/> 
+                    <img src="https://pixcel360.com/wp-content/uploads/2023/11/PIXEL360-LOGO.png" alt="logo" className="desktop-white"/> 
                     </Link> 
                     </div>
                <p className="h5 mb-2 text-center">Sign In</p>
