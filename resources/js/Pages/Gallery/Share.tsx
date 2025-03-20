@@ -1,11 +1,10 @@
 import Guest from '@/Layouts/GuestLayout';
-import { Event, EventProps } from '@/types';
+import { Event } from '@/types';
 import { Head, router } from '@inertiajs/react';
-import { CloudDownload, Copy, Download, Loader } from 'lucide-react';
+import { Copy, Download, Loader } from 'lucide-react';
 import React, { Suspense } from 'react'
 import VideoPlayerComponent from './VideoPlayerComponent';
 import Paginator from '@/Shared/Paginator';
-import { Breadcrumb } from '@/Shared/Breadcrumb';
 import CustomTooltip from '@/Components/CustomTooltip';
 import showToast from '@/utils/showToast';
 
@@ -25,7 +24,7 @@ export default function Share({event, videos}: {
        })
       }
 const handleCopy = (processed_video_path: string) => {
-  navigator.clipboard.writeText(processed_video_path);
+  navigator.clipboard.writeText(processed_video_path);alert('kkk')
   showToast('success','Link copied to clipboard', {position: 'bottom-right'});
 }
   return (
@@ -63,15 +62,11 @@ const handleCopy = (processed_video_path: string) => {
               />
 
             <div className="hstack gap-2 text-[15px] text-center"> 
-            <CustomTooltip content="Copy link">
-                <button onClick={() => handleCopy(video.processed_video_path)} aria-label="anchor" className="ti-btn ti-btn-icon ti-btn-sm ti-btn-soft-primary3">
-                <Copy/>
-                </button> 
-                </CustomTooltip>
                 <CustomTooltip content="Download">
-                <button onClick={() => window.open(video.processed_video_path, '_blank')} aria-label="anchor" className="ti-btn ti-btn-icon ti-btn-sm ti-btn-soft-primary2">
-                <Download />
-                </button></CustomTooltip> 
+                <button onClick={() => window.open(video.processed_video_path, '_blank')} aria-label="anchor" className="ti-btn ti-btn-sm ti-btn bg-[linear-gradient(243deg,#FF4F84_0%,#394DFF_100%)] text-white">
+                Download
+                </button>
+                </CustomTooltip> 
                 </div>
             </div>
 
