@@ -15,7 +15,7 @@ export default function UserCard({user, setUser, setDialogOpen}:
     }
 
   return (
-    <div className="xxl:col-span-3 lg:col-span-6 col-span-12">
+    <div className="xxl:col-span-3 lg:col-span-3 col-span-12">
     <div className="box">
       <div className="box-body">
         <div className="text-center">
