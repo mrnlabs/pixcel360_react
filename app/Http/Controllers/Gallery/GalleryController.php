@@ -79,9 +79,11 @@ switch ($sort) {
 
 // Now paginate with all conditions applied
 $videos = $videosQuery->paginate(10);
-
+$gallery_link = route('shared_gallery', $request->slug);
     return response()->json([
             'videos' => $videos,
+            'message' => "Find your Pixcel360 Gallery link here:",
+            'gallery_link' => $gallery_link,
             'filters' => [
                 'search' => $search,
                 'sort' => $sort

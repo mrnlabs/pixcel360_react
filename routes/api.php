@@ -22,7 +22,7 @@ Route::post('/update-fields', [EventSettingAPIController::class, 'updateField'])
 
 Route::post('/upload-overlay', [UserOverlayController::class, 'store']);
 
-
+//we get gallery using domain.com?slug=rtrtrtrt
 Route::get('/gallery', [GalleryController::class, 'get_gallery_api']);
 
 

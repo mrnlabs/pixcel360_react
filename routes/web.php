@@ -53,7 +53,7 @@ Route::get('/checkout', [CheckoutController::class, 'checkout'])->name('checkout
 Route::get('/plans/show/{slug}', [PlanController::class, 'show'])->name('plans.show');
 
 // exclude this route from auth
-// its for shared gallery
+// its for shared gallery link
 Route::get('/shared-gallery/{slug}', [GalleryController::class, 'share_gallery'])->name('shared_gallery');
 
 require __DIR__.'/auth.php';

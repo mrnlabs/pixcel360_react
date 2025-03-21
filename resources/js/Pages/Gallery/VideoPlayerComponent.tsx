@@ -1,10 +1,11 @@
 import { useEffect, useRef } from "react";
 import { VideoPlayer, VideoPlayerProps } from "@graphland/react-video-player";
+import { useWindowSize } from "@/hooks/useWindowSize";
 
 
 const VideoPlayerComponent = ({ videoSrc }: any) => {
   const videoRef = useRef(null);
-
+  const { width } = useWindowSize();
 
   const videoSources = [
     {
@@ -17,7 +18,7 @@ const VideoPlayerComponent = ({ videoSrc }: any) => {
   const videoProps: VideoPlayerProps = {
     theme: "forest", // 'city', 'fantasy', 'forest', 'sea'
     height: 500,
-    width: 400,
+    width: width > 1000 ? 400 : 250,
     autoPlay: false,
     loop: false,
     sources: videoSources,

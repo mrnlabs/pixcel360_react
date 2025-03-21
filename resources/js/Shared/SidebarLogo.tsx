@@ -2,10 +2,10 @@ import React from 'react'
 
 export default function SidebarLogo() {
   return (
-    <div className="flex items-center justify-center h-16 bg-[#394DFF]">
+    <div className="flex items-center justify-center h-16 bg-[#FF9339]">
             <span className="text-white font-bold uppercase">
               <img 
-                src="https://pixcel360.com/wp-content/uploads/2024/01/Backup_of_PIXEL360-LOGO-with-grey.png"
+                src="https://pixcel360.com/wp-content/uploads/2023/11/PIXEL360-LOGO.png"
                 alt="logo" 
                 className="w-14 h-14"
               />
