@@ -299,6 +299,7 @@ export default function Audio({event}: any) {
         };
     }, [showTrimmer, trimRange, audioDuration]);
 
+    
     return (
         <div className="space-y-4"> 
             <Suspense fallback={<Loader className="mx-auto" size={20} />}>

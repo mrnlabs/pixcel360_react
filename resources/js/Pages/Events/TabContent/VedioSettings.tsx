@@ -80,62 +80,6 @@ export default function VedioSettings({event} : any) {
     </div>
 
 
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
-      <div className="space-y-4">
-        <div className="xl:col-span-6 lg:col-span-6 md:col-span-6 sm:col-span-12 col-span-12">
-        <CustomToggle 
-        label="Mirror overlay preview" 
-        initialValue={data.mirror_overlay} 
-        onChange={(value) => setData('mirror_overlay', value ? 1 : 0)} 
-        />
-  </div>
-      </div>
-
-      <div className="space-y-4">
-        <CustomToggle 
-        label="Enable Flash Light" 
-        initialValue={data.flash} 
-        onChange={(value) => setData('flash', value ? 1 : 0)} 
-        />
-      </div>
-
-      
-
-    </div>
-
-
-
-    <div className="grid grid-cols-12 sm:gap-x-6 gap-y-6 mt-4">
-  <div className="xl:col-span-6 lg:col-span-6 md:col-span-6 sm:col-span-12 col-span-12">
-    <CustomToggle 
-        label="Enable Camera exposure menu" 
-        initialValue={data.camera_exposure} 
-        onChange={(value) => setData('camera_exposure', value ? 1 : 0)} 
-        />
-  </div>
-  <div className="xl:col-span-6 lg:col-span-6 md:col-span-6 sm:col-span-12 col-span-12">
-     <CustomToggle 
-        label="Enable QR app protection" 
-        initialValue={data.qr_app_protection} 
-        onChange={(value) => setData('qr_app_protection', value ? 1 : 0)} 
-        />
-  </div>
-  <div className="xl:col-span-6 lg:col-span-6 md:col-span-6 sm:col-span-12 col-span-12">
-  <label className="block text-sm mb-1">Front or rear camera</label>
-        <Select value={String(data.front_rear_camera)} onValueChange={(value) => setData('front_rear_camera', value)}>
-      <SelectTrigger className="w-[180px] form-control border rounded-lg">
-        <SelectValue placeholder="Select" />
-        </SelectTrigger>
-        <SelectContent className='form-control'>
-            <SelectGroup>
-            <SelectLabel>Camera</SelectLabel>
-            <SelectItem value="0">Front</SelectItem>
-            <SelectItem value="1">Back</SelectItem>
-            </SelectGroup>
-        </SelectContent>
-    </Select>
-  </div>
-  </div>
   <Button onClick={handleSubmit} disabled={processing} className='mt-4 ti-btn bg-[linear-gradient(243deg,#FF4F84_0%,#394DFF_100%)] text-white w-full'>
     {processing && <Loader className='mr-2 h-4 w-4 animate-spin'/>}Save</Button>
 </div>
