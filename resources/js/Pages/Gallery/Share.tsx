@@ -24,7 +24,8 @@ export default function Share({event, videos}: {
        })
       }
 const handleCopy = (processed_video_path: string) => {
-  navigator.clipboard.writeText(processed_video_path);alert('kkk')
+  if(!processed_video_path) return
+  navigator.clipboard.writeText(processed_video_path);
   showToast('success','Link copied to clipboard', {position: 'bottom-right'});
 }
   return (
