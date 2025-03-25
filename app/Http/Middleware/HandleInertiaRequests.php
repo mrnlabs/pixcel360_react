@@ -34,6 +34,7 @@ class HandleInertiaRequests extends Middleware
                 'roles' => $request->user() ? $request->user()->roles->pluck('name') : [],
                 'current_subscription' => $request->user() ? $request->user()->currentSubscription()->with('plan')->first() : null
             ],
+            'profile_placeholder' => 'https://picxel-bucket.s3.af-south-1.amazonaws.com/placeholders/profile_placeholder.jpg',
         ];
     }
 }

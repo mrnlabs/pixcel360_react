@@ -104,9 +104,20 @@ class VideoSettingsController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
-    {
-        //
+    public function updateVedioLogoImage(Request $request, $slug){
+        if($request->isMethod('delete')) {
+            $event = Event::where('slug', $slug)->first();
+            $event->setting()->update(['app_logo' => null]);
+            return back()->with('success', 'Logo removed successfully');
+        }
+        $request->validate([
+            'logo' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+        ]);
+        $event = Event::where('slug', $slug)->first();
+        $filePath = Storage::put('logos', $request->file('logo'));
+        $url = Storage::url($filePath);
+        $event->setting()->update(['app_logo' => $url]);
+        return back()->with('success', 'Logo uploaded successfully');
     }
 
     /**

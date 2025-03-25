@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import ReactQuill from 'react-quill';
+import ReactQuill from 'react-quill-new';
 import 'react-quill/dist/quill.snow.css';
 
 export default function QuillEditor({
@@ -22,17 +22,11 @@ export default function QuillEditor({
       ],
     }
 
-    const formats = [
-      'header',
-      'bold', 'italic', 'underline', 'strike', 'blockquote',
-      'list', 'bullet', 'indent',
-      'link',
-    ]
+   
 
   return (
     <ReactQuill 
     modules={modules}
-    formats={formats}
     ref={quillRef}
     style={{height: '100%'}}
     theme="snow" 

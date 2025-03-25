@@ -93,7 +93,7 @@ export default function Edit({event} : EventProps) {
    items={[
       { label: 'Home', href: '/dashboard' },
       { label: 'Events', href: '/events' },
-      { label: 'Create', active: true }
+      { label: 'Details', active: true }
     ]}
     />
    

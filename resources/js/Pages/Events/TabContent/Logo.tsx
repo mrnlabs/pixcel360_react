@@ -4,15 +4,17 @@ import { router, usePage } from '@inertiajs/react';
 import ConfirmDialog from '@/Components/ConfirmDialog';
 import InputError from '@/Components/InputError';
 import showToast from '@/utils/showToast';
+import { EventProps } from '@/types';
 
-export default function Logo() {
+export default function Logo({ event }: EventProps ) {
   const {errors } = usePage().props;
   // @ts-ignore
   const user = usePage().props.auth.user;
+  const profile_placeholder = usePage().props.profile_placeholder;
 
   const [dialogOpen, setDialogOpen] = useState(false);
 
-  const [preview, setPreview] = useState(user?.photo ? user?.photo : 'https://picxel-bucket.s3.af-south-1.amazonaws.com/placeholders/profile_placeholder.jpg');
+  const [preview, setPreview] = useState(event?.setting?.app_logo ? event?.setting?.app_logo : profile_placeholder);
   const [uploading, setUploading] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -30,11 +32,11 @@ export default function Logo() {
 
    
     const formData = new FormData();
-    formData.append('photo', file);
+    formData.append('logo', file);
 
     setUploading(true);
     
-    router.post('/update-profile-picture', formData, {
+    router.post(route('event.update.vedio.logo.image', event?.slug), formData, {
       forceFormData: true,
       onSuccess: () => {
         setUploading(false);
@@ -43,7 +45,7 @@ export default function Logo() {
       onError: () => {
         setUploading(false);
         showToast('error', 'Something went wrong!', {position: 'bottom-right'});
-        setPreview('https://picxel-bucket.s3.af-south-1.amazonaws.com/placeholders/profile_placeholder.jpg');
+        setPreview(profile_placeholder);
       },
       onFinish: () => {
         setUploading(false);
@@ -55,12 +57,12 @@ export default function Logo() {
     if (fileInputRef.current) {
       fileInputRef.current.value = '';
     }
-    setPreview('https://picxel-bucket.s3.af-south-1.amazonaws.com/placeholders/profile_placeholder.jpg');
+    setPreview(profile_placeholder);
     
-    router.delete('/remove-profile-image', {
+    router.delete(route('remove_logo_image', event?.slug), {
       onSuccess: () => {
         setUploading(false);
-        showToast('success', 'Profile removed successfully!', {position: 'bottom-right'});
+        showToast('success', 'Gallery logo removed successfully!', {position: 'bottom-right'});
       },
       onError: () => {
         setUploading(false);
@@ -75,6 +77,7 @@ export default function Logo() {
         <div>
           <span className="avatar avatar-xxl">
             <img 
+            // @ts-ignore
               src={preview} 
               alt="Profile"
               className={uploading ? 'opacity-50' : ''}
@@ -87,22 +90,22 @@ export default function Logo() {
           </span>
         </div>
         <div>
-          <span className="font-medium block mb-2">Profile Picture</span>
+          <span className="font-medium block mb-2">Upload Logo</span>
           <div className="btn-list mb-1">
             <label 
-              htmlFor="profile-image" 
-              className={`ti-btn ti-btn-sm ti-btn-primary btn-wave waves-effect waves-light ${uploading ? 'opacity-50 cursor-not-allowed' : ''}`}
+              htmlFor="logo-image" 
+              className={`ti-btn ti-btn-sm bg-[linear-gradient(243deg,#FF4F84_0%,#394DFF_100%)] text-white btn-wave waves-effect waves-light ${uploading ? 'opacity-50 cursor-not-allowed' : ''}`}
             >
               <Upload size={16} className="me-1" />
-              Change Image 
+              Change Logo 
               <input
                 type="file"
-                name="profile-image"
-                id="profile-image"
+                name="logo-image"
+                id="logo-image"
                 hidden
                 ref={fileInputRef}
                 onChange={handleImageChange}
-                accept="image/jpeg,image/png,image/gif"
+                accept="image/jpeg,image/png,image/jpg"
                 disabled={uploading || !preview}
               />
             </label>
@@ -111,7 +114,7 @@ export default function Logo() {
              type="button" 
              className={`ti-btn ti-btn-sm ti-btn-soft-primary1 btn-wave waves-effect waves-light ${uploading ? 'opacity-50 cursor-not-allowed' : ''}`}
              onClick={() => setDialogOpen(true)}
-             disabled={uploading}
+             disabled={uploading || !event?.setting?.app_logo}
            >
              <Trash2 size={16} className="me-1"/>
              Remove 

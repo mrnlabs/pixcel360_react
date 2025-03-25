@@ -35,7 +35,7 @@ export default function Branding({event} : EventProps) {
   return (
     <div className=" rounded-lg p-6">
     <div className="grid grid-cols-12 sm:gap-x-6 gap-y-6">
-   <Logo/>
+   <Logo event={event} />
     <div className="xl:col-span-6 lg:col-span-6 md:col-span-6 sm:col-span-12 col-span-12">
       <label className='block text-sm mb-1' htmlFor="gallery-name">Gallery Name</label>
      <Input value={data.gallery_name} type="text" id='gallery-name' className="w-full px-3 py-2 border rounded-lg" placeholder="Enter gallery name"

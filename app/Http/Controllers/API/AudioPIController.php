@@ -61,12 +61,5 @@ class AudioPIController extends Controller
             $event = Event::with('boomerang_setting')->where('slug', $slug)->first();
             $event->boomerang_setting()->update(['add_audio_file' => $request->audioFileUrl]);
             return back()->with('success', 'Audio updated successfully');
-            
-            // return response()->json([
-            //     'message' => 'Audio updated successfully',
-            //     'status' => 200,
-            //     'path' => $request->audioFileUrl,
-            //     'video' => Event::where('slug', $slug)->first()
-            // ]);
      }
 }

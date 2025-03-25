@@ -22,6 +22,8 @@ Route::patch('/update-vedio-timeouts/{slug}', [VideoSettingsController::class, '
 Route::patch('/update-vedio-sharing-method/{slug}', [VideoSettingsController::class, 'updateVedioSharingMethod'])->name('event.update.vedio.sharing.methods');
 Route::patch('/update-vedio-subjects/{slug}', [VideoSettingsController::class, 'updateVedioSubjects'])->name('event.update.vedio.subjects');
 Route::patch('/update-vedio-branding/{slug}', [VideoSettingsController::class, 'updateVedioBranding'])->name('event.update.vedio.branding');
+Route::post('/update-logo-image/{slug}', [VideoSettingsController::class, 'updateVedioLogoImage'])->name('event.update.vedio.logo.image');
+Route::delete('/remove-logo-image/{slug}', [VideoSettingsController::class, 'updateVedioLogoImage'])->name('remove_logo_image');
 
 // header search
 Route::get('/header-search', [EventController::class, 'searchEventHeader']);

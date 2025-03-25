@@ -93,6 +93,11 @@ class EventService
         }
 
         // Delete the event
+        //delete all related tables
+        $event->setting->delete();
+        $event->boomerang_setting->delete();
+        $event->sharing_method->delete();
+        $event->sharing_subject->delete();
         $event->delete();
 
         return true;
