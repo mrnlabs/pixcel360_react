@@ -11,11 +11,13 @@ export default function Branding({event} : EventProps) {
    useEffect(() => {
      setData('gallery_name', event?.setting?.gallery_name ?? '');
      setData('text_button_color', event?.setting?.text_button_color ?? '');
+     setData('gallery_contact', event?.setting?.gallery_contact ?? '');
    }, [event]);
  
    const { data, setData, patch, processing, errors, reset } = useForm({
      gallery_name: "",
      text_button_color: "",
+     gallery_contact: ""
  });
 
  const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -40,6 +42,12 @@ export default function Branding({event} : EventProps) {
       <label className='block text-sm mb-1' htmlFor="gallery-name">Gallery Name</label>
      <Input value={data.gallery_name} type="text" id='gallery-name' className="w-full px-3 py-2 border rounded-lg" placeholder="Enter gallery name"
         onChange={(e) => setData('gallery_name',e.target.value)} 
+        />
+     </div>
+     <div className="xl:col-span-6 lg:col-span-6 md:col-span-6 sm:col-span-12 col-span-12">
+      <label className='block text-sm mb-1' htmlFor="gallery-contact">Gallery Contact</label>
+     <Input value={data.gallery_contact} type="number" id='gallery-contact' className="w-full px-3 py-2 border rounded-lg" placeholder="Enter gallery contact"
+        onChange={(e) => setData('gallery_contact',e.target.value)} 
         />
      </div>
      <div className="xl:col-span-6 lg:col-span-6 md:col-span-6 sm:col-span-12 col-span-12">

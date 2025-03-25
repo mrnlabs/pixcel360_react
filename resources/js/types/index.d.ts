@@ -36,7 +36,6 @@ export interface Event {
     country: string;
     countdown: string;
     beep_sounds: string;
-    gallery_name: string;
     attract_screen: string;
     app_logo: string;
     app_background: string;
@@ -52,7 +51,7 @@ export interface Event {
         camera_exposure: number;
         qr_app_protection: number;
         gallery_name: null;
-        attract_screen: null;
+        gallery_contact: string;
         app_logo: null;
         text_button_color: null;
         app_background: null;

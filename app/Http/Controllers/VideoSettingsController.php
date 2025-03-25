@@ -44,7 +44,8 @@ class VideoSettingsController extends Controller
         $event = Event::where('slug', $slug)->first();
         $event->setting()->update([
             'gallery_name' => $request->gallery_name,
-            'text_button_color' => $request->text_button_color
+            'text_button_color' => $request->text_button_color,
+            'gallery_contact'    => $request->gallery_contact,
         ]);
         return back()->with('success', 'Event settings updated successfully');
     }
