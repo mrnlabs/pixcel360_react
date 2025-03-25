@@ -68,13 +68,13 @@ export default function SharingMethods({event} : any) {
         onChange={(value) => setData('download', value ? 1 : 0)} 
         />
   </div>
-  <div className="xl:col-span-3 lg:col-span-3 md:col-span-3 sm:col-span-12 col-span-12">
+  {/* <div className="xl:col-span-3 lg:col-span-3 md:col-span-3 sm:col-span-12 col-span-12">
   <CustomToggle 
         label="Airdrop" 
         initialValue={data.airdrop} 
         onChange={(value) => setData('airdrop', value ? 1 : 0)} 
         />
-  </div>
+  </div> */}
   <div className="xl:col-span-3 lg:col-span-3 md:col-span-3 sm:col-span-12 col-span-12">
   <CustomToggle 
         label="QR" 
@@ -82,13 +82,13 @@ export default function SharingMethods({event} : any) {
         onChange={(value) => setData('qr', value ? 1 : 0)} 
         />
   </div>
-   <div className="xl:col-span-3 lg:col-span-3 md:col-span-3 sm:col-span-12 col-span-12">
+   {/* <div className="xl:col-span-3 lg:col-span-3 md:col-span-3 sm:col-span-12 col-span-12">
   <CustomToggle 
         label="General" 
         initialValue={data.general} 
         onChange={(value) => setData('general', value ? 1 : 0)} 
         />
-  </div>
+  </div> */}
   <div className="xl:col-span-3 lg:col-span-3 md:col-span-3 sm:col-span-12 col-span-12">
   <CustomToggle 
         label="Whatsapp" 
@@ -96,13 +96,13 @@ export default function SharingMethods({event} : any) {
         onChange={(value) => setData('whatsapp', value ? 1 : 0)} 
         />
   </div>
-  <div className="xl:col-span-3 lg:col-span-3 md:col-span-3 sm:col-span-12 col-span-12">
+  {/* <div className="xl:col-span-3 lg:col-span-3 md:col-span-3 sm:col-span-12 col-span-12">
   <CustomToggle 
         label="In-app gallery" 
         initialValue={data.inappgallery} 
         onChange={(value) => setData('inappgallery', value ? 1 : 0)} 
         />
-  </div>
+  </div> */}
   </div>
   <Button onClick={handleSubmit} disabled={processing} 
    className='mt-4 ti-btn bg-[linear-gradient(243deg,#FF4F84_0%,#394DFF_100%)] text-white w-full'>

@@ -63,7 +63,7 @@ export default function EventSidebar({activeTab,setActiveTab, scrollToDiv,event}
                   </div>
                 </div>
               </li>
-              <li className={`${activeTab === 'timeouts' ? 'active' : ''} files-type`} >
+              <li className={`${activeTab === 'timeouts' ? 'active' : ''} files-type hidden`} >
                 <div onClick={() => setActiveTab('timeouts')} className="cursor-pointer">
                   <div className="flex items-center">
                     <div className="me-2">
@@ -87,7 +87,7 @@ export default function EventSidebar({activeTab,setActiveTab, scrollToDiv,event}
                   </div>
                 </div>
               </li>
-              <li className={`${activeTab === 'sharing-subjects' ? 'active' : ''} files-type`}>
+              <li className={`${activeTab === 'sharing-subjects' ? 'active' : ''} files-type hidden`}>
                 <div onClick={() => setActiveTab('sharing-subjects')} className="cursor-pointer">
                   <div className="flex items-center">
                     <div className="me-2">

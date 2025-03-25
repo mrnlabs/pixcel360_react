@@ -50,13 +50,13 @@ const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
     <div className=" rounded-lg p-6">
     <div className="grid grid-cols-2 gap-6">
       <div className="space-y-4">
-        <div>
+        {/* <div>
           <CustomToggle 
             label="Enable Boomerang" 
             initialValue={data.boomerang} 
             onChange={(value) => setData('boomerang', value)} 
             />
-        </div>
+        </div> */}
         <CustomToggle 
         label="Enable Slomo" 
         initialValue={data.slomo} 
@@ -153,7 +153,7 @@ const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
     type="number" min={0} className="form-control" id="input-text" />
   </div>
   
-  <div className="xl:col-span-6 lg:col-span-6 md:col-span-6 sm:col-span-12 col-span-12">
+  {/* <div className="xl:col-span-6 lg:col-span-6 md:col-span-6 sm:col-span-12 col-span-12">
   <label className="block text-sm mb-1">Slomo Boomerang</label>
         <Select value={data.slomo_boomerang} onValueChange={(value) => setData('slomo_boomerang', value)}>
       <SelectTrigger className="w-[180px] form-control border rounded-lg">
@@ -167,7 +167,7 @@ const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
             </SelectGroup>
         </SelectContent>
     </Select>
-  </div>
+  </div> */}
   <div className="xl:col-span-6 lg:col-span-6 md:col-span-6 sm:col-span-12 col-span-12">
     <label className="block text-sm mb-1">Slomo Speed</label>
     <Input 
