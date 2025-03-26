@@ -137,7 +137,7 @@ const handleDelete = (video: any) => {
                       setQRData(event)
                     }} 
                   type="button" className="ti-btn ti-btn-sm bg-[linear-gradient(243deg,#FF4F84_0%,#394DFF_100%)] text-white ">
-                    <CopyCheck/>
+                    <Share2 />
                     </button>
                   </CustomTooltip>
 

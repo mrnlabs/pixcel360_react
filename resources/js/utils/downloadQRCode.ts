@@ -39,7 +39,7 @@ export  const downloadQRCode = (page: string, event: Event) => {
       // Create a download link
       const downloadLink = document.createElement('a');
       downloadLink.href = dataUrl;
-      if(page == ''){
+      if(page == 'event'){
         downloadLink.download = `#${event?.id + (event.name ?? 'qr')}.png`;
       }else{
        downloadLink.download = `#${event?.id + (event.setting?.gallery_name ?? 'share')}.png`;

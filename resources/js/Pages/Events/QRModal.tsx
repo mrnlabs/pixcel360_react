@@ -1,4 +1,5 @@
 
+import CustomTooltip from "@/Components/CustomTooltip";
 import { Button } from "@/Components/ui/button";
 import {
   Dialog,
@@ -8,6 +9,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/Components/ui/dialog";
+import { downloadQRCode } from "@/utils/downloadQRCode";
 import { Download, Printer } from "lucide-react";
 import { QRCodeSVG } from "qrcode.react";
 
@@ -33,7 +35,7 @@ function QRModal({
                     <DialogTitle className="card-title">Activate Event</DialogTitle>
                     <DialogDescription></DialogDescription>
                 </DialogHeader>
-                <div className="flex justify-center items-center">
+                <div className="flex justify-center items-center" id="qr-code">
                 <QRCodeSVG
                     value={QRData?.slug}
                     title={"Title for my QR Code"}
@@ -48,8 +50,11 @@ function QRModal({
                 <ul className="mb-0 list-none hire-list">
                     <li>
                     <div className="flex items-center">
-                        <button onClick={window.print} type="button" aria-label="anchor" className="me-2">
-                        <span className="avatar avatar-lg bg-primary/10 !text-primary"><Printer /></span>
+                        <button onClick={() => downloadQRCode('event',QRData)} type="button" aria-label="anchor" className="me-2">
+                        <span className="avatar avatar-lg bg-primary/10 !text-primary">
+                        <CustomTooltip content="Download QR"><Download /></CustomTooltip>
+                        
+                        </span>
                         </button>
                         <div className="flex-auto truncate">
                         <a href="#!" className="font-medium text-[14px] w-75 truncate block"> Event Name</a>
