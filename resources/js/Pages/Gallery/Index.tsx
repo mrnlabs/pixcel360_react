@@ -111,7 +111,7 @@ const handleDelete = (video: any) => {
                  <span className='ml-3'>Number of files: <span className="badge bg-primary text-white">{totalItems ?? 0 }</span></span></div>
 
 
-                 <div className="flex items-center"> 
+                 {/* <div className="flex items-center"> 
                   <div className="me-0 mt-2" onClick={copyLink}> 
                     <span className="!svg-primary !text-primary"> 
                     <CustomTooltip content="Copy">
@@ -124,7 +124,7 @@ const handleDelete = (video: any) => {
                   <button onClick={copyLink} className='ml-2 hover:text-primary'>{link}</button> 
                   </CustomTooltip>
                   </div> 
-                  </div>
+                  </div> */}
 
 
 

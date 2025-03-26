@@ -43,20 +43,25 @@ function ShareGalleryModal({
                     />
                 </div>
                 <div className="box-body">
+
                     <a target="_blank" 
-                    href={event.sharing_method?.whatsapp == 1 ? 'https://wa.me/?text=' + gallery_link : ''} rel={'noreferrer'} 
-                    className={`ti-btn ${event.sharing_method?.whatsapp == 1 ? 'bg-success' : 'bg-[#D3D3D3]'} text-white my-1 me-2`}> 
-                     Send Whatsap                     
-                    </a>
+                        href={event.sharing_method?.whatsapp == 1 ? `https://wa.me/?text=${gallery_link}` : undefined}
+                        rel="noreferrer" 
+                        className={`ti-btn ${event.sharing_method?.whatsapp == 1 ? 'bg-success' : 'bg-[#D3D3D3]'} text-white my-1 me-2`}>
+                            Send Whatsap 
+                        </a>
+
+
+
                     <a target="_blank" 
-                    href={event.sharing_method?.email == 1 ?'mailto:?subject=' + event.setting?.gallery_name + '&body=' + gallery_link : ''} 
-                    rel={'noreferrer'} 
-                    className={`ti-btn ${event.sharing_method?.email == 1 ? 'bg-primary' : 'bg-[#D3D3D3] cursor-not-allowed'} text-white my-1 me-2`}>
-                        Send Email 
-                    </a>
+                        href={event.sharing_method?.email == 1 ? `mailto:?subject=${event.setting?.gallery_name}&body=${gallery_link}` : undefined}
+                        rel="noreferrer" 
+                        className={`ti-btn ${event.sharing_method?.email == 1 ? 'bg-primary' : 'bg-[#D3D3D3]'} text-white my-1 me-2`}>
+                            Send Email 
+                        </a>
                     <button onClick={() => downloadQRCode('gallery',event)} 
                     type="button" disabled={event.sharing_method?.download == 1 ? false : true}
-                    className={`ti-btn ${event.sharing_method?.download == 1 ? 'bg-secondary' : 'bg-[#D3D3D3] cursor-not-allowed'}  text-white my-1 me-2`}> 
+                    className={`ti-btn ${event.sharing_method?.download == 1 ? 'bg-secondary' : 'bg-[#D3D3D3]'}  text-white my-1 me-2`}> 
                         Download                       
                     </button>
                 </div>
