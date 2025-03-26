@@ -12,6 +12,7 @@ import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrig
 import Paginator from '@/Shared/Paginator';
 import CustomTooltip from '@/Components/CustomTooltip';
 import showToast from '@/utils/showToast';
+import ShareGalleryModal from './ShareGalleryModal';
 
 export default function Index({event, videos} : {
   event: Event,
@@ -22,6 +23,8 @@ export default function Index({event, videos} : {
     search: '',
     sort: ''
 });
+const [modalOpen, setModalOpen] = useState(false);
+const [QRData, setQRData] = useState<Event | null>(null);
 
   const totalItems = videos?.total;
   const itemsPerPage = videos?.per_page;
@@ -103,9 +106,9 @@ const handleDelete = (video: any) => {
               <div className="box-body p-4">
                 <div className="flex items-center justify-between flex-wrap gap-4">
                 <div className="avatar-list-stacked">
-                 <div> Gallery Name: <span className='font-bold'>{event?.name}</span></div>
+                 <div> Gallery Name: <span className='font-bold'>{event?.setting?.gallery_name ?? '-'}</span></div>
                  <div> Event nr: <span className='font-bold'><span className='text-primary'>#</span>{event?.id}</span>
-                 <span className='ml-3'>Number of files: {totalItems ?? 0 }</span></div>
+                 <span className='ml-3'>Number of files: <span className="badge bg-primary text-white">{totalItems ?? 0 }</span></span></div>
 
 
                  <div className="flex items-center"> 
@@ -118,7 +121,7 @@ const handleDelete = (video: any) => {
                     </div> 
                     <div> 
                   <CustomTooltip content="Copy">
-                  <button className='ml-2'>{link}</button> 
+                  <button onClick={copyLink} className='ml-2 hover:text-primary'>{link}</button> 
                   </CustomTooltip>
                   </div> 
                   </div>
@@ -128,8 +131,14 @@ const handleDelete = (video: any) => {
                   </div>
                   <div className="flex" role="search">
                   <CustomTooltip content="Share Link">
-                  <button onClick={copyLink} type="button" className="ti-btn ti-btn-sm bg-[linear-gradient(243deg,#FF4F84_0%,#394DFF_100%)] text-white ">
-                    {copied ? <CopyCheck/> : <Share2 />}</button>
+                  <button 
+                    onClick={() => {
+                      setModalOpen(true)
+                      setQRData(event)
+                    }} 
+                  type="button" className="ti-btn ti-btn-sm bg-[linear-gradient(243deg,#FF4F84_0%,#394DFF_100%)] text-white ">
+                    <CopyCheck/>
+                    </button>
                   </CustomTooltip>
 
                     <Input 
@@ -173,6 +182,14 @@ const handleDelete = (video: any) => {
                     />
                     </div>
           </div>
+
+          <Suspense fallback={""}>
+                        <ShareGalleryModal 
+                        open={modalOpen} 
+                        gallery_link={link}
+                        setOpen={setModalOpen} 
+                        event={event}/>
+         </Suspense>
         </Authenticated>
   )
 }

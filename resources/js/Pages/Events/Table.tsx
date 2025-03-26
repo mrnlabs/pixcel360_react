@@ -169,13 +169,15 @@ export default function Table({events, setModalOpen, setQRData, setDuplicateModa
           {events.map((event: any) => (
             <tr key={event.id} className="border-b border-defaultborder dark:border-defaultborder/10">
               <td>
+              <Link href={route('event.edit', event.slug)} className="text-[13px] font-medium hover:underline hover:text-primary">
                 <span className="text-primary text-[14px]">#{event.id}</span>
+                </Link>
               </td>
               <td>
                 <div className="flex items-center">
                   <div className="flex-1 flex-between pos-relative ms-2">
-                    <div className="">
-                      <a href="#!" className="text-[13px] font-medium">{event.name}</a>
+                    <div>
+                      <Link href={route('event.edit', event.slug)} className="text-[13px] font-medium hover:underline hover:text-primary">{event.name}</Link>
                     </div>
                   </div>
                 </div>
@@ -198,19 +200,25 @@ export default function Table({events, setModalOpen, setQRData, setDuplicateModa
                     setQRData(event)
                   }} 
                   className="cursor-pointer">
+                     <CustomTooltip content="View Event QR">
                   <QrCode />
+                  </CustomTooltip>
                 </div>
               </td>
               {/* <td>
                 <span className="badge bg-success/10 text-success leading-none">Active</span>
               </td> */}
               <td>
+              <CustomTooltip content="View Web Gallery">
                 <Link href={route('gallery',event.slug)}><span><Image/></span></Link>
+                </CustomTooltip>
               </td>
               
                 <AuthGuard roles={["Account Owner"]} permissions={["*"]}>
                 <td>
+                <CustomTooltip content="View Session Overlays">
                   <Link href={route('user.overlays',event.slug)}><span className="font-medium cursor-pointer"><Layers /></span></Link>
+                  </CustomTooltip>
                   </td>
                 </AuthGuard>
               
@@ -218,14 +226,14 @@ export default function Table({events, setModalOpen, setQRData, setDuplicateModa
               <td>
                 <div className="btn-list">
                   <div className="hs-tooltip ti-main-tooltip">
-                    <CustomTooltip content="Edit">
+                    <CustomTooltip content="Edit This Event">
                       <Link href={route('event.edit', event.slug)} aria-label="anchor" className="hs-tooltip-toggle ti-btn ti-btn-icon me-2 ti-btn-soft-primary !mb-0">
                         <SquarePen className="text-[14px]" />
                       </Link>
                     </CustomTooltip>
                   </div>
                   <div className="hs-tooltip ti-main-tooltip">
-                    <CustomTooltip content="Duplicate">
+                    <CustomTooltip content="Duplicate This Event">
                       <div 
                         onClick={() => {
                           setDuplicateModalOpen(true)

@@ -12,6 +12,7 @@ import { debounce } from 'lodash';
 import { Input } from '@/Components/ui/input'
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/Components/ui/select'
 import Paginator from '@/Shared/Paginator'
+import { AuthGuard } from '@/guards/authGuard'
 
 export default function Index({events} : any) {
   
@@ -79,8 +80,14 @@ const updateFilters = React.useCallback(
                     <div className="box-header justify-between">
                       <div className="box-title"> Events <span className="text-primary">({totalItems})</span></div>
                       <div className="flex flex-wrap gap-2">
-                        <Link href={route('event.create')} className="ti-btn bg-[linear-gradient(243deg,#FF4F84_0%,#394DFF_100%)] text-white !m-0 btn-wave ti-btn-sm waves-effect waves-light">
-                          <SquarePlus className="align-middle" />Create </Link>
+                        <AuthGuard roles={["Account Owner"]} 
+                            permissions={["*"]}
+                            requireAll={true}
+                            >
+                          <Link href={route('event.create')} className="ti-btn bg-[linear-gradient(243deg,#FF4F84_0%,#394DFF_100%)] text-white !m-0 btn-wave ti-btn-sm waves-effect waves-light">
+                          <SquarePlus className="align-middle" />Create 
+                          </Link>
+                          </AuthGuard>
                         <div>
                           <Input 
                           onChange={(e) => updateFilters({ search: e.target.value })}

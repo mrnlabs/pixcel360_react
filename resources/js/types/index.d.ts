@@ -75,6 +75,9 @@ export interface Event {
       },
       sharing_method? : {
         event_id: number;
+        whatsapp: number;
+        email: number;
+        download: number;
         text_message: string;
         email_subject: string
         default_text_email: string

@@ -1,6 +1,7 @@
 import CustomTooltip from '@/Components/CustomTooltip';
 import VideoPlayerComponent from './VideoPlayerComponent';
 import { Copy, Download, Trash2 } from 'lucide-react';
+import { AuthGuard } from '@/guards/authGuard';
 
 export default function VideoCard({videos, handleDelete}: any) {
   return (
@@ -11,15 +12,22 @@ export default function VideoCard({videos, handleDelete}: any) {
                videoSrc={video.processed_video_path}
               />
               <div className="hstack gap-2 text-[15px] text-center"> 
-                    <CustomTooltip content="Copy link">
+                    <CustomTooltip content="Download">
                         <button onClick={() => window.open(video.processed_video_path, '_blank')} aria-label="anchor" className="ti-btn ti-btn-icon ti-btn-sm ti-btn-soft-primary3">
                         <Download/>
                         </button> 
                         </CustomTooltip>
-                        <CustomTooltip content="Download">
-                        <button onClick={() => handleDelete(video)} aria-label="anchor" className="ti-btn ti-btn-icon ti-btn-sm ti-btn-soft-primary2">
-                        <Trash2 />
-                        </button></CustomTooltip> 
+                        <CustomTooltip content="Delete">
+                        <AuthGuard 
+                            roles={["Account Owner"]} 
+                            permissions={["*"]}
+                            requireAll={true}>
+                            <button onClick={() => handleDelete(video)} aria-label="anchor" className="ti-btn ti-btn-icon ti-btn-sm ti-btn-soft-primary2">
+                          <Trash2 />
+                          </button>
+                        </AuthGuard>
+                         
+                        </CustomTooltip> 
                         </div>
            </div>
         ))}

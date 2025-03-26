@@ -31,7 +31,7 @@ const handleCopy = (processed_video_path: string) => {
   return (
     <Guest>
     <Head title={event?.name} />
-    <Head title="Gallery" />
+    <Head title="Web Gallery" />
           <div className="main-content mt-6">
             <div className="container-fluid">
         
