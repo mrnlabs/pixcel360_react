@@ -65,19 +65,14 @@ const handlePageChange  = (page: number) => {
   const [copied, setCopied] = useState(false);
   const [link, setLink] = useState(route('shared_gallery',event?.slug));
 
-const copyLink = () => {
-  navigator.clipboard.writeText(link);
-  setCopied(true)
-  setTimeout(() => {
-    setCopied(false)
-  },2000)
-  showToast('success','Link copied to clipboard', {position: 'bottom-right'});
-}
 
-const handleDelete = (video: any) => {
-  if(!video) return;
-  if(!window.confirm('Are you sure you want to delete this video?')) return;
-  router.delete(route('delete_video', video?.id), {
+
+const handleDelete = (videos: any) => {
+  
+  if(!videos) return;
+  if(!window.confirm('Are you sure you want to delete these selected videos?')) return;
+  router.delete(route('delete_videos'), {
+    data: { ids: videos },
     preserveScroll: true,
     onSuccess: () => {
       showToast('success', 'Video deleted successfully!', {position: 'bottom-right'});
@@ -141,8 +136,9 @@ const handleDelete = (video: any) => {
                     </button>
                   </CustomTooltip>
 
-                    <Input 
-                    onChange={(e) => updateFilters({ search: e.target.value })} className="form-control me-2" type="search" placeholder="Search Video" aria-label="Search"/>
+                    {/* <Input 
+                    onChange={(e) => updateFilters({ search: e.target.value })} className="form-control me-2" type="search" placeholder="Search Video"
+                     aria-label="Search"/> */}
                      <Select onValueChange={(e) => updateFilters({ sort: e })}>
                           <SelectTrigger className="w-[180px] form-control">
                             <SelectValue placeholder="Sort By"></SelectValue>

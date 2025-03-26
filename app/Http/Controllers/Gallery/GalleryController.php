@@ -131,16 +131,29 @@ function share_gallery(Request $request, $slug){
     ]);
 }
 
-function delete_video($id){
-    $video = Video::find($id);
+function delete_videos(Request $request)
+{
+    $request->validate([
+        'ids' => 'required|array',
+        'ids.*' => 'exists:videos,id'
+    ]);
 
-    if(auth()->id() !== $video->event->user_id){
-        abort(403, 'Unauthorized');
+    $videoIds = $request->input('ids');
+
+    $eventIds = Video::whereIn('id', $videoIds)->pluck('event_id')->unique()->toArray();
+
+    foreach ($eventIds as $eventId) {
+        $event = Event::find($eventId);
+        if (!$event || auth()->id() !== $event->user_id) {
+            abort(403, 'Unauthorized');
+        }
     }
 
-    if ($video->delete()) {
-        return back()->with('Video deleted successfully');
-    } 
-        return back()->with('Error deleting video');
+    Video::whereIn('id', $videoIds)->delete();
+
+    return back()->with('success', 'Videos deleted successfully!');
 }
+
+
 }
+
