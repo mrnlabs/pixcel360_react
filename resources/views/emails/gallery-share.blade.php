@@ -62,13 +62,11 @@
 </head>
 <body>
     <div class="container">
-        <!-- <div class="header">
+         <div class="header">
             @if(isset($logo))
                 <img src="{{ $logo }}" alt="Logo" class="logo">
-            @else
-                <h2>Gallery Sharing</h2>
             @endif
-        </div> -->
+        </div> 
         
         <div class="content">
             

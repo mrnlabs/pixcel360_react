@@ -120,7 +120,7 @@ useEffect(() => {
     </Select>
   </div>
   <div className="xl:col-span-6 lg:col-span-6 md:col-span-6 sm:col-span-12 col-span-12">
-    <label className="block text-sm mb-1">Slomo Speed</label>
+    <label className="block text-sm mb-1">Boomerang Speed</label>
     <Input value={data.boomerang_speed} onChange={(e) => setData('boomerang_speed', e.target.value)} type="number" min={0} className="form-control" id="input-text" />
   </div>
     

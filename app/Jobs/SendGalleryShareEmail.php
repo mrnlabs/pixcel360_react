@@ -20,6 +20,7 @@ class SendGalleryShareEmail implements ShouldQueue
     protected $email;
     protected $event;
     protected $galleryLink;
+    protected $logo;
 
     /**
      * The number of times the job may be attempted.
@@ -31,11 +32,12 @@ class SendGalleryShareEmail implements ShouldQueue
     /**
      * Create a new job instance.
      */
-    public function __construct(string $email, Event $event, string $galleryLink)
+    public function __construct(string $email, Event $event, string $galleryLink, $logo)
     {
         $this->email = $email;
         $this->event = $event;
         $this->galleryLink = $galleryLink;
+        $this->logo = $logo;
     }
 
     /**
@@ -46,7 +48,8 @@ class SendGalleryShareEmail implements ShouldQueue
         try {
             Mail::to($this->email)->send(new GalleryShareMail(
                 $this->event,
-                $this->galleryLink
+                $this->galleryLink,
+                $this->logo
             ));
             
             // Log successful email sending

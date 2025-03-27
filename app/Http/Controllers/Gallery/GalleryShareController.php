@@ -27,13 +27,15 @@ class GalleryShareController extends Controller
         $event = Event::findOrFail($request->event_id);
         $emails = $request->emails;
         $galleryLink = $request->gallery_link;
+        $logo =  $event->setting->app_logo;
 
         try {
             foreach ($emails as $email) {
                 SendGalleryShareEmail::dispatch(
                     $email,
                     $event,
-                    $galleryLink
+                    $galleryLink,
+                    $logo
                 );
             }
 

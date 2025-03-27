@@ -5,9 +5,10 @@ namespace App\Mail;
 use App\Models\Event;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
+use Illuminate\Mail\Mailables\Address;
 use Illuminate\Mail\Mailables\Content;
-use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Mail\Mailables\Envelope;
 
 class GalleryShareMail extends Mailable
 {
@@ -18,7 +19,8 @@ class GalleryShareMail extends Mailable
      */
     public function __construct(
         public Event $event,
-        public string $galleryLink
+        public string $galleryLink,
+        public $logo
     ) {}
 
     /**
@@ -27,7 +29,8 @@ class GalleryShareMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: "Gallery Shared: {$this->event->setting->gallery_name}",
+            subject: "Photo Booth",
+            from: new Address('noreply@example.com', 'Photo Booth')
         );
     }
 
