@@ -92,12 +92,10 @@ $gallery_link = route('shared_gallery', $request->slug);
 }
 
 function share_gallery(Request $request, $slug){
-    $event = Event::where('slug', $slug)->first();
+    $event = Event::with('setting', 'sharing_method')->where('slug', $slug)->first();
 
     $search = $request->input('search', '');
     $sort = $request->input('sort', 'latest'); // default to latest
-
-    $event = Event::where('slug', $slug)->first();
 
 // Then build your videos query separately
         $videosQuery = $event->videos();

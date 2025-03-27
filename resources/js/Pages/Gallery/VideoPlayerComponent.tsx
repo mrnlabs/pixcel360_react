@@ -18,7 +18,7 @@ const VideoPlayerComponent = ({ videoSrc }: any) => {
   const videoProps: VideoPlayerProps = {
     theme: "forest", // 'city', 'fantasy', 'forest', 'sea'
     height: 500,
-    width: width > 1000 ? 400 : 250,
+    width: width > 1300 ? 600 : 250,
     autoPlay: false,
     loop: false,
     sources: videoSources,
