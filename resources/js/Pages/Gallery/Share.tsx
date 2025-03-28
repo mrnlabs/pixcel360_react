@@ -12,6 +12,7 @@ import { saveAs } from 'file-saver';
 import ShareGalleryViaEmailModal from './ShareGalleryViaEmailModal';
 import showToast from '@/utils/showToast';
 import { LoadingOverlay } from './LoadingOverlay';
+import axios from 'axios';
 
 export default function Share({event, videos}: {
         event: Event,
@@ -35,80 +36,82 @@ export default function Share({event, videos}: {
       const [loading, setLoading] = useState(false);
 
       const downloadAll = async () => {
-          setLoading(true);
-          const zip = new JSZip();
-          
-          try {
-              showToast('info', 'Preparing videos for download...', {position: 'bottom-right'});
-              
-              const videoPromises = videos.data.map(async (video: any, index: number) => {
-                  try {
-                      // Show progress to user
-                      if (index === 0) {
-                          showToast('info', `Downloading videos (1/${videos.data.length})...`, {position: 'bottom-right'});
-                      }
-                      
-                      const response = await fetch(video.processed_video_path, {
-                          headers: {
-                              'Referer': 'https://app.pixcel360.com/'
-                          },
-                      });
-                      
-                      if (!response.ok) {
-                          throw new Error(`Failed to fetch video: ${response.status} ${response.statusText}`);
-                      }
-                      
-                      const blob = await response.blob();
-                      zip.file(video.name, blob);
-                      
-                      // Show download progress periodically (for larger collections)
-                      if ((index + 1) % 5 === 0 && index + 1 < videos.data.length) {
-                          //showToast('info', `Downloading videos (${index + 1}/${videos.data.length})...`, {position: 'bottom-right'});
-                      }
-                      
-                      return true;
-                  } catch (error) {
-                      console.error("Error fetching video:", error);
-                      showToast('error', `Failed to download ${video.name}`, {position: 'bottom-right'});
-                      return false;
-                  }
-              });
-      
-              const results = await Promise.all(videoPromises);
-              const successfulDownloads = results.filter(Boolean);
-      
-              if (successfulDownloads.length === 0) {
-                  showToast('error', 'Failed to download any videos.', {position: 'bottom-right'});
-                  setLoading(false);
-                  return;
-              }
-      
-              showToast('info', 'Creating zip file...', {position: 'bottom-right'});
-              const content = await zip.generateAsync({ 
-                  type: "blob",
-                  streamFiles: true,
-                  compression: "DEFLATE",
-                  compressionOptions: {
-                      level: 6 // Balanced compression level
-                  },
-                  // @ts-expect-error
-                  onUpdate: (metadata) => {
-                      if (metadata.percent % 20 === 0) { // Update every 20%
-                          showToast('info', `Creating zip: ${Math.round(metadata.percent)}% complete`, {position: 'bottom-right'});
-                      }
-                  }
-              });
-              
-              saveAs(content, "videos.zip");
-              showToast('success', `Successfully downloaded ${successfulDownloads.length} videos!`, {position: 'bottom-right'});
-              
-          } catch (error) {
-              console.error("Error in download process:", error);
-              showToast('error', 'Failed to generate zip file.', {position: 'bottom-right'});
-          } finally {
-              setLoading(false);
-          }
-      };
+        setLoading(true);
+        const zip = new JSZip();
+
+        try {
+            showToast('info', 'Preparing videos for download...', { position: 'bottom-right' });
+
+            const videoPromises = videos.data.map(async (video: any, index: number) => {
+                try {
+                    // Show progress to user
+                    if (index === 0) {
+                        showToast('info', `Downloading videos (1/${videos.data.length})...`, { position: 'bottom-right' });
+                    }
+
+                    const response = await axios.get(video.processed_video_path, {
+                        responseType: 'blob',
+                        headers: {
+                            // 'Referer': 'https://app.pixcel360.com/'
+                            "Cache-Control": "no-cache" 
+                        },
+                    });
+
+                    if (response.status !== 200) {
+                        throw new Error(`Failed to fetch video: ${response.status} ${response.statusText}`);
+                    }
+
+                    const blob = response.data;
+                    zip.file(video.name, blob);
+
+                    // Show download progress periodically (for larger collections)
+                    if ((index + 1) % 5 === 0 && index + 1 < videos.data.length) {
+                        //showToast('info', `Downloading videos (${index + 1}/${videos.data.length})...`, {position: 'bottom-right'});
+                    }
+
+                    return true;
+                } catch (error: any) {
+                    console.error("Error fetching video:", error);
+                    showToast('error', `Failed to download ${video.name}`, { position: 'bottom-right' });
+                    return false;
+                }
+            });
+
+            const results = await Promise.all(videoPromises);
+            const successfulDownloads = results.filter(Boolean);
+
+            if (successfulDownloads.length === 0) {
+                showToast('error', 'Failed to download any videos.', { position: 'bottom-right' });
+                setLoading(false);
+                return;
+            }
+
+            showToast('info', 'Creating zip file...', { position: 'bottom-right' });
+            const content = await zip.generateAsync({
+                type: "blob",
+                streamFiles: true,
+                compression: "DEFLATE",
+                compressionOptions: {
+                    level: 6 // Balanced compression level
+                },
+                // @ts-expect-error
+                onUpdate: (metadata) => {
+                    if (metadata.percent % 20 === 0) { // Update every 20%
+                        showToast('info', `Creating zip: ${Math.round(metadata.percent)}% complete`, { position: 'bottom-right' });
+                    }
+                }
+            });
+
+            saveAs(content, "videos.zip");
+            showToast('success', `Successfully downloaded ${successfulDownloads.length} videos!`, { position: 'bottom-right' });
+
+        } catch (error) {
+            console.error("Error in download process:", error);
+            showToast('error', 'Failed to generate zip file.', { position: 'bottom-right' });
+        } finally {
+            setLoading(false);
+        }
+    };
       
 
   return (
@@ -204,7 +207,7 @@ export default function Share({event, videos}: {
                videoSrc={video.processed_video_path}
               />
 
-            <div className="hstack gap-2 text-[15px] "> 
+            <div className="hstack gap-2 text-[15px] text-center"> 
 
 
                 

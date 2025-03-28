@@ -75,3 +75,6 @@
   border-radius: 0.25rem !important;
   border-color: rgb(var(--input-border)) !important;
 }
+.gl-video-player__wrapper{
+  text-align: center !important;
+}
