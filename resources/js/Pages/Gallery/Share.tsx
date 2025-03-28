@@ -11,6 +11,7 @@ import JSZip from 'jszip';
 import { saveAs } from 'file-saver';
 import ShareGalleryViaEmailModal from './ShareGalleryViaEmailModal';
 import showToast from '@/utils/showToast';
+import { LoadingOverlay } from './LoadingOverlay';
 
 export default function Share({event, videos}: {
         event: Event,
@@ -31,40 +32,82 @@ export default function Share({event, videos}: {
       }
 
       const [gallery_link, setLink] = useState(route('shared_gallery',event?.slug));
+      const [loading, setLoading] = useState(false);
 
       const downloadAll = async () => {
-        //grab all videos and download as .zip file
-        const zip = new JSZip();
-        const videoPromises = videos.data.map(async (video: any) => { // Assuming videos.data is an array of video objects
+          setLoading(true);
+          const zip = new JSZip();
+          
           try {
-            const response = await fetch(video.processed_video_path);
-            if (!response.ok) {
-              throw new Error(`Failed to fetch video: ${video.processed_video_path}`);
-            }
-            const blob = await response.blob();
-            zip.file(video.name, blob);
+              showToast('info', 'Preparing videos for download...', {position: 'bottom-right'});
+              
+              const videoPromises = videos.data.map(async (video: any, index: number) => {
+                  try {
+                      // Show progress to user
+                      if (index === 0) {
+                          showToast('info', `Downloading videos (1/${videos.data.length})...`, {position: 'bottom-right'});
+                      }
+                      
+                      const response = await fetch(video.processed_video_path, {
+                          headers: {
+                              'Referer': 'https://app.pixcel360.com/'
+                          },
+                      });
+                      
+                      if (!response.ok) {
+                          throw new Error(`Failed to fetch video: ${response.status} ${response.statusText}`);
+                      }
+                      
+                      const blob = await response.blob();
+                      zip.file(video.name, blob);
+                      
+                      // Show download progress periodically (for larger collections)
+                      if ((index + 1) % 5 === 0 && index + 1 < videos.data.length) {
+                          //showToast('info', `Downloading videos (${index + 1}/${videos.data.length})...`, {position: 'bottom-right'});
+                      }
+                      
+                      return true;
+                  } catch (error) {
+                      console.error("Error fetching video:", error);
+                      showToast('error', `Failed to download ${video.name}`, {position: 'bottom-right'});
+                      return false;
+                  }
+              });
+      
+              const results = await Promise.all(videoPromises);
+              const successfulDownloads = results.filter(Boolean);
+      
+              if (successfulDownloads.length === 0) {
+                  showToast('error', 'Failed to download any videos.', {position: 'bottom-right'});
+                  setLoading(false);
+                  return;
+              }
+      
+              showToast('info', 'Creating zip file...', {position: 'bottom-right'});
+              const content = await zip.generateAsync({ 
+                  type: "blob",
+                  streamFiles: true,
+                  compression: "DEFLATE",
+                  compressionOptions: {
+                      level: 6 // Balanced compression level
+                  },
+                  // @ts-expect-error
+                  onUpdate: (metadata) => {
+                      if (metadata.percent % 20 === 0) { // Update every 20%
+                          showToast('info', `Creating zip: ${Math.round(metadata.percent)}% complete`, {position: 'bottom-right'});
+                      }
+                  }
+              });
+              
+              saveAs(content, "videos.zip");
+              showToast('success', `Successfully downloaded ${successfulDownloads.length} videos!`, {position: 'bottom-right'});
+              
           } catch (error) {
-            console.error("Error fetching or adding video to zip:", error);
-            // Handle the error appropriately, e.g., show a toast notification
-            showToast('error', `Failed to download ${video.name}`, {position: 'bottom-right'});
-            return null; // Return null to filter out failed promises later
+              console.error("Error in download process:", error);
+              showToast('error', 'Failed to generate zip file.', {position: 'bottom-right'});
+          } finally {
+              setLoading(false);
           }
-        });
-      
-        const results = await Promise.all(videoPromises);
-        const successfulDownloads = results.filter((result) => result !== null);
-      
-        if (successfulDownloads.length === 0) {
-          showToast('error', 'Failed to download any videos.', {position: 'bottom-right'});
-          return;
-        }
-      
-        zip.generateAsync({ type: "blob" }).then(function (content) {
-          saveAs(content, "videos.zip");
-        }).catch((error) => {
-          console.error("Error generating zip:", error);
-          showToast('error', 'Failed to generate zip file.', {position: 'bottom-right'});
-        });
       };
       
 
@@ -72,6 +115,7 @@ export default function Share({event, videos}: {
     <Guest>
     <Head title={event?.name} />
     <Head title="Web Gallery" />
+          <LoadingOverlay show={loading} />
           <div className="main-content mt-6">
             <div className="container-fluid">
         
@@ -110,20 +154,24 @@ export default function Share({event, videos}: {
                   <div className="hstack gap-2 text-[15px] "> 
 
 
-                <CustomTooltip content="Download All">
+               
                 <button onClick={downloadAll} aria-label="anchor" 
-                className="ti-btn ti-btn-sm ti-btn bg-[linear-gradient(243deg,#FF4F84_0%,#394DFF_100%)] text-white">
-                <Download size={20} />
-                </button>
+                  className="ti-btn ti-btn-sm ti-btn bg-[linear-gradient(243deg,#FF4F84_0%,#394DFF_100%)] text-white">
+                  <CustomTooltip content="Download All">
+                {loading ? <Loader className="animate-spin" size={20} /> : <Download size={20} />}
                 </CustomTooltip> 
+                </button>
+                
 
 
-                <CustomTooltip content="Email">
+              
                 <button onClick={() => setModalOpen(true)} aria-label="anchor" 
                 className="ti-btn ti-btn-sm ti-btn bg-[linear-gradient(243deg,#FF4F84_0%,#394DFF_100%)] text-white">
+                 <CustomTooltip content="Email">
                 <Mail size={20} />
-                </button>
                 </CustomTooltip> 
+                </button>
+                
 
                 <CustomTooltip content="WhatsApp">
                 <a target="_blank" 
@@ -159,20 +207,24 @@ export default function Share({event, videos}: {
             <div className="hstack gap-2 text-[15px] "> 
 
 
-                <CustomTooltip content="Download">
+                
                 <button onClick={() => window.open(video.processed_video_path, '_blank')} aria-label="anchor" 
                 className="ti-btn ti-btn-sm ti-btn bg-[linear-gradient(243deg,#FF4F84_0%,#394DFF_100%)] text-white">
-                <Download size={17} />
-                </button>
+                  <CustomTooltip content="Download">
+                      <Download size={17} />
                 </CustomTooltip> 
+                </button>
+                
 
 
-                <CustomTooltip content="Email">
+                
                 <button onClick={() => setModalOpen(true)} aria-label="anchor" 
                 className="ti-btn ti-btn-sm ti-btn bg-[linear-gradient(243deg,#FF4F84_0%,#394DFF_100%)] text-white">
-                <Mail size={17} />
-                </button>
+                  <CustomTooltip content="Email">
+                     <Mail size={17} />
                 </CustomTooltip> 
+                </button>
+                
 
                 <CustomTooltip content="WhatsApp">
                 <a target="_blank" 

@@ -76,7 +76,7 @@ const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
 
     <div className="grid grid-cols-12 sm:gap-x-6 gap-y-6">
 
-    <div className="xl:col-span-6 lg:col-span-6 md:col-span-6 sm:col-span-12 col-span-12">
+    {/* <div className="xl:col-span-6 lg:col-span-6 md:col-span-6 sm:col-span-12 col-span-12">
   <label className="block text-sm mb-1">Boomerang repeats</label>
         <Select value={data.boomerang_repeats} onValueChange={(value) => setData('boomerang_repeats', value)}>
       <SelectTrigger className="w-[180px] form-control border rounded-lg">
@@ -91,7 +91,7 @@ const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
             </SelectGroup>
         </SelectContent>
     </Select>
-  </div>
+  </div> 
  
   <div className="xl:col-span-6 lg:col-span-6 md:col-span-6 sm:col-span-12 col-span-12">
   <label className="block text-sm mb-1">Boomerang speed</label>
@@ -120,7 +120,6 @@ const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
         </SelectTrigger>
         <SelectContent className='form-control'>
             <SelectGroup>
-            {/* <SelectLabel>Boomerang repeats</SelectLabel> */}
             {[...Array(7).keys()].map((i) => (
               <SelectItem key={i} value={String(i + 1)}>{i + 1} s</SelectItem>
             ))}
@@ -128,7 +127,7 @@ const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
         </SelectContent>
     </Select>
   </div>
-
+  */}
   <div className="xl:col-span-6 lg:col-span-6 md:col-span-6 sm:col-span-12 col-span-12">
   <label className="block text-sm mb-1"> Recording duration</label>
   <Select value={data.duration} onValueChange={(value) => setData('duration', value)}>
@@ -147,33 +146,42 @@ const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
 
   <div className="xl:col-span-6 lg:col-span-6 md:col-span-6 sm:col-span-12 col-span-12">
     <label className="block text-sm mb-1">Slomo recording time</label>
-    <Input 
-    value={data.slomo_recording_time}
-    onChange={(e) => setData('slomo_recording_time', e.target.value)}
-    type="number" min={0} className="form-control" id="input-text" />
-  </div>
-  
-  {/* <div className="xl:col-span-6 lg:col-span-6 md:col-span-6 sm:col-span-12 col-span-12">
-  <label className="block text-sm mb-1">Slomo Boomerang</label>
-        <Select value={data.slomo_boomerang} onValueChange={(value) => setData('slomo_boomerang', value)}>
+    <Select value={data.slomo_recording_time} onValueChange={(value) => setData('slomo_recording_time', value)}>
       <SelectTrigger className="w-[180px] form-control border rounded-lg">
         <SelectValue placeholder="Select" />
         </SelectTrigger>
         <SelectContent className='form-control'>
             <SelectGroup>
-            <SelectLabel>Slomo Boomerang</SelectLabel>
-            <SelectItem value="0">Yes</SelectItem>
-            <SelectItem value="1">No</SelectItem>
+            {/* //between 0 and 12 , eg 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9 */}
+            
+            {[...Array(120).keys()].map((i) => (
+              <SelectItem key={i} value={String((i + 1) / 10)}>{(i + 1) / 10}</SelectItem>
+            ))}
+            
+           
             </SelectGroup>
         </SelectContent>
     </Select>
-  </div> */}
+  </div>
+  
+
   <div className="xl:col-span-6 lg:col-span-6 md:col-span-6 sm:col-span-12 col-span-12">
     <label className="block text-sm mb-1">Slomo Speed</label>
-    <Input 
-    value={data.speed}
-    onChange={(e) => setData('speed', e.target.value)}
-    type="number" min={0} className="form-control" id="input-text" />
+    <Select value={data.speed} onValueChange={(value) => setData('speed', value)}>
+      <SelectTrigger className="w-[180px] form-control border rounded-lg">
+        <SelectValue placeholder="Select" />
+        </SelectTrigger>
+        <SelectContent className='form-control'>
+            <SelectGroup>
+            {/* //between 0 and 1 , eg 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9 */}
+            
+            {[...Array(10).keys()].map((i) => (
+              <SelectItem key={i} value={String((i + 1) / 10)}>{(i + 1) / 10}</SelectItem>
+            ))}
+           
+            </SelectGroup>
+        </SelectContent>
+    </Select>
   </div>
 
   </div>
