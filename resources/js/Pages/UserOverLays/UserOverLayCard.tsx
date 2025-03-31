@@ -18,17 +18,7 @@ export default function UserOverLayCard({
 
   const setAsTemplate = () => {
     if (overlay) {
-      router.post(route('user.overlays.addOverlayToEvent', overlay.id), {
-        overlayId: overlay.id,
-        eventSlug: window.location.href.split('/').pop(),
-      }, {
-        onSuccess: () => {
-          showToast('success', 'Template set successfully', {position: 'bottom-right'});
-        },
-        onError: () => {
-          showToast('error', 'Something went wrong', {position: 'bottom-right'});
-        }
-      })
+      router.get(route('user.overlays.display_selected_overlay', overlay.id));
     }
   }
   
@@ -59,14 +49,14 @@ export default function UserOverLayCard({
           )}
         </div>
         <div className="box-body">
-          <h6 className="font-medium mb-3 text-center">{overlay?.name}</h6>
+          <h6 className="font-medium mb-3 text-center">{overlay?.name}({JSON.parse(overlay?.dimensions)?.width} x {JSON.parse(overlay?.dimensions)?.height})</h6>
           <div className='text-center'>
               <button 
                 onClick={setAsTemplate} 
                 className={`ti-btn ${isActive ? 'ti-btn-primary' : 'ti-btn-outline-primary'} ti-btn-wave w-full btn-wave font-medium waves-effect waves-light table-icon`}
               >
-                {isActive ? 'Add to event' : 'Choose this template'}
-              </button>
+                Select this template
+                             </button>
           
           </div>
         </div>

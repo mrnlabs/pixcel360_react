@@ -38,36 +38,56 @@ function UserOverLayModal({
     };
 
     const handleFileSelect = (files: File[]) => {
-        // if file is not audio return
         if (!files[0]) { 
             showToast('error', 'Please select a png file.', {position: 'bottom-right'});
             return;
         }
-        checkPNGTransparency(files[0]).then((hasTransparency) => {
-            
-            if (!hasTransparency) {
-                showToast('error', 'Please select a png file with transparency.', {position: 'bottom-right'});
-                setData('pngFile', null);
-                setSelectedFile(null);
-                return;
-            }
-        });
-// console.log(files[0]);
-
-        if (!isPngFile(files[0])) { 
+    
+        const file = files[0];
+    
+        // First check if it's a PNG file
+        if (!isPngFile(file)) { 
             showToast('error', 'Please select a valid PNG file.', {position: 'bottom-right'});
             return;
         }
-
+    
+        // Create an image object to get dimensions
+        const img = new Image();
+        const url = URL.createObjectURL(file);
         
-        if (files.length > 0) {
-            const file = files[0];
-            setData('pngFile',file);
-        }
-        const file = files[0];
-        setData('pngFile', file);
-        setSelectedFile(file);
-       
+        img.onload = () => {
+            // Get width and height here
+            const width = img.width;
+            const height = img.height;
+            console.log(`Image dimensions: ${width}x${height}`);
+            
+            // You can use these dimensions as needed
+            // For example, store them in state or validate them
+            
+            // Now check transparency
+            checkPNGTransparency(file).then((hasTransparency) => {
+                if (!hasTransparency) {
+                    showToast('error', 'Please select a png file with transparency.', {position: 'bottom-right'});
+                    setData('pngFile', null);
+                    setSelectedFile(null);
+                    return;
+                }
+                
+                // If everything is okay, set the file
+                setData('pngFile', file);
+                setSelectedFile(file);
+            });
+            
+            // Clean up the object URL
+            URL.revokeObjectURL(url);
+        };
+        
+        img.onerror = () => {
+            showToast('error', 'Failed to load image.', {position: 'bottom-right'});
+            URL.revokeObjectURL(url);
+        };
+        
+        img.src = url;
     };
 
     const handleFileRemove = () => {

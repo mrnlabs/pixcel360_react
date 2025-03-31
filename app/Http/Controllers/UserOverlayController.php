@@ -22,7 +22,7 @@ class UserOverlayController extends Controller
         $adminQuery = Overlay::query()->admin();
         $adminOverlays = $this->applyFiltersToQuery($adminQuery)->paginate(10);
         $adminOverlays->appends(request()->query());
-        
+       
         return Inertia::render('UserOverLays/Index', [
             'userOverlays' => $userOverlays,
             'adminOverlays' => $adminOverlays,
@@ -174,6 +174,13 @@ class UserOverlayController extends Controller
 
         return redirect()->route('overlays.index')
             ->with('success', 'Overlay updated successfully');
+    }
+
+    function displaySelectedOverlay($overlayId){
+        $overlay = Overlay::findOrFail($overlayId);
+        return Inertia::render('UserOverLays/SelectedOverlay', [
+            'overlay' => $overlay,
+        ]);
     }
 
     /**

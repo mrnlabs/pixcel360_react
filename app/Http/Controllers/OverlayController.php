@@ -50,7 +50,7 @@ class OverlayController extends Controller
         
         $request->validate([
             'name' => 'required|string|max:255',
-            'pngFile' => ['required', 'image', 'mimes:png', new PNGHasTransparency()],
+            'pngFile' => ['required', 'image', 'mimes:png'],
         ]);
         
 
@@ -61,7 +61,8 @@ class OverlayController extends Controller
         Overlay::create([
             'name' => $request->name,
             'path' => $url,
-            'is_admin' => true,
+            'is_admin' => true,            
+            'dimensions' => json_encode($request->dimensions),
             'user_id' => null, // Admin overlays don't belong to any specific user
         ]);
 
@@ -113,21 +114,16 @@ class OverlayController extends Controller
     }
 
    
-    public function destroy(Overlay $overlay)
+    public function destroy($id)
     {
+        $overlay = Overlay::findOrFail($id);
         // Ensure this is an admin overlay
         if (!$overlay->is_admin) {
-            return redirect()->route('admin.overlays.index')
-                ->with('error', 'You can only delete admin overlays here.');
+            abort(403);
         }
-
-        // Delete the image file
-        Storage::disk('public')->delete($overlay->path);
-        
         // Delete the overlay
         $overlay->delete();
 
-        return redirect()->route('admin.overlays.index')
-            ->with('success', 'Overlay deleted successfully');
+        return back()->with('success', 'Overlay deleted successfully');
     }
 }

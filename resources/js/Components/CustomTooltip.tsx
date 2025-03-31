@@ -14,7 +14,7 @@ interface CustomTooltipProps {
 const CustomTooltip: React.FC<CustomTooltipProps> = ({ children, content }) => {
   return (
     <TooltipProvider>
-      <Tooltip>
+      <Tooltip delayDuration={3}>
         <TooltipTrigger>
           {children}
         </TooltipTrigger>

@@ -1,5 +1,5 @@
 import { Event } from '@/types';
-import { ClockAlert, Dice5, FileMusic, NotepadTextDashed, Settings, Share2, SquareFunction, SquarePen } from 'lucide-react'
+import { ClockAlert, Dice5, FileMusic, Layers, NotepadTextDashed, Settings, Share2, SquareFunction, SquarePen } from 'lucide-react'
 
 export default function EventSidebar({activeTab,setActiveTab, scrollToDiv,event} : {
   activeTab: string,setActiveTab: (tab: string) => void,
@@ -50,6 +50,16 @@ export default function EventSidebar({activeTab,setActiveTab, scrollToDiv,event}
                       <SquareFunction size={16} className="ri-share-forward-line text-[1rem]"/>
                     </div>
                     <span className="flex-auto text-nowrap"> Video Functions </span>
+                  </div>
+                </div>
+              </li>
+              <li  className={`${activeTab === 'audio' ? 'active' : ''} files-type`}>
+                <div onClick={() => setActiveTab('audio')} className='cursor-pointer'>
+                  <div className="flex items-center">
+                    <div className="me-2">
+                    <Layers size={16} />
+                    </div>
+                    <span className="flex-auto text-nowrap"> Overlays </span>
                   </div>
                 </div>
               </li>

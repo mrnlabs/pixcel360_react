@@ -135,11 +135,19 @@ const handleDelete = (videos: any) => {
                     <Share2 />
                     </button>
                   </CustomTooltip>
+                  <CustomTooltip content="Public Gallery">
+                  <a 
+                   href={link}
+                   target='_blank'
+                  type="button" className="ti-btn ti-btn-sm bg-[linear-gradient(243deg,#FF4F84_0%,#394DFF_100%)] text-white ">
+                    Public Gallery
+                    </a>
+                  </CustomTooltip>
 
                     {/* <Input 
                     onChange={(e) => updateFilters({ search: e.target.value })} className="form-control me-2" type="search" placeholder="Search Video"
                      aria-label="Search"/> */}
-                     <Select onValueChange={(e) => updateFilters({ sort: e })}>
+                     {/* <Select onValueChange={(e) => updateFilters({ sort: e })}>
                           <SelectTrigger className="w-[180px] form-control">
                             <SelectValue placeholder="Sort By"></SelectValue>
                           </SelectTrigger>
@@ -150,7 +158,7 @@ const handleDelete = (videos: any) => {
                               <SelectItem className='cursor-pointer' value="oldest">Oldest</SelectItem>
                             </SelectGroup>
                           </SelectContent>
-                        </Select>
+                        </Select> */}
                   </div>
                 </div>
               </div>

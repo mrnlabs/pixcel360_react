@@ -1,8 +1,9 @@
 
-export default function OverLayCard({overlay, setModalOpen}: 
+export default function OverLayCard({overlay, setModalOpen,handleDelete}: 
   {
   overlay: any,
   setModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  handleDelete: (id: number) => void;
 }) {
   
   return (
@@ -13,10 +14,10 @@ export default function OverLayCard({overlay, setModalOpen}:
                 // onClick={() => setModalOpen(true)} 
                 src={overlay?.path} className="object-fill h-80 card-img-top cursor-pointer" alt={overlay?.name}/>
               <div className="box-body">
-                <h6 className="font-medium mb-3 text-center">{overlay?.name}</h6>
+                <h6 className="font-medium mb-3 text-center">{overlay?.name}({JSON.parse(overlay?.dimensions)?.width} x {JSON.parse(overlay?.dimensions)?.height})</h6>
                 <div className='text-center'>
                   
-                <button className="ti-btn ti-btn-outline-danger ti-btn-wave w-full btn-wave font-medium waves-effect waves-light table-icon">
+                <button onClick={() => handleDelete(overlay?.id)} className="ti-btn ti-btn-outline-danger ti-btn-wave w-full btn-wave font-medium waves-effect waves-light table-icon">
                   Delete
                   </button>
                 </div>

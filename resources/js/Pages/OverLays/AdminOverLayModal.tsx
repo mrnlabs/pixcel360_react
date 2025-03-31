@@ -14,7 +14,7 @@ import showToast from "@/utils/showToast";
 import { Loader, Trash2 } from "lucide-react";
 import { useState } from "react";
 
-function OverLayModal({
+function AdminOverLayModal({
     open,
     setOpen,
     overlay,
@@ -33,41 +33,64 @@ function OverLayModal({
 }) {
 
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
+    const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
+    
     const isPngFile = (file: File) => {
         return file.type === 'image/png';
     };
 
     const handleFileSelect = (files: File[]) => {
-        // if file is not audio return
         if (!files[0]) { 
             showToast('error', 'Please select a png file.', {position: 'bottom-right'});
             return;
         }
-        checkPNGTransparency(files[0]).then((hasTransparency) => {
-            
-            if (!hasTransparency) {
-                showToast('error', 'Please select a png file with transparency.', {position: 'bottom-right'});
-                setData('pngFile', null);
-                setSelectedFile(null);
-                return;
-            }
-        });
-// console.log(files[0]);
-
-        if (!isPngFile(files[0])) { 
+    
+        const file = files[0];
+    
+        // First check if it's a PNG file
+        if (!isPngFile(file)) { 
             showToast('error', 'Please select a valid PNG file.', {position: 'bottom-right'});
             return;
         }
-
+    
+        // Create an image object to get dimensions
+        const img = new Image();
+        const url = URL.createObjectURL(file);
         
-        if (files.length > 0) {
-            const file = files[0];
-            setData('pngFile',file);
-        }
-        const file = files[0];
-        setData('pngFile', file);
-        setSelectedFile(file);
-       
+        img.onload = () => {
+            // Get width and height here
+            const width = img.width;
+            const height = img.height;
+            setDimensions({ width, height });
+            
+            // You can use these dimensions as needed
+            // For example, store them in state or validate them
+            
+            // Now check transparency
+            checkPNGTransparency(file).then((hasTransparency) => {
+                if (!hasTransparency) {
+                    showToast('error', 'Please select a png file with transparency.', {position: 'bottom-right'});
+                    setData('pngFile', null);
+                    setSelectedFile(null);
+                    return;
+                }
+                
+                // If everything is okay, set the file
+                setData('pngFile', file);
+                setData('dimensions', { width, height });
+                setSelectedFile(file);
+            });
+            
+            // Clean up the object URL
+            URL.revokeObjectURL(url);
+        };
+        
+        img.onerror = () => {
+            showToast('error', 'Failed to load image.', {position: 'bottom-right'});
+            URL.revokeObjectURL(url);
+        };
+        
+        img.src = url;
     };
 
     const handleFileRemove = () => {
@@ -99,16 +122,20 @@ function OverLayModal({
                                     onFileRemove={handleFileRemove}
                                     multiple={false}
                                     acceptedTypes={['image/png']}
-                                    maxSize={10 * 1024 * 1024} // 10MB
+                                    maxSize={2 * 1024 * 1024} // 2MB
                                     showPreview={false} 
                                 />
                                 <div className="flex-1 mt-1">
                                     <span className="text-sm flex font-medium">{selectedFile?.name}
                                         <CustomTooltip content="Remove">
                                         <span>
-                                            {selectedFile?.name && <Trash2 onClick={handleFileRemove} className='ml-2 text-danger cursor-pointer' size={16}/>}</span>
+                                            {selectedFile?.name && <Trash2 onClick={handleFileRemove} className='ml-2 text-danger cursor-pointer' size={16}/>}
+                                            
+                                            </span>
+                                            
                                         </CustomTooltip>
                                      </span>
+                                     <div>Dimensions: {dimensions ? dimensions.width + ' x ' + dimensions.height : ''}</div>
                                 </div>
                                 </div>
                                 <Button onClick={handleSubmit} disabled={processing} className="w-full ti-btn bg-[linear-gradient(243deg,#FF4F84_0%,#394DFF_100%)] text-white btn-wave waves-effect waves-light">
@@ -123,4 +150,4 @@ function OverLayModal({
     );
 }
 
-export default OverLayModal
+export default AdminOverLayModal

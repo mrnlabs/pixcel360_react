@@ -10,8 +10,8 @@ import { debounce } from 'lodash';
 import { Input } from '@/Components/ui/input';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/Components/ui/select';
 import OverLayCard from './OverLayCard';
-import OverLayModal from './UserOverLayModal';
 import showToast from '@/utils/showToast';
+import AdminOverLayModal from './AdminOverLayModal';
 
 export default function Index({overlays=[], isAdmin} : any) {
 
@@ -26,6 +26,7 @@ export default function Index({overlays=[], isAdmin} : any) {
   const { data, setData, post, processing, errors, reset } = useForm({
     name: "",
     pngFile: null as File | string | null,
+    dimensions: { width: 0, height: 0 },
 });
 
 const updateFilters = React.useCallback(
@@ -67,6 +68,20 @@ const handleSubmit = () => {
   });
 }
 
+const handleDelete = (id: number) => {
+  if (confirm('Are you sure you want to delete this overlay?')) {
+    router.delete(route('overlays.destroy', id), {
+      preserveState: true,
+      onSuccess: () => {
+        showToast('success', 'Overlay deleted successfully', {position: 'bottom-right'});
+      },
+      onError: () => {
+        showToast('error', 'Something went wrong', {position: 'bottom-right'});
+      }
+    });
+  }
+}
+
 
   return (
     <Authenticated>
@@ -85,7 +100,8 @@ const handleSubmit = () => {
             <div className="box">
               <div className="box-body p-4">
                 <div className="flex items-center justify-between flex-wrap gap-4">
-               <button onClick={() => setModalOpen(true)} className='ti-btn bg-[linear-gradient(243deg,#FF4F84_0%,#394DFF_100%)] text-white !m-0 btn-wave ti-btn-sm waves-effect waves-light'>Upload New Overlay</button>
+               <button onClick={() => setModalOpen(true)} className='ti-btn bg-[linear-gradient(243deg,#FF4F84_0%,#394DFF_100%)] text-white !m-0 btn-wave ti-btn-sm waves-effect waves-light'>
+                Upload New Overlay</button>
                   <div className="flex" role="search">
                     <Input 
                     onChange={(e) => updateFilters({ search: e.target.value })} className="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
@@ -115,11 +131,11 @@ const handleSubmit = () => {
                     key={overlay.id}
                     setModalOpen={setModalOpen}
                     overlay={overlay}
-                    
+                    handleDelete={handleDelete}
                   />
                ))}
 
-              <OverLayModal 
+              <AdminOverLayModal 
               data={data}
                  setData={setData}
                   open={modalOpen} 

@@ -10,7 +10,7 @@ import { debounce } from 'lodash';
 import { Input } from '@/Components/ui/input';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/Components/ui/select';
 import OverLayCard from './OverLayCard';
-import OverLayModal from './UserOverLayModal';
+import OverLayModal from './AdminOverLayModal';
 import showToast from '@/utils/showToast';
 
 export default function UserOverLay({overlays=[]} : any) {

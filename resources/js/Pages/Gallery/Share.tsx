@@ -101,8 +101,11 @@ export default function Share({event, videos}: {
                     }
                 }
             });
-
-            saveAs(content, "videos.zip");
+            //replace space with underscore + '.zip' 
+            const zipFileName = event.setting?.gallery_name 
+                ? (event.setting.gallery_name as string).replace(/\s+/g, '_') + '.zip' 
+                : (event.name as string).replace(/\s+/g, '_') + '.zip';
+            saveAs(content, zipFileName);
             showToast('success', `Successfully downloaded ${successfulDownloads.length} videos!`, { position: 'bottom-right' });
 
         } catch (error) {

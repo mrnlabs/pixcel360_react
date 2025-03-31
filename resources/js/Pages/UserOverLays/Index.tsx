@@ -9,13 +9,11 @@ import { EventProps, Filters, QueryParams } from '@/types';
 import { debounce } from 'lodash';
 import { Input } from '@/Components/ui/input';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/Components/ui/select';
-import OverLayCard from './UserOverLayCard';
-import OverLayModal from './UserOverLayModal';
 import showToast from '@/utils/showToast';
 import UserOverLayCard from './UserOverLayCard';
 import UserOverLayModal from './UserOverLayModal';
 
-export default function Index({userOverlays=[], adminOverlays=[], isAdmin} : any) {
+export default function Index({ adminOverlays=[], isAdmin} : any) {
 
   const [modalOpen, setModalOpen] = useState(false);
   const [overlay, setOverlay] = useState<any>(null);
@@ -23,11 +21,8 @@ export default function Index({userOverlays=[], adminOverlays=[], isAdmin} : any
   const [activeOverlay, setActiveOverlay] = useState<any>(null);
   const [showPresets, setShowPresets] = useState(false);
 
-  useEffect(() => {
-    setOverlays(showPresets ? adminOverlays : userOverlays);
-  }, [showPresets, adminOverlays, userOverlays]);
 
-  const [overlays, setOverlays] = useState(showPresets ? adminOverlays : userOverlays);
+  const [overlays, setOverlays] = useState(adminOverlays);
 
   const handleOverlaySelect = (overlay: any) => {
     setActiveOverlay(overlay);
@@ -127,7 +122,8 @@ const handleDeleteSelected = () => {
               
               </div>
                   <div className="flex" role="search">
-                  <button onClick={() => setModalOpen(true)} className='ti-btn bg-[linear-gradient(243deg,#FF4F84_0%,#394DFF_100%)] text-white !m-0 btn-wave ti-btn-sm waves-effect waves-light w-full'>Upload Overlay</button>
+                  <button onClick={() => setModalOpen(true)} className='ti-btn bg-[linear-gradient(243deg,#FF4F84_0%,#394DFF_100%)] text-white !m-0 btn-wave ti-btn-sm waves-effect waves-light w-full'>
+                    Upload Overlay</button>
 
                     <Input 
                     onChange={(e) => updateFilters({ search: e.target.value })} className="form-control me-2 ml-3 " type="search" placeholder="Search" aria-label="Search"/>
@@ -177,7 +173,7 @@ const handleDeleteSelected = () => {
 
               </Suspense>
       </div>
-              {!overlays?.data?.length && <div className="text-center">No overlays found.</div>}
+              {!adminOverlays.data?.length && <div className="text-center">No overlays found.</div>}
             </div>
           </div>
         </Authenticated>
