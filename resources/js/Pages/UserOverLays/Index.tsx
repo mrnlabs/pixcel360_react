@@ -160,7 +160,7 @@ const handleDeleteSelected = () => {
                   />
                ))}
 
-              <UserOverLayModal 
+              {/* <UserOverLayModal 
               data={data}
                  setData={setData}
                   open={modalOpen} 
@@ -169,7 +169,7 @@ const handleDeleteSelected = () => {
                   handleSubmit={handleSubmit}
                   processing={processing}
                   
-                />
+                /> */}
 
               </Suspense>
       </div>

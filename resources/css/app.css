@@ -78,3 +78,12 @@
 .gl-video-player__wrapper{
   text-align: center !important;
 }
+
+.relative:hover .absolute.z-10 {
+  outline: 2px dashed #3b82f6;
+  opacity: 0.9;
+}
+
+.user-overlay{
+  outline: 2px dashed #3b82f6;
+}

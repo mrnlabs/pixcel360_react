@@ -21,7 +21,10 @@ function UserOverLayModal({
     handleSubmit,
     data,
     setData,
-    processing
+    processing,
+    handleFileSelect,
+    handleFileRemove,
+    selectedFile
 }: {
     open: boolean
     setOpen: React.Dispatch<React.SetStateAction<boolean>>,
@@ -29,71 +32,16 @@ function UserOverLayModal({
     handleSubmit: () => void,
     data: any,
     setData: (field: string, value: any) => void,
-    processing: boolean
+    processing: boolean,
+    handleFileSelect: (files: File[]) => void,
+    handleFileRemove: () => void,
+    selectedFile: File | null
 }) {
 
-    const [selectedFile, setSelectedFile] = useState<File | null>(null);
-    const isPngFile = (file: File) => {
-        return file.type === 'image/png';
-    };
+ 
+    
 
-    const handleFileSelect = (files: File[]) => {
-        if (!files[0]) { 
-            showToast('error', 'Please select a png file.', {position: 'bottom-right'});
-            return;
-        }
     
-        const file = files[0];
-    
-        // First check if it's a PNG file
-        if (!isPngFile(file)) { 
-            showToast('error', 'Please select a valid PNG file.', {position: 'bottom-right'});
-            return;
-        }
-    
-        // Create an image object to get dimensions
-        const img = new Image();
-        const url = URL.createObjectURL(file);
-        
-        img.onload = () => {
-            // Get width and height here
-            const width = img.width;
-            const height = img.height;
-            console.log(`Image dimensions: ${width}x${height}`);
-            
-            // You can use these dimensions as needed
-            // For example, store them in state or validate them
-            
-            // Now check transparency
-            checkPNGTransparency(file).then((hasTransparency) => {
-                if (!hasTransparency) {
-                    showToast('error', 'Please select a png file with transparency.', {position: 'bottom-right'});
-                    setData('pngFile', null);
-                    setSelectedFile(null);
-                    return;
-                }
-                
-                // If everything is okay, set the file
-                setData('pngFile', file);
-                setSelectedFile(file);
-            });
-            
-            // Clean up the object URL
-            URL.revokeObjectURL(url);
-        };
-        
-        img.onerror = () => {
-            showToast('error', 'Failed to load image.', {position: 'bottom-right'});
-            URL.revokeObjectURL(url);
-        };
-        
-        img.src = url;
-    };
-
-    const handleFileRemove = () => {
-        setData('pngFile', null);
-        setSelectedFile(null);
-    };
     return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogContent className="sm:max-w-[425px] max-h-[90vh] overflow-y-auto top-[5%] sm:top-[10%]  translate-y-0" style={{ maxWidth: "50rem" }}>
@@ -106,20 +54,13 @@ function UserOverLayModal({
                         <div className="xxl:col-span-12 col-span-12">
                             <div className="box">
                                 <div className="box-body">
-                                    <input
-                                        type="text"
-                                        placeholder="Your Overlay Name"
-                                        value={data.name}
-                                        onChange={(e) => setData('name', e.target.value)}
-                                        className="form-control mb-3"
-                                        />
                                 <FileUpload
                                    dropzoneText="Drag and drop a PNG file here or click to browse"
                                     onFilesSelected={handleFileSelect}
                                     onFileRemove={handleFileRemove}
                                     multiple={false}
                                     acceptedTypes={['image/png']}
-                                    maxSize={10 * 1024 * 1024} // 10MB
+                                    maxSize={2 * 1024 * 1024} // 10MB
                                     showPreview={false} 
                                 />
                                 <div className="flex-1 mt-1">
@@ -131,9 +72,9 @@ function UserOverLayModal({
                                      </span>
                                 </div>
                                 </div>
-                                <Button onClick={handleSubmit} disabled={processing} className="w-full ti-btn ti-btn-primary btn-wave waves-effect waves-light">
+                                <Button onClick={handleSubmit} disabled={processing} className="w-full ti-btn ti-btn bg-[linear-gradient(243deg,#FF4F84_0%,#394DFF_100%)] text-white btn-wave waves-effect waves-light">
                         {processing && <Loader className="mr-2 h-4 w-4 animate-spin" />} Submit
-                    </Button>
+                        </Button>
                             </div>
                         </div>
                     </div>

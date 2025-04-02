@@ -179,7 +179,7 @@ class UserOverlayController extends Controller
     function displaySelectedOverlay($overlayId){
         $overlay = Overlay::findOrFail($overlayId);
         return Inertia::render('UserOverLays/SelectedOverlay', [
-            'overlay' => $overlay,
+            'overlayPreset' => $overlay,
         ]);
     }
 
