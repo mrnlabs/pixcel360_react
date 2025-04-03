@@ -228,4 +228,13 @@ class UserOverlayController extends Controller
     function downloadOverlayImage(Request $request){
        return getSignedDownloadUrl($request);
     }
+
+    function getAllOverlays($eventSlug){
+        $event = Event::whereSlug($eventSlug)->first();
+        $overlays = Overlay::whereId($event->overlay_id)->where('user_id', auth()->id())->get();
+        return Inertia::render('UserOverLays/AllOverlays', [
+            'overlays' => $overlays,
+            'event' => $event,
+        ]);
+    }
 }

@@ -109,42 +109,7 @@ const handleDeleteSelected = () => {
               ]}
               />
         
-        <div className="row">
-          <div className="col-xl-12">
-            <div className="box">
-              <div className="box-body p-4">
-                <div className="flex items-center justify-between flex-wrap gap-4">
-              <div className='!space-x-3'>
-              <button onClick={togglePresets} className='ti-btn bg-[linear-gradient(243deg,#FF4F84_0%,#394DFF_100%)] text-white !m-0 btn-wave ti-btn-sm waves-effect waves-light'>
-                {showPresets ? 'Show My Overlays' : 'Load Presets'}</button>
-              {/* if showPresets is false, its my overlays show delete */}
-              {(!showPresets && activeOverlay) && <button onClick={handleDeleteSelected} className='ti-btn ti-btn-danger !m-0 btn-wave ti-btn-sm waves-effect waves-light p-3'>Delete Selected</button>}
-              
-              </div>
-                  <div className="flex" role="search">
-                  <button onClick={() => setModalOpen(true)} className='ti-btn bg-[linear-gradient(243deg,#FF4F84_0%,#394DFF_100%)] text-white !m-0 btn-wave ti-btn-sm waves-effect waves-light w-full'>
-                    Upload Overlay</button>
-
-                    <Input 
-                    onChange={(e) => updateFilters({ search: e.target.value })} className="form-control me-2 ml-3 " type="search" placeholder="Search" aria-label="Search"/>
-                     <Select onValueChange={(e) => updateFilters({ sort: e })} >
-                          <SelectTrigger className="w-[180px] form-control">
-                            <SelectValue placeholder="Sort By"></SelectValue>
-                          </SelectTrigger>
-                          <SelectContent className='form-control'>
-                            <SelectGroup>
-                              <SelectLabel>Sort By</SelectLabel>
-                              <SelectItem className='cursor-pointer' value="latest">Latest</SelectItem>
-                              <SelectItem className='cursor-pointer' value="oldest">Oldest</SelectItem>
-                            </SelectGroup>
-                          </SelectContent>
-                        </Select>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+    
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
           
         <Suspense fallback={<Loader className="align-middle animate-spin"/>}>

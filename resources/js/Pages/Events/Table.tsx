@@ -217,7 +217,7 @@ export default function Table({events, setModalOpen, setQRData, setDuplicateModa
                 <AuthGuard roles={["Account Owner"]} permissions={["*"]}>
                 <td>
                 <CustomTooltip content="View Session Overlays">
-                  <Link href={route('user.overlays',event.slug)}><span className="font-medium cursor-pointer"><Layers /></span></Link>
+                  <Link href={route('get.all.overlays',event.slug)}><span className="font-medium cursor-pointer"><Layers /></span></Link>
                   </CustomTooltip>
                   </td>
                 </AuthGuard>

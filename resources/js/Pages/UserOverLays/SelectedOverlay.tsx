@@ -134,7 +134,7 @@ export default function SelectedOverlay({ overlayPreset, events, overlaysLength 
           <Breadcrumb
             items={[
               { label: 'Home', href: '/dashboard' },
-              { label: 'Events', href: '/events' },
+              { label: 'Overlays', href: '/overlays' },
               { label: 'Overlay', active: true }
             ]}
           />
