@@ -72,29 +72,40 @@ class UserOverlayController extends Controller
         if($request->is('api/*')) {
            return $this->uploadOverlayAPI($request);
         }
-
+      
         $request->validate([
-            'name' => 'required|string|max:255',
+            'event_id' => 'required|exists:events,slug',
             'pngFile' => ['required', 'image', 'mimes:png'],
         ]);
      
-        // if(!validatePngTransparency($request->file('pngFile'))) {
-        //     return back()->with('error', 'Image has no transparency');
-        // }
        
         // Store the overlay image
         $filePath = Storage::put('video_overlays', $request->file('pngFile'));
                 
         $url = Storage::url($filePath);
-        Overlay::create([
-            // if $request->is('api/*') get name 
-            'name' => $request->name,
-            'path' => $url,
-            'is_admin' => false,
-            'user_id' => auth()->id(), // Admin overlays don't belong to any specific user
-        ]);
+        if($filePath){
+            $event = Event::whereSlug($request->event_id)->first();
+            //if $request->apply_to_all is true then we keep the previously uploaded overlays or else remove existing overlays
+            if(!$request->apply_to_all){
+                $event->update(['overlay_id' => null]);
+                $overlays = Overlay::where('user_id', auth()->id())->get();
+                foreach($overlays as $overlay){
+                    $overlay->delete();
+                }
+            }
+            
+          
+            $overlay = Overlay::create([
+                'name' => $request->file('pngFile')->getClientOriginalName(),
+                'path' => $url,
+                'is_admin' => false,
+                'user_id' => auth()->id(), // Admin overlays don't belong to any specific user
+            ]);
+            $event->update(['overlay_id' => $overlay->id]);  
+            return back()->with('success', 'Overlay created successfully');
+            }
 
-        return back()->with('success', 'Overlay created successfully');
+        return back()->with('error', 'Error creating overlay');
     }
 
     public function uploadOverlayAPI(Request $request)
@@ -178,9 +189,23 @@ class UserOverlayController extends Controller
 
     function displaySelectedOverlay($overlayId){
         $overlay = Overlay::findOrFail($overlayId);
+        //pluck id and name of events only
+        $events = Event::where('status', '1')->where('user_id', auth()->id())->get(['slug', 'name']);
+        $overlaysLength = Overlay::where('user_id', auth()->id())->count();
         return Inertia::render('UserOverLays/SelectedOverlay', [
             'overlayPreset' => $overlay,
+            'events' => $events,
+            'overlaysLength' => $overlaysLength
+        
         ]);
+    }
+
+    function getEventOverlays($slug){
+        $event = Event::whereSlug($slug)->first();
+        $overlays = Overlay::where('user_id', auth()->id())->get();
+        return response()->json([
+            'overlays' => $overlays
+        ], 200);
     }
 
     /**
@@ -198,5 +223,9 @@ class UserOverlayController extends Controller
     
         $overlay->delete();
         return back()->with('success', 'Overlay deleted successfully');
+    }
+
+    function downloadOverlayImage(Request $request){
+       return getSignedDownloadUrl($request);
     }
 }

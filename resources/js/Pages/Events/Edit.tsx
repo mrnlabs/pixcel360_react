@@ -15,6 +15,7 @@ import TimeOuts from "./TabContent/TimeOuts";
 import SharingMethods from "./TabContent/SharingMethods";
 import SharingSubjects from "./TabContent/SharingSubjects";
 import Branding from "./TabContent/Branding";
+import Overlay from "./TabContent/Overlay";
 
 export default function Edit({event} : EventProps) {
   const [activeTab, setActiveTab] = React.useState('event-details');
@@ -57,6 +58,8 @@ export default function Edit({event} : EventProps) {
               return 'Sharing subjects';
           case 'branding':
               return 'Branding';
+          case 'overlay':
+              return 'Overlays of ' + event?.name;
           default:
               return '';
       }
@@ -80,6 +83,8 @@ export default function Edit({event} : EventProps) {
             return <SharingSubjects event={event} scrollToDiv={scrollToDiv} />;
         case 'branding':
             return <Branding event={event}  />;
+        case 'overlay':
+          return <Overlay event={event}  />;
         default:
             return null;
     }

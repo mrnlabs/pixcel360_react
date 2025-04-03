@@ -65,10 +65,10 @@ function UserOverLayModal({
                                 />
                                 <div className="flex-1 mt-1">
                                     <span className="text-sm flex font-medium">{selectedFile?.name}
-                                        <CustomTooltip content="Remove">
+                               
                                         <span>
                                             {selectedFile?.name && <Trash2 onClick={handleFileRemove} className='ml-2 text-danger cursor-pointer' size={16}/>}</span>
-                                        </CustomTooltip>
+                                        
                                      </span>
                                 </div>
                                 </div>

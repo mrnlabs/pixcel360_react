@@ -56,6 +56,8 @@ Route::get('/plans/show/{slug}', [PlanController::class, 'show'])->name('plans.s
 // its for shared gallery link
 Route::get('/shared-gallery/{slug}', [GalleryController::class, 'share_gallery'])->name('shared_gallery');
 
+
+
 require __DIR__.'/auth.php';
 require __DIR__.'/event.php';
 require __DIR__.'/gallery.php';

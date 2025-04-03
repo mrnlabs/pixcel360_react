@@ -39,7 +39,8 @@
         },
         "files": [
             "app/Helpers/UserHelper.php",
-            "app/Helpers/validatePngTransparency.php"
+            "app/Helpers/validatePngTransparency.php",
+            "app/Helpers/getSignedDownloadUrl.php"
         ]
     },
     "autoload-dev": {

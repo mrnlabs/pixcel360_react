@@ -5,12 +5,19 @@ import React, { Suspense, useState } from 'react'
 import UserOverLayModal from './UserOverLayModal'
 import showToast from '@/utils/showToast'
 import { checkPNGTransparency } from '@/utils/checkPNGTransparency'
-import { CropperRef, Cropper } from 'react-advanced-cropper';
-import 'react-advanced-cropper/dist/themes/classic.css';
+import { Popover, PopoverContent, PopoverTrigger } from '@/Components/ui/popover'
+import { Check, ChevronsUpDown } from 'lucide-react'
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from '@/Components/ui/command'
+import { cn } from '@/lib/utils'
+import { Button } from '@/Components/ui/button'
 
-export default function SelectedOverlay({ overlayPreset }: any) {
+import ConfirmOverlayUploadDialog from './ConfirmOverlayUploadDialog'
+
+export default function SelectedOverlay({ overlayPreset, events, overlaysLength }: any) {
   const { data, setData, post, processing, errors, reset } = useForm({
     pngFile: null as File | string | null,
+    event_id: null as string | null,
+    apply_to_all: false
   });
 
   const [modalOpen, setModalOpen] = useState(false);
@@ -20,26 +27,11 @@ export default function SelectedOverlay({ overlayPreset }: any) {
       height: JSON.parse(overlayPreset.dimensions).height || 0 
     });
 
-  const handleSubmit = () => {
-    post(route('user.overlays.store'), {
-      preserveState: true,
-      onSuccess: (response: any) => {
-        // Assuming the response contains the path to the saved overlay
-        if (response?.overlay?.path) {
-          setUserOverlay(response.overlay.path);
-        }
-        setModalOpen(false);
-        setData('pngFile', null);
-        showToast('success', 'Overlay uploaded successfully', {position: 'bottom-right'});
-        reset();
-      },
-      onError: () => {
-        showToast('error', 'Something went wrong', {position: 'bottom-right'});
-      }
-    });
-  }
+ const [dialogOpen, setDialogOpen] = useState(false);
 
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [open, setOpen] = React.useState(false)
+  const [value, setValue] = React.useState("")
   const isPngFile = (file: File) => {
       return file.type === 'image/png';
   };
@@ -61,7 +53,8 @@ export default function SelectedOverlay({ overlayPreset }: any) {
         showToast('error', 'Please select a valid PNG file.', {position: 'bottom-right'});
         return;
     }
-
+    // dismiss modal
+    setModalOpen(false)
     // Create an image object to get dimensions
     const img = new Image();
     const url = URL.createObjectURL(file);
@@ -88,7 +81,6 @@ export default function SelectedOverlay({ overlayPreset }: any) {
             setData('pngFile', file);
             setSelectedFile(file);
             setUserOverlay(url);
-            console.log('img', img);
         });
         
     };
@@ -101,9 +93,39 @@ export default function SelectedOverlay({ overlayPreset }: any) {
     img.src = url;
 };
   
-const onChange = (cropper: CropperRef) => {
-  console.log(cropper.getCoordinates(), cropper.getCanvas());
-};
+
+
+  const handleSubmit = () => {
+    if (!overlayPreset) {
+      showToast('error', 'Please select an overlay preset.', {position: 'bottom-right'});
+      return;
+    }
+    if(!selectedFile) {
+      showToast('error', 'Please select an overlay image.', {position: 'bottom-right'});
+      return;
+    }
+    if (!value) {
+      showToast('error', 'Please select an event.', {position: 'bottom-right'});
+      return;
+    }
+    post(route('user.overlays.store'), {
+      preserveState: true,
+      onSuccess: (response: any) => {
+        // Assuming the response contains the path to the saved overlay
+        if (response?.overlay?.path) {
+          setUserOverlay(response.overlay.path);
+        }
+        setModalOpen(false);
+        setData('pngFile', null);
+        showToast('success', 'Overlay uploaded successfully', {position: 'bottom-right'});
+        reset();
+      },
+      onError: () => {
+        showToast('error', 'Something went wrong', {position: 'bottom-right'});
+      }
+    });
+  }
+
   return (
     <Authenticated>
       <Head title="Manage Overlay" />
@@ -120,22 +142,70 @@ const onChange = (cropper: CropperRef) => {
           <div className="grid grid-cols-12 gap-x-6">
             <div className="xl:col-span-12 col-span-12">
               <div className="box">
-                <div className="box-body">
+                <div className="box-body ticky top-0 z-20 bg-white dark:bg-gray-900">
                   <div className="flex items-center flex-wrap gap-2 justify-between">
-                    <div className="flex items-center">
-                      <span className="font-medium text-[1rem] me-2">Overlays</span>
+                    <div className="flex items-center space-x-3">
+                    <Popover open={open} onOpenChange={setOpen}>
+  <PopoverTrigger asChild>
+    <Button
+      variant="outline"
+      role="combobox"
+      aria-expanded={open}
+      className=" sm:w-[200px] justify-between rounded-md border border-[#ecf3fb]"
+    >
+      {value
+        ? events.find((event: any) => event.name === value)?.name
+        : "Select event..."}
+      <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+    </Button>
+  </PopoverTrigger>
+  <PopoverContent className="sm:w-[200px] p-0">
+    <Command>
+      <CommandInput placeholder="Search events..." />
+      <CommandList>
+        <CommandEmpty>No events found.</CommandEmpty>
+        <CommandGroup>
+          {events.map((event: any) => (
+            <CommandItem
+              key={event.slug}
+              value={event.name}
+              onSelect={(currentValue) => {
+                //get event by curent value
+                const event = events.find((event: any) => event.name === currentValue);
+                setData('event_id', event.slug);
+                setValue(currentValue === value ? "" : currentValue)
+                setOpen(false)
+              }}
+            >
+              <Check
+                className={cn(
+                  "mr-2 h-4 w-4",
+                  value === event.name ? "opacity-100" : "opacity-0"
+                )}
+              />
+              {event.name}
+            </CommandItem>
+          ))}
+        </CommandGroup>
+      </CommandList>
+    </Command>
+  </PopoverContent>
+</Popover>
                       {overlayPreset && (
-                  <div className="mt-2 text-sm text-gray-500 text-center">
-                    Preset dimensions: {presetDimensions.width}px × {presetDimensions.height}px
+                  <div className="w-full sm:w-auto text-sm text-gray-500 text-center">
+                    <Button disabled={!data.pngFile || !value || processing}
+                       onClick={overlaysLength > 0 ? () => setDialogOpen(true) : handleSubmit}
+                     className='w-full ti-btn ti-btn bg-[linear-gradient(243deg,#FF4F84_0%,#394DFF_100%)] text-white ti-btn-lg'>
+                      Add to Event</Button>
                   </div>
                 )}
                     </div>
-                    <div className="flex flex-wrap gap-2">
+                    <div className="flex flex-wrap gap-2 w-full sm:w-auto mt-3 sm:mt-0">
                       <button 
                         onClick={() => setModalOpen(true)} 
                         aria-label="button" 
                         type="button" 
-                        className="ti-btn ti-btn-primary ti-btn-sm"
+                        className="w-full ti-btn ti-btn-primary ti-btn-sm"
                       >
                         Upload Overlay
                       </button>
@@ -148,7 +218,7 @@ const onChange = (cropper: CropperRef) => {
               
               <div className="text-center mt-6">
                 {/* Display area for the preset and user overlay */}
-                <div className="relative inline-block">
+                <div className="relative inline-block" onClick={() => setModalOpen(true)}>
                   {/* Preset frame */}
                   {overlayPreset?.path && (
                     <div className="max-h-[90%] overflow-hidden">
@@ -200,6 +270,14 @@ const onChange = (cropper: CropperRef) => {
               handleFileSelect={handleFileSelect}
               selectedFile={selectedFile}
             />
+         
+          <ConfirmOverlayUploadDialog
+            setData={setData}
+            message="Checking this option will preserve your existing overlays, allowing for selecting multiple overlays during the event."
+            dialogOpen={dialogOpen} 
+            setDialogOpen={setDialogOpen}
+            onContinue={handleSubmit}
+          />
           </Suspense>
         </div>
       </div>

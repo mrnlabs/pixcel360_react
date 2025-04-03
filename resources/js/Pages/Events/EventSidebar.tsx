@@ -53,8 +53,8 @@ export default function EventSidebar({activeTab,setActiveTab, scrollToDiv,event}
                   </div>
                 </div>
               </li>
-              <li  className={`${activeTab === 'audio' ? 'active' : ''} files-type`}>
-                <div onClick={() => setActiveTab('audio')} className='cursor-pointer'>
+              <li  className={`${activeTab === 'overlay' ? 'active' : ''} files-type`}>
+                <div onClick={() => setActiveTab('overlay')} className='cursor-pointer'>
                   <div className="flex items-center">
                     <div className="me-2">
                     <Layers size={16} />
