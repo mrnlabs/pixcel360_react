@@ -105,7 +105,7 @@ const handleDeleteSelected = () => {
              <Breadcrumb
              items={[
                 { label: 'Home', href: '/dashboard' },
-                { label: 'Overlays', active: true }
+                { label: 'Choose Overlay', active: true }
               ]}
               />
         

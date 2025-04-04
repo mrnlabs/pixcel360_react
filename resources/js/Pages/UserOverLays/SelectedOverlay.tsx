@@ -116,6 +116,8 @@ export default function SelectedOverlay({ overlayPreset, events, overlaysLength 
           setUserOverlay(response.overlay.path);
         }
         setModalOpen(false);
+        data.event_id = null;
+        setValue("");
         setData('pngFile', null);
         showToast('success', 'Overlay uploaded successfully', {position: 'bottom-right'});
         reset();
@@ -134,7 +136,7 @@ export default function SelectedOverlay({ overlayPreset, events, overlaysLength 
           <Breadcrumb
             items={[
               { label: 'Home', href: '/dashboard' },
-              { label: 'Overlays', href: '/overlays' },
+              { label: 'Overlays Templates', href: '/overlays' },
               { label: 'Overlay', active: true }
             ]}
           />
@@ -246,7 +248,7 @@ export default function SelectedOverlay({ overlayPreset, events, overlaysLength 
                     {/* Fallback if no overlay is selected */}
                     {!userOverlay && (
                       <div className="absolute inset-0 flex items-center justify-center bg-gray-100/50 dark:bg-gray-800/50">
-                        <p className="text-gray-500">Your overlay will appear here</p>
+                        <p className="text-gray-500">Your overlay will appear here. Click to upload</p>
                       </div>
                     )}
                 </div>

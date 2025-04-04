@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use Inertia\Inertia;
 use App\Models\Event;
 use App\Models\Overlay;
 use Illuminate\Http\Request;
 use App\Rules\PNGHasTransparency;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
-use Inertia\Inertia;
 
 class UserOverlayController extends Controller
 {
@@ -77,35 +78,55 @@ class UserOverlayController extends Controller
             'event_id' => 'required|exists:events,slug',
             'pngFile' => ['required', 'image', 'mimes:png'],
         ]);
-     
-       
+        
         // Store the overlay image
         $filePath = Storage::put('video_overlays', $request->file('pngFile'));
                 
         $url = Storage::url($filePath);
-        if($filePath){
+        
+        if ($filePath) {
             $event = Event::whereSlug($request->event_id)->first();
-            //if $request->apply_to_all is true then we keep the previously uploaded overlays or else remove existing overlays
-            if(!$request->apply_to_all){
-                $event->update(['overlay_id' => null]);
-                $overlays = Overlay::where('user_id', auth()->id())->get();
-                foreach($overlays as $overlay){
-                    $overlay->delete();
-                }
-            }
             
-          
-            $overlay = Overlay::create([
-                'name' => $request->file('pngFile')->getClientOriginalName(),
-                'path' => $url,
-                'is_admin' => false,
-                'user_id' => auth()->id(), // Admin overlays don't belong to any specific user
-            ]);
-            $event->update(['overlay_id' => $overlay->id]);  
-            return back()->with('success', 'Overlay created successfully');
+            // Begin a database transaction to ensure data integrity
+            DB::beginTransaction();
+            
+            try {
+                // First, set event's overlay_id to null
+                $event->update(['overlay_id' => null]);
+                
+                // Handle existing overlays based on apply_to_all flag
+                if (!$request->apply_to_all) {
+                    // If not applying to all, delete previous overlays
+                    Overlay::where('user_id', auth()->id())
+                          ->where('event_id', $event->id)
+                          ->delete();
+                }
+                
+                // Create the new overlay with event_id
+                $overlay = Overlay::create([
+                    'name' => $request->file('pngFile')->getClientOriginalName(),
+                    'path' => $url,
+                    'is_admin' => false,
+                    'user_id' => auth()->id(),
+                    'event_id' => $event->id, // Add event_id here
+                ]);
+                
+                // Update the event to use this new overlay
+                $event->update(['overlay_id' => $overlay->id]);
+                
+                // Commit the transaction
+                DB::commit();
+                
+                return back()->with('success', 'Overlay created successfully');
+            } catch (\Exception $e) {
+                // If anything goes wrong, roll back the transaction
+                DB::rollBack();
+                return back()->with('error', 'Failed to create overlay: ' . $e->getMessage());
             }
-
-        return back()->with('error', 'Error creating overlay');
+        }
+        
+        // Handle the case where file upload failed
+        return back()->with('error', 'Failed to upload file');
     }
 
     public function uploadOverlayAPI(Request $request)
@@ -231,7 +252,7 @@ class UserOverlayController extends Controller
 
     function getAllOverlays($eventSlug){
         $event = Event::whereSlug($eventSlug)->first();
-        $overlays = Overlay::whereId($event->overlay_id)->where('user_id', auth()->id())->get();
+        $overlays = Overlay::where('user_id', auth()->id())->where('event_id', $event->id)->get();
         return Inertia::render('UserOverLays/AllOverlays', [
             'overlays' => $overlays,
             'event' => $event,
