@@ -67,6 +67,20 @@ const handleSubmit = () => {
   });
 }
 
+const handleDelete = (id: number) => {
+  if (confirm('Are you sure you want to delete this overlay?')) {
+    router.delete(route('user.overlays.destroy', id), {
+      preserveState: true,
+      onSuccess: () => {
+        showToast('success', 'Overlay deleted successfully', {position: 'bottom-right'});
+      },
+      onError: () => {
+        showToast('error', 'Something went wrong', {position: 'bottom-right'});
+      }
+    });
+  }
+  
+}
 
   return (
     <Authenticated>
@@ -115,7 +129,7 @@ const handleSubmit = () => {
                     key={overlay.id}
                     setModalOpen={setModalOpen}
                     overlay={overlay}
-                    
+                    handleDelete={handleDelete}
                   />
                ))}
 

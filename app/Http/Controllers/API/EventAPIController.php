@@ -14,6 +14,12 @@ use App\Models\Video;
 use Illuminate\Support\Facades\Storage;
 use Throwable;
 
+use Illuminate\Support\Facades\Validator;
+use Pion\Laravel\ChunkUpload\Exceptions\UploadMissingFileException;
+use Pion\Laravel\ChunkUpload\Handler\HandlerFactory;
+use Pion\Laravel\ChunkUpload\Receiver\FileReceiver;
+use Illuminate\Http\UploadedFile;
+
 class EventAPIController extends Controller
 {
 
@@ -31,37 +37,130 @@ class EventAPIController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function uploadVideo(Request $request)
-    {
-        try {
+    // public function uploadVideo(Request $request)
+    // {
+    //     try {
            
-            if ($request->hasFile('video')) {
-                $event = Event::where('slug', $request->slug)->first();
-                $filePath = Storage::put('video_uploads', $request->file('video'));
+    //         if ($request->hasFile('video')) {
+    //             $event = Event::where('slug', $request->slug)->first();
+    //             $filePath = Storage::put('video_uploads', $request->file('video'));
                 
-                $url = Storage::url($filePath);
-                $video = Video::create([
-                    'name' => $request->file('video')->getClientOriginalName(),
-                    'path' => $url,
-                    'event_id' => $event->id,
-                    'size' => $request->file('video')->getSize()
-                ]);
+    //             $url = Storage::url($filePath);
+    //             $video = Video::create([
+    //                 'name' => $request->file('video')->getClientOriginalName(),
+    //                 'path' => $url,
+    //                 'event_id' => $event->id,
+    //                 'size' => $request->file('video')->getSize()
+    //             ]);
 
-                // Dispatch the video processing job
-                ProcessVideoJob::dispatch($video)->onQueue('video-processing');
+    //             // Dispatch the video processing job
+    //             ProcessVideoJob::dispatch($video)->onQueue('video-processing');
                 
-                return response()->json([
-                    'message' => 'Video uploaded successfully and queued for processing',
-                    'path' => $url,
-                    'video' => $video
-                ], 200);
-            }
+    //             return response()->json([
+    //                 'message' => 'Video uploaded successfully and queued for processing',
+    //                 'path' => $url,
+    //                 'video' => $video
+    //             ], 200);
+    //         }
         
-            return response()->json(['message' => 'No file uploaded'], 400);
-        } catch (Throwable $th) {
-            throw $th;
-        }
+    //         return response()->json(['message' => 'No file uploaded'], 400);
+    //     } catch (Throwable $th) {
+    //         throw $th;
+    //     }
+    // }
+
+    public function uploadVideo(Request $request)
+{
+    $validator = Validator::make($request->all(), [
+        'video' => 'required|mimes:mp4,mov,avi,m4v,flv',
+        'slug' => 'required|exists:events,slug'
+    ]);
+
+    if ($validator->fails()) {
+        return response()->json([
+            'status' => false,
+            'message' => $validator->errors()->first()
+        ], 400);
     }
+
+    try {
+        // Create the file receiver
+        $receiver = new FileReceiver('video', $request, HandlerFactory::classFromRequest($request));
+
+        // Check if the upload is success
+        if ($receiver->isUploaded() === false) {
+            throw new UploadMissingFileException();
+        }
+
+        // Receive the file
+        $save = $receiver->receive();
+
+        // Check if the upload has finished
+        if ($save->isFinished()) {
+            // Save the file and process it
+            $file = $save->getFile();
+            $response = $this->saveVideo($file, $request->slug);
+
+            // Delete chunks directory if exists
+            if (Storage::exists('chunks')) {
+                Storage::deleteDirectory('chunks');
+            }
+
+            return response()->json([
+                'message' => 'Video uploaded successfully and queued for processing',
+                'path' => $response['path'],
+                'video' => $response['video']
+            ], 200);
+        }
+
+        // We are in chunk mode, send the current progress
+        $handler = $save->handler();
+        return response()->json([
+            'done' => $handler->getPercentageDone(),
+            'status' => true
+        ]);
+    } catch (\Throwable $th) {
+        return response()->json([
+            'status' => false,
+            'message' => $th->getMessage()
+        ], 500);
+    }
+}
+
+protected function saveVideo(UploadedFile $file, $eventSlug)
+{
+    $event = Event::where('slug', $eventSlug)->firstOrFail();
+    
+    // Generate a unique filename with original extension
+    $fileName = $this->generateVideoFilename($file);
+    
+    // Store the file in S3
+    $filePath = Storage::putFileAs('video_uploads', $file, $fileName);
+    $url = Storage::url($filePath);
+    
+    // Create video record
+    $video = Video::create([
+        'name' => $file->getClientOriginalName(),
+        'path' => $url,
+        'event_id' => $event->id,
+        'size' => $file->getSize(),
+        'status' => 'uploaded'
+    ]);
+    
+    // Dispatch processing job
+    ProcessVideoJob::dispatch($video)->onQueue('video-processing');
+    
+    return [
+        'path' => $url,
+        'video' => $video
+    ];
+}
+
+protected function generateVideoFilename(UploadedFile $file)
+{
+    $extension = $file->getClientOriginalExtension();
+    return 'vid_' . time() . '_' . bin2hex(random_bytes(8)) . '.' . $extension;
+}
 
         public function activateEvent(Request $request){
             $request->validate(['slug' => 'required|string|max:255']);

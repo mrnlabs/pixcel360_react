@@ -119,7 +119,7 @@ const handleSubmit = () => {
                     
                   />
                ))}
-
+{/* @ts-expect-error */}
               <OverLayModal 
               data={data}
                  setData={setData}
