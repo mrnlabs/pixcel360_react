@@ -19,6 +19,7 @@ use Pion\Laravel\ChunkUpload\Exceptions\UploadMissingFileException;
 use Pion\Laravel\ChunkUpload\Handler\HandlerFactory;
 use Pion\Laravel\ChunkUpload\Receiver\FileReceiver;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Log;
 
 class EventAPIController extends Controller
 {
@@ -71,12 +72,14 @@ class EventAPIController extends Controller
 
     public function uploadVideo(Request $request)
 {
+    Log::info('Received video upload request');
     $validator = Validator::make($request->all(), [
         'video' => 'required|mimes:mp4,mov,avi,m4v,flv',
         'slug' => 'required|exists:events,slug'
     ]);
-
+    Log::info('Passed validation...');
     if ($validator->fails()) {
+        Log::error('Validation errors: ' . json_encode($validator->errors()->all()));
         return response()->json([
             'status' => false,
             'message' => $validator->errors()->first()

@@ -228,7 +228,11 @@ export default function SelectedOverlay({ overlayPreset, events, overlaysLength 
                       src={overlayPreset.path} 
                       className="img-fluid inline-flex" 
                       alt="Preset Frame" 
-                      style={{width: presetDimensions.width, height: presetDimensions.height}}
+                      // style={{width: presetDimensions.width, height: presetDimensions.height}}
+                      style={{
+                        maxHeight: '80vh', // or whatever maximum height you prefer
+                        objectFit: 'contain'
+                    }}
                     />
                     </div>
                   )}
