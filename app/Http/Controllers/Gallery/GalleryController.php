@@ -36,7 +36,7 @@ class GalleryController extends Controller
                 $videosQuery->orderBy('name', 'desc');
                 break;
             default: // 'latest'
-                $videosQuery->where('processed_at', '!=', null)->latest();
+                $videosQuery->where('processed_video_path', '!=', null)->latest();
         }
 
         // Now paginate with all conditions applied
@@ -74,7 +74,7 @@ switch ($sort) {
         $videosQuery->orderBy('name', 'desc');
         break;
     default: // 'latest'
-        $videosQuery->where('processed_at', '!=', null)->latest();
+        $videosQuery->where('processed_video_path', '!=', null)->latest();
 }
 
 // Now paginate with all conditions applied
@@ -116,7 +116,7 @@ function share_gallery(Request $request, $slug){
                 $videosQuery->orderBy('name', 'desc');
                 break;
             default: // 'latest'
-                $videosQuery->where('processed_at', '!=', null)->latest();
+                $videosQuery->where('processed_video_path', '!=', null)->latest();
         }
         $videos = $videosQuery->paginate(8);
     return Inertia::render('Gallery/Share', [
