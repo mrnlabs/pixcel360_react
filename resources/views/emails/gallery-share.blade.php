@@ -75,7 +75,7 @@
             <p>Thank you for visiting the event. Click the link to view the event gallery:</p>
             
             <div style="text-align: center;">
-                <a href="{{ $galleryLink }}" class="button">View Gallery</a>
+                <a href="{{ $galleryLink }}" class="button" style="color: #ffff">View Gallery</a>
             </div>
             
             <p>If the button doesn't work, you can copy and paste the following link into your browser:</p>

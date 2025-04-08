@@ -7,7 +7,7 @@ import { formatFileSize } from '@/utils/formatFileSize';
 import { isAudioFile } from '@/utils/isAudioFile';
 import showToast from '@/utils/showToast';
 import { router, useForm } from '@inertiajs/react';
-import { Loader, Play, Pause, ArrowUpFromLine, Trash2, Scissors } from 'lucide-react'
+import { Loader, Play, Pause, ArrowUpFromLine, Trash2, Scissors, Loader2 } from 'lucide-react'
 import React, { Suspense, useState, useRef, useEffect } from 'react'
 
 export default function Audio({event}: any) {
@@ -104,6 +104,8 @@ export default function Audio({event}: any) {
         }
     };
 
+    const [isApplyingTrim, setIsApplyingTrim] = useState(false);
+
     const handleTrimAudio = async () => {
         if (!originalAudioFile || !audioRef.current || !audioDuration) return;
 
@@ -111,7 +113,7 @@ export default function Audio({event}: any) {
             // Create audio context
             // @ts-ignore
             const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-            
+            setIsApplyingTrim(true);
             // Get file as array buffer
             const arrayBuffer = await originalAudioFile.arrayBuffer();
             const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
@@ -158,12 +160,13 @@ export default function Audio({event}: any) {
             // Create URL for audio player
             const trimmedUrl = URL.createObjectURL(trimmedFile);
             setAudioUrl(trimmedUrl);
-            
+            setIsApplyingTrim(false);
             // Close trimmer
             setShowTrimmer(false);
             
             showToast('success', 'Audio trimmed successfully.', {position: 'bottom-right'});
         } catch (error) {
+            setIsApplyingTrim(false);
             console.error('Error trimming audio:', error);
             showToast('error', 'Error trimming audio.', {position: 'bottom-right'});
         }
@@ -309,7 +312,7 @@ export default function Audio({event}: any) {
                     onFileRemove={handleFileRemove}
                     multiple={false}
                     acceptedTypes={['audio/*']}
-                    maxSize={10 * 1024 * 1024} // 10MB
+                    maxSize={30 * 1024 * 1024} // 30MB
                     showPreview={false} 
                 />
             </Suspense>
@@ -400,7 +403,7 @@ export default function Audio({event}: any) {
                                     onClick={handleTrimAudio}
                                     disabled={processing}
                                 >
-                                    {processing ? <Loader className='mr-2 animate-spin'/> : null}
+                                    {isApplyingTrim ? <Loader2 className='mr-2 animate-spin'/> : null}
                                     Apply Trim
                                 </Button>
                             </div>
@@ -427,7 +430,7 @@ export default function Audio({event}: any) {
             {progress && (<progress value={progress.percentage} max="100">{progress.percentage}%</progress>)}
             <Suspense fallback={""}>
                 <ConfirmDialog 
-                    message="Do you want to delete this file from database ?"
+                    message="Do you want to delete this audio from database ?"
                     dialogOpen={dialogOpen} 
                     setDialogOpen={setDialogOpen}
                     onContinue={deleteDBFile}
