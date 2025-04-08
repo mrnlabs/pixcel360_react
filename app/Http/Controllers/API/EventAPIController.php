@@ -38,39 +38,39 @@ class EventAPIController extends Controller
     /**
      * Display a listing of the resource.
      */
-    // public function uploadVideo(Request $request)
-    // {
-    //     try {
-           
-    //         if ($request->hasFile('video')) {
-    //             $event = Event::where('slug', $request->slug)->first();
-    //             $filePath = Storage::put('video_uploads', $request->file('video'));
-                
-    //             $url = Storage::url($filePath);
-    //             $video = Video::create([
-    //                 'name' => $request->file('video')->getClientOriginalName(),
-    //                 'path' => $url,
-    //                 'event_id' => $event->id,
-    //                 'size' => $request->file('video')->getSize()
-    //             ]);
-
-    //             // Dispatch the video processing job
-    //             ProcessVideoJob::dispatch($video)->onQueue('video-processing');
-                
-    //             return response()->json([
-    //                 'message' => 'Video uploaded successfully and queued for processing',
-    //                 'path' => $url,
-    //                 'video' => $video
-    //             ], 200);
-    //         }
-        
-    //         return response()->json(['message' => 'No file uploaded'], 400);
-    //     } catch (Throwable $th) {
-    //         throw $th;
-    //     }
-    // }
-
     public function uploadVideo(Request $request)
+    {
+        try {
+           
+            if ($request->hasFile('video')) {
+                $event = Event::where('slug', $request->slug)->first();
+                $filePath = Storage::put('video_uploads', $request->file('video'));
+                
+                $url = Storage::url($filePath);
+                $video = Video::create([
+                    'name' => $request->file('video')->getClientOriginalName(),
+                    'path' => $url,
+                    'event_id' => $event->id,
+                    'size' => $request->file('video')->getSize()
+                ]);
+
+                // Dispatch the video processing job
+                ProcessVideoJob::dispatch($video)->onQueue('video-processing');
+                
+                return response()->json([
+                    'message' => 'Video uploaded successfully and queued for processing',
+                    'path' => $url,
+                    'video' => $video
+                ], 200);
+            }
+        
+            return response()->json(['message' => 'No file uploaded'], 400);
+        } catch (Throwable $th) {
+            throw $th;
+        }
+    }
+
+ /*   public function uploadVideo(Request $request)
 {
     Log::info('Received video upload request');
     $validator = Validator::make($request->all(), [
@@ -164,7 +164,7 @@ protected function generateVideoFilename(UploadedFile $file)
     $extension = $file->getClientOriginalExtension();
     return 'vid_' . time() . '_' . bin2hex(random_bytes(8)) . '.' . $extension;
 }
-
+*/
         public function activateEvent(Request $request){
             $request->validate(['slug' => 'required|string|max:255']);
            try {
