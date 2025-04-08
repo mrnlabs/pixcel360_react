@@ -13,6 +13,7 @@ import ShareGalleryViaEmailModal from './ShareGalleryViaEmailModal';
 import showToast from '@/utils/showToast';
 import { LoadingOverlay } from './LoadingOverlay';
 import axios from 'axios';
+import ShareGalleryViaEmailModalSingle from './ShareGalleryViaEmailModalSingle';
 
 export default function Share({event, videos}: {
         event: Event,
@@ -24,6 +25,8 @@ export default function Share({event, videos}: {
     const currentPage = videos?.current_page;
 
     const [modalOpen, setModalOpen] = useState(false);
+    const [openSingleModal, setSingleModalOpen] = useState(false);
+    const [video_link, setVideoLink] = useState('');
 
     const handlePageChange  = (page: number) => {
        router.get(route('shared_gallery',event?.slug), {page}, {
@@ -229,7 +232,12 @@ export default function Share({event, videos}: {
 
                 {event.sharing_method?.email == 1 ? (
                 
-                <button onClick={() => setModalOpen(true)} aria-label="anchor" 
+                <button onClick={() => {
+                  setVideoLink(video.processed_video_path)
+                  setSingleModalOpen(true)
+                }
+                } 
+                aria-label="anchor" 
                 className="ti-btn ti-btn-sm ti-btn bg-[linear-gradient(243deg,#FF4F84_0%,#394DFF_100%)] text-white">
                   <CustomTooltip content="Email">
                      <Mail size={17} />
@@ -282,6 +290,13 @@ export default function Share({event, videos}: {
                         setOpen={setModalOpen} 
                         event={event}
                         gallery_link={gallery_link}
+                        />
+
+                   <ShareGalleryViaEmailModalSingle 
+                        openSingleModal={openSingleModal} 
+                        setSingleModalOpen={setSingleModalOpen} 
+                        event={event}
+                        video_link={video_link}
                         />
                     </div>
           </div>

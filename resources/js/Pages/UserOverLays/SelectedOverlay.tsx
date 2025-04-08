@@ -197,7 +197,7 @@ export default function SelectedOverlay({ overlayPreset, events, overlaysLength 
                   <div className="w-full sm:w-auto text-sm text-gray-500 text-center">
                     <Button disabled={!data.pngFile || !value || processing}
                        onClick={overlaysLength > 0 ? () => setDialogOpen(true) : handleSubmit}
-                     className='w-full ti-btn ti-btn bg-[linear-gradient(243deg,#FF4F84_0%,#394DFF_100%)] text-white ti-btn-lg'>
+                     className={`${userOverlay ? 'animate-pulse' : ''} w-full ti-btn ti-btn bg-[linear-gradient(243deg,#FF4F84_0%,#394DFF_100%)] text-white ti-btn-lg`}>
                       Add to Event</Button>
                   </div>
                 )}

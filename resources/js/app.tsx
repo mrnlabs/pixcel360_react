@@ -2,13 +2,12 @@ import '../css/app.css';
 import '../css/progressbar.css';
 import './bootstrap';
 import '../css/dashboard.css';
-// import './theme.js'
 
 import { createInertiaApp } from '@inertiajs/react';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { createRoot } from 'react-dom/client';
 
-const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
+const appName = import.meta.env.VITE_APP_NAME || 'Pixcel360';
 
 createInertiaApp({
     title: (title) => `${title} - ${appName}`,

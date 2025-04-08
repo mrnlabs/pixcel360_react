@@ -16,16 +16,16 @@ import showToast from "@/utils/showToast";
 import InputError from "@/Components/InputError";
 import { Toaster } from "react-hot-toast";
 
-function ShareGalleryViaEmailModal({
-  open,
-  setOpen,
+function ShareGalleryViaEmailModalSingle({
+  openSingleModal,
+  setSingleModalOpen,
   event,
-  gallery_link
+  video_link
 }: {
-  open: boolean;
-  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  openSingleModal: boolean;
+  setSingleModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
   event: Event;
-  gallery_link: string;
+  video_link: string;
 }) {
   const [email, setEmail] = useState("");
   const [emails, setEmails] = useState<string[]>([]);
@@ -37,10 +37,9 @@ function ShareGalleryViaEmailModal({
   };
 
   const { data, setData, post, processing, errors, reset } = useForm({
-      emails: [],
+      email: '',
       event_id: event.id,
-      gallery_link: gallery_link,
-      terms_and_conditions: '0'
+      video_link: video_link,
   });
 
   const handleAddEmail = () => {
@@ -48,10 +47,7 @@ function ShareGalleryViaEmailModal({
       setMessage({ text: "Please enter an email address", type: "error" });
       return;
     }
-    if(!data.terms_and_conditions){
-      setMessage({ text: "Please accept terms and conditions", type: "error" });
-      return;
-    }
+   
 
     if (!validateEmail(email)) {
       setMessage({ text: "Please enter a valid email address", type: "error" });
@@ -65,7 +61,7 @@ function ShareGalleryViaEmailModal({
 
     setEmails([...emails, email]);
     // @ts-ignore
-    setData('emails', [...emails, email]);
+    setData("email", [...emails, email]);
     setEmail("");
     setMessage({ text: "", type: "" });
   };
@@ -82,12 +78,12 @@ function ShareGalleryViaEmailModal({
   };
 
   const handleSendEmails = async () => {
-    if (emails.length === 0) {
+    if (!data.email) {
       setMessage({ text: "Please add at least one email address", type: "error" });
       return;
     }
 
-    post(route('share_gallery_via_email', event.slug),{
+    post(route('share_single_video_gallery_via_email'),{
         preserveScroll: true,
         onSuccess: () => {
           reset();
@@ -102,13 +98,13 @@ function ShareGalleryViaEmailModal({
 
   return (
     <>
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog open={openSingleModal} onOpenChange={setSingleModalOpen}>
       <DialogContent className="sm:max-w-[535px] top-[15%] translate-y-0">
         <DialogHeader className="border-b">
-          <DialogTitle className="card-title">Share via Email</DialogTitle>
+          <DialogTitle className="card-title">Share Video Via Email</DialogTitle>
           <DialogDescription></DialogDescription>
         </DialogHeader>
-        Share this gallery by adding one or more email addresses
+        Share this gallery by adding anemail address
         <div className="flex justify-center items-center">
           <div className="input-group w-full">
             <input
@@ -131,7 +127,7 @@ function ShareGalleryViaEmailModal({
             </button>
           </div>
         </div>
-        <InputError message={errors.emails} />
+        <InputError message={errors.email} />
         
         {message.text && (
           <div className={`text-sm ${message.type === "error" ? "text-red-500" : "text-green-500"}`}>
@@ -147,44 +143,39 @@ function ShareGalleryViaEmailModal({
                   Sharing to...
                 </span>
               </li>
-              {emails.map((email, index) => (
-                <li key={index}>
+             
+                <li>
                   <div className="flex items-center gap-2">
                     <div>
-                      <span>{email}</span>
+                      <span>{data.email}</span>
                     </div>
                     <div className="ms-auto">
                       <span
                         className="font-medium   cursor-pointer"
-                        onClick={() => handleRemoveEmail(email)}
+                        onClick={() => setData('email','')}
                       >
                         <Trash2 size={18} className="text-danger" />
                       </span>
                     </div>
                   </div>
                 </li>
-              ))}
+            
             </ul>
           )}
 
-<div className="form-check flex items-center gap-2 mt-4">
-    <input onChange={(e) => setData('terms_and_conditions', e.target.checked ? '1' : '0')} required={true} className="form-check-input" type="checkbox" value="" id="flexCheckChecked" /> 
-    <label className="form-check-label" htmlFor="flexCheckChecked"> I grant my permission to use this email to send me emails.
-</label>
-<InputError message={errors.terms_and_conditions} />
-</div> 
+
         </div>
         
         <DialogFooter className="flex gap-2 justify-end">
           <Button 
-            onClick={() => setOpen(false)} 
+            onClick={() => setSingleModalOpen(false)} 
             variant="outline"
             className="ti-btn">
             Cancel
           </Button>
           <Button
             onClick={handleSendEmails}
-            disabled={processing || emails.length === 0}
+            disabled={processing || data.email == ""}
             className="ti-btn bg-[linear-gradient(243deg,#FF4F84_0%,#394DFF_100%)] text-white btn-wave waves-effect waves-light"
           >
             {processing ? "Sending..." : "Send"}
@@ -197,4 +188,4 @@ function ShareGalleryViaEmailModal({
   );
 }
 
-export default ShareGalleryViaEmailModal;
+export default ShareGalleryViaEmailModalSingle;

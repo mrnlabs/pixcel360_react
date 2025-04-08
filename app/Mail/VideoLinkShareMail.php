@@ -10,7 +10,7 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Mail\Mailables\Envelope;
 
-class GalleryShareMail extends Mailable
+class VideoLinkShareMail extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -29,8 +29,8 @@ class GalleryShareMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: "Gallery Share - {$this->event->setting->gallery_name} - {$this->event->name}",
-            from: new Address(env('MAIL_FROM_ADDRESS'), 'Photo Booth')
+            subject: "Video Link - {$this->event->setting->gallery_name} - {$this->event->name}",
+            from: new Address(env('MAIL_FROM_ADDRESS'), 'Pixcel360 Photo Booth')
         );
     }
 
@@ -40,9 +40,9 @@ class GalleryShareMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'emails.gallery-share',
+            view: 'emails.gallery-video-link',
             with: [
-                'eventName' => $this->event->setting->gallery_name ?? 'Event Gallery',
+                'eventName' => $this->event->setting->gallery_name ?? 'Event Video Link',
                 'galleryLink' => $this->galleryLink,
                 'logo' => $this->logo,
             ],

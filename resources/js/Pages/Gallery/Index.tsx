@@ -139,7 +139,7 @@ const handleDelete = (videos: any) => {
                   <a 
                    href={link}
                    target='_blank'
-                  type="button" className="ti-btn ti-btn-sm bg-[linear-gradient(243deg,#FF4F84_0%,#394DFF_100%)] text-white ">
+                  type="button" className="ti-btn  bg-[linear-gradient(243deg,#FF4F84_0%,#394DFF_100%)] text-white ">
                     Public Gallery
                     </a>
                   </CustomTooltip>

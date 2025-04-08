@@ -3,6 +3,7 @@
 namespace App\Jobs;
 
 use App\Mail\GalleryShareMail;
+use App\Mail\VideoLinkShareMail;
 use App\Models\Event;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -12,7 +13,7 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Log;
 
-class SendGalleryShareEmail implements ShouldQueue
+class SendVideoLinkEmail implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -45,16 +46,16 @@ class SendGalleryShareEmail implements ShouldQueue
     public function handle(): void
     {
         try {
-            Mail::to($this->email)->send(new GalleryShareMail(
+            Mail::to($this->email)->send(new VideoLinkShareMail(
                 $this->event,
                 $this->galleryLink,
                 $this->logo
             ));
             
             // Log successful email sending
-            Log::info("Gallery share email sent successfully to: {$this->email} for event: {$this->event->id}");
+            Log::info("Gallery video link shared email sent successfully to: {$this->email} for event: {$this->event->id}");
         } catch (\Exception $e) {
-            Log::error("Failed to send gallery share email to {$this->email}: " . $e->getMessage());
+            Log::error("Failed to send gallery video link shared email to {$this->email}: " . $e->getMessage());
             throw $e;
         }
     }
