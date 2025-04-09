@@ -93,6 +93,7 @@ function ShareGalleryViaEmailModal({
           reset();
           setEmails([]);
           showToast('success', 'Email sent successfully!', {position: 'bottom-right'});
+          setOpen(false);
         },
         onError: () => {
           showToast('error', 'Failed to share gallery. Please try again.', {position: 'bottom-right'});

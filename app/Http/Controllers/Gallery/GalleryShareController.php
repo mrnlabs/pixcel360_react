@@ -21,9 +21,7 @@ class GalleryShareController extends Controller
             'gallery_link' => 'required|url'
         ]);
 
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 422);
-        }
+       
 
         $event = Event::findOrFail($request->event_id);
         $emails = $request->emails;
@@ -51,16 +49,15 @@ class GalleryShareController extends Controller
         $validator = Validator::make($request->all(), [
             'email' => 'required|email',
             'event_id' => 'required|exists:events,id',
-            'gallery_link' => 'required|url'
+            'video_link' => 'required|url'
         ]);
 
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 422);
-        }
+     
+        $validator->validate();
 
         $event = Event::findOrFail($request->event_id);
         $email = $request->email;
-        $videoLink = $request->videoLink;
+        $videoLink = $request->video_link;
         $logo =  $event->setting->app_logo;
 
         try {

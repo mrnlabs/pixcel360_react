@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/Components/ui/button";
 import {
   Dialog,
@@ -27,6 +27,10 @@ function ShareGalleryViaEmailModalSingle({
   event: Event;
   video_link: string;
 }) {
+  console.log(video_link)
+ 
+
+     
   const [email, setEmail] = useState("");
   const [emails, setEmails] = useState<string[]>([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -42,6 +46,11 @@ function ShareGalleryViaEmailModalSingle({
       video_link: video_link,
   });
 
+  useEffect(() => {
+    if (video_link) {
+      setData("video_link", video_link)
+    }
+  }, [video_link]);
   const handleAddEmail = () => {
     if (!email) {
       setMessage({ text: "Please enter an email address", type: "error" });
@@ -61,7 +70,7 @@ function ShareGalleryViaEmailModalSingle({
 
     setEmails([...emails, email]);
     // @ts-ignore
-    setData("email", [...emails, email]);
+    setData("email", email);
     setEmail("");
     setMessage({ text: "", type: "" });
   };
@@ -88,7 +97,9 @@ function ShareGalleryViaEmailModalSingle({
         onSuccess: () => {
           reset();
           setEmails([]);
+          reset('email');
           showToast('success', 'Email sent successfully!', {position: 'bottom-right'});
+          setSingleModalOpen(false)
         },
         onError: () => {
           showToast('error', 'Failed to share gallery. Please try again.', {position: 'bottom-right'});
@@ -104,7 +115,7 @@ function ShareGalleryViaEmailModalSingle({
           <DialogTitle className="card-title">Share Video Via Email</DialogTitle>
           <DialogDescription></DialogDescription>
         </DialogHeader>
-        Share this gallery by adding anemail address
+        Share this gallery by adding an email address
         <div className="flex justify-center items-center">
           <div className="input-group w-full">
             <input
@@ -112,7 +123,10 @@ function ShareGalleryViaEmailModalSingle({
               className="form-control !border-s"
               placeholder="email-to@share.com"
               value={email}
-              onChange={(e) => {setEmail(e.target.value)}}
+              onChange={(e) => {
+                setData('email', e.target.value);
+                setEmail(e.target.value)}
+              }
               onKeyPress={handleKeyPress}
               autoComplete="email"
               aria-describedby="button-addon01"
