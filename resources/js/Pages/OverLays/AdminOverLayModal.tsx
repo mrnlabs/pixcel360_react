@@ -117,6 +117,7 @@ function AdminOverLayModal({
                                         className="form-control mb-3"
                                         />
                                 <FileUpload
+                                   iconType="image"
                                    dropzoneText="Drag and drop a PNG file here or click to browse"
                                     onFilesSelected={handleFileSelect}
                                     onFileRemove={handleFileRemove}

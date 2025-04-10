@@ -307,6 +307,7 @@ export default function Audio({event}: any) {
         <div className="space-y-4"> 
             <Suspense fallback={<Loader className="mx-auto" size={20} />}>
                 <FileUpload
+                    iconType='music'
                     dropzoneText="Drag and drop an audio file here or click to browse"
                     onFilesSelected={handleFileSelect}
                     onFileRemove={handleFileRemove}

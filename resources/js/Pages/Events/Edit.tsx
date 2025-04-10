@@ -116,13 +116,16 @@ export default function Edit({event} : EventProps) {
       <div className="box-body p-0">
         <div className="file-manager-folders">
           <div className="flex p-4 flex-wrap gap-2 items-center justify-between border-b border-defaultborder dark:border-defaultborder/10">
-            <div className="flex-auto">
+            <div className="flex flex-auto ">
               <h6 className="font-medium mb-0">{getHeader()}</h6>
             </div>
-            <div className=" gap-2 lg:nowrap justify-end flex-wrap justify-content-sm-end sm:w-[80%] hidden">
+            <div className=" gap-2 lg:nowrap justify-end flex-wrap justify-content-sm-end ">
+              {activeTab == 'overlay' && (
+                <Link href={route('user.overlays')} aria-label="button" type="button" 
+                className="ti-btn bg-[linear-gradient(243deg,#FF4F84_0%,#394DFF_100%)] float-end text-white !m-0 btn-w-md flex items-center btn-wave waves-light text-nowrap waves-effect waves-light">
+                  <SquarePlus className="align-middle" />Designer </Link>
+              )}
               
-              <Link href={route('event.create')} aria-label="button" type="button" className="ti-btn bg-[linear-gradient(243deg,#FF4F84_0%,#394DFF_100%)] text-white !m-0 btn-w-md flex items-center  btn-wave waves-light text-nowrap waves-effect waves-light">
-                <SquarePlus className="align-middle" />Create New Event </Link>
               
             </div>
           </div>

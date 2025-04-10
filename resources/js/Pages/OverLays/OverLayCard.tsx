@@ -12,7 +12,7 @@ export default function OverLayCard({overlay, setModalOpen,handleDelete}:
             <div className="box">
               <img 
                 // onClick={() => setModalOpen(true)} 
-                src={overlay?.path} className="object-fill h-80 card-img-top cursor-pointer" alt={overlay?.name}/>
+                src={overlay?.path} className="object-fill card-img-top cursor-pointer" alt={overlay?.name}/>
               <div className="box-body">
                 <h6 className="font-medium mb-3 text-center">{overlay?.name}({JSON.parse(overlay?.dimensions)?.width} x {JSON.parse(overlay?.dimensions)?.height})</h6>
                 <div className='text-center'>

@@ -37,7 +37,7 @@ export default function UserOverLayCard({
         <div className="relative">
           <img 
             src={overlay?.path} 
-            className="object-fill h-80 card-img-top cursor-pointer" 
+            className="object-fill h-full card-img-top cursor-pointer" 
             alt={overlay?.name}
           />
           {isActive && (

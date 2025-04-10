@@ -1,5 +1,5 @@
 import React, { useState, useRef, useCallback } from 'react';
-import { Plus, File, X, Image as ImageIcon, Music } from 'lucide-react';
+import { Plus, File, X, Image as ImageIcon, Music, Image } from 'lucide-react';
 
 interface FileWithPreview extends File {
   preview?: string;
@@ -9,6 +9,7 @@ export interface FileUploadProps {
   // Core props
   onFilesSelected: (files: File[]) => void;
   onFileRemove?: (file: File) => void;
+  iconType?: string;
   
   // Configuration props
   multiple?: boolean;
@@ -28,6 +29,7 @@ export interface FileUploadProps {
 }
 
 const FileUpload: React.FC<FileUploadProps> = ({
+  iconType = 'image',
   onFilesSelected,
   onFileRemove,
   multiple = false,
@@ -47,6 +49,17 @@ const FileUpload: React.FC<FileUploadProps> = ({
   const [error, setError] = useState<string | null>(null);
   const [isDragging, setIsDragging] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const getIcon = () => {
+    switch (iconType) {
+      case 'image':
+        return <Image className="w-12 h-12 mb-4" />;
+      case 'music':
+        return <Music className="w-12 h-12 mb-4" />;
+      default:
+        return <File className="w-12 h-12 mb-4" />;
+    }
+  };
 
   const validateFile = useCallback((file: File): string | null => {
     if (maxSize && file.size > maxSize) {
@@ -165,7 +178,7 @@ const FileUpload: React.FC<FileUploadProps> = ({
         `}
       >
         <div className="flex flex-col items-center justify-center min-h-[10rem] text-gray-500">
-          {multiple ? <Plus className="w-12 h-12 mb-4" /> : <Music className="w-12 h-12 mb-4" />}
+          {multiple ? <Plus className="w-12 h-12 mb-4" /> : getIcon()}
           <p className="text-sm text-center">{dropzoneText}</p>
           <p className="text-xs mt-2 text-gray-400">
             {acceptedTypes[0] === '*/*' 
