@@ -27,4 +27,8 @@ class Subscription extends Model
     {
         return $this->belongsTo(Plan::class);
     }
+
+    public function devices(){
+        return $this->hasMany(Device::class);
+    }
 }

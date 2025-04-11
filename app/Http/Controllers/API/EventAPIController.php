@@ -2,24 +2,26 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Http\Controllers\Controller;
+use Throwable;
+use App\Models\User;
 use Inertia\Inertia;
 use App\Models\Event;
-use Illuminate\Http\Request;
-use App\Services\EventService;
-use App\Services\VideoSettingsService;
-use App\Services\SharingSettingsService;
-use App\Jobs\ProcessVideoJob;
 use App\Models\Video;
-use Illuminate\Support\Facades\Storage;
-use Throwable;
-
-use Illuminate\Support\Facades\Validator;
-use Pion\Laravel\ChunkUpload\Exceptions\UploadMissingFileException;
-use Pion\Laravel\ChunkUpload\Handler\HandlerFactory;
-use Pion\Laravel\ChunkUpload\Receiver\FileReceiver;
+use Illuminate\Http\Request;
+use App\Jobs\ProcessVideoJob;
+use App\Services\EventService;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Log;
+use App\Http\Controllers\Controller;
+
+use App\Services\VideoSettingsService;
+use Illuminate\Support\Facades\Storage;
+use App\Services\SharingSettingsService;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
+use Pion\Laravel\ChunkUpload\Receiver\FileReceiver;
+use Pion\Laravel\ChunkUpload\Handler\HandlerFactory;
+use Pion\Laravel\ChunkUpload\Exceptions\UploadMissingFileException;
 
 class EventAPIController extends Controller
 {
@@ -186,9 +188,18 @@ protected function generateVideoFilename(UploadedFile $file)
                         'message' => $validator->errors()->first()
                     ], 400);
                 }
-                $event->devices()->create([
+                $user= User::whereId($event->user_id)->first();
+             $hasReachedLimit = $user->currentSubscription->devices()->count() >= $user->currentSubscription->plan->device_limit;
+             if ($hasReachedLimit) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Device limit reached.'
+                ], 400);
+            }
+                DB::table('devices')->insert([
                     'device_name' => $request->device_name,
-                    'device_id' => $request->device_id
+                    'device_id' => $request->device_id,
+                    'subscription_id' => $user->currentSubscription->id,
                 ]);
                 $event->update(['status' => true]);
                 return response()->json($event);
