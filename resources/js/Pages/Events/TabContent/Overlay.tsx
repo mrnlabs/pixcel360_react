@@ -1,6 +1,6 @@
 import { EventProps } from '@/types'
 import showToast from '@/utils/showToast';
-import { router } from '@inertiajs/react';
+import { Head, router } from '@inertiajs/react';
 import axios from 'axios';
 import { Download, DownloadCloud, Trash2 } from 'lucide-react';
 import React, { useEffect, useState } from 'react'
@@ -59,6 +59,7 @@ export default function Overlay({event} : EventProps) {
   return (
     
     <div className="grid grid-cols-12 gap-x-6">
+        <Head title="Event Overlays" />
        {
         overlays?.length > 0 ? (
             overlays?.map((overlay: any) => (

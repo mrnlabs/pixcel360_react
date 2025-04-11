@@ -113,7 +113,7 @@ export default function EventSidebar({activeTab,setActiveTab, scrollToDiv,event}
                     <div className="me-2">
                     <Dice5 size={16} />
                     </div>
-                    <span className="flex-auto text-nowrap"> Branding </span>
+                    <span className="flex-auto text-nowrap"> Gallery Branding </span>
                   </div>
                 </div>
               </li>

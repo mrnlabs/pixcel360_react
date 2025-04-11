@@ -6,7 +6,7 @@ import { Slider } from '@/Components/ui/slider';
 import { formatFileSize } from '@/utils/formatFileSize';
 import { isAudioFile } from '@/utils/isAudioFile';
 import showToast from '@/utils/showToast';
-import { router, useForm } from '@inertiajs/react';
+import { Head, router, useForm } from '@inertiajs/react';
 import { Loader, Play, Pause, ArrowUpFromLine, Trash2, Scissors, Loader2 } from 'lucide-react'
 import React, { Suspense, useState, useRef, useEffect } from 'react'
 
@@ -305,6 +305,7 @@ export default function Audio({event}: any) {
     
     return (
         <div className="space-y-4"> 
+        <Head title="Gallery Audio" />
             <Suspense fallback={<Loader className="mx-auto" size={20} />}>
                 <FileUpload
                     iconType='music'
@@ -334,7 +335,7 @@ export default function Audio({event}: any) {
                                 <div className="flex-1">
                                     <span className="text-sm flex font-medium">
                                         {audioFile?.name || "Audio file"}
-                                        {audioFile && (
+                                        {/* {audioFile && (
                                             <>
                                                 <CustomTooltip content="Trim Audio">
                                                     <span>
@@ -346,7 +347,7 @@ export default function Audio({event}: any) {
                                                     </span>
                                                 </CustomTooltip>
                                             </>
-                                        )}
+                                        )} */}
                                         <CustomTooltip content="Remove">
                                             <span>
                                                 <Trash2 
@@ -369,19 +370,34 @@ export default function Audio({event}: any) {
                         </li>
                     </ul>
                     
-                    {showTrimmer && audioFile && (
+                    {/* {showTrimmer && audioFile && ( */}
+                        {audioFile && (
                         <div className="mt-4 p-4 border rounded-lg">
                             <h4 className="text-sm font-medium mb-2">Trim Audio</h4>
-                            <div className="mb-4">
-                                <Slider
-                                    value={trimRange}
-                                    onValueChange={handleTrimRangeChange}
-                                    min={0}
-                                    max={100}
-                                    step={0.1}
-                                    className="my-4"
+                            <div className="mb-4 relative">
+                            <Slider
+                                value={trimRange}
+                                onValueChange={handleTrimRangeChange}
+                                min={0}
+                                max={100}
+                                step={0.1}
+                                className="my-4"
+                            />
+                            {/* Custom handles */}
+                            <div className="absolute top-1/2 -translate-y-1/2 left-0 right-0 pointer-events-none">
+                                <div 
+                                    className="absolute w-4 h-4 rounded-full bg-primary -translate-x-1/2 -translate-y-1/2"
+                                    style={{ left: `${trimRange[0]}%` }}
                                 />
-                                <div className="flex justify-between text-xs text-gray-500">
+                                <div 
+                                    className="absolute w-4 h-4 rounded-full bg-primary -translate-x-1/2 -translate-y-1/2"
+                                    style={{ left: `${trimRange[1]}%` }}
+                                />
+                            </div>
+    
+                            </div>
+
+                            <div className="flex justify-between text-xs text-gray-500">
                                     <span>
                                         {audioDuration ? formatTime((trimRange[0] / 100) * audioDuration) : '0:00'}
                                     </span>
@@ -389,7 +405,6 @@ export default function Audio({event}: any) {
                                         {audioDuration ? formatTime((trimRange[1] / 100) * audioDuration) : '0:00'}
                                     </span>
                                 </div>
-                            </div>
                             <div className="flex justify-end space-x-2">
                                 <Button className='ti-btn'
                                     variant="outline" 

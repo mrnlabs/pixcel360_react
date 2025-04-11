@@ -21,7 +21,7 @@ export default function UserCard({user, setUser, setDialogOpen}:
         <div className="text-center">
           <div className="mb-2">
             <span className={`avatar avatar-xl avatar-rounded  ${user && isRecentlyLogin(user) ? 'online' : 'offline'}`}>
-              <img src={user?.photo ?? 'https://picxel-bucket.s3.af-south-1.amazonaws.com/placeholders/profile_placeholder.jpg'} alt=""/>
+              <img src={user?.photo ?? 'https://picxel-bucket.s3.af-south-1.amazonaws.com/placeholders/128x128.png'} alt=""/>
             </span>
           </div>
           <div className="main-profile-info">

@@ -46,6 +46,7 @@ class VideoSettingsController extends Controller
             'gallery_name' => $request->gallery_name,
             'text_button_color' => $request->text_button_color,
             'gallery_contact'    => $request->gallery_contact,
+            'webgallery_background' => $request->webgallery_background
         ]);
         return back()->with('success', 'Event settings updated successfully');
     }

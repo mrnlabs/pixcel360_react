@@ -1,6 +1,6 @@
 import { Button } from '@/Components/ui/button'
 import showToast from '@/utils/showToast';
-import { useForm } from '@inertiajs/react';
+import { Head, useForm } from '@inertiajs/react';
 import { Loader } from 'lucide-react';
 import { useEffect } from 'react';
 export default function SharingSubjects({event} : any) {
@@ -39,6 +39,7 @@ export default function SharingSubjects({event} : any) {
 
   return (
     <div className=" rounded-lg p-6">
+      <Head title="Sharing Subjects" />
     <div className="grid grid-cols-12 sm:gap-x-6 gap-y-6">
 
     <div className="xl:col-span-6 lg:col-span-6 md:col-span-6 sm:col-span-12 col-span-12">

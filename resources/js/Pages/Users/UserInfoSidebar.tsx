@@ -10,7 +10,7 @@ export default function UserInfoSidebar({user} : {user: User | null}) {
               <div className="box-body border-b border-dashed border-defaultborder dark:border-defaultborder/10">
                 <div className="text-center">
                   <span className={`avatar avatar-xxl avatar-rounded online mb-3 ${user && isRecentlyLogin(user) ? 'online' : 'offline'}`}>
-                    <img src={user?.photo ?? 'https://picxel-bucket.s3.af-south-1.amazonaws.com/placeholders/profile_placeholder.jpg'} alt=""/>
+                    <img src={user?.photo ?? 'https://picxel-bucket.s3.af-south-1.amazonaws.com/placeholders/128x128.png'} alt=""/>
                   </span>
                   <h5 className="font-semibold mb-1">{user?.firstname} {user?.lastname}</h5>
                   <p className="text-xs mb-0 text-textmuted dark:text-textmuted/50">

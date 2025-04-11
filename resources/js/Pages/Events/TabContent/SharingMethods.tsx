@@ -1,7 +1,7 @@
 import CustomToggle from '@/Components/Form/CustomToggle'
 import { Button } from '@/Components/ui/button'
 import showToast from '@/utils/showToast'
-import { useForm } from '@inertiajs/react'
+import { Head, useForm } from '@inertiajs/react'
 import { Loader } from 'lucide-react'
 import { useEffect } from 'react'
 
@@ -45,6 +45,7 @@ export default function SharingMethods({event} : any) {
 
   return (
     <div className=" rounded-lg p-6">
+      <Head title="Sharing Methods" />
     <div className="grid grid-cols-12 sm:gap-x-6 gap-y-6">
 
     <div className="xl:col-span-3 lg:col-span-3 md:col-span-3 sm:col-span-12 col-span-12">

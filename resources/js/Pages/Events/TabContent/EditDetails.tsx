@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { Input } from '@/Components/ui/input'
-import { useForm } from '@inertiajs/react'
+import { Head, useForm } from '@inertiajs/react'
 import InputError from '@/Components/InputError'
 import CountrySelector from '../../Profile/CountrySelector'
 import QuillEditor from '@/Components/Editors/QuillEditor'
@@ -55,6 +55,7 @@ const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
    
    
     <div className="bg-white rounded-lg shadow-sm p-6" id="event-details">
+      <Head title="Edit Event" />
     <div className="grid grid-cols-1 md:grid-cols-2 w-full gap-6">
       <div className="space-y-4">
         <div>

@@ -57,7 +57,7 @@ export default function Edit({event} : EventProps) {
           case 'sharing-subjects':
               return 'Sharing subjects';
           case 'branding':
-              return 'Branding';
+              return 'Gallery Branding';
           case 'overlay':
               return 'Overlays of ' + event?.name;
           default:

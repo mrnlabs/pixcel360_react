@@ -3,7 +3,7 @@ import { Button } from '@/Components/ui/button'
 import { Input } from '@/Components/ui/input'
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/Components/ui/select'
 import showToast from '@/utils/showToast'
-import { useForm } from '@inertiajs/react'
+import { Head, useForm } from '@inertiajs/react'
 import { Loader } from 'lucide-react'
 import React, { useEffect } from 'react'
 
@@ -48,6 +48,7 @@ const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
 };
   return (
     <div className=" rounded-lg p-6">
+      <Head title="Event Video Functions" />
     <div className="grid grid-cols-2 gap-6">
       <div className="space-y-4">
         {/* <div>

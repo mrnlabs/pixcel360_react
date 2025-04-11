@@ -2,7 +2,7 @@ import { Button } from '@/Components/ui/button'
 import { Input } from '@/Components/ui/input'
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/Components/ui/select'
 import showToast from '@/utils/showToast'
-import { useForm } from '@inertiajs/react'
+import { Head, useForm } from '@inertiajs/react'
 import { Loader } from 'lucide-react'
 import React, { useEffect } from 'react'
 
@@ -42,6 +42,7 @@ useEffect(() => {
 
   return (
     <div className=" rounded-lg p-6">
+      <Head title="TimeOuts" />
     <div className="grid grid-cols-12 sm:gap-x-6 gap-y-6">
 
     <div className="xl:col-span-6 lg:col-span-6 md:col-span-6 sm:col-span-12 col-span-12">

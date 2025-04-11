@@ -7,7 +7,7 @@ import React, { useState } from 'react'
 export default function HeaderProfile() {
   // @ts-ignore
   const user = usePage().props.auth.user;
-  const [preview, setPreview] = useState(user?.photo ? user?.photo : 'https://picxel-bucket.s3.af-south-1.amazonaws.com/placeholders/profile_placeholder.jpg');
+  const [preview, setPreview] = useState(user?.photo ? user?.photo : 'https://picxel-bucket.s3.af-south-1.amazonaws.com/placeholders/128x128.png');
     const goToProfile = () => {
         router.get('/profile')
     }
