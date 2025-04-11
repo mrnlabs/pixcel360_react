@@ -211,7 +211,7 @@ class UserOverlayController extends Controller
     function displaySelectedOverlay($overlayId){
         $overlay = Overlay::findOrFail($overlayId);
         //pluck id and name of events only
-        $events = Event::where('status', '1')->where('user_id', auth()->id())->get(['slug', 'name']);
+        $events = Event::where('user_id', auth()->id())->get(['slug', 'name']);
         $overlaysLength = Overlay::where('user_id', auth()->id())->count();
         return Inertia::render('UserOverLays/SelectedOverlay', [
             'overlayPreset' => $overlay,

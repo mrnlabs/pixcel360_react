@@ -150,20 +150,20 @@ const AdminSidebar: React.FC = () => {
       )
     },
 
-    {
-      id: 'payment-methods',
-      label: 'Payment Methods',
-      path: '/payment-methods',
-      icon: (<IdCard className="h-6 w-6 mr-2 text-white" />
-      ),
-      subItems: [
-        {
-          label: 'Add Payment Method',
-          path: '/plans/create',
-          icon: (<Plus className="h-5 w-5 mr-2" />)
-        }
-      ]
-    },
+    // {
+    //   id: 'payment-methods',
+    //   label: 'Payment Methods',
+    //   path: '/payment-methods',
+    //   icon: (<IdCard className="h-6 w-6 mr-2 text-white" />
+    //   ),
+    //   subItems: [
+    //     {
+    //       label: 'Add Payment Method',
+    //       path: '/plans/create',
+    //       icon: (<Plus className="h-5 w-5 mr-2" />)
+    //     }
+    //   ]
+    // },
     //  {
     //   id: 't_and_cs',
     //   label: 'T & Cs',

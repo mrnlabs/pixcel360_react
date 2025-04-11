@@ -10,6 +10,13 @@ import { Head, router, useForm } from '@inertiajs/react';
 import { Loader, Play, Pause, ArrowUpFromLine, Trash2, Scissors, Loader2 } from 'lucide-react'
 import React, { Suspense, useState, useRef, useEffect } from 'react'
 
+// Helper function to format time in MM:SS format
+function formatTime(seconds: number): string {
+    const minutes = Math.floor(seconds / 60);
+    const secs = Math.floor(seconds % 60);
+    return `${minutes}:${secs.toString().padStart(2, '0')}`;
+}
+
 export default function Audio({event}: any) {
     const [dbAudio, setDbAudio] = useState(null);
     const [dialogOpen, setDialogOpen] = useState(false);
@@ -335,7 +342,7 @@ export default function Audio({event}: any) {
                                 <div className="flex-1">
                                     <span className="text-sm flex font-medium">
                                         {audioFile?.name || "Audio file"}
-                                        {/* {audioFile && (
+                                        {audioFile && (
                                             <>
                                                 <CustomTooltip content="Trim Audio">
                                                     <span>
@@ -347,7 +354,7 @@ export default function Audio({event}: any) {
                                                     </span>
                                                 </CustomTooltip>
                                             </>
-                                        )} */}
+                                        )} 
                                         <CustomTooltip content="Remove">
                                             <span>
                                                 <Trash2 
@@ -371,7 +378,7 @@ export default function Audio({event}: any) {
                     </ul>
                     
                     {/* {showTrimmer && audioFile && ( */}
-                        {audioFile && (
+                        {showTrimmer &&audioFile && (
                         <div className="mt-4 p-4 border rounded-lg">
                             <h4 className="text-sm font-medium mb-2">Trim Audio</h4>
                             <div className="mb-4 relative">
@@ -456,9 +463,3 @@ export default function Audio({event}: any) {
     )
 }
 
-// Helper function to format time in MM:SS format
-function formatTime(seconds: number): string {
-    const minutes = Math.floor(seconds / 60);
-    const secs = Math.floor(seconds % 60);
-    return `${minutes}:${secs.toString().padStart(2, '0')}`;
-}

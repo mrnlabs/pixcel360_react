@@ -79,9 +79,15 @@ class ProcessVideoJob implements ShouldQueue
                 'slow_factor' => $videoSettings->speed ?? 0.7,//speed
                 'effect' => 'slomo_boomerang',
                 'video_url' => $videoPath,
-                'audio_url' => $videoSettings->add_audio_file,
-                'overlay_url' => $eventOverlay->path,
+                // 'audio_url' => $videoSettings->add_audio_file,
             ];
+            if ($videoSettings->add_audio_file) {
+                $data['audio_url'] = $videoSettings->add_audio_file;
+            }
+
+            if ($eventOverlay) {
+                $data['overlay_url'] = $eventOverlay->path;
+            }
     
             $stringifiedData = http_build_query($data);
     
