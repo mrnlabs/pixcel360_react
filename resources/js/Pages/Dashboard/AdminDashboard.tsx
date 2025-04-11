@@ -1,15 +1,15 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, usePage } from '@inertiajs/react';
-import HeaderCard from './Dashboard/HeaderCard';
+import HeaderCard from './HeaderCard';
 import { Breadcrumb } from '@/Shared/Breadcrumb';
 import { DashboardProps } from '@/types';
-import DBarChart from './Charts/DBarChart';
+import DBarChart from '../Charts/DBarChart';
 import showToast from '@/utils/showToast';
 import { Suspense, useEffect } from 'react';
 import { Loader } from 'lucide-react';
-import EventCard from './Dashboard/EventCard';
+import EventCard from './EventCard';
 
-export default function Dashboard({ metrics: { metrics, userAnalytics },events }: DashboardProps) {
+export default function AdminDashboard({ metrics: { metrics, userAnalytics },events }: DashboardProps) {
   // @ts-ignore
   const user = usePage().props.auth.user;
 

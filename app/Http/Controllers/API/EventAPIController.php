@@ -169,10 +169,10 @@ protected function generateVideoFilename(UploadedFile $file)
 
            try {
             $event = Event::where('slug', $request->slug)->firstOrFail();
-            if($request->close_event){
-                $event->update(['status' => '2']);
-                return response()->json(['message' => 'Event closed successfully.'], 200);
-            }
+                if($request->close_event){
+                    $event->update(['status' => '2']);
+                    return response()->json(['message' => 'Event closed successfully.'], 200);
+                }
 
                 $validator = Validator::make($request->all(), [
                     'slug' => 'required|string|max:255',
@@ -186,7 +186,10 @@ protected function generateVideoFilename(UploadedFile $file)
                         'message' => $validator->errors()->first()
                     ], 400);
                 }
-
+                $event->devices()->create([
+                    'device_name' => $request->device_name,
+                    'device_id' => $request->device_id
+                ]);
                 $event->update(['status' => true]);
                 return response()->json($event);
            } catch (\Throwable $th) {
