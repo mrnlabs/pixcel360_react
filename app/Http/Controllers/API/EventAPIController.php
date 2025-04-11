@@ -166,9 +166,27 @@ protected function generateVideoFilename(UploadedFile $file)
 }
 */
         public function activateEvent(Request $request){
-            $request->validate(['slug' => 'required|string|max:255']);
+
            try {
-                $event = $this->eventService->getEvent($request->slug);
+            $event = Event::where('slug', $request->slug)->firstOrFail();
+            if($request->close_event){
+                $event->update(['status' => '2']);
+                return response()->json(['message' => 'Event closed successfully.'], 200);
+            }
+
+                $validator = Validator::make($request->all(), [
+                    'slug' => 'required|string|max:255',
+                     'device_name' => 'required|string|max:255',
+                     'device_id' => 'required|string|max:255',
+                ]);
+                
+                if ($validator->fails()) {
+                    return response()->json([
+                        'status' => false,
+                        'message' => $validator->errors()->first()
+                    ], 400);
+                }
+
                 $event->update(['status' => true]);
                 return response()->json($event);
            } catch (\Throwable $th) {

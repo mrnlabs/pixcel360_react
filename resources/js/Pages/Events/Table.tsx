@@ -1,5 +1,5 @@
-import { Copy, Image, Layers, QrCode, SquarePen, Trash2 } from 'lucide-react'
-import { format } from "date-fns";
+import { Copy, Image, Info, Layers, QrCode, SquarePen, Trash2 } from 'lucide-react'
+import { addMonths, format, parseISO } from "date-fns";
 import CustomTooltip from '@/Components/CustomTooltip';
 import React, { Suspense, useState, useEffect } from 'react';
 import ConfirmDialog from '@/Components/ConfirmDialog';
@@ -7,11 +7,14 @@ import { Link, router } from '@inertiajs/react';
 import { useToast } from '@/hooks/use-toast';
 import showToast from '@/utils/showToast';
 import { AuthGuard } from '@/guards/authGuard';
+import EventDescriptionPopover from './EventDescriptionPopover';
 
 export default function Table({events, setModalOpen, setQRData, setDuplicateModalOpen}: any) {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [event, setEvent] = useState<{ slug: string } | null>(null);
   const [isMobile, setIsMobile] = useState(false);
+
+  const [popOverOpen, setPopOverOpen] = useState(false)
 
   useEffect(() => {
     const checkDeviceSize = () => {
@@ -145,8 +148,8 @@ export default function Table({events, setModalOpen, setQRData, setDuplicateModa
           <tr className="border-b border-defaultborder dark:border-defaultborder/10">
             <th scope="col" className="text-center">NR.</th>
             <th scope="col">Event Name</th>
-            <th scope="col">Start Date</th>
             <th scope="col">Status</th>
+            <th scope="col">Created</th>
             <th scope="col">Expires</th>
             <th scope="col">QR Code</th>
             {/* <th scope="col">Data</th> */}
@@ -177,21 +180,31 @@ export default function Table({events, setModalOpen, setQRData, setDuplicateModa
                 <div className="flex items-center">
                   <div className="flex-1 flex-between pos-relative ms-2">
                     <div>
-                      <Link href={route('event.edit', event.slug)} className="text-[13px] font-medium hover:underline hover:text-primary">{event.name}</Link>
+                      <Link href={route('event.edit', event.slug)} className="text-[13px] font-medium hover:underline hover:text-primary">
+                      {event.name}
+                      </Link>
+                      <span className='float-right'>
+                      <EventDescriptionPopover event={event} />
+                    </span>
                     </div>
                   </div>
                 </div>
               </td>
-              <td className=""> {event.start_date ? format(new Date(event.start_date), 'dd-MM-yyyy') : '-'} </td>
               <td>
-                {event.status == 1 ? (
+                {event.status == 1 && (
                   <span className="badge bg-success text-white leading-none">Active</span>
-                ) : (
-                  <span className="badge bg-danger text-white leading-none">Inactive</span>
+                )} 
+                {event.status == 0 && (
+                  <span className="badge bg-warning text-white leading-none">Inactive</span>
+                )}
+                {event.status == 2 && (
+                  <span className="badge bg-danger text-white leading-none">Closed</span>
                 )}
               </td>
+              <td className=""> {format(new Date(event.created_at), 'dd-MM-yyyy')} </td>
+             
               <td>
-                <span className="">{event.end_date ? format(new Date(event.end_date), 'dd-MM-yyyy') : '-'}</span>
+                <span className="">{format(addMonths(parseISO(event.created_at), 6), 'dd-MM-yyyy')}</span>
               </td>
               <td>
                 <div 

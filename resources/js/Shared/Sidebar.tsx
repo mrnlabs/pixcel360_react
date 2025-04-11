@@ -89,7 +89,14 @@ const Sidebar: React.FC = () => {
       id: 'events',
       label: 'Events',
       path: '/events',
-      icon: (<Calendar className="h-6 w-6 mr-2 text-white" />)
+      icon: (<Calendar className="h-6 w-6 mr-2 text-white" />),
+      subItems: [
+              {
+                label: 'New Event',
+                path: '/events/create',
+                icon: (<Plus className="h-5 w-5 mr-2 text-white" />)
+              }
+            ]
     },
     {
       id: 'subscriptions',
@@ -168,12 +175,12 @@ const Sidebar: React.FC = () => {
       <div key={item.id} className="relative">
         {/* Parent menu item */}
         <Link href={item.path} className={`
-          flex items-center px-4 py-2 text-gray-300 rounded-xs
+          flex items-center px-4 py-2 text-white rounded-xs
           transition-all duration-200 ease-in-out
-          hover:bg-gray-700/30
+          hover:bg-[linear-gradient(243deg,#FF4F84_0%,#394DFF_100%)]
           ${isExactActive(item.path)
-            ? 'bg-gray-700/50 text-white font-medium'
-            : 'hover:bg-gray-700/30'
+            ? 'bg-[linear-gradient(243deg,#FF4F84_0%,#394DFF_100%)] text-white font-medium'
+            : 'hover:bg-[linear-gradient(243deg,#FF4F84_0%,#394DFF_100%)]'
           }
         `}>
           <span className="flex items-center text-white">

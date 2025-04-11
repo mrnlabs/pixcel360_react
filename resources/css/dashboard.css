@@ -35341,7 +35341,7 @@ input[type=week]:where([dir="rtl"], [dir="rtl"] *)::-webkit-calendar-picker-indi
   color: rgb(var(--default-text-color) / 0.8);
 }
 [type=checkbox], [type=radio]{
-  border-color: rgb(var(--default-border)) !important;
+  border-color: #000 !important;
 }
 [type=checkbox]:is(.dark *), [type=radio]:is(.dark *){
   border-color: rgb(var(--default-border) / 0.1) !important;

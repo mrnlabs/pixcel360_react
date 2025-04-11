@@ -182,7 +182,12 @@ const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
                              />
                             </div>
                             <div className="form-check flex items-center gap-2 mt-4">
-                              <input onChange={(e) => setData('terms_and_conditions', e.target.checked ? '1' : '0')} required={true} className="form-check-input" type="checkbox" value="" id="flexCheckChecked" /> 
+                              <input 
+                              onChange={(e) => setData('terms_and_conditions', e.target.checked ? '1' : '0')} 
+                              required={true} 
+                              className="form-check-input" 
+                              type="checkbox" 
+                              id="flexCheckChecked" /> 
                             <label className="form-check-label" htmlFor="flexCheckChecked"> I agree to the 
                             Privacy Policy and the General <Link target='_blank' href='#!' className='underline text-primary'>Terms and Conditions<span className='text-red-500'> *</span>
                             </Link>

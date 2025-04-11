@@ -73,19 +73,35 @@ const updateFilters = React.useCallback(
                 { label: 'All', active: true }
               ]}
               />
+                <div className="row">
+                <div className="col-xl-12">
+                  <div className="box flex ml-4"> 
+                    <h6 className=" mt-6 ml-4">
+                    My events
+                    </h6>
+                    <span className='mb-4 ml-4'><span className='text-danger'>*</span> The gallery of an event is deleted 
+                      <span className='text-primary'> six months </span> 
+                       creation. Backup your data before the indicated date.</span>
+                  </div>
+                </div>
+          
+        </div>
              
               <div className="grid grid-cols-12 gap-x-6">
                 <div className="xxl:col-span-12 col-span-12">
                   <div className="box">
                     <div className="box-header justify-between">
-                      <div className="box-title"> Events <span className="text-primary">({totalItems})</span></div>
+                      <div className="box-title"> 
+                        Total Events: <span className="text-primary">{totalItems}</span>
+                        <span className="ml-6">Active License Slots: <span className='text-primary'>{totalItems}/4</span></span>
+                        </div>
                       <div className="flex flex-wrap gap-2">
                         <AuthGuard roles={["Account Owner"]} 
                             permissions={["*"]}
                             requireAll={true}
                             >
                           <Link href={route('event.create')} className="ti-btn bg-[linear-gradient(243deg,#FF4F84_0%,#394DFF_100%)] text-white !m-0 btn-wave ti-btn-sm waves-effect waves-light">
-                          <SquarePlus className="align-middle" />Create 
+                          <SquarePlus className="align-middle" />Create Event
                           </Link>
                           </AuthGuard>
                         <div>

@@ -90,14 +90,14 @@ export default function Logo({ event }: EventProps ) {
           </span>
         </div>
         <div>
-          <span className="font-medium block mb-2">Upload Logo</span>
+          <span className="font-medium block mb-2">Upload Gallery Logo</span>
           <div className="btn-list mb-1">
             <label 
               htmlFor="logo-image" 
               className={`ti-btn ti-btn-sm bg-[linear-gradient(243deg,#FF4F84_0%,#394DFF_100%)] text-white btn-wave waves-effect waves-light ${uploading ? 'opacity-50 cursor-not-allowed' : ''}`}
             >
               <Upload size={16} className="me-1" />
-              Change Logo 
+              Change Gallery Logo 
               <input
                 type="file"
                 name="logo-image"

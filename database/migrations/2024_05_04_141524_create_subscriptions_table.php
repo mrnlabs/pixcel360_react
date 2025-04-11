@@ -20,6 +20,13 @@ return new class extends Migration
             $table->string('slug')->unique();
             $table->timestamps();
         });
+
+        Schema::create('devices', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('subscription_id')->constrained()->onDelete('cascade');
+            $table->string('device_name');
+            $table->string('device_id')->unique();
+        });
     }
 
     /**
@@ -28,5 +35,6 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('subscriptions');
+        Schema::dropIfExists('devices');
     }
 };
