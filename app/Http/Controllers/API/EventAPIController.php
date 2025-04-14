@@ -189,18 +189,24 @@ protected function generateVideoFilename(UploadedFile $file)
                     ], 400);
                 }
                 $user= User::whereId($event->user_id)->first();
-             $hasReachedLimit = $user->currentSubscription->devices()->count() >= $user->currentSubscription->plan->device_limit;
-             if ($hasReachedLimit) {
-                return response()->json([
-                    'status' => false,
-                    'message' => 'Device limit reached.'
-                ], 400);
-            }
-                DB::table('devices')->insert([
-                    'device_name' => $request->device_name,
-                    'device_id' => $request->device_id,
-                    'subscription_id' => $user->currentSubscription->id,
-                ]);
+               $hasReachedLimit = $user->currentSubscription->devices()->count() >= env('DEVICE_LIMIT', 4);
+                // Check if the user has reached the device limit
+                if ($hasReachedLimit) {
+                    return response()->json([
+                        'status' => false,
+                        'message' => 'Device limit reached.'
+                    ], 400);
+                }
+                $deviceExists = DB::table('devices')->where('device_id', $request->device_id)->exists();
+                if(!$deviceExists){
+                    DB::table('devices')->insert([
+                        'device_name' => $request->device_name,
+                        'device_id' => $request->device_id,
+                        // 'subscription_id' => $user->currentSubscription->id,
+                        'subscription_id' => 1,
+                    ]);
+                }
+               
                 $event->update(['status' => true]);
                 return response()->json($event);
            } catch (\Throwable $th) {

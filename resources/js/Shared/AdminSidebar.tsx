@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { usePage, Link } from '@inertiajs/react';
-import { Calendar, CircleDollarSign, Clipboard, Home, IdCard, Layers, Layers2, LogOut, Plus, SquareUserRound } from 'lucide-react';
+import { Calendar, CircleDollarSign, Clipboard, Home, IdCard, Layers, Layers2, LogOut, Plus, Recycle, SquareUserRound } from 'lucide-react';
 import SidebarLogo from './SidebarLogo';
 
 interface MenuState {
@@ -142,13 +142,13 @@ const AdminSidebar: React.FC = () => {
         }
       ]
     },
-    {
-      id: 'overlays',
-      label: 'Overlays',
-      path: '/admin-overlays',
-      icon: (<Layers className="h-6 w-6 mr-2 text-white" />
-      )
-    },
+    // {
+    //   id: 'overlays',
+    //   label: 'Overlays',
+    //   path: '/admin-overlays',
+    //   icon: (<Layers className="h-6 w-6 mr-2 text-white" />
+    //   )
+    // },
 
     // {
     //   id: 'payment-methods',
@@ -164,12 +164,12 @@ const AdminSidebar: React.FC = () => {
     //     }
     //   ]
     // },
-    //  {
-    //   id: 't_and_cs',
-    //   label: 'T & Cs',
-    //   path: '/terms-and-conditions',
-    //   icon: (<Clipboard className="h-6 w-6 mr-2 text-white" />
-    //   )
+ 
+    // {
+    //   id: 'events',
+    //   label: 'Deleted Items',
+    //   path: '/deleted-items',
+    //   icon: (<Recycle className="h-6 w-6 mr-2 text-white" />)
     // },
     {
       id: 'profile',

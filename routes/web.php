@@ -72,4 +72,5 @@ require __DIR__.'/notify.php';
 require __DIR__.'/user_overlay.php';
 require __DIR__.'/admin_overlay.php';
 require __DIR__.'/t_and_cs.php';
+require __DIR__.'/recycle.php';
 

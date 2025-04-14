@@ -55,7 +55,7 @@ class ProcessVideoJob implements ShouldQueue
             $currentVideoId = $this->video->id;
     
             // Use a lock to ensure only one job runs at a time
-            $lock = Cache::lock('video_processing_lock', 180);
+            $lock = Cache::lock('video_processing_lock', 120);
     
             // Attempt to acquire the lock
             if (!$lock->get()) {
