@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { usePage, Link } from '@inertiajs/react';
-import { BellPlus, Calendar, CircleDollarSign, Home, IdCard, LogOut, Plus, SquareUserRound } from 'lucide-react';
+import { BellPlus, Bug, Calendar, CircleDollarSign, Home, IdCard, LogOut, Plus, SquareUserRound } from 'lucide-react';
 import SidebarLogo from './SidebarLogo';
 import UpgradeCard from './UpgradeCard';
 
@@ -134,6 +134,13 @@ const Sidebar: React.FC = () => {
           )
         },
      {
+      id: 'issues',
+      label: 'Report Problem',
+      path: '/issues',
+      icon: (<Bug className="h-6 w-6 mr-2 text-white" />
+      )
+    },
+    {
       id: 'profile',
       label: 'Profile',
       path: '/profile',

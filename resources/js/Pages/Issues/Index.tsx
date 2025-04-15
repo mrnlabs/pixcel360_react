@@ -1,7 +1,7 @@
 import Authenticated from '@/Layouts/AuthenticatedLayout'
 import { Breadcrumb } from '@/Shared/Breadcrumb'
 import Paginator from '@/Shared/Paginator'
-import { Head, router } from '@inertiajs/react'
+import { Head, Link, router, usePage } from '@inertiajs/react'
 import React, { useState } from 'react'
 // @ts-expect-error
 import { debounce } from 'lodash';
@@ -9,15 +9,26 @@ import { Filters, QueryParams } from '@/types'
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/Components/ui/select'
 import { DatePickerWithRange } from '@/Components/DatePickerWithRange'
 import { Download, Eye, Trash2 } from 'lucide-react'
+import showToast from '@/utils/showToast'
+import { format } from 'date-fns'
+import { truncateText } from '@/utils/truncateText'
 
-export default function Index({ subscriptions }: any) {
-    console.log(subscriptions)
-    const totalItems = subscriptions?.total;
-    const itemsPerPage = subscriptions?.per_page;
-    const currentPage = subscriptions?.current_page;
+export default function Index({ issues }: any) {
+    
+    const totalItems = issues?.total;
+    const itemsPerPage = issues?.per_page;
+    const currentPage = issues?.current_page;
+
+    const { success } = usePage().props;
+
+    React.useEffect(() => {
+        if (success) {
+            showToast('success', String(success), { position: 'bottom-right' });
+        }
+    }, [success]);
 
      const handlePageChange  = (page: number) => {
-       router.get(route('events'), {page}, {
+       router.get(route('issues.index'), {page}, {
         preserveState: true,
         replace: true
        })
@@ -40,7 +51,7 @@ export default function Index({ subscriptions }: any) {
           }
         });
     
-        router.get(route('events'), queryParams, {
+        router.get(route('issues.index'), queryParams, {
           preserveState: true,
           replace: true
         });
@@ -53,13 +64,13 @@ export default function Index({ subscriptions }: any) {
 
   return (
     <Authenticated>
-    <Head title="Admin Subscriptions" />
+    <Head title="Issues" />
     <div className="main-content app-content">
       <div className="container-fluid">
        <Breadcrumb
        items={[
           { label: 'Home', href: '/dashboard' },
-          { label: 'Admin Subscriptions', href: '/subscriptions' },
+          { label: 'Issues', href: '/subscriptions' },
           { label: 'All', active: true }
         ]}
         />
@@ -68,10 +79,11 @@ export default function Index({ subscriptions }: any) {
           <div className="xxl:col-span-12 col-span-12">
           <div className="box">
   <div className="box-header justify-between">
-    <div className="box-title"> All Subscriptions </div>
+    <div className="box-title"> All Issues </div>
     <div className="flex gap-4 items-center flex-wrap">
       <div className="custom-form-group grow">
         {/* <DatePickerWithRange className="form-control !pe-[7rem]" range={filters.range} onChange={(value) => updateFilters({ range: value })} /> */}
+        <Link href={route('issues.create')} className="ti-btn bg-[linear-gradient(243deg,#FF4F84_0%,#394DFF_100%)] text-white">Report Issue</Link>
       </div>
     </div>
   </div>
@@ -80,56 +92,53 @@ export default function Index({ subscriptions }: any) {
       <table className="ti-custom-table ti-custom-table-hover text-nowrap">
         <thead>
           <tr className="border-b !border-defaultborder dark:!border-defaultborder/10">
-            <th scope="col">Order Id</th>
-            <th scope="col">Plan</th>
-            <th scope="col">Customer Name</th>
-            <th scope="col">Mobile Number</th>
-            <th scope="col">Subscription Date</th>
+            <th scope="col">Request Id</th>
+            <th scope="col">Title</th>
+            <th scope="col">Category</th>
+            <th scope="col">Priority</th>
+            <th scope="col">Date</th>
             <th scope="col">Status</th>
-            <th scope="col">Payment Mode</th>
-            <th scope="col">Cost</th>
-            <th scope="col">Action</th>
+            <th scope="col">Actions</th>
           </tr>
         </thead>
         <tbody>
-         {!subscriptions?.data?.length ? (
+         {!issues?.data?.length ? (
           <tr>
-            <td colSpan={9} className="text-center py-4">No subscriptions found</td>
+            <td colSpan={9} className="text-center py-4">No issues found</td>
           </tr>
          ) : (
-          subscriptions?.data?.map((subscription: any, index: number) => (
+          issues?.data?.map((issue: any, index: number) => (
             <tr className="order-list border-b !border-defaultborder dark:!border-defaultborder/10">
-            <td>#{subscription.id}</td>
+            <td>#{issue.id}</td>
             <td>
               <div className="flex items-center">
                 <div className="">
                   <p className="font-semibold mb-0 flex items-center">
-                    <a href="order-details.html">{subscription.plan.name}</a>
+                    <a href="order-details.html">{truncateText(issue.title, 70, '...')}</a>
                   </p>
                 </div>
               </div>
             </td>
             <td>
               <div className="flex items-center">
-                <span className="avatar avatar-sm me-2 avatar-rounded">
-                  <img src="../assets/images/faces/4.jpg" alt=""/>
-                </span>Violeta Tilly
+                <div className="flex items-center">
+                  <span className="badge bg-success/10 text-success">{issue.category.name}</span>
+                </div>
               </div>
             </td>
-            <td>(222) 111 - 57840</td>
-            <td> 11 Jan 2024 </td>
             <td>
-              <span className="badge bg-success/10 text-success">Shippped</span>
+              <div className="flex items-center">
+                <div className="flex items-center">
+                  <span className="badge bg-success/10 text-success">{issue.priority}</span>
+                </div>
+              </div>
             </td>
-            <td>Card</td>
-            <td className="font-semibold">$177.00</td>
+            <td> {format(new Date(issue.created_at), 'dd/MM/yyyy')} </td>
+            <td className="font-semibold">{issue.status}</td>
             <td>
-              <a aria-label="anchor" href="order-details.html" className="ti-btn ti-btn-sm ti-btn-soft-primary btn-wave waves-effect waves-light !mb-0">
+              <Link href={route('issues.show', issue.slug)} aria-label="anchor" className="ti-btn ti-btn-sm ti-btn-soft-primary btn-wave waves-effect waves-light !mb-0">
               <Eye size={18} />
-              </a>
-              <a aria-label="anchor" href="javascript:void(0);" className="ti-btn ti-btn-sm ti-btn-soft-info btn-wave waves-effect waves-light !mb-0">
-              <Download size={18} />
-              </a>
+              </Link>
               <a aria-label="anchor" href="javascript:void(0);" className="order-delete-btn ti-btn ti-btn-sm ti-btn-soft-primary2 btn-wave waves-effect waves-light !mb-0">
                 <Trash2 size={18}/>
               </a>
