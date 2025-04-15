@@ -1,7 +1,7 @@
 import Guest from '@/Layouts/GuestLayout';
 import { Event } from '@/types';
 import { Head, router } from '@inertiajs/react';
-import { Download, Loader, Mail } from 'lucide-react';
+import { Download, Loader, Mail, QrCode } from 'lucide-react';
 import React, { Suspense, useState } from 'react'
 import VideoPlayerComponent from './VideoPlayerComponent';
 import Paginator from '@/Shared/Paginator';
@@ -14,6 +14,7 @@ import showToast from '@/utils/showToast';
 import { LoadingOverlay } from './LoadingOverlay';
 import axios from 'axios';
 import ShareGalleryViaEmailModalSingle from './ShareGalleryViaEmailModalSingle';
+import ShareGalleryViaQRModal from './ShareGalleryViaQRModal';
 
 export default function Share({event, videos}: {
         event: Event,
@@ -27,6 +28,7 @@ export default function Share({event, videos}: {
     const [modalOpen, setModalOpen] = useState(false);
     const [openSingleModal, setSingleModalOpen] = useState(false);
     const [video_link, setVideoLink] = useState('');
+    const [openQRModal, setQRModalOpen] = useState(false);
 
     const handlePageChange  = (page: number) => {
        router.get(route('shared_gallery',event?.slug), {page}, {
@@ -188,6 +190,20 @@ export default function Share({event, videos}: {
               ) : ( '')
             }
 
+{event.sharing_method?.qr == 1 ? (
+                <button onClick={() => {
+                  setQRModalOpen(true)
+                  setVideoLink(gallery_link)
+                }
+                } aria-label="anchor" 
+                className="ti-btn ti-btn-sm ti-btn bg-[linear-gradient(243deg,#FF4F84_0%,#394DFF_100%)] text-white">
+                 <CustomTooltip content="QR Code">
+                <QrCode size={20} />
+                </CustomTooltip> 
+                </button>
+              ) : ( '')
+            }
+
   {event.sharing_method?.whatsapp == 1 ? (
                 <CustomTooltip content="WhatsApp">
                 <a target="_blank" 
@@ -233,6 +249,19 @@ export default function Share({event, videos}: {
                 </button>
                   ) : ( '')
                 }
+                {event.sharing_method?.qr == 1 ? (
+                <button onClick={() => {
+                  setVideoLink(video.processed_video_path)
+                  setQRModalOpen(true)
+                }
+              } aria-label="anchor" 
+                className="ti-btn ti-btn-sm ti-btn bg-[linear-gradient(243deg,#FF4F84_0%,#394DFF_100%)] text-white">
+                  <CustomTooltip content="QR Code">
+                      <QrCode size={17} />
+                </CustomTooltip> 
+                </button>
+                  ) : ( '')
+                }
 
                 {event.sharing_method?.email == 1 ? (
                 
@@ -248,6 +277,8 @@ export default function Share({event, videos}: {
                 </CustomTooltip> 
                 </button>
                 ) : ( '')
+
+                
             }
                 
 {event.sharing_method?.whatsapp == 1 ? (
@@ -281,7 +312,8 @@ export default function Share({event, videos}: {
               {!totalItems && <div className="text-center p-4">No videos found.</div>}
             </div>
             <div className="box-footer">
-            <Paginator
+           <Suspense fallback={<Loader className="align-middle animate-spin"/>}>
+           <Paginator
                       totalItems={totalItems}
                       itemsPerPage={itemsPerPage}
                       currentPage={currentPage}
@@ -302,6 +334,14 @@ export default function Share({event, videos}: {
                         event={event}
                         video_link={video_link}
                         />
+                        <ShareGalleryViaQRModal 
+                        openQRModal={openQRModal} 
+                        setQRModalOpen={setQRModalOpen} 
+                        event={event}
+                        video_link={video_link}
+                        title='Share this video by scanning the QR code.'
+                        />
+           </Suspense>
                     </div>
           </div>
 </Guest>

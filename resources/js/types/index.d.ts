@@ -78,6 +78,7 @@ export interface Event {
         event_id: number;
         whatsapp: number;
         email: number;
+        qr: number;
         download: number;
         text_message: string;
         email_subject: string

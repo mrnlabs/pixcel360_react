@@ -38,7 +38,7 @@ function QRModal({
                 <div className="flex justify-center items-center" id="qr-code">
                 <QRCodeSVG
                     value={QRData?.slug}
-                    title={"Title for my QR Code"}
+                    title={"Scan QR Code"}
                     size={128}
                     bgColor={"#ffffff"}
                     fgColor={"#000000"}
