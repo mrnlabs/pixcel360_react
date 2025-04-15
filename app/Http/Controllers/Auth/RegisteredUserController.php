@@ -7,6 +7,7 @@ use App\Http\Requests\Auth\CreateUserRequest;
 use App\Mail\WelcomeEmail;
 use App\Models\User;
 use App\Notifications\NewUserRegistered;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
@@ -39,6 +40,7 @@ class RegisteredUserController extends Controller
             'email' => $createUserRequest->email,
             'phone' => $createUserRequest->phone,
             'last_login_at' => now(),
+            'trial_ends_at' => Carbon::now()->addDays(7),
             'password' => Hash::make($createUserRequest->password),
         ]);
 

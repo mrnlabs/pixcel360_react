@@ -24,4 +24,8 @@ class SubscriptionController extends Controller
         
     }
 
+    function trialEnded() {
+        return Inertia::render('Subscriptions/TrialEnded');
+    }
+
 }

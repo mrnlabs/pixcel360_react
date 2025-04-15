@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { usePage, Link } from '@inertiajs/react';
 import { BellPlus, Calendar, CircleDollarSign, Home, IdCard, LogOut, Plus, SquareUserRound } from 'lucide-react';
 import SidebarLogo from './SidebarLogo';
+import UpgradeCard from './UpgradeCard';
 
 interface MenuState {
   [key: string]: boolean;
@@ -27,6 +28,11 @@ const Sidebar: React.FC = () => {
   const [isMobile, setIsMobile] = useState<boolean>(false);
   
   const { url } = usePage();
+  const { auth } = usePage().props;
+// @ts-ignore
+  const trialEnds = new Date(auth.user.trial_ends_at);
+  const today = new Date();
+  const diffDays = Math.ceil((trialEnds.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
 
   // Check if exactly matches the current route
   const isExactActive = (path: string): boolean => {
@@ -263,6 +269,18 @@ const Sidebar: React.FC = () => {
         <div className="flex flex-col flex-1 overflow-y-auto">
           <nav className="flex-1 p-2 space-y-1 bg-[#212542]">
             {menuItems.map(renderMenuItem)}
+            <div>
+           
+            {diffDays > 0 ? (
+                <UpgradeCard
+                diffDays={diffDays}
+               />
+            ) : (
+              <UpgradeCard
+               diffDays={diffDays}
+              />
+            )}
+        </div>
           </nav>
         </div>
       </div>

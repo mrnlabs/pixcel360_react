@@ -41,6 +41,7 @@ class EventService
     {
 //        add user id
         $data['user_id'] = auth()->user()->id;
+        $data['status'] = 0;
         $event = Event::create($data);
         return $event;
     }
