@@ -69,10 +69,6 @@ class EventController extends Controller
     public function store(CreateEventRequest $createEventRequest)
     {
         try{
-            $eventCount = Event::active()->count() >= env('EVENT_LIMIT_NUM', 4);
-            if($eventCount){
-                return back()->with('error', 'Maximum of ' . env('EVENT_LIMIT_NUM', 4) . ' active events is allowed');
-            }
             $new_event = $this->eventService->createEvent($createEventRequest->validated());
             if($new_event){
                 $createVideoSettingsRequest['event_id'] = $new_event->id;

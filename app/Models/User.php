@@ -67,5 +67,10 @@ class User extends Authenticatable
         return $this->hasMany(Event::class);
     }
 
-    
+    public function activeEvents(): HasMany
+    {
+        return $this->hasMany(Event::class)
+            ->where('status', 1);
+    }
+
 }

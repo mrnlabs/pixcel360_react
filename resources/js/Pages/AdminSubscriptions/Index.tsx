@@ -7,6 +7,8 @@ import React, { useState } from 'react'
 import { debounce } from 'lodash';
 import { Filters, QueryParams } from '@/types'
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/Components/ui/select'
+import { DatePickerWithRange } from '@/Components/DatePickerWithRange'
+import { Download, Eye, Trash2 } from 'lucide-react'
 
 export default function Index({ subscriptions }: any) {
     console.log(subscriptions)
@@ -22,7 +24,7 @@ export default function Index({ subscriptions }: any) {
       }
     
       const [filters, setFilters] = useState({
-        search: '',
+        range: '',
         sort: ''
     });
     
@@ -65,22 +67,12 @@ export default function Index({ subscriptions }: any) {
         <div className="grid grid-cols-12 gap-x-6">
           <div className="xxl:col-span-12 col-span-12">
           <div className="box">
-  <div className="box-header justify-between hidden">
+  <div className="box-header justify-between">
     <div className="box-title"> All Subscriptions </div>
     <div className="flex gap-4 items-center flex-wrap">
       <div className="custom-form-group grow">
-        <label htmlFor="" className='block text-sm'>From: </label>
-        <input type="date" className="form-control !pe-[7rem]" placeholder="Search Orders.." aria-label="Recipient's username" aria-describedby="button-addon2"/>
-        <a aria-label="anchor" href="javascript:void(0);" className="text-textmuted dark:text-textmuted/50 custom-form-btn">
-          <i className="ti ti-search"></i>
-        </a>
-      </div>
-      <div className="custom-form-group grow">
-        <label htmlFor="">To: </label>
-        <input type="date" className="form-control !pe-[7rem]" placeholder="Search Orders.." aria-label="Recipient's username" aria-describedby="button-addon2"/>
-        <a aria-label="anchor" href="javascript:void(0);" className="text-textmuted dark:text-textmuted/50 custom-form-btn">
-          <i className="ti ti-search"></i>
-        </a>
+        <label htmlFor="" className='block text-sm mr-3'>From: </label>
+        {/* <DatePickerWithRange className="form-control !pe-[7rem]" range={filters.range} onChange={(value) => updateFilters({ range: value })} /> */}
       </div>
     </div>
   </div>
@@ -101,13 +93,19 @@ export default function Index({ subscriptions }: any) {
           </tr>
         </thead>
         <tbody>
-          <tr className="order-list border-b !border-defaultborder dark:!border-defaultborder/10">
-            <td>#1172553</td>
+         {!subscriptions?.data?.length ? (
+          <tr>
+            <td colSpan={9} className="text-center py-4">No subscriptions found</td>
+          </tr>
+         ) : (
+          subscriptions?.data?.map((subscription: any, index: number) => (
+            <tr className="order-list border-b !border-defaultborder dark:!border-defaultborder/10">
+            <td>#{subscription.id}</td>
             <td>
               <div className="flex items-center">
                 <div className="">
                   <p className="font-semibold mb-0 flex items-center">
-                    <a href="order-details.html">Lightweight Sneakers</a>
+                    <a href="order-details.html">{subscription.plan.name}</a>
                   </p>
                 </div>
               </div>
@@ -128,16 +126,18 @@ export default function Index({ subscriptions }: any) {
             <td className="font-semibold">$177.00</td>
             <td>
               <a aria-label="anchor" href="order-details.html" className="ti-btn ti-btn-sm ti-btn-soft-primary btn-wave waves-effect waves-light !mb-0">
-                <i className="ri-eye-line"></i>
+              <Eye size={18} />
               </a>
               <a aria-label="anchor" href="javascript:void(0);" className="ti-btn ti-btn-sm ti-btn-soft-info btn-wave waves-effect waves-light !mb-0">
-                <i className="ri-download-line"></i>
+              <Download size={18} />
               </a>
               <a aria-label="anchor" href="javascript:void(0);" className="order-delete-btn ti-btn ti-btn-sm ti-btn-soft-primary2 btn-wave waves-effect waves-light !mb-0">
-                <i className="ri-delete-bin-line"></i>
+                <Trash2 size={18}/>
               </a>
             </td>
           </tr>
+          ))
+         )}
         </tbody>
       </table>
     </div>

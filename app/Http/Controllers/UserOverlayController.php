@@ -223,7 +223,7 @@ class UserOverlayController extends Controller
 
     function getEventOverlays($slug){
         $event = Event::whereSlug($slug)->first();
-        $overlays = Overlay::where('user_id', auth()->id())->get();
+        $overlays = Overlay::where('user_id', auth()->id())->where('event_id', $event->id)->get();
         return response()->json([
             'overlays' => $overlays
         ], 200);
