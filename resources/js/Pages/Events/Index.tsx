@@ -14,7 +14,7 @@ import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrig
 import Paginator from '@/Shared/Paginator'
 import { AuthGuard } from '@/guards/authGuard'
 
-export default function Index({events} : any) {
+export default function Index({events, active_events_count} : any) {
   
   const [modalOpen, setModalOpen] = useState(false);
   const [duplicateModalOpen, setDuplicateModalOpen] = useState(false);
@@ -93,7 +93,7 @@ const updateFilters = React.useCallback(
                     <div className="box-header justify-between">
                       <div className="box-title"> 
                         Total Events: <span className="text-primary">{totalItems}</span>
-                        <span className="ml-6">Active License Slots: <span className='text-primary'>{totalItems}/4</span></span>
+                        <span className="ml-6">Active License Slots: <span className='text-primary'>{4 - active_events_count}/4</span></span>
                         </div>
                       <div className="flex flex-wrap gap-2">
                         <AuthGuard roles={["Account Owner"]} 

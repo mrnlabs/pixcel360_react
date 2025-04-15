@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Traits\HasSlug;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\DeletedModels\Models\Concerns\KeepsDeletedModels;
 
 class Event extends Model
@@ -44,5 +45,9 @@ class Event extends Model
     return $this->belongsTo(Overlay::class);
 }
 
+public function scopeActive($query)
+{
+    return $query->where('status', 1);
+}
 }
 

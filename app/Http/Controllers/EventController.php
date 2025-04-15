@@ -43,8 +43,9 @@ class EventController extends Controller
                 'last_page' => $events->lastPage()
             ]
         ]);
+        $active_events_count =  Event::active()->count();
         
-            return Inertia::render('Events/Index', ['events' => $response]);
+            return Inertia::render('Events/Index', ['events' => $response, 'active_events_count' => $active_events_count]);
         } catch (Throwable $th){
             throw $th;
             //return Inertia::render('Error', ['message' => $e->getMessage()]);
@@ -68,6 +69,10 @@ class EventController extends Controller
     public function store(CreateEventRequest $createEventRequest)
     {
         try{
+            $eventCount = Event::active()->count() >= env('EVENT_LIMIT_NUM', 4);
+            if($eventCount){
+                return back()->with('error', 'Maximum of ' . env('EVENT_LIMIT_NUM', 4) . ' active events is allowed');
+            }
             $new_event = $this->eventService->createEvent($createEventRequest->validated());
             if($new_event){
                 $createVideoSettingsRequest['event_id'] = $new_event->id;
@@ -166,5 +171,12 @@ class EventController extends Controller
         }
     
         return response()->json($query->get());
+    }
+
+    function closeEvent(Request $request){
+       $request->validate(['slug' => 'required|exists:events,slug']);
+       $event = Event::where('slug', $request->slug)->first();
+       $event->update(['status' => '2']);
+        return back()->with('success', 'Event closed successfully');
     }
 }

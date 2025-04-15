@@ -6,6 +6,7 @@ import React, { useState } from 'react'
 // @ts-expect-error
 import { debounce } from 'lodash';
 import { Filters, QueryParams } from '@/types'
+import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/Components/ui/select'
 
 export default function Index({ subscriptions }: any) {
     console.log(subscriptions)
@@ -64,36 +65,19 @@ export default function Index({ subscriptions }: any) {
         <div className="grid grid-cols-12 gap-x-6">
           <div className="xxl:col-span-12 col-span-12">
           <div className="box">
-  <div className="box-header justify-between">
+  <div className="box-header justify-between hidden">
     <div className="box-title"> All Subscriptions </div>
     <div className="flex gap-4 items-center flex-wrap">
-      <div className="ti-btn-group ti-dropdown hs-dropdown p-0 border-0">
-        <button className="ti-btn ti-btn-outline-light border !m-0 !border-defaultborder dark:!border-defaultborder/10 ti-dropdown-toggle hs-dropdown-toggle gap-0" type="button">
-          <i className="ti ti-sort-descending-2 me-1"></i> Sort By <i className="ri-arrow-down-s-line align-middle ms-1 inline-block"></i>
-        </button>
-        <ul className="ti-dropdown-menu hs-dropdown-menu hidden" role="menu">
-          <li>
-            <a className="ti-dropdown-item" href="javascript:void(0)">Created Date</a>
-          </li>
-          <li>
-            <a className="ti-dropdown-item" href="javascript:void(0)">Status</a>
-          </li>
-          <li>
-            <a className="ti-dropdown-item" href="javascript:void(0)">Orders</a>
-          </li>
-          <li>
-            <a className="ti-dropdown-item" href="javascript:void(0)">Product Name</a>
-          </li>
-          <li>
-            <a className="ti-dropdown-item" href="javascript:void(0)">Newest</a>
-          </li>
-          <li>
-            <a className="ti-dropdown-item" href="javascript:void(0)">Oldest</a>
-          </li>
-        </ul>
+      <div className="custom-form-group grow">
+        <label htmlFor="" className='block text-sm'>From: </label>
+        <input type="date" className="form-control !pe-[7rem]" placeholder="Search Orders.." aria-label="Recipient's username" aria-describedby="button-addon2"/>
+        <a aria-label="anchor" href="javascript:void(0);" className="text-textmuted dark:text-textmuted/50 custom-form-btn">
+          <i className="ti ti-search"></i>
+        </a>
       </div>
       <div className="custom-form-group grow">
-        <input type="text" className="form-control !pe-[7rem]" placeholder="Search Orders.." aria-label="Recipient's username" aria-describedby="button-addon2"/>
+        <label htmlFor="">To: </label>
+        <input type="date" className="form-control !pe-[7rem]" placeholder="Search Orders.." aria-label="Recipient's username" aria-describedby="button-addon2"/>
         <a aria-label="anchor" href="javascript:void(0);" className="text-textmuted dark:text-textmuted/50 custom-form-btn">
           <i className="ti ti-search"></i>
         </a>
@@ -107,9 +91,9 @@ export default function Index({ subscriptions }: any) {
           <tr className="border-b !border-defaultborder dark:!border-defaultborder/10">
             <th scope="col">Order Id</th>
             <th scope="col">Plan</th>
-            <th scope="col">Customer</th>
+            <th scope="col">Customer Name</th>
             <th scope="col">Mobile Number</th>
-            <th scope="col">Ordered Date</th>
+            <th scope="col">Subscription Date</th>
             <th scope="col">Status</th>
             <th scope="col">Payment Mode</th>
             <th scope="col">Cost</th>
@@ -140,7 +124,7 @@ export default function Index({ subscriptions }: any) {
             <td>
               <span className="badge bg-success/10 text-success">Shippped</span>
             </td>
-            <td>Cash On Delivery</td>
+            <td>Card</td>
             <td className="font-semibold">$177.00</td>
             <td>
               <a aria-label="anchor" href="order-details.html" className="ti-btn ti-btn-sm ti-btn-soft-primary btn-wave waves-effect waves-light !mb-0">

@@ -1,7 +1,7 @@
 import Authenticated from "@/Layouts/AuthenticatedLayout";
 import { Breadcrumb } from "@/Shared/Breadcrumb";
 import { EventProps } from "@/types";
-import { Head, Link } from "@inertiajs/react";
+import { Head, Link, router } from "@inertiajs/react";
 
 import React, { useMemo, useRef, useState } from 'react'
 import EditDetails from "./TabContent/EditDetails";
@@ -16,6 +16,7 @@ import SharingMethods from "./TabContent/SharingMethods";
 import SharingSubjects from "./TabContent/SharingSubjects";
 import Branding from "./TabContent/Branding";
 import Overlay from "./TabContent/Overlay";
+import showToast from "@/utils/showToast";
 
 export default function Edit({event} : EventProps) {
   const [activeTab, setActiveTab] = React.useState('event-details');
@@ -89,6 +90,24 @@ export default function Edit({event} : EventProps) {
             return null;
     }
 }, [activeTab, event, scrollToDiv]);
+
+const handleCloseEvent = () => {
+  if (confirm('Are you sure you want to close this event?')) {
+    router.post(route('events.close'), {
+      'slug': event?.slug,
+    }, {
+      preserveState: true,
+      replace: true,
+      onSuccess: () => {
+        showToast('success', 'Event closed successfully!', {position: 'bottom-right'});
+      },
+      onError: () => {
+        showToast('error', 'Failed to close event!', {position: 'bottom-right'});
+      }
+    });
+  }
+};
+
   return (
     <Authenticated>
 <Head title={'Edit Event' + event?.name} />
@@ -165,17 +184,15 @@ export default function Edit({event} : EventProps) {
       </div>
     
     </div>
-    {/* <div className="box">
+    <div className="box">
       <div className="box-body">
         <div className="filemanager-upgrade-storage w-full text-center">
-          <span className="text-[1rem] font-semibold text-defaulttextcolor">Danger Zone.</span>
-          <span className="block text-textmuted dark:text-textmuted/50 mt-2">.</span>
           <div className=" grid">
-            <button type="button" className="ti-btn ti-btn-lg ti-btn-danger btn-wave waves-effect waves-light">Delete Event</button>
+            <button onClick={handleCloseEvent} type="button" className="ti-btn  ti-btn-danger btn-wave waves-effect waves-light">Close Event</button>
           </div>
         </div>
       </div>
-    </div> */}
+    </div>
   </div>
 </div>
   

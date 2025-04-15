@@ -21,7 +21,7 @@ class CheckTrial
         }
 
         if (auth()->check() && !isInternalPortalUser() && auth()->user()->trial_ends_at && now()->gt(auth()->user()->trial_ends_at)) {
-             return to_route('subscription.trial-ended');
+            //  return to_route('subscription.trial-ended');
         }
         return $next($request);
     }

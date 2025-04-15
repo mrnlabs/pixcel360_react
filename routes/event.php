@@ -27,6 +27,7 @@ Route::delete('/remove-logo-image/{slug}', [VideoSettingsController::class, 'upd
 
 // header search
 Route::get('/header-search', [EventController::class, 'searchEventHeader']);
+Route::post('/close-event', [EventController::class, 'closeEvent'])->name('events.close');
 
 
 

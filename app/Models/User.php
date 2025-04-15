@@ -61,4 +61,11 @@ class User extends Authenticatable
     {
         return $this->hasMany(Overlay::class);
     }
+
+    public function events(): HasMany
+    {
+        return $this->hasMany(Event::class);
+    }
+
+    
 }

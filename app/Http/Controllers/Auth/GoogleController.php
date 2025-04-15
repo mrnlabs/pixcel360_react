@@ -10,6 +10,7 @@ use App\Mail\WelcomeEmail;
 use Illuminate\Support\Str;
 use App\Http\Controllers\Controller;
 use App\Notifications\NewUserRegistered;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
@@ -59,6 +60,7 @@ if (!$user) {
         'google_id' => $googleUser->id,
         'photo' => $googleUser->avatar,
         'last_login_at' => now(),
+        'trial_ends_at' => Carbon::now()->addDays(7),
         'password' => Hash::make($plainPassword)
     ]);
     Mail::to($user->email)->send(new WelcomeEmail($user, $plainPassword));
