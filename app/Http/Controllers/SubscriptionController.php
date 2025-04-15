@@ -2,14 +2,24 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Subscription;
 use Inertia\Inertia;
 
 class SubscriptionController extends Controller
 {
 
     function index() {
-        $subscriptions = auth()->user()->subscriptions()->with('plan')->latest()->get();
-        return Inertia::render('Subscriptions/Index',[
+        $view = null;
+        
+        if(isInternalPortalUser()) {
+            $view = 'AdminSubscriptions/Index';
+            $subscriptions = Subscription::with('plan')->latest()->paginate(10);
+        }else{
+            $view = 'Subscriptions/Index';
+            $subscriptions = auth()->user()->subscriptions()->with('plan')->latest()->get();
+        }
+        
+        return Inertia::render($view,[
             'subscriptions' => $subscriptions
         ]);
     }

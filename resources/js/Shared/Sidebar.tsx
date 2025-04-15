@@ -269,7 +269,7 @@ const Sidebar: React.FC = () => {
         <div className="flex flex-col flex-1 overflow-y-auto">
           <nav className="flex-1 p-2 space-y-1 bg-[#212542]">
             {menuItems.map(renderMenuItem)}
-            <div>
+            <div className='border-t border-gray-500 my-2'>
            
             {diffDays > 0 ? (
                 <UpgradeCard
