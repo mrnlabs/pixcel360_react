@@ -5,6 +5,7 @@ namespace App\Services;
 use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Event;
+use App\Models\Issue;
 use App\Models\Subscription;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Cache;
@@ -29,7 +30,7 @@ class MetricsService
         $usersChange = $this->calculatePercentageChange('previous_users_count', $totalUsers, 0.97);
         $subscriptionsChange = $this->calculatePercentageChange('previous_subscriptions_count', $totalSubscriptions, 0.96);
         $ordersChange = $this->calculateMonthOverMonthChange('Order', 100);
-        $customerQueries = $this->calculateMonthOverMonthChange('CustomerQuery', 100);
+        $customerQueries = $this->calculateCustomerQueriesChange();
         
         return [
             'metrics' => collect([
@@ -75,14 +76,14 @@ class MetricsService
                     'route' => 'orders'
                 ],
                 isInternalPortalUser() ? [
-                    'label' => 'Customer Queries',
+                    'label' => 'Open Tickets',
                     'value' => number_format($customerQueries),
                     'percentageChange' => $customerQueries,
                     'isPositive' => $customerQueries >= 0,
                     'icon' => 'bug-report',
                     'iconBgColor' => 'bg-secondary',
                     'outerBgColor' => 'border-secondary/10 bg-secondary/10',
-                    'route' => 'customer-queries'
+                    'route' => 'issues'
                 ] : null,
             ])->filter()->values()->all(),
             
@@ -297,5 +298,10 @@ class MetricsService
         return $lastMonthCount > 0 
             ? round(($currentValue - $lastMonthCount) / $lastMonthCount * 100, 1) 
             : 0;
+    }
+
+    public function calculateCustomerQueriesChange(){
+        $lastMonthCount = Issue::where('status', '=', 'open')->count();            
+        return $lastMonthCount;
     }
 }

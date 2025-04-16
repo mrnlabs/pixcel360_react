@@ -46,7 +46,7 @@ const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
         reset();
         setQuillValue('');
         setData('screenshots', []);
-        showToast('success', 'Issue created successfully!', {position: 'bottom-right'});
+        showToast('success', 'Ticket created successfully!', {position: 'bottom-right'});
       },
       onError: () => {
         showToast('error', 'Something went wrong!', {position: 'bottom-right'});
@@ -86,7 +86,7 @@ const handleFileRemove = () => {
                   <div className="box">
                     <div className="box-body">
                     <div className="bg-white rounded-lg shadow-sm p-6">
-                            <h2 className="text-xl mb-6">{issue ? 'Issue Details' : 'Report Issue'}</h2>
+                            <h2 className="text-xl mb-6">{issue ? 'Ticket Details' : 'Create New Ticket'}</h2>
                             
                             <div className="grid grid-cols-1 w-full md:gap-6 gap-6">
                               <div className="space-y-4">
@@ -104,11 +104,12 @@ const handleFileRemove = () => {
 
                                 
                                 <div>
-                                  <label className="block text-sm mb-1">Category</label>
+                                  <label className="block text-sm mb-1">Issue Type</label>
                                   <select 
                                   value={data.category} 
                                   onChange={(e) => setData('category', e.target.value)} 
                                   className="w-full px-3 py-2 border rounded-lg">
+                                    <option value="" selected disabled>Select Issue Type</option>
                                     {issue_categories.map((category: any) => (
                                       <option key={category.id} value={category.id}>{category.name}</option>
                                     ))}
@@ -149,6 +150,23 @@ const handleFileRemove = () => {
                                 {processing && <Loader className='animate-spin mr-2'/>} Submit</button>
                             </div>
                             </>
+                        )}
+
+                        {issue && issue.screenshots.length > 0 && (
+                          <div className="grid grid-cols-12 mt-2">
+                            <div>Screenshots</div>
+                          {issue.screenshots.map((screenshot: any) => (     
+                             <div key={screenshot} className="xl:col-span-3 col-span-12">
+                              <div className="box !w-[75%]">
+                                <div className="box-header">
+                                  <div className="box-title">
+                                    <img src={screenshot} alt="screenshot"/>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
                         )}
                             
                           </div>

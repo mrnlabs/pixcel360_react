@@ -5,6 +5,7 @@ import FullScreen from './FullScreen'
 import { Search } from 'lucide-react'
 import { HeaderSearch } from './HeaderSearch'
 import NotificationBell from './NotificationBell'
+import { AuthGuard } from '@/guards/authGuard'
 
 export default function Header() {
   return (
@@ -31,9 +32,14 @@ export default function Header() {
               </li> */}
             
               
-              <li className="header-element header-theme-mode hidden !items-center sm:block md:!px-[0.5rem] [--auto-close:inside]">
-                <NotificationBell/>
-              </li>
+              <AuthGuard 
+              roles={["System Admin", "System SuperAdmin"]} 
+              permissions={["*"]}
+              requireAll={true}>
+                <li className="header-element header-theme-mode hidden !items-center sm:block md:!px-[0.5rem] [--auto-close:inside]">
+                  <NotificationBell/>
+                </li>
+              </AuthGuard>
               
               <FullScreen />
               

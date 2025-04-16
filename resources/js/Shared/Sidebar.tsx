@@ -135,7 +135,7 @@ const Sidebar: React.FC = () => {
         },
      {
       id: 'issues',
-      label: 'Report Problem',
+      label: 'Tickets',
       path: '/issues',
       icon: (<Bug className="h-6 w-6 mr-2 text-white" />
       )
