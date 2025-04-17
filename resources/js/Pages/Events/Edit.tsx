@@ -184,7 +184,8 @@ const handleCloseEvent = () => {
       </div>
     
     </div>
-    <div className="box">
+    {event?.status !== '2' && (
+      <div className="box">
       <div className="box-body">
         <div className="filemanager-upgrade-storage w-full text-center">
           <div className=" grid">
@@ -193,6 +194,18 @@ const handleCloseEvent = () => {
         </div>
       </div>
     </div>
+    )}
+    {event?.status == '2' && (
+      <div className="box">
+      <div className="box-body">
+        <div className="filemanager-upgrade-storage w-full text-center">
+          <div className=" grid">
+            <button disabled type="button" className="ti-btn  ti-btn-danger btn-wave waves-effect waves-light"> Event Closed</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    )}
   </div>
 </div>
   

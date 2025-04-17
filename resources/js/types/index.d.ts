@@ -33,6 +33,7 @@ export interface Event {
     start_date?: string;
     description?: string;
     end_date?: string;
+    status?: string;
     language: string;
     country: string;
     countdown: string;
