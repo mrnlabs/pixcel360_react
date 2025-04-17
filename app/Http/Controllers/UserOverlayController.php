@@ -73,6 +73,7 @@ class UserOverlayController extends Controller
         if($request->is('api/*')) {
            return $this->uploadOverlayAPI($request);
         }
+        
       
         $request->validate([
             'event_id' => 'required|exists:events,slug',
@@ -208,14 +209,14 @@ class UserOverlayController extends Controller
             ->with('success', 'Overlay updated successfully');
     }
 
-    function displaySelectedOverlay($overlayId){
-        $overlay = Overlay::findOrFail($overlayId);
+    function displaySelectedOverlay(Request $request){
+        $overlay = Overlay::findOrFail($request->overlay);
         //pluck id and name of events only
-        $events = Event::where('user_id', auth()->id())->get(['slug', 'name']);
+        $event = Event::whereSlug($request->event)->first();
         $overlaysLength = Overlay::where('user_id', auth()->id())->count();
         return Inertia::render('UserOverLays/SelectedOverlay', [
             'overlayPreset' => $overlay,
-            'events' => $events,
+            'event' => $event,
             'overlaysLength' => $overlaysLength
         
         ]);

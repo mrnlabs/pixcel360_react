@@ -29,6 +29,13 @@ class ProcessVideoJob implements ShouldQueue
      */
     public $backoff = 60;
 
+    /**
+     * The number of seconds the job can run before timing out.
+     *
+     * @var int
+     */
+    public $timeout = 180;
+
 
     /**
      * The video instance.
@@ -55,7 +62,7 @@ class ProcessVideoJob implements ShouldQueue
             $currentVideoId = $this->video->id;
     
             // Use a lock to ensure only one job runs at a time
-            $lock = Cache::lock('video_processing_lock', 120);
+            $lock = Cache::lock('video_processing_lock', 180);
     
             // Attempt to acquire the lock
             if (!$lock->get()) {

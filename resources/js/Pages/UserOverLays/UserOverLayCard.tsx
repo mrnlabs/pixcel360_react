@@ -18,13 +18,22 @@ export default function UserOverLayCard({
 
   const setAsTemplate = () => {
     if (overlay) {
-      router.get(route('user.overlays.display_selected_overlay', overlay.id));
+      router.get(route('user.overlays.display_selected_overlay', {
+        overlay: overlay.id,
+        event: window.location.href.split('?')[1].split('=')[1]
+      }));
     }
   }
   
   const handleCardClick = () => {
-    if (onSelect) {
-      onSelect(overlay);
+    // if (onSelect) {
+    //   onSelect(overlay);
+    // }
+    if (overlay) {
+      router.get(route('user.overlays.display_selected_overlay', {
+        overlay: overlay.id,
+        event: window.location.href.split('?')[1].split('=')[1]
+      }));
     }
   };
   

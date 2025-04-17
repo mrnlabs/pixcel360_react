@@ -142,13 +142,13 @@ const AdminSidebar: React.FC = () => {
         }
       ]
     },
-    // {
-    //   id: 'overlays',
-    //   label: 'Overlays',
-    //   path: '/admin-overlays',
-    //   icon: (<Layers className="h-6 w-6 mr-2 text-white" />
-    //   )
-    // },
+    {
+      id: 'overlays',
+      label: 'Overlays',
+      path: '/admin-overlays',
+      icon: (<Layers className="h-6 w-6 mr-2 text-white" />
+      )
+    },
 
     // {
     //   id: 'payment-methods',

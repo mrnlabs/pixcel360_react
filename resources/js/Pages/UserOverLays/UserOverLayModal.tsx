@@ -73,9 +73,9 @@ function UserOverLayModal({
                                      </span>
                                 </div>
                                 </div>
-                                <Button onClick={handleSubmit} disabled={processing} className="w-full ti-btn ti-btn bg-[linear-gradient(243deg,#FF4F84_0%,#394DFF_100%)] text-white btn-wave waves-effect waves-light">
+                                {/* <Button onClick={handleSubmit} disabled={processing} className="w-full ti-btn ti-btn bg-[linear-gradient(243deg,#FF4F84_0%,#394DFF_100%)] text-white btn-wave waves-effect waves-light">
                         {processing && <Loader className="mr-2 h-4 w-4 animate-spin" />} Submit
-                        </Button>
+                        </Button> */}
                             </div>
                         </div>
                     </div>

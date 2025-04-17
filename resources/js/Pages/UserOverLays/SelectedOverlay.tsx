@@ -16,7 +16,7 @@ import ConfirmOverlayUploadDialog from './ConfirmOverlayUploadDialog'
 export default function SelectedOverlay({ overlayPreset, events, overlaysLength }: any) {
   const { data, setData, post, processing, errors, reset } = useForm({
     pngFile: null as File | string | null,
-    event_id: null as string | null,
+    event_id: window.location.href.split('?')[1].split('=')[1],
     apply_to_all: false
   });
 
@@ -116,7 +116,6 @@ export default function SelectedOverlay({ overlayPreset, events, overlaysLength 
           setUserOverlay(response.overlay.path);
         }
         setModalOpen(false);
-        data.event_id = null;
         setValue("");
         setData('pngFile', null);
         showToast('success', 'Overlay uploaded successfully', {position: 'bottom-right'});
@@ -136,7 +135,7 @@ export default function SelectedOverlay({ overlayPreset, events, overlaysLength 
           <Breadcrumb
             items={[
               { label: 'Home', href: '/dashboard' },
-              { label: 'Overlays Templates', href: '/overlays' },
+              { label: 'Overlays Templates', href: `${'/overlays?event=' + window.location.href.split('?')[1].split('=')[1] + '/'}` },//get 
               { label: 'Overlay', active: true }
             ]}
           />
@@ -147,71 +146,26 @@ export default function SelectedOverlay({ overlayPreset, events, overlaysLength 
                 <div className="box-body ticky top-0 z-20 bg-white dark:bg-gray-900">
                   <div className="flex items-center flex-wrap gap-2 justify-between">
                     <div className="flex items-center space-x-3">
-                    <Popover open={open} onOpenChange={setOpen}>
-  <PopoverTrigger asChild>
-    <Button
-      variant="outline"
-      role="combobox"
-      aria-expanded={open}
-      className=" sm:w-[200px] justify-between rounded-md border border-[#ecf3fb]"
-    >
-      {value
-        ? events.find((event: any) => event.name === value)?.name
-        : "Select event..."}
-      <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-    </Button>
-  </PopoverTrigger>
-  <PopoverContent className="sm:w-[200px] p-0">
-    <Command>
-      <CommandInput placeholder="Search events..." />
-      <CommandList>
-        <CommandEmpty>No events found.</CommandEmpty>
-        <CommandGroup>
-          {events.map((event: any) => (
-            <CommandItem
-              key={event.slug}
-              value={event.name}
-              onSelect={(currentValue) => {
-                //get event by curent value
-                const event = events.find((event: any) => event.name === currentValue);
-                setData('event_id', event.slug);
-                setValue(currentValue === value ? "" : currentValue)
-                setOpen(false)
-              }}
-            >
-              <Check
-                className={cn(
-                  "mr-2 h-4 w-4",
-                  value === event.name ? "opacity-100" : "opacity-0"
-                )}
-              />
-              {event.name}
-            </CommandItem>
-          ))}
-        </CommandGroup>
-      </CommandList>
-    </Command>
-  </PopoverContent>
-</Popover>
                       {overlayPreset && (
                   <div className="w-full sm:w-auto text-sm text-gray-500 text-center">
-                    <Button disabled={!data.pngFile || !value || processing}
-                       onClick={overlaysLength > 0 ? () => setDialogOpen(true) : handleSubmit}
-                     className={`${userOverlay ? 'animate-pulse' : ''} w-full ti-btn ti-btn bg-[linear-gradient(243deg,#FF4F84_0%,#394DFF_100%)] text-white ti-btn-lg`}>
-                      Add to Event</Button>
-                  </div>
-                )}
-                    </div>
-                    <div className="flex flex-wrap gap-2 w-full sm:w-auto mt-3 sm:mt-0">
+                    
                       <button 
                         onClick={() => setModalOpen(true)} 
                         aria-label="button" 
                         type="button" 
                         className="w-full ti-btn ti-btn-primary ti-btn-sm"
                       >
-                        Upload Overlay
+                        Choose Overlay
                       </button>
+                  </div>
+                )}
+                    </div>
+                    <div className="flex flex-wrap gap-2 w-full sm:w-auto mt-3 sm:mt-0">
                       
+                    <Button disabled={!data.pngFile || !value || processing}
+                       onClick={handleSubmit}
+                     className={` w-full ti-btn ti-btn bg-[linear-gradient(243deg,#FF4F84_0%,#394DFF_100%)] text-white ti-btn-lg`}>
+                      Submit</Button>
                       
                     </div>
                   </div>
@@ -228,11 +182,11 @@ export default function SelectedOverlay({ overlayPreset, events, overlaysLength 
                       src={overlayPreset.path} 
                       className="img-fluid inline-flex" 
                       alt="Preset Frame" 
-                      // style={{width: presetDimensions.width, height: presetDimensions.height}}
                       style={{
-                        maxHeight: '80vh', // or whatever maximum height you prefer
+                        width: '300px',
+                        height: '529px', // Maintains original aspect ratio
                         objectFit: 'contain'
-                    }}
+                      }}
                     />
                     </div>
                   )}

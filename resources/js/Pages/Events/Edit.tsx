@@ -140,7 +140,7 @@ const handleCloseEvent = () => {
             </div>
             <div className=" gap-2 lg:nowrap justify-end flex-wrap justify-content-sm-end ">
               {activeTab == 'overlay' && (
-                <Link href={route('user.overlays')} aria-label="button" type="button" 
+                <Link href={route('user.overlays',{event: event?.slug})} aria-label="button" type="button" 
                 className="ti-btn bg-[linear-gradient(243deg,#FF4F84_0%,#394DFF_100%)] float-end text-white !m-0 btn-w-md flex items-center btn-wave waves-light text-nowrap waves-effect waves-light">
                   <SquarePlus className="align-middle" />Designer </Link>
               )}

@@ -15,13 +15,6 @@ class HandleInertiaRequests extends Middleware
         return parent::version($request);
     }
 
-    public function isProduction() : string
-    {
-        if (!app()->environment(['production'])) {
-            return env('FILE_PATH');
-        }
-        return env('AWS_STORAGE_URL');
-    }
 
     public function share(Request $request): array
     {

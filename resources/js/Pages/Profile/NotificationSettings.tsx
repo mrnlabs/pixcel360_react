@@ -5,9 +5,9 @@ export default function NotificationSettings() {
     <div className="tab-pane show overflow-hidden p-0 border-0 " id="notification-tab-pane" role="tabpanel">
           <div className="flex justify-between items-center mb-4 flex-wrap gap-1">
             <div className="font-semibold block text-[15px]">Notifications Settings:</div>
-            <div className="ti-btn ti-btn-primary ti-btn-sm">
+            {/* <div className="ti-btn ti-btn-primary ti-btn-sm">
               <i className="ri-loop-left-line leading-none me-2"></i>Restore Changes
-            </div>
+            </div> */}
           </div>
           <div className="grid grid-cols-12 sm:gap-x-6 gx-5 gap-y-3">
             <div className="xl:col-span-12 col-span-12">

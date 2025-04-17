@@ -64,7 +64,7 @@ export default function AllOverlays({overlays,event}: any) {
                
                     </div>
                     <div className="flex flex-wrap gap-2 w-full sm:w-auto mt-3 sm:mt-0">
-                      <Link href={route('user.overlays')} 
+                      <Link href={route('user.overlays',{event: event?.slug})} 
                         aria-label="button" 
                         role="link" 
                         className="w-full ti-btn ti-btn-primary ti-btn-sm"

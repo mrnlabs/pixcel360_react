@@ -54,10 +54,10 @@ export default function Index({user} : any) {
       </div>
         
 
-
+{/* 
       <div className={activeTab === 'notification' ? 'block' : 'hidden'}>
            <NotificationSettings />
-       </div>
+       </div> */}
 
 
        <div className={activeTab === 'security' ? 'block' : 'hidden'}>
