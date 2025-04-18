@@ -71,7 +71,7 @@ export default function WordpressShow({plan, plans}: {
                                 </div>
                             </div>
                             <Button onClick={() => {showToast('success', 'Will plugin Payment gateway here!', {position: 'bottom-right'});}} disabled={processing} 
-                            className="inline-block px-8 py-3 rounded-sm text-white font-medium bg-[linear-gradient(243deg,#FF4F84_0%,#394DFF_100%)]  w-full shadow-md transition duration-300">
+                            className="inline-block px-8 py-3 rounded-sm text-white font-medium bg-[linear-gradient(243deg,#ffcc00_0%,#ff9339_100%)]  w-full shadow-md transition duration-300">
                         {processing && <Loader className="mr-2 h-4 w-4 animate-spin" />} Subscribe
                     </Button>
                      

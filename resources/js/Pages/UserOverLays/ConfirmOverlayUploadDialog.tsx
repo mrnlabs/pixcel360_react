@@ -45,7 +45,7 @@ import {
               onContinue();
               setDialogOpen(false);
             }}
-            className=" bg-[linear-gradient(243deg,#FF4F84_0%,#394DFF_100%)] text-white"
+            className=" bg-[linear-gradient(243deg,#ffcc00_0%,#ff9339_100%)] text-white"
             >
               Continue
             </AlertDialogAction>

@@ -100,7 +100,7 @@ const handleDelete = (id: number) => {
             <div className="box">
               <div className="box-body p-4">
                 <div className="flex items-center justify-between flex-wrap gap-4">
-               <button onClick={() => setModalOpen(true)} className='ti-btn bg-[linear-gradient(243deg,#FF4F84_0%,#394DFF_100%)] text-white !m-0 btn-wave ti-btn-sm waves-effect waves-light'>
+               <button onClick={() => setModalOpen(true)} className='ti-btn bg-[linear-gradient(243deg,#ffcc00_0%,#ff9339_100%)] text-white !m-0 btn-wave ti-btn-sm waves-effect waves-light'>
                 Upload New Overlay</button>
                   <div className="flex" role="search">
                     <Input 

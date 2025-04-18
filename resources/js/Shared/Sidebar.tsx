@@ -168,7 +168,7 @@ const Sidebar: React.FC = () => {
             flex items-center px-4 py-2 text-gray-300 rounded-xs
             transition-all duration-200 ease-in-out
             ${isExactActive(item.path)
-              ? ' bg-[linear-gradient(243deg,#FF4F84_0%,#394DFF_100%)] text-white font-medium'
+              ? ' bg-[linear-gradient(243deg,#ffcc00_0%,#ff9339_100%)] text-white font-medium'
               : 'hover:bg-gray-700/30'
             }
           `}
@@ -190,10 +190,10 @@ const Sidebar: React.FC = () => {
         <Link href={item.path} className={`
           flex items-center px-4 py-2 text-white rounded-xs
           transition-all duration-200 ease-in-out
-          hover:bg-[linear-gradient(243deg,#FF4F84_0%,#394DFF_100%)]
+          hover:bg-[linear-gradient(243deg,#ffcc00_0%,#ff9339_100%)]
           ${isExactActive(item.path)
-            ? 'bg-[linear-gradient(243deg,#FF4F84_0%,#394DFF_100%)] text-white font-medium'
-            : 'hover:bg-[linear-gradient(243deg,#FF4F84_0%,#394DFF_100%)]'
+            ? 'bg-[linear-gradient(243deg,#ffcc00_0%,#ff9339_100%)] text-white font-medium'
+            : 'hover:bg-[linear-gradient(243deg,#ffcc00_0%,#ff9339_100%)]'
           }
         `}>
           <span className="flex items-center text-white">
@@ -226,8 +226,8 @@ const Sidebar: React.FC = () => {
                   flex items-center pl-10 pr-4 py-2 text-sm text-gray-300 rounded-xs
                   transition-all duration-200 ease-in-out
                   ${isExactActive(subItem.path)
-                    ? 'bg-[linear-gradient(243deg,#FF4F84_0%,#394DFF_100%)] text-white font-medium'
-                    : 'hover:bg-[linear-gradient(243deg,#FF4F84_0%,#394DFF_100%)] text-white'
+                    ? 'bg-[linear-gradient(243deg,#ffcc00_0%,#ff9339_100%)] text-white font-medium'
+                    : 'hover:bg-[linear-gradient(243deg,#ffcc00_0%,#ff9339_100%)] text-white'
                   }
                 `}
               >

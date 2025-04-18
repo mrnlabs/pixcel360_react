@@ -186,7 +186,7 @@ function ShareGalleryViaEmailModal({
           <Button
             onClick={handleSendEmails}
             disabled={processing || emails.length === 0}
-            className="ti-btn bg-[linear-gradient(243deg,#FF4F84_0%,#394DFF_100%)] text-white btn-wave waves-effect waves-light"
+            className="ti-btn bg-[linear-gradient(243deg,#ffcc00_0%,#ff9339_100%)] text-white btn-wave waves-effect waves-light"
           >
             {processing ? "Sending..." : "Send"}
           </Button>

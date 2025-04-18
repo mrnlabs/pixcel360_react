@@ -91,7 +91,7 @@ export default function ProfileImage() {
           <div className="btn-list mb-1">
             <label 
               htmlFor="profile-image" 
-              className={`ti-btn ti-btn-sm bg-[linear-gradient(243deg,#FF4F84_0%,#394DFF_100%)] text-white btn-wave waves-effect waves-light ${uploading ? 'opacity-50 cursor-not-allowed' : ''}`}
+              className={`ti-btn ti-btn-sm bg-[linear-gradient(243deg,#ffcc00_0%,#ff9339_100%)] text-white btn-wave waves-effect waves-light ${uploading ? 'opacity-50 cursor-not-allowed' : ''}`}
             >
               <Upload size={16} className="me-1" />
               Change Image 

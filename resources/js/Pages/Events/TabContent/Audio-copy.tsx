@@ -232,7 +232,7 @@ export default function Audio({event, setRefresh}: any) {
                     <Button 
                     onClick={handleSubmit}
                     disabled={!audioFile || processing || audioProcessing} 
-                    className="ti-btn bg-[linear-gradient(243deg,#FF4F84_0%,#394DFF_100%)] text-white w-full">
+                    className="ti-btn bg-[linear-gradient(243deg,#ffcc00_0%,#ff9339_100%)] text-white w-full">
                     
                     {(processing || audioProcessing) && <Loader className='mr-2 animate-spin'/>}Upload</Button>
                 </div>

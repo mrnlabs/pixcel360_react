@@ -70,7 +70,7 @@ function QRModal({
                     </li>
                 </ul>
                 </div>
-                <Button onClick={() => setOpen(false)} className=" ti-btn bg-[linear-gradient(243deg,#FF4F84_0%,#394DFF_100%)] text-white btn-wave  waves-effect waves-light">Dismiss</Button>
+                <Button onClick={() => setOpen(false)} className=" ti-btn bg-[linear-gradient(243deg,#ffcc00_0%,#ff9339_100%)] text-white btn-wave  waves-effect waves-light">Dismiss</Button>
             </DialogContent>
         </Dialog>
     );

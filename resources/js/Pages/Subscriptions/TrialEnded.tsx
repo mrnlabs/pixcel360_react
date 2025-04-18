@@ -10,7 +10,7 @@ export default function TrialEnded() {
     <TriangleAlert className='w-12 h-12 text-red-500' />
       <h2>Your Free Trial Has Ended</h2>
       <p>Please consider upgrading your plan to continue using our services.</p>
-      <Link href={route('plans')} type="button" className="mt-3 bg-[#ff9339] text-white font-medium py-2 px-4 rounded-sm mb-3 hover:bg-amber-400 transition-colors">Upgrade Now</Link>
+      <Link href={route('plans')} type="button" className="mt-3 bg-[linear-gradient(243deg,#ffcc00_0%,#ff9339_100%)] text-white font-medium py-2 px-4 rounded-sm mb-3 hover:bg-amber-400 transition-colors">Upgrade Now</Link>
     </div>
     </Authenticated>
   )

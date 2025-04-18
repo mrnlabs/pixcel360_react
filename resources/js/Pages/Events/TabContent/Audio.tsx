@@ -420,7 +420,7 @@ export default function Audio({event}: any) {
                                 >
                                     Cancel
                                 </Button>
-                                <Button className='ti-btn bg-[linear-gradient(243deg,#FF4F84_0%,#394DFF_100%)] text-white'
+                                <Button className='ti-btn bg-[linear-gradient(243deg,#ffcc00_0%,#ff9339_100%)] text-white'
                                     variant="default" 
                                     size="sm" 
                                     onClick={handleTrimAudio}
@@ -443,7 +443,7 @@ export default function Audio({event}: any) {
                     <Button 
                         onClick={handleSubmit}
                         disabled={!audioFile || processing} 
-                        className="ti-btn bg-[linear-gradient(243deg,#FF4F84_0%,#394DFF_100%)] text-white w-full mt-4">
+                        className="ti-btn bg-[linear-gradient(243deg,#ffcc00_0%,#ff9339_100%)] text-white w-full mt-4">
                         {!processing && <ArrowUpFromLine className="mr-2" />}
                         {processing && <Loader className='mr-2 animate-spin'/>}
                         Upload

@@ -100,7 +100,7 @@ const updateFilters = React.useCallback(
                             permissions={["*"]}
                             requireAll={true}
                             >
-                          <Link href={route('event.create')} className="ti-btn bg-[linear-gradient(243deg,#FF4F84_0%,#394DFF_100%)] text-white !m-0 btn-wave ti-btn-sm waves-effect waves-light">
+                          <Link href={route('event.create')} className="ti-btn bg-[linear-gradient(243deg,#ffcc00_0%,#ff9339_100%)] text-white !m-0 btn-wave ti-btn-sm waves-effect waves-light">
                           <SquarePlus className="align-middle" />Create Event
                           </Link>
                           </AuthGuard>

@@ -103,7 +103,7 @@ const handleSubmit = () => {
     </div>
   </div>
 </div>
-      <button className='p-3 ti-btn ti-btn-sm text-white bg-[linear-gradient(243deg,#FF4F84_0%,#394DFF_100%)]' onClick={handleSubmit}>
+      <button className='p-3 ti-btn ti-btn-sm text-white bg-[linear-gradient(243deg,#ffcc00_0%,#ff9339_100%)]' onClick={handleSubmit}>
         {processing ? 'Updating...' : 'Update'}</button>
     </div>
   </div>

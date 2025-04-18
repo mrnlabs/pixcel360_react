@@ -171,7 +171,7 @@ export default function Share({event, videos}: {
 
                   {event.sharing_method?.download == 1 ? (
                       <button onClick={downloadAll} aria-label="anchor" 
-                        className="ti-btn ti-btn-sm ti-btn bg-[linear-gradient(243deg,#FF4F84_0%,#394DFF_100%)] text-white">
+                        className="ti-btn ti-btn-sm ti-btn bg-[linear-gradient(243deg,#ffcc00_0%,#ff9339_100%)] text-white">
                         <CustomTooltip content="Download All">
                       {loading ? <Loader className="animate-spin" size={20} /> : <Download size={20} />}
                       </CustomTooltip> 
@@ -182,7 +182,7 @@ export default function Share({event, videos}: {
 
           {event.sharing_method?.email == 1 ? (
                 <button onClick={() => setModalOpen(true)} aria-label="anchor" 
-                className="ti-btn ti-btn-sm ti-btn bg-[linear-gradient(243deg,#FF4F84_0%,#394DFF_100%)] text-white">
+                className="ti-btn ti-btn-sm ti-btn bg-[linear-gradient(243deg,#ffcc00_0%,#ff9339_100%)] text-white">
                  <CustomTooltip content="Email">
                 <Mail size={20} />
                 </CustomTooltip> 
@@ -196,7 +196,7 @@ export default function Share({event, videos}: {
                   setVideoLink(gallery_link)
                 }
                 } aria-label="anchor" 
-                className="ti-btn ti-btn-sm ti-btn bg-[linear-gradient(243deg,#FF4F84_0%,#394DFF_100%)] text-white">
+                className="ti-btn ti-btn-sm ti-btn bg-[linear-gradient(243deg,#ffcc00_0%,#ff9339_100%)] text-white">
                  <CustomTooltip content="QR Code">
                 <QrCode size={20} />
                 </CustomTooltip> 
@@ -209,7 +209,7 @@ export default function Share({event, videos}: {
                 <a target="_blank" 
                         href={`https://wa.me/?text=${gallery_link}`}
                         rel="noreferrer"  aria-label="anchor" 
-                className="ti-btn ti-btn-sm ti-btn bg-[linear-gradient(243deg,#FF4F84_0%,#394DFF_100%)] text-white">
+                className="ti-btn ti-btn-sm ti-btn bg-[linear-gradient(243deg,#ffcc00_0%,#ff9339_100%)] text-white">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" height={20} width={17}>
                   <path 
                     fill="#ffff" 
@@ -242,7 +242,7 @@ export default function Share({event, videos}: {
 
             {event.sharing_method?.download == 1 ? (
                 <button onClick={() => window.open(video.processed_video_path, '_blank')} aria-label="anchor" 
-                className="ti-btn ti-btn-sm ti-btn bg-[linear-gradient(243deg,#FF4F84_0%,#394DFF_100%)] text-white">
+                className="ti-btn ti-btn-sm ti-btn bg-[linear-gradient(243deg,#ffcc00_0%,#ff9339_100%)] text-white">
                   <CustomTooltip content="Download">
                       <Download size={17} />
                 </CustomTooltip> 
@@ -255,7 +255,7 @@ export default function Share({event, videos}: {
                   setQRModalOpen(true)
                 }
               } aria-label="anchor" 
-                className="ti-btn ti-btn-sm ti-btn bg-[linear-gradient(243deg,#FF4F84_0%,#394DFF_100%)] text-white">
+                className="ti-btn ti-btn-sm ti-btn bg-[linear-gradient(243deg,#ffcc00_0%,#ff9339_100%)] text-white">
                   <CustomTooltip content="QR Code">
                       <QrCode size={17} />
                 </CustomTooltip> 
@@ -271,7 +271,7 @@ export default function Share({event, videos}: {
                 }
                 } 
                 aria-label="anchor" 
-                className="ti-btn ti-btn-sm ti-btn bg-[linear-gradient(243deg,#FF4F84_0%,#394DFF_100%)] text-white">
+                className="ti-btn ti-btn-sm ti-btn bg-[linear-gradient(243deg,#ffcc00_0%,#ff9339_100%)] text-white">
                   <CustomTooltip content="Email">
                      <Mail size={17} />
                 </CustomTooltip> 
@@ -286,7 +286,7 @@ export default function Share({event, videos}: {
    <a target="_blank" 
            href={`https://wa.me/?text=${video.processed_video_path}`}
            rel="noreferrer"  aria-label="anchor" 
-   className="ti-btn ti-btn-sm ti-btn bg-[linear-gradient(243deg,#FF4F84_0%,#394DFF_100%)] text-white">
+   className="ti-btn ti-btn-sm ti-btn bg-[linear-gradient(243deg,#ffcc00_0%,#ff9339_100%)] text-white">
    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" height={17} width={17}>
      <path 
        fill="#ffff" 

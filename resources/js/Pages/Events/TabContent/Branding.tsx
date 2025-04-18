@@ -107,7 +107,7 @@ export default function Branding({event} : EventProps) {
       <Button 
         onClick={handleSubmit} 
         disabled={processing} 
-        className='mt-4 ti-btn bg-[linear-gradient(243deg,#FF4F84_0%,#394DFF_100%)] text-white w-full'>
+        className='mt-4 ti-btn bg-[linear-gradient(243deg,#ffcc00_0%,#ff9339_100%)] text-white w-full'>
         {processing && <Loader className="animate-spin mr-2" /> }
         Save
       </Button>

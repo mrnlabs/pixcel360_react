@@ -143,7 +143,7 @@ function ShareGalleryViaQRModal({
                 </Button>
                 <Button
                   onClick={() => downloadQRCode('',event)}
-                  className="ti-btn bg-[linear-gradient(243deg,#FF4F84_0%,#394DFF_100%)] text-white btn-wave waves-effect waves-light"
+                  className="ti-btn bg-[linear-gradient(243deg,#ffcc00_0%,#ff9339_100%)] text-white btn-wave waves-effect waves-light"
                 >
                   Download
                 </Button>

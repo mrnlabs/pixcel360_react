@@ -150,7 +150,7 @@ const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
               <InputError message={errors.post_code} />
             </div>
             <div className="xl:col-span-12 col-span-12">
-            <button disabled={processing} type="submit" className="ti-btn bg-[linear-gradient(243deg,#FF4F84_0%,#394DFF_100%)] text-white w-full">{ processing ? 'Saving...' : 'Save'}</button>
+            <button disabled={processing} type="submit" className="ti-btn bg-[linear-gradient(243deg,#ffcc00_0%,#ff9339_100%)] text-white w-full">{ processing ? 'Saving...' : 'Save'}</button>
             </div>
             
           </form>

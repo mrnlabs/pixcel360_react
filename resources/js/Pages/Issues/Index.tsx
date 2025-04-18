@@ -96,7 +96,7 @@ export default function Index({ issues }: any) {
     <div className="flex gap-4 items-center flex-wrap">
       <div className="custom-form-group grow">
         {/* <DatePickerWithRange className="form-control !pe-[7rem]" range={filters.range} onChange={(value) => updateFilters({ range: value })} /> */}
-        <Link href={route('issues.create')} className="ti-btn bg-[linear-gradient(243deg,#FF4F84_0%,#394DFF_100%)] text-white">Create Ticket</Link>
+        <Link href={route('issues.create')} className="ti-btn bg-[linear-gradient(243deg,#ffcc00_0%,#ff9339_100%)] text-white">Create Ticket</Link>
       </div>
     </div>
   </div>
