@@ -82,11 +82,11 @@ class ProcessVideoJob implements ShouldQueue
     
             $data = [
                 'trim_start' => 0,
-                'play_to_sec' => $videoSettings->duration ?? 3,//duration
+                'play_to_sec' => $videoSettings->duration ?? 6,//duration
                 'slow_factor' => $videoSettings->speed ?? 0.7,//speed
                 'effect' => 'slomo_boomerang',
                 'video_url' => $videoPath,
-                // 'audio_url' => $videoSettings->add_audio_file,
+                'quality' => 'high'
             ];
             if ($videoSettings->add_audio_file) {
                 $data['audio_url'] = $videoSettings->add_audio_file;

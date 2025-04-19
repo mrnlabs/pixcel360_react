@@ -203,27 +203,66 @@ return [
         ],
     ],
 
-    'environments' => [
-        'production' => [
-            'supervisor-1' => [
-                'maxProcesses' => 10,
-                'balanceMaxShift' => 1,
-                'balanceCooldown' => 3,
-            ],
-            'supervisor-2' => [
-                'connection' => 'redis',
-                'queue' => ['video-processing'],
-                'balance' => 'auto',
-                'processes' => 3,
-                'tries' => 1,
-                'timeout' => 180, // 3 minutes for video processing
-            ],
-        ],
+    // 'environments' => [
+    //     'production' => [
+    //         'supervisor-1' => [
+    //             'maxProcesses' => 10,
+    //             'balanceMaxShift' => 1,
+    //             'balanceCooldown' => 3,
+    //         ],
+    //         'supervisor-2' => [
+    //             'connection' => 'redis',
+    //             'queue' => ['video-processing'],
+    //             'balance' => 'auto',
+    //             'processes' => 3,
+    //             'tries' => 1,
+    //             'timeout' => 180, // 3 minutes for video processing
+    //         ],
+    //     ],
 
-        'local' => [
-            'supervisor-1' => [
-                'maxProcesses' => 3,
+    //     'local' => [
+    //         'supervisor-1' => [
+    //             'maxProcesses' => 3,
+    //         ],
+    //     ],
+    // ],
+
+    'environments' => [
+            'production' => [
+                'supervisor-1-emails' => [
+                    'connection' => 'redis',
+                    'queue' => ['default'],
+                    'balance' => 'auto',
+                    'processes' => 5,
+                    'tries' => 3,
+                    'timeout' => 60,
+                ],
+                'supervisor-2-videos' => [
+                    'connection' => 'redis',
+                    'queue' => ['video-processing'],
+                    'balance' => 'auto',
+                    'processes' => 3,  // Fewer processes for video processing
+                    'tries' => 1,      // Videos might be long-running, maybe don't retry
+                    'timeout' => 3600, // Longer timeout for video processing
+                ],
             ],
-        ],
+
+            'local' => [
+                'supervisor-1' => [
+                    'connection' => 'redis',
+                    'queue' => ['default'],
+                    'balance' => 'simple',
+                    'processes' => 2,
+                    'tries' => 3,
+                ],
+                'supervisor-2' => [
+                    'connection' => 'redis',
+                    'queue' => ['video-processing'],
+                    'balance' => 'simple',
+                    'processes' => 1,
+                    'tries' => 1,
+                    'timeout' => 1800,
+                ],
+            ],      
     ],
 ];
