@@ -84,12 +84,16 @@ export default function PlanCard({plan, handleDelete, dialogOpen, setDialogOpen,
 
              
       
-      <AuthGuard 
+      {/* <AuthGuard 
           roles={["Account Owner"]} 
           permissions={["*"]}
           requireAll={true}>
           <button onClick={handleSubscribe} aria-label="anchor" type='button' className="w-full ti-btn bg-[linear-gradient(243deg,#ffcc00_0%,#ff9339_100%)] text-white btn-wave mt-4 waves-effect waves-light">Subscribe</button>
-      </AuthGuard>
+      </AuthGuard> */}
+
+<Link href={route('payment.checkout', plan?.slug )}  className="ti-btn ti-btn-icon ti-btn-soft-primary1 btn-wave ti-btn-sm ms-2 waves-effect waves-light">
+              Subscribe
+              </Link>
 
              
           </div>

@@ -3,7 +3,7 @@ import InputError from '@/Components/InputError';
 import Guest from '@/Layouts/GuestLayout';
 import showToast from '@/utils/showToast';
 import { Head, Link, router, useForm, usePage } from '@inertiajs/react';
-import { Eye, EyeOff, Loader } from 'lucide-react';
+import { Eye, EyeOff, Loader, Loader2 } from 'lucide-react';
 import { FormEventHandler, useState } from 'react';
 
 export default function Welcome() {
@@ -64,7 +64,7 @@ const handleGoogleLogin = async () => {
                  <span className="avatar avatar-xs flex-shrink-0"> 
                     <img src="https://pixcelcapetown.s3.af-south-1.amazonaws.com/placeholders/google.png" alt=""/> 
                     </span> <span className="leading-[1.2rem] ms-2 text-[13px] text-defaulttextcolor">
-                    {isLoading ? 'Signing in...' : 'Signup with Google'}</span> 
+                    {isLoading ? <Loader2 className='mr-2 animate-spin'/> : 'Signup with Google'}</span> 
                </button> 
                   </div>
                <div className="text-center my-3 authentication-barrier"> <span>OR</span> </div>

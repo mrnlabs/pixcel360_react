@@ -17,6 +17,7 @@ data-width="fullwidth"  data-vertical-style="overlay" data-icon-overlay="open">
     /* background-color: #eef2f5 !important; */
 }
         </style>
+        <script src="https://www.payfast.co.za/onsite/engine.js"></script>
         @routes
         @viteReactRefresh
         @vite(['resources/js/app.tsx', "resources/js/Pages/{$page['component']}.tsx"])

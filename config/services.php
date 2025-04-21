@@ -42,7 +42,7 @@ return [
     ],
 
     'video_processing' => [
-        'endpoint' => env('VIDEO_PROCESSING_API_ENDPOINT', 'http://13.247.185.225/process-video-s3-async'),
+        'endpoint' => env('VIDEO_PROCESSING_API_ENDPOINT', 'http://13.247.119.213/process-video-s3-async'),
         'timeout' => env('VIDEO_PROCESSING_TIMEOUT', 300), // 5 minutes
     ],
 

@@ -171,7 +171,14 @@ class EventController extends Controller
 
     function closeEvent(Request $request){
        $request->validate(['slug' => 'required|exists:events,slug']);
+
        $event = Event::where('slug', $request->slug)->first();
+
+       if(isInternalPortalUser() && $request->reopen){
+           $event->update(['status' => '1']);
+           return back()->with('success', 'Event reopened successfully');
+       }
+       
        $event->update(['status' => '2']);
         return back()->with('success', 'Event closed successfully');
     }

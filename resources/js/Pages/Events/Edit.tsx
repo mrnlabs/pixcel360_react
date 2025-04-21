@@ -17,6 +17,7 @@ import SharingSubjects from "./TabContent/SharingSubjects";
 import Branding from "./TabContent/Branding";
 import Overlay from "./TabContent/Overlay";
 import showToast from "@/utils/showToast";
+import { AuthGuard } from "@/guards/authGuard";
 
 export default function Edit({event} : EventProps) {
   const [activeTab, setActiveTab] = React.useState('event-details');
@@ -95,6 +96,23 @@ const handleCloseEvent = () => {
   if (confirm('Are you sure you want to close this event?')) {
     router.post(route('events.close'), {
       'slug': event?.slug,
+    }, {
+      preserveState: true,
+      replace: true,
+      onSuccess: () => {
+        showToast('success', 'Event closed successfully!', {position: 'bottom-right'});
+      },
+      onError: () => {
+        showToast('error', 'Failed to close event!', {position: 'bottom-right'});
+      }
+    });
+  }
+};
+const handleActivateEvent = () => {
+  if (confirm('Are you sure you want to reopen this event?')) {
+    router.post(route('events.close'), {
+      'slug': event?.slug,
+      'reopen': 'true'
     }, {
       preserveState: true,
       replace: true,
@@ -200,7 +218,20 @@ const handleCloseEvent = () => {
       <div className="box-body">
         <div className="filemanager-upgrade-storage w-full text-center">
           <div className=" grid">
-            <button disabled type="button" className="ti-btn  ti-btn-danger btn-wave waves-effect waves-light"> Event Closed</button>
+          <AuthGuard 
+          roles={["System Admin", "System SuperAdmin"]} 
+          permissions={["*"]}
+          requireAll={true}>
+          <button onClick={handleActivateEvent} type="button" className="ti-btn  ti-btn-danger btn-wave waves-effect waves-light"> Event Closed</button>
+      </AuthGuard>
+      
+      <AuthGuard 
+          roles={["Account Owner"]} 
+          permissions={["*"]}
+          requireAll={true}>
+          <button disabled type="button" className="ti-btn  ti-btn-danger btn-wave waves-effect waves-light"> Event Closed</button>
+      </AuthGuard>
+            
           </div>
         </div>
       </div>

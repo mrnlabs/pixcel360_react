@@ -2,14 +2,12 @@
 
 namespace App\Http\Controllers\PaymentGateWays;
 
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use App\Models\Plan;
 use Inertia\Inertia;
-use PayFast\PayFastPayment;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
-use App\Http\Controllers\Controller;
 
-class PayFastController extends Controller
+class PayFastControllerCopy extends Controller
 {
     private $merchant_id;
     private $merchant_key;
@@ -30,33 +28,60 @@ class PayFastController extends Controller
     {
         
         try {
-            $payfast = new PayFastPayment(
-                [
-                    'merchantId' => '10000100',
-                    'merchantKey' => '46f0cd694581a',
-                    'passPhrase' => env('PAYFAST_PASSPHRASE'),
-                    'testMode' => false
-                ]
-            );
-        
-            $data = [
-                'amount' => '100.00',
+
+            $data = array(
+                // Merchant details
+                'merchant_id' => $this->merchant_id,
+                'merchant_key' => $this->merchant_key,
+                'return_url' =>  route('payment.success'),
+                'cancel_url' => route('payment.cancel'),
+                'notify_url' => route('payment.notify'),
+                // Buyer details
+                'name_first' => 'First Name',
+                'name_last'  => 'Last Name',
+                'email_address'=> 'test@test.com',
+                // Transaction details
+                'm_payment_id' => '1234', //Unique payment ID to pass through to notify_url
+                'amount' => number_format( sprintf( '%.2f', 200 ), 2, '.', '' ),
                 'item_name' => 'Order#123'
-            ];
-        
-            // Generate payment identifier
-            $identifier = $payfast->onsite->generatePaymentIdentifier($data);
-        
-            if($identifier!== null){
-                Log::info('Payment identifier: '.$identifier);
-                // echo '<script type="text/javascript">window.payfast_do_onsite_payment({"uuid":"'.$identifier.'"});</script>';
-                return Inertia::render('PaymentMethods/Index', [
-                    'payfastIdentifier' => $identifier  
+            );
+           
+
+            $data['signature'] = $this->generateSignature($data, $this->passphrase);
+
+
+            // convert data to string
+            $data_string = $this->dataToString($data);
+          
+           
+           $identifier = $this->generatePaymentIdentifier($data_string);
+          
+           if($identifier) {
+                return Inertia::view('PaymentMethods/Index', [
+                    'order' => Plan::where('slug', $slug)->first(),
+                    'uuid' => $identifier,
+                    "return_url" => $data['return_url'],
+                    "cancel_url" => $data['cancel_url'],
+                    "notify_url" => $data['notify_url'],
+                    "amount" => 200
                 ]);
-            }
-        } catch(\Exception $e) {
-            echo 'There was an exception: '.$e->getMessage();
+           }
+        
+        } catch (\Illuminate\Http\Client\RequestException $e) {
+            // Handle exception
+            logger()->error('PayFast API Error: ' . $e->getMessage());
+            throw $e;
         }
+
+
+            $plan = Plan::where('slug', $slug)->first();
+            $plan->subscriptions()->create([
+                'user_id' => auth()->id(),
+                'plan_id' => $plan->id,
+                'started_at' => now(),
+                'expires_at' => $plan->getEndDate(),
+            ]);
+            return back()->with('success', 'Plan subscribed successfully');
         
     }
 
@@ -168,7 +193,6 @@ class PayFastController extends Controller
     public function notify(Request $request)
     {
         logger()->error('NOTIFY HIT: ' );
-        logger()->info('NOTIFY Request: ' .$request);
         // Verify the payment notification
         if (!$this->verifyPayment($request->all())) {
             return response('Invalid signature', 400);

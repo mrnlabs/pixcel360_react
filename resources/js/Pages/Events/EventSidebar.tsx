@@ -118,7 +118,7 @@ export default function EventSidebar({activeTab,setActiveTab, scrollToDiv,event}
                 </div>
               </li>
 
-              <li className={`${activeTab === 'branding' ? 'active' : ''} files-type`}>
+              {/* <li className={`${activeTab === 'branding' ? 'active' : ''} files-type`}>
                 <div onClick={() => setActiveTab('branding')} className="cursor-pointer">
                   <div className="flex items-center">
                     <div className="me-2">
@@ -127,7 +127,7 @@ export default function EventSidebar({activeTab,setActiveTab, scrollToDiv,event}
                     <span className="flex-auto text-nowrap"> Devices </span>
                   </div>
                 </div>
-              </li>
+              </li> */}
              
             </ul>
           </div>

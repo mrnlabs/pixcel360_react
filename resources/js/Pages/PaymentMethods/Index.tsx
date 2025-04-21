@@ -1,69 +1,75 @@
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Head, usePage } from '@inertiajs/react';
 import { router } from '@inertiajs/react';
+import PayFastCheckout from './PayFastCheckout';
 
-const Index = ({ 
-    order, 
-    uuid,
-    return_url, cancel_url, notify_url, amount }: any) => {
+const Index = ({ payfastIdentifier, error }: any) => {
   const props = usePage().props
-    useEffect(() => {
-        // Load PayFast script
-        const script = document.createElement('script');
-        script.src = 'https://www.payfast.co.za/onsite/engine.js';
-        script.async = true;
-        document.body.appendChild(script);
+  const [paymentStatus, setPaymentStatus] = useState<{ success: boolean; message: string; data: any } | null>(null);
+  
+  const handlePaymentSuccess = (result: any) => {
+    setPaymentStatus({
+      success: true,
+      message: 'Payment completed successfully!',
+      data: result
+    });
+    
+    // You might want to redirect or update your UI
+    // window.location.href = '/thank-you';
+  };
+  
+  const handlePaymentError = (error: any) => {
+    setPaymentStatus({
+      success: false,
+      message: typeof error === 'string' ? error : 'Payment failed. Please try again.',
+      data: error
+    });
+  };
 
-        return () => {
-            document.body.removeChild(script);
-        };
-    }, []);
-
-    const initiatePayment = async () => {
-        
-            // @ts-expect-error
-          window.payfast_do_onsite_payment({
-            "uuid":uuid,
-            "return_url":return_url,
-            "cancel_url":cancel_url,
-            "notify_url":notify_url,
-            "amount":amount
-        }, function (result: any) {
-            if (result === true) {
-              alert('Payment successful');
-            }
-            else {
-              alert('Payment failed');
-            }
-          }); 
-    };
 
     return (
         <>
             <Head title="Checkout" />
             
-            <div className="max-w 7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                <div className="bg-white rounded-lg shadow-lg p-6">
-                    <h2 className="text-2xl font-bold mb-4">Checkout</h2>
-                    
-                    {/* Order Summary */}
-                    <div className="mb-6">
-                        <h3 className="text-lg font-semibold mb-2">Order Summary</h3>
-                        <p>Order ID: {order.id}</p>
-                        <p>Total: R{amount}</p>
-                    </div>
-
-                    {/* Payment Button */}
-                    <button
-                        id="pay-button"
-                        onClick={initiatePayment}
-                        className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
-                    >
-                        Pay Now
-                    </button>
+            <div className="py-12">
+        <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
+          <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+            <div className="p-6 bg-white border-b border-gray-200">
+              <h1 className="text-2xl font-bold mb-4">Complete Your Payment</h1>
+              
+              {error && (
+                <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+                  {error}
                 </div>
+              )}
+              
+              {paymentStatus && (
+                <div className={`${paymentStatus.success ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'} border px-4 py-3 rounded mb-4`}>
+                  {paymentStatus.message}
+                </div>
+              )}
+              
+              {payfastIdentifier && (
+                <div className="mt-6">
+                  <PayFastCheckout 
+                    payfastIdentifier={payfastIdentifier} 
+                    onSuccess={handlePaymentSuccess}
+                    onError={handlePaymentError}
+                  />
+                </div>
+              )}
+              
+              {!payfastIdentifier && !error && (
+                <div className="bg-yellow-100 border border-yellow-400 text-yellow-700 px-4 py-3 rounded">
+                  Unable to initialize payment. Please try again later.
+                </div>
+              )}
             </div>
+          </div>
+        </div>
+      </div>
+
         </>
     );
 };
