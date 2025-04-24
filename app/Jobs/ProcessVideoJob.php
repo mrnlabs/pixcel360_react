@@ -81,9 +81,9 @@ class ProcessVideoJob implements ShouldQueue
             $eventOverlay = Overlay::find($event->overlay_id);
     
             $data = [
-                'trim_start' => 0,
-                'play_to_sec' => $videoSettings->duration ?? 6,//duration
-                'slow_factor' => $videoSettings->speed ?? 0.7,//speed
+                'normal_play' => $videoSettings->duration ?? 2,
+                'slow_play' => $videoSettings->slomo_recording_time ?? 2,
+                'slow_factor' => $videoSettings->speed ?? 0.5,//speed
                 'effect' => 'slomo_boomerang',
                 'video_url' => $videoPath,
                 'quality' => 'ultra'

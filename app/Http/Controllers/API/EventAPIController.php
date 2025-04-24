@@ -170,7 +170,7 @@ protected function generateVideoFilename(UploadedFile $file)
         public function activateEvent(Request $request){
 
            try {
-            $event = Event::where('slug', $request->slug)->first();
+            $event = Event::with('setting','boomerang_setting','sharing_method','sharing_subject')->where('slug', $request->slug)->first();
                 if($request->close_event){
                     $event->update(['status' => '2']);
                     return response()->json(['message' => 'Event closed successfully.'], 200);

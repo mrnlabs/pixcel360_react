@@ -130,7 +130,7 @@ const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
   </div>
   */}
   <div className="xl:col-span-6 lg:col-span-6 md:col-span-6 sm:col-span-12 col-span-12">
-  <label className="block text-sm mb-1"> Recording duration</label>
+  <label className="block text-sm mb-1"> Normal Play Time</label>
   <Select value={data.duration} onValueChange={(value) => setData('duration', value)}>
       <SelectTrigger className="w-[180px] form-control border rounded-lg">
         <SelectValue placeholder="Select" />
@@ -146,7 +146,7 @@ const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
   </div>
 
   <div className="xl:col-span-6 lg:col-span-6 md:col-span-6 sm:col-span-12 col-span-12">
-    <label className="block text-sm mb-1">Slomo recording time</label>
+    <label className="block text-sm mb-1">Slomo Recording Time</label>
     <Select value={data.slomo_recording_time} onValueChange={(value) => setData('slomo_recording_time', value)}>
       <SelectTrigger className="w-[180px] form-control border rounded-lg">
         <SelectValue placeholder="Select" />
@@ -155,8 +155,8 @@ const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
             <SelectGroup>
             {/* //between 0 and 12 , eg 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9 */}
             
-            {[...Array(120).keys()].map((i) => (
-              <SelectItem key={i} value={String((i + 1) / 10)}>{(i + 1) / 10}</SelectItem>
+            {[...Array(20).keys()].map((i) => (
+              <SelectItem key={i} value={String((i + 1))}>{(i + 1)}s</SelectItem>
             ))}
             
            

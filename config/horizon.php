@@ -85,6 +85,7 @@ return [
 
     'waits' => [
         'redis:default' => 60,
+        'redis:video-processing' => 120,
     ],
 
     /*
