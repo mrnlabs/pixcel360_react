@@ -13,7 +13,7 @@ use App\Services\EventService;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
-
+use App\Http\Resources\EventResource;
 use App\Services\VideoSettingsService;
 use Illuminate\Support\Facades\Storage;
 use App\Services\SharingSettingsService;
@@ -171,6 +171,9 @@ protected function generateVideoFilename(UploadedFile $file)
 
            try {
             $event = Event::with('setting','boomerang_setting','sharing_method','sharing_subject')->where('slug', $request->slug)->first();
+                if(!$event){
+                    return response()->json(['message' => 'Event not found.'], 404);
+                }
                 if($request->close_event){
                     $event->update(['status' => '2']);
                     return response()->json(['message' => 'Event closed successfully.'], 200);
@@ -209,7 +212,7 @@ protected function generateVideoFilename(UploadedFile $file)
                 }
                
                 $event->update(['status' => true]);
-                return response()->json($event);
+                return new EventResource($event);
            } catch (\Throwable $th) {
              return response()->json(['message' => $th->getMessage()], 400);
            }
