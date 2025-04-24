@@ -83,10 +83,7 @@ class EventSettingAPIController extends Controller
                 $url = Storage::url($filePath);
                 $video = $event->boomerang_setting()->update(['add_audio_file' => $url]);
                 return response()->json([
-                    'message' => 'Audio uploaded successfully',
-                    'status' => 200,
                     'path' => $url,
-                    'video' => $event = Event::where('slug', $request->slug)->first()
                 ], 200);
             }
           
@@ -109,7 +106,6 @@ class EventSettingAPIController extends Controller
                     'message' => 'Overlay uploaded successfully',
                     'status' => 200,
                     'path' => $url,
-                    'video' => $event = Event::where('slug', $request->slug)->first()
                 ], 200);
             }
           

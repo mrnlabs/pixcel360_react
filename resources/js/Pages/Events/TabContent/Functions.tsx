@@ -19,6 +19,7 @@ export default function Functions({event} : any) {
     slomo_boomerang: event?.boomerang_setting?.slomo_boomerang,
     duration: event?.boomerang_setting?.duration,
     speed: event?.boomerang_setting?.speed,
+    stabilization: event?.boomerang_setting?.stabilization ?? 'off',
 });
 
 useEffect(() => {
@@ -180,6 +181,23 @@ const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
               <SelectItem key={i} value={String((i + 1) / 10)}>{(i + 1) / 10}</SelectItem>
             ))}
            
+            </SelectGroup>
+        </SelectContent>
+    </Select>
+  </div>
+
+  <div className="xl:col-span-6 lg:col-span-6 md:col-span-6 sm:col-span-12 col-span-12">
+    <label className="block text-sm mb-1">Stabilization(Android Only)</label>
+    <Select value={data.stabilization} onValueChange={(value) => setData('stabilization', value)}>
+      <SelectTrigger className="w-[180px] form-control border rounded-lg">
+        <SelectValue placeholder="Select Option" />
+        </SelectTrigger>
+        <SelectContent className='form-control'>
+            <SelectGroup>
+              <SelectItem value="off">Off</SelectItem>
+              <SelectItem value="low">Low</SelectItem>
+              <SelectItem value="normal">Normal</SelectItem>
+              <SelectItem value="max">Max</SelectItem>
             </SelectGroup>
         </SelectContent>
     </Select>
