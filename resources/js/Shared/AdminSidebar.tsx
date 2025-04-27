@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { usePage, Link } from '@inertiajs/react';
-import { Bug, Calendar, CircleDollarSign, Clipboard, Home, IdCard, Layers, Layers2, LogOut, Plus, Recycle, SquareUserRound } from 'lucide-react';
+import { Bug, Calendar, CircleDollarSign, Clipboard, Database, Home, IdCard, Layers, Layers2, LogOut, Plus, Recycle, SquareUserRound } from 'lucide-react';
 import SidebarLogo from './SidebarLogo';
 
 interface MenuState {
@@ -171,12 +171,25 @@ const AdminSidebar: React.FC = () => {
     //   path: '/deleted-items',
     //   icon: (<Recycle className="h-6 w-6 mr-2 text-white" />)
     // },
-    {
+
+        {
           id: 'issues',
-          label: 'Support Tickets',
+          label: 'Support',
           path: '/issues',
           icon: (<Bug className="h-6 w-6 mr-2 text-white" />
-          )
+          ),
+          subItems: [
+            {
+              label: 'Support Tickets',
+              path: '/issues',
+              icon: (<Bug className="h-5 w-5 mr-2" />)
+            },
+            {
+              label: 'Backup Schedule',
+              path: '/backup/schedule',
+              icon: (<Database className="h-5 w-5 mr-2" />)
+            }
+          ]
         },
     {
       id: 'profile',

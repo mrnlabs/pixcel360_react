@@ -1,6 +1,9 @@
 <?php
 
+use App\Jobs\DatabaseBackupJob;
+use App\Jobs\CleanupOldBackupsJob;
 use Illuminate\Foundation\Application;
+use Illuminate\Support\Facades\Schedule;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 
@@ -26,6 +29,15 @@ return Application::configure(basePath: dirname(__DIR__))
             // 'http://example.com/foo/bar',
             // 'http://example.com/foo/*',
         ]);
+    })
+    ->withSchedule(function (Schedule $schedule) {
+    
+        // Run the cleanup job daily at 2:00 AM
+        $schedule->job(new CleanupOldBackupsJob)->dailyAt('02:00');
+
+        // Run the database backup job every day at 3:00 AM
+        // $schedule->job(new DatabaseBackupJob)->dailyAt('03:00');
+        $schedule->command('backups:run-scheduled')->everyMinute();
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
