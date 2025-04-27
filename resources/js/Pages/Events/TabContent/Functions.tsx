@@ -32,6 +32,7 @@ useEffect(() => {
   setData('slomo_recording_time', event?.boomerang_setting?.slomo_recording_time);
   setData('slomo_boomerang', event?.boomerang_setting?.slomo_boomerang);
   setData('speed', event?.boomerang_setting?.speed);
+  setData('stabilization', event?.boomerang_setting?.stabilization);
 }, [event]);
 
 const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
