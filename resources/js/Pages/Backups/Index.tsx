@@ -9,7 +9,7 @@ import React, { useState } from 'react';
 export default function Index({schedules}:{ schedules: any }) {
   const { data, setData, post, processing, errors, reset } = useForm({
     name: '',
-    scheduled_at: '',
+    weekday: '',
     scheduled_time: '',
     frequency: 'once',
   });
@@ -20,17 +20,23 @@ export default function Index({schedules}:{ schedules: any }) {
     { id: 'weekly', name: 'Weekly' },
     { id: 'monthly', name: 'Monthly' },
   ];
+  const weekdays = [
+    { id: '', name: 'Every day' },
+    { id: '0', name: 'Sunday' },
+    { id: '1', name: 'Monday' },
+    { id: '2', name: 'Tuesday' },
+    { id: '3', name: 'Wednesday' },
+    { id: '4', name: 'Thursday' },
+    { id: '5', name: 'Friday' },
+    { id: '6', name: 'Saturday' },
+  ];
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     
-    // Combine date and time
-    const scheduledDateTime = new Date(`${data.scheduled_at}T${data.scheduled_time}`);
     
     post(route('backup.schedule.store'), {
       ...data,
-      // @ts-ignore
-      scheduled_at: scheduledDateTime.toISOString(),
       onSuccess: () => {
         reset()
         showToast('success','Backup scheduled successfully', {position: 'bottom-right'});
@@ -100,19 +106,24 @@ export default function Index({schedules}:{ schedules: any }) {
                 </div>
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                  <div>
-                    <label className="block text-gray-700 mb-2" htmlFor="scheduled_at">
-                      Date
+                <div>
+                    <label className="block text-gray-700 mb-2" htmlFor="weekday">
+                      Day of Week
                     </label>
-                    <input
-                      id="scheduled_at"
-                      type="date"
+                    <select
+                      id="weekday"
                       className="w-full px-3 py-2 border rounded"
-                      value={data.scheduled_at}
-                      onChange={(e) => setData('scheduled_at', e.target.value)}
-                      required
-                    />
+                      value={data.weekday}
+                      onChange={(e) => setData('weekday', e.target.value)}
+                    >
+                      {weekdays.map((day) => (
+                        <option key={day.id} value={day.id}>
+                          {day.name}
+                        </option>
+                      ))}
+                    </select>
                   </div>
+                  
                   
                   <div>
                     <label className="block text-gray-700 mb-2" htmlFor="scheduled_time">
@@ -182,7 +193,7 @@ export default function Index({schedules}:{ schedules: any }) {
                               {schedule.name || `Backup ${schedule.id}`}
                             </td>
                             <td className="py-2 px-4 border-b border-gray-200">
-                              {schedule.scheduled_at}, {schedule.scheduled_time}
+                              {schedule.weekday_name}, {schedule.time_of_day}
                             </td>
                             <td className="py-2 px-4 border-b border-gray-200 capitalize">
                               {schedule.frequency}

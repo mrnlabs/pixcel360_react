@@ -262,6 +262,14 @@ return [
                     'tries' => 1,      // Backup jobs should generally only be tried once
                     'timeout' => 120, // Longer timeout (1 hour) for backup operations
                 ],
+                'supervisor-cleanup' => [
+                    'connection' => 'redis',
+                    'queue' => ['cleanup'],
+                    'balance' => 'simple',
+                    'processes' => 1,
+                    'tries' => 1,
+                    'timeout' => 7200,  // 2 hours for cleanup operations
+                ],
             ],
 
             'local' => [
@@ -287,6 +295,14 @@ return [
                     'processes' => 1,  // Fewer processes since backups are less frequent
                     'tries' => 1,      // Backup jobs should generally only be tried once
                     'timeout' => 120, // Longer timeout (1 hour) for backup operations
+                ],
+                'supervisor-cleanup' => [
+                    'connection' => 'redis',
+                    'queue' => ['cleanup'],
+                    'balance' => 'simple',
+                    'processes' => 1,
+                    'tries' => 1,
+                    'timeout' => 7200,  // 2 hours for cleanup operations
                 ],
             ],      
     ],
