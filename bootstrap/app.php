@@ -3,7 +3,7 @@
 use App\Jobs\DatabaseBackupJob;
 use App\Jobs\CleanupOldBackupsJob;
 use Illuminate\Foundation\Application;
-use Illuminate\Support\Facades\Schedule;
+use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 

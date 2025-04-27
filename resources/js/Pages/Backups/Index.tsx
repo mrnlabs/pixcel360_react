@@ -1,7 +1,9 @@
 // resources/js/Pages/Backup/Index.jsx
 import Authenticated from '@/Layouts/AuthenticatedLayout';
 import { Breadcrumb } from '@/Shared/Breadcrumb';
+import showToast from '@/utils/showToast';
 import { Head, router, useForm, usePage } from '@inertiajs/react';
+import { Trash2 } from 'lucide-react';
 import React, { useState } from 'react';
 
 export default function Index({schedules}:{ schedules: any }) {
@@ -29,12 +31,19 @@ export default function Index({schedules}:{ schedules: any }) {
       ...data,
       // @ts-ignore
       scheduled_at: scheduledDateTime.toISOString(),
-      onSuccess: () => reset(),
+      onSuccess: () => {
+        reset()
+        showToast('success','Backup scheduled successfully', {position: 'bottom-right'});
+      },
+      onError: () => {
+        showToast('error','Error scheduling backup', {position: 'bottom-right'});
+      }
     });
   };
 
   const runBackupNow = () => {
     router.post(route('backup.run-now'));
+    showToast('success','Backup started successfully', {position: 'bottom-right'});
   };
 
   const deleteSchedule = (id: number) => {
@@ -173,7 +182,7 @@ export default function Index({schedules}:{ schedules: any }) {
                               {schedule.name || `Backup ${schedule.id}`}
                             </td>
                             <td className="py-2 px-4 border-b border-gray-200">
-                              {new Date(schedule.scheduled_at).toLocaleString()}
+                              {schedule.scheduled_at}, {schedule.scheduled_time}
                             </td>
                             <td className="py-2 px-4 border-b border-gray-200 capitalize">
                               {schedule.frequency}
@@ -190,7 +199,7 @@ export default function Index({schedules}:{ schedules: any }) {
                                 onClick={() => deleteSchedule(schedule.id)}
                                 className="text-red-500 hover:text-red-700"
                               >
-                                Delete
+                                <Trash2 className="w-4 h-4" />
                               </button>
                             </td>
                           </tr>

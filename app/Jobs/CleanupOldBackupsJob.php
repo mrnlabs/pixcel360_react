@@ -15,7 +15,7 @@ class CleanupOldBackupsJob implements ShouldQueue
      */
     public function __construct()
     {
-        //
+        $this->onQueue('cleanup');
     }
 
     /**

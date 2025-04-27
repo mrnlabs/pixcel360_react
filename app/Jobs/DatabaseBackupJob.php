@@ -18,6 +18,7 @@ class DatabaseBackupJob implements ShouldQueue
     public function __construct($filename = null)
     {
         $this->filename = $filename ?: 'db-backup-' . now()->format('Y-m-d-H-i-s');
+        $this->onQueue('backups');
     }
 
     /**

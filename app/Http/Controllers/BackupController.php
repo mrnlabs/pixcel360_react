@@ -24,11 +24,17 @@ class BackupController extends Controller
     {
         $validated = $request->validate([
             'name' => 'nullable|string|max:255',
-            'scheduled_at' => 'required|date',
+            'scheduled_at' => 'required',
+            'scheduled_time' => 'required',
             'frequency' => 'required|in:once,daily,weekly,monthly',
         ]);
-        
-        $schedule = BackupSchedule::create($validated);
+       
+        $schedule = BackupSchedule::create([
+            'name' => $validated['name'],
+            'scheduled_at' => $request->scheduled_at,
+            'scheduled_time' => $request->scheduled_time,
+            'frequency' => $validated['frequency'],
+        ]);
         
         // If it's scheduled for now or in the past, dispatch the job immediately
         if (Carbon::parse($schedule->scheduled_at)->isPast()) {

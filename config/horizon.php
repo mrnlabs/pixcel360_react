@@ -202,6 +202,14 @@ return [
             'tries' => 1,
             'timeout' => 180, // 3 minutes for video processing
         ],
+        'supervisor-backups' => [
+            'connection' => 'redis',
+            'queue' => ['backups'],
+            'balance' => 'simple',
+            'processes' => 1,  // Fewer processes since backups are less frequent
+            'tries' => 1,      // Backup jobs should generally only be tried once
+            'timeout' => 120,
+        ],
     ],
 
     // 'environments' => [
@@ -246,6 +254,14 @@ return [
                     'tries' => 1,      // Videos might be long-running, maybe don't retry
                     'timeout' => 3600, // Longer timeout for video processing
                 ],
+                'supervisor-backups' => [
+                    'connection' => 'redis',
+                    'queue' => ['backups'],
+                    'balance' => 'simple',
+                    'processes' => 1,  // Fewer processes since backups are less frequent
+                    'tries' => 1,      // Backup jobs should generally only be tried once
+                    'timeout' => 120, // Longer timeout (1 hour) for backup operations
+                ],
             ],
 
             'local' => [
@@ -263,6 +279,14 @@ return [
                     'processes' => 1,
                     'tries' => 1,
                     'timeout' => 1800,
+                ],
+                'supervisor-backups' => [
+                    'connection' => 'redis',
+                    'queue' => ['backups'],
+                    'balance' => 'simple',
+                    'processes' => 1,  // Fewer processes since backups are less frequent
+                    'tries' => 1,      // Backup jobs should generally only be tried once
+                    'timeout' => 120, // Longer timeout (1 hour) for backup operations
                 ],
             ],      
     ],
