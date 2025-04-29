@@ -8,6 +8,8 @@ use App\Models\Transaction;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Jobs\SendPaymentErrorEmailJob;
+use App\Jobs\SendPaymentSuccessEmailJob;
 
 class PayFastController extends Controller
 {
@@ -325,6 +327,7 @@ class PayFastController extends Controller
                     'currency' => 'USD',
                     "item_name" => $request->input('item_name'),
                     "plan_id" => $planId,
+                    "email" => $request->input('email_address'),
                 ]);
             }
             
@@ -370,8 +373,11 @@ class PayFastController extends Controller
                     
                     logger()->info("Subscription {$subscription->id} created successfully for plan: {$plan->id}, user: {$user->id}");
                     
-                    // You could send confirmation email here
-                    // Mail::to($user->email)->send(new SubscriptionConfirmation($subscription));
+                    SendPaymentSuccessEmailJob::dispatch(
+                        $user, $subscription, 
+                        $transaction->email,
+                        $plan)
+                        ->onQueue('emails');
                 }
             } else if (in_array($payment_status, ['FAILED', 'CANCELLED'])) {
                 $transaction->markAsFailed();
@@ -379,8 +385,11 @@ class PayFastController extends Controller
             } else {
                 logger()->info("Payment status: {$payment_status}. Transaction: {$transaction->id}");
             }
-      
-            logger()->info('Current user ID: ' . auth()->id());
+            SendPaymentErrorEmailJob::dispatch(
+                $user, $subscription, 
+                $transaction->email, $plan)
+            ->onQueue('emails');
+            
             return response('OK');
         } catch (\Exception $e) {
             logger()->error('Error processing PayFast notification: ' . $e->getMessage());

@@ -12,8 +12,6 @@ interface SuccessProps {
 export default function Success({ auth }: SuccessProps) {
     return (
         <AuthenticatedLayout
-            // @ts-ignore
-            user={auth.user}
             header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Subscription Successful</h2>}
         >
             <Head title="Subscription Success" />
@@ -30,7 +28,7 @@ export default function Success({ auth }: SuccessProps) {
                                 Your Pixcel360 subscription is now active and ready to use.
                             </p>
                             <Link href={route('dashboard')} className="mt-4 ti-btn bg-[linear-gradient(243deg,#ffcc00_0%,#ff9339_100%)] text-white font-bold py-2 px-4 rounded">
-                                Go to Dashboard
+                            Take Me Home
                             </Link>
                         </div>
                     </div>

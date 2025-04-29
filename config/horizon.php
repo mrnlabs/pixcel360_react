@@ -270,6 +270,14 @@ return [
                     'tries' => 1,
                     'timeout' => 7200,  // 2 hours for cleanup operations
                 ],
+                'supervisor-payments' => [
+                    'connection' => 'redis',
+                    'queue' => ['payments'],
+                    'balance' => 'simple',
+                    'processes' => 1,
+                    'tries' => 1,
+                    'timeout' => 7200,  // 2 hours for payments operations
+                ],
             ],
 
             'local' => [
@@ -303,6 +311,14 @@ return [
                     'processes' => 1,
                     'tries' => 1,
                     'timeout' => 7200,  // 2 hours for cleanup operations
+                ],
+                'supervisor-payments' => [
+                    'connection' => 'redis',
+                    'queue' => ['payments'],
+                    'balance' => 'simple',
+                    'processes' => 1,
+                    'tries' => 1,
+                    'timeout' => 7200,  // 2 hours for payments operations
                 ],
             ],      
     ],

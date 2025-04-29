@@ -1,11 +1,12 @@
 import Authenticated from '@/Layouts/AuthenticatedLayout'
-import { Link } from '@inertiajs/react'
+import { Head, Link } from '@inertiajs/react'
 import { TriangleAlert } from 'lucide-react'
 import React from 'react'
 
 export default function TrialEnded() {
   return (
     <Authenticated>
+      <Head title="Trial Ended" />
     <div className='flex flex-col items-center justify-center h-screen bg-gray-100'>
     <TriangleAlert className='w-12 h-12 text-red-500' />
       <h2>Your Free Trial Has Ended</h2>
