@@ -80,6 +80,7 @@ class ProfileController extends Controller
             $user = $request->user();
             $user->fill($request->validated());
             $request->user()->email_verified_at = null;
+            $request->user()->address2 = $request->address2;
              Auth::user()->save();
         } catch (\Throwable $th) {
             throw $th;

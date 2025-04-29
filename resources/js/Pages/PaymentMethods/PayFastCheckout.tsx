@@ -14,7 +14,7 @@ const PayFastCheckout = ({ payfastIdentifier, onSuccess, onError }: any) => {
       scriptLoaded.current = true;
       
       const script = document.createElement('script');
-      script.src = 'https://www.payfast.co.za/onsite/js/payfastpaymentwidget.js';
+      script.src = 'https://www.payfast.co.za/onsite/engine.js';
       script.async = true;
       
       script.onload = () => {
@@ -30,20 +30,22 @@ const PayFastCheckout = ({ payfastIdentifier, onSuccess, onError }: any) => {
       // @ts-expect-error
     } else if (window.payfast_do_onsite_payment) {
       // PayFast script already loaded, initialize payment
-      initializePayment();
+      console.log('PayFast checkout script already loaded');
+      //initializePayment();
     }
   }, [payfastIdentifier, onSuccess, onError]);
   
   const initializePayment = () => {
+    console.log('PayFast checkout with identifier:', payfastIdentifier);
     // @ts-expect-error
     if (window.payfast_do_onsite_payment && payfastIdentifier) {
       try {
         // @ts-expect-error
         window.payfast_do_onsite_payment({
           uuid: payfastIdentifier,
-          return_url: window.location.origin + '/payment/success',
-          cancel_url: window.location.origin + '/payment/cancel',
-          notify_url: window.location.origin + '/api/payment/notification',
+          return_url: route('payment.success'),
+          cancel_url: route('payment.cancel'),
+          notify_url: route('payment.notify'),
           // Optional callback handlers
           callback: function(result: any) {
             console.log('Payment Result:', result);

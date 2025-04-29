@@ -20,35 +20,31 @@ class RunScheduledBackups extends Command
     public function handle()
     {
         $now = Carbon::now();
+    $currentWeekday = $now->dayOfWeek; // 0 (Sunday) to 6 (Saturday)
+    $currentTime = $now->format('H:i');
+    
+    // Find all active schedules for today's weekday (or null/every day)
+    $dueSchedules = BackupSchedule::where('is_active', true)
+        ->where(function($query) use ($currentWeekday) {
+            $query->where('weekday', $currentWeekday)
+                  ->orWhereNull('weekday');
+        })
+        ->whereRaw("TIME(time_of_day) <= ?", [$currentTime])
+        ->get();
         
-        // Find all active schedules that are due
-        $dueSchedules = BackupSchedule::where('is_active', true)
-            ->where('scheduled_at', '<=', $now)
-            ->get();
-            
-        foreach ($dueSchedules as $schedule) {
-            $this->info("Running scheduled backup: {$schedule->name}");
-            DatabaseBackupJob::dispatch();
-            
-            // Update schedule based on frequency
-            switch ($schedule->frequency) {
-                case 'once':
-                    $schedule->is_active = false;
-                    break;
-                case 'daily':
-                    $schedule->scheduled_at = Carbon::parse($schedule->scheduled_at)->addDay();
-                    break;
-                case 'weekly':
-                    $schedule->scheduled_at = Carbon::parse($schedule->scheduled_at)->addWeek();
-                    break;
-                case 'monthly':
-                    $schedule->scheduled_at = Carbon::parse($schedule->scheduled_at)->addMonth();
-                    break;
-            }
-            
-            $schedule->save();
+    foreach ($dueSchedules as $schedule) {
+        $this->info("Running scheduled backup: {$schedule->name}");
+        DatabaseBackupJob::dispatch();
+        
+        // Handle frequency logic differently now
+        // No need to update weekday or time_of_day
+        if ($schedule->frequency === 'once') {
+            $schedule->is_active = false;
         }
         
-        $this->info("Completed running scheduled backups.");
+        $schedule->save();
+    }
+    
+    $this->info("Completed running scheduled backups.");
     }
 }

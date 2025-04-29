@@ -1,7 +1,7 @@
 import { useSubscriptionStatus } from '@/hooks/useSubscriptionStatus';
 import { SubscriptionCardProps } from '@/types';
 import { getNextPaymentDate } from '@/utils/getNextPaymentDate';
-import { Link } from '@inertiajs/react';
+import { Link, usePage } from '@inertiajs/react';
 
 export default function SubscriptionCard({subscription}: SubscriptionCardProps) {
 
@@ -11,6 +11,16 @@ export default function SubscriptionCard({subscription}: SubscriptionCardProps) 
 
   const { isExpired} = useSubscriptionStatus(subscription);
 
+  // @ts-ignore
+    const current_subscription = usePage().props.auth.current_subscription;
+
+    const isActive = () => {
+      if (current_subscription) {
+        return current_subscription?.id == subscription?.id;
+      }
+      return isExpired;
+    }
+
   return (
     <div className="xxl:col-span-3 lg:col-span-6 col-span-12">
     <div className="box">
@@ -18,7 +28,7 @@ export default function SubscriptionCard({subscription}: SubscriptionCardProps) 
   <div className="box-body">
     <div className="grid grid-cols-12 gap-y-3">
     <div className="xl:col-span-12 col-span-12">
-      <p className="text-[14px] font-medium mb-4">{subscription?.plan?.name}</p>
+      <p className="text-[14px] font-medium mb-4">#{subscription?.transaction_id}</p>
       {/* <p className="mb-4">
         <span className="font-medium text-textmuted dark:text-textmuted/50 text-xs">Name On Card :</span> Henry Milo
       </p> */}
@@ -29,20 +39,22 @@ export default function SubscriptionCard({subscription}: SubscriptionCardProps) 
         </span>
       </p>
       <p className="mb-4">
-        <span className="font-medium text-textmuted dark:text-textmuted/50 text-xs">Next Payment Date :</span> {getNextPaymentDate(subscription)}
+        <span className="font-medium text-textmuted dark:text-textmuted/50 text-xs">Expires :</span> {
+        isActive() ? getNextPaymentDate(subscription) : '-'}
         {/* <span className={`text-xs font-medium ${isExpired ? 'text-danger' : 'text-warning'}`}>
           {timeRemaining}
         </span> */}
       </p>
+      {}
       <p className="mb-4">
         <span className="font-medium text-textmuted dark:text-textmuted/50 text-xs">
           Status : {' '}
           <span className={`badge ${
-            isExpired 
-              ? 'bg-danger/10 text-danger' 
-              : 'bg-primarytint3color/10 text-primarytint3color'
+            isActive() 
+              ? 'bg-success text-white' 
+              : 'bg-danger/10 text-danger'
           }`}>
-            {isExpired ? 'Expired' : 'Active'}
+            {isActive() ? 'Active' : 'Expired'}
           </span>
         </span>
       </p>

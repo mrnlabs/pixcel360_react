@@ -45,6 +45,18 @@ return [
                  */
                 'relative_path' => null,
             ],
+            'mysql' => [
+                   'dump' => [
+                       'dump_binary_path' => '/usr/bin/mysqldump/', // Specify the path to the mysqldump binary
+                        'use_single_transaction' => true,
+                        'timeout' => 60 * 5, // 5 minutes
+                        'excludeTables' => [
+                             'table_to_exclude_from_backup',
+                             'another_table_to_exclude'
+                         ]
+                    ],
+                    
+              ],
 
             /*
              * The names of the connections to the databases that should be backed up
@@ -211,7 +223,7 @@ return [
         'notifiable' => \Spatie\Backup\Notifications\Notifiable::class,
 
         'mail' => [
-            'to' => 'your@example.com',
+            'to' => 'mazisimsebele18@gmail.com',
 
             'from' => [
                 'address' => env('MAIL_FROM_ADDRESS', 'hello@example.com'),

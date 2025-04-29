@@ -1,15 +1,16 @@
 
-import React from 'react';
-import { Mail } from 'lucide-react';
-import { router } from '@inertiajs/react';
+import { router, usePage } from '@inertiajs/react';
 
 const UpgradeCard = ({diffDays}:{diffDays:number}) => {
+
+  // @ts-ignore
+  const current_subscription = usePage().props.auth.current_subscription;
     const handleSubscribe = () => {
         router.get(route('plans'));
     }
   return (
     <div className=" p-4 rounded-md w-64">
-        {diffDays < 0  && (
+        {(diffDays < 0 && !current_subscription)  && (
            <button type='button' onClick={handleSubscribe}
            className="w-full bg-[linear-gradient(243deg,#ffcc00_0%,#ff9339_100%)] text-white font-medium py-2 px-4 rounded-xs mb-3 hover:bg-amber-400 transition-colors">
             Upgrade
