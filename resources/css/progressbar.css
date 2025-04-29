@@ -1,15 +1,15 @@
 #nprogress .bar {
-    background: linear-gradient(to right, #dc2626, #4f46e5) !important;
+    background: linear-gradient(to right, #ff9339, #ffcc00) !important;
     height: 3px !important; /* Adjust height as needed */
   }
   
   /* Optional: Customize the loading spinner if you're using it */
   #nprogress .spinner-icon {
-    border-top-color: #dc2626 !important;
-    border-left-color: #4f46e5 !important;
+    border-top-color: #ff9339 !important;
+    border-left-color: #ffcc00 !important;
   }
   
   /* Optional: Customize the peg (the shiny bit) */
   #nprogress .peg {
-    box-shadow: 0 0 10px #4f46e5, 0 0 5px #4f46e5 !important;
+    box-shadow: 0 0 10px #ff9339, 0 0 5px #ffcc00 !important;
   }

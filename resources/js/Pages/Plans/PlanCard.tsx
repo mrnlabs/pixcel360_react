@@ -4,7 +4,7 @@ import { AuthGuard } from '@/guards/authGuard'
 import { Plan, PlanCardProps } from '@/types'
 import { truncateText } from '@/utils/truncateText'
 import { Link, router, useForm } from '@inertiajs/react'
-import { CreditCard, SquarePen, Trash2 } from 'lucide-react'
+import { CreditCard, Loader, SquarePen, Trash2 } from 'lucide-react'
 import React, { Suspense, useState } from 'react'
 import ViewPlanModal from './ViewPlanModal'
 import toast from 'react-hot-toast'
@@ -21,7 +21,7 @@ const getRibbonColor = (categoryName: string | undefined) => {
     }
   };
 
-export default function PlanCard({plan, handleDelete, dialogOpen, setDialogOpen, setModalOpen, handleSubscribe, setPlan}: {
+  export default function PlanCard({plan, handleDelete, dialogOpen, setDialogOpen, setModalOpen, handleSubscribe, setPlan, processing}: {
     plan: PlanCardProps['plan'] | undefined; 
     handleDelete: () => void; 
     dialogOpen: boolean
@@ -29,10 +29,10 @@ export default function PlanCard({plan, handleDelete, dialogOpen, setDialogOpen,
     setModalOpen: React.Dispatch<React.SetStateAction<boolean>>
     handleSubscribe: () => void
     setPlan: (plan: Plan) => void
+    processing: boolean
     }
     ) {
 
-     
 
   return (
     <div className="xxl:col-span-3 xl:col-span-6 lg:col-span-6 md:col-span-6 sm:col-span-12 col-span-12">
@@ -74,9 +74,6 @@ export default function PlanCard({plan, handleDelete, dialogOpen, setDialogOpen,
               type='button' className="ti-btn ti-btn-icon ti-btn-soft-primary2 btn-wave ti-btn-sm ms-2 waves-effect waves-light">
                 <Trash2/>
               </button>
-              <Link href={route('payment.checkout', plan?.slug )}  className="ti-btn ti-btn-icon ti-btn-soft-primary1 btn-wave ti-btn-sm ms-2 waves-effect waves-light">
-              <CreditCard />
-              </Link>
             </AuthGuard>
 
 
@@ -84,16 +81,15 @@ export default function PlanCard({plan, handleDelete, dialogOpen, setDialogOpen,
 
              
       
-      {/* <AuthGuard 
+      <AuthGuard 
           roles={["Account Owner"]} 
           permissions={["*"]}
           requireAll={true}>
-          <button onClick={handleSubscribe} aria-label="anchor" type='button' className="w-full ti-btn bg-[linear-gradient(243deg,#ffcc00_0%,#ff9339_100%)] text-white btn-wave mt-4 waves-effect waves-light">Subscribe</button>
-      </AuthGuard> */}
-
-<Link href={route('payment.checkout', plan?.slug )}  className="ti-btn ti-btn-icon ti-btn-soft-primary1 btn-wave ti-btn-sm ms-2 waves-effect waves-light">
-              Subscribe
-              </Link>
+          <Link href={route('payment.checkout', plan?.slug)}
+          aria-label="anchor" type='button' className="w-full ti-btn bg-[linear-gradient(243deg,#ffcc00_0%,#ff9339_100%)] text-white btn-wave mt-4 waves-effect waves-light">
+            Subscribe 
+            </Link>
+      </AuthGuard> 
 
              
           </div>

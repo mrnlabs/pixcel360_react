@@ -1,36 +1,18 @@
-import { Button } from '@/Components/ui/button';
-import Authenticated from '@/Layouts/AuthenticatedLayout';
 import WordPressLayout from '@/Layouts/WordPressLayout';
-import { Breadcrumb } from '@/Shared/Breadcrumb';
 import WordpressFooter from '@/Shared/WordpressFooter';
 import { Plan, PlanCardProps } from '@/types';
-import showToast from '@/utils/showToast';
-import { Head, useForm } from '@inertiajs/react';
-import { Loader } from 'lucide-react';
-import React from 'react'
-
+import { Head, Link } from '@inertiajs/react';
 export default function WordpressShow({plan, plans}: {
     plan: Plan
     plans: PlanCardProps
 }) {
 
-    const { data, setData, post, processing, errors, reset } = useForm({
-            plan: "",
-        });
 
   return (
     <WordPressLayout>
           <Head title="View Plan" />
           <div className="mx-[19rem] mt-3">
             <div className="container-fluid">
-             {/* <Breadcrumb
-             items={[
-                { label: 'Home', href: '/dashboard' },
-                { label: 'Plans', href: '/plans' },
-                { label: 'View Plan', active: true }
-              ]}
-              /> */}
-             
               <div className="grid grid-cols-12 gap-x-6">
                 <div className="xxl:col-span-12 col-span-12">
                   <div className="box">
@@ -40,10 +22,10 @@ export default function WordpressShow({plan, plans}: {
                         <div className="xxl:col-span-5 col-span-12">
                             <div className="box">
                                 <div className="box-body">
-                                    {/* <div className="ecommerce-gallery flex text-center">
-                                        <span className="badge bg-primarytint2color tag-badge">{plan?.category?.name}</span>
+                                   <div className="ecommerce-gallery flex text-center">
+                                        {/* <span className="badge bg-primarytint2color tag-badge">{plan?.category?.name}</span> */}
                                         <img src={plan?.photo} alt="image" className="w-full"/>
-                                    </div> */}
+                                    </div> 
                                 </div>
                             </div>
                         </div>
@@ -70,10 +52,10 @@ export default function WordpressShow({plan, plans}: {
                                     </div>
                                 </div>
                             </div>
-                            <Button onClick={() => {showToast('success', 'Will plugin Payment gateway here!', {position: 'bottom-right'});}} disabled={processing} 
-                            className="inline-block px-8 py-3 rounded-sm text-white font-medium bg-[linear-gradient(243deg,#ffcc00_0%,#ff9339_100%)]  w-full shadow-md transition duration-300">
-                        {processing && <Loader className="mr-2 h-4 w-4 animate-spin" />} Subscribe
-                    </Button>
+                            <Link href="/"
+                            className="inline-block px-8 py-3 rounded-sm text-white font-medium bg-[linear-gradient(243deg,#ffcc00_0%,#ff9339_100%)] w-full shadow-md transition duration-300">
+                             Subscribe
+                             </Link>
                      
                         </div>
                     </div>

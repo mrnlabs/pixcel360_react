@@ -75,11 +75,11 @@ const handleDelete = () => {
  });
 }
 
-const { data, setData, post, processing } = useForm({slug: plan?.slug});
+const { data, setData, get, processing } = useForm({slug: plan?.slug});
 
 const handleSubscribe = () => {
   if (plan) {
-    post(route('subscribe', plan.slug), {
+    get(route('payment.checkout', plan?.slug), {
       onSuccess: () => {
           showToast('success', 'You have subscribed successfully!', {position: 'bottom-right'});
           setModalOpen(false);
@@ -152,6 +152,7 @@ const handleSubscribe = () => {
                         dialogOpen={dialogOpen}
                         setDialogOpen={setDialogOpen}
                         setModalOpen={setModalOpen}
+                        processing={processing}
                         handleSubscribe={handleSubscribe} />
                       ))}
                       

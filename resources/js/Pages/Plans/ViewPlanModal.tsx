@@ -68,7 +68,7 @@ function ViewPlanModal({
                     </div>
                 </div>
                 <div className=" bottom-0 pt-4 pb-2 bg-white dark:bg-gray-900 z-10">
-                    <Button onClick={handleSubscribe} disabled={processing} className="w-full ti-btn ti-btn-primary btn-wave waves-effect waves-light">
+                    <Button onClick={handleSubscribe} disabled={processing} className="w-full ti-btn bg-[linear-gradient(243deg,#ffcc00_0%,#ff9339_100%)] btn-wave waves-effect waves-light">
                         {processing && <Loader className="mr-2 h-4 w-4 animate-spin" />} Subscribe
                     </Button>
                 </div>

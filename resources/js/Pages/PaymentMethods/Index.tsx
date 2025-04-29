@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { Head, usePage } from '@inertiajs/react';
 import { router } from '@inertiajs/react';
 import PayFastCheckout from './PayFastCheckout';
+import Authenticated from '@/Layouts/AuthenticatedLayout';
 
 const Index = ({ payfastIdentifier, error }: any) => {
   const props = usePage().props
@@ -29,14 +30,10 @@ const Index = ({ payfastIdentifier, error }: any) => {
 
 
     return (
-        <>
+        <Authenticated>
             <Head title="Checkout" />
             
-            <div className="py-12">
-        <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-          <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-            <div className="p-6 bg-white border-b border-gray-200">
-              <h1 className="text-2xl font-bold mb-4">Complete Your Payment</h1>
+            <div>
               
               {error && (
                 <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
@@ -65,12 +62,9 @@ const Index = ({ payfastIdentifier, error }: any) => {
                   Unable to initialize payment. Please try again later.
                 </div>
               )}
-            </div>
-          </div>
-        </div>
       </div>
 
-        </>
+        </Authenticated>
     );
 };
 

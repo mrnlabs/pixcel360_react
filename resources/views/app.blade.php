@@ -23,7 +23,7 @@ data-width="fullwidth"  data-vertical-style="overlay" data-icon-overlay="open">
     /* background-color: #eef2f5 !important; */
 }
         </style>
-        <script src="https://www.payfast.co.za/onsite/engine.js"></script>
+        <script src="https://sandbox.payfast.co.za/onsite/engine.js"></script>
         {{-- <script src="{{ env('APP_ENV') === 'local' ? 'https://sandbox.payfast.co.za/onsite/engine.js' : 'https://www.payfast.co.za/onsite/engine.js' }}"></script> --}}
         @routes
         @viteReactRefresh

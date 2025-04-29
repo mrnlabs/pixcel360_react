@@ -39,9 +39,7 @@ export default function ViewInvoice({subscription, otherSubscriptions}: any) {
     <div className="box">
       <div className="box-header md:flex block">
         <div className="h5 mb-0 sm:flex block items-center">
-          <div className="avatar avatar-sm">
-            <img src="https://pixcel360.com/wp-content/uploads/2024/01/Backup_of_PIXEL360-LOGO-with-grey.png" alt=""/>
-          </div>
+         
           <div className="sm:ms-2 ms-0 sm:mt-0 mt-2">
             <div className="h6 font-medium mb-0">INVOICE : <span className="text-primary">#{subscription?.transaction_id}</span>
             </div>

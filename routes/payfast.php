@@ -10,10 +10,5 @@ Route::get('payment/success', [PayFastController::class, 'success'])->name('paym
 Route::get('payment/cancel', [PayFastController::class, 'cancel'])->name('payment.cancel');
 Route::post('payment/notify', [PayFastController::class, 'notify'])->name('payment.notify');
 Route::post('payment/initiate', [PayFastController::class, 'initiatePayment']);
-Route::post('payment/process', [PayFastController::class, 'processPayment']);
-
-Route::get('/payment/success', [PayFastController::class, 'success'])->name('payment.success');
-Route::get('/payment/cancel', [PayFastController::class, 'cancel'])->name('payment.cancel');
-Route::post('/api/payment/notification', [PayFastController::class, 'notification'])->name('payment.notification');
 
 });
