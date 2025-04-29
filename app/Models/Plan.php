@@ -44,7 +44,7 @@ class Plan extends Model
         return $this->belongsTo(PlanCategory::class);
     }
 
-    public function getEndDate(Carbon $startDate = null): Carbon
+    public function getEndDate($startDate = null): Carbon
 {
     $startDate = $startDate ?? now();
 

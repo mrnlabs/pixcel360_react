@@ -147,6 +147,7 @@ interface Filters {
     user_id: number;
     started_at: string;
     expires_at: string;
+    transaction_id: number;
     slug: string;
     plan?: Plan;
   }

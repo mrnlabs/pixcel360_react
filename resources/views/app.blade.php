@@ -24,6 +24,7 @@ data-width="fullwidth"  data-vertical-style="overlay" data-icon-overlay="open">
 }
         </style>
         <script src="https://www.payfast.co.za/onsite/engine.js"></script>
+        {{-- <script src="{{ env('APP_ENV') === 'local' ? 'https://sandbox.payfast.co.za/onsite/engine.js' : 'https://www.payfast.co.za/onsite/engine.js' }}"></script> --}}
         @routes
         @viteReactRefresh
         @vite(['resources/js/app.tsx', "resources/js/Pages/{$page['component']}.tsx"])

@@ -1,3 +1,4 @@
+import { useSubscriptionStatus } from '@/hooks/useSubscriptionStatus'
 import Authenticated from '@/Layouts/AuthenticatedLayout'
 import { Breadcrumb } from '@/Shared/Breadcrumb'
 import { Head, router, usePage } from '@inertiajs/react'
@@ -5,14 +6,21 @@ import { format } from 'date-fns'
 import { ArrowDownToLine, FileText, Printer } from 'lucide-react'
 import React from 'react'
 
-export default function ViewInvoice({otherSubscriptions}: any) {
+export default function ViewInvoice({subscription, otherSubscriptions}: any) {
   // @ts-ignore
     const { current_subscription } = usePage().props.auth;
-    console.log(current_subscription);
+    // @ts-ignore
+    const user = usePage().props.auth.user;
+    const isActive = (subscriptionParam: any) => {
+      if(subscriptionParam?.id === current_subscription?.id) {
+        return false;
+      }
+      return true;
+    };
 
     const generateInvoice = () => {
-      if(!current_subscription) return;
-      window.open(route('invoice.generate', current_subscription.slug), '_blank');
+      if(!subscription) return;
+      window.open(route('invoice.generate', subscription.slug), '_blank');
     }
   return (
     <Authenticated>
@@ -35,7 +43,7 @@ export default function ViewInvoice({otherSubscriptions}: any) {
             <img src="https://pixcel360.com/wp-content/uploads/2024/01/Backup_of_PIXEL360-LOGO-with-grey.png" alt=""/>
           </div>
           <div className="sm:ms-2 ms-0 sm:mt-0 mt-2">
-            <div className="h6 font-medium mb-0">SHOPPING INVOICE : <span className="text-primary">#7864-1542</span>
+            <div className="h6 font-medium mb-0">INVOICE : <span className="text-primary">#{subscription?.transaction_id}</span>
             </div>
           </div>
         </div>
@@ -50,12 +58,13 @@ export default function ViewInvoice({otherSubscriptions}: any) {
           <div className="xl:col-span-12 col-span-12">
             <div className="grid grid-cols-12 gap-x-6">
               <div className="xl:col-span-4 lg:col-span-4 md:col-span-5 sm:col-span-12 col-span-12">
-                <p className="text-textmuted dark:text-textmuted/50 mb-2"> Billing From : </p>
-                <p className="font-bold mb-1"> SPRUKO TECHNOLOGIES </p>
-                <p className="mb-1 text-textmuted dark:text-textmuted/50"> WNN-A1-1323,Robsons street </p>
-                <p className="mb-1 text-textmuted dark:text-textmuted/50"> Ottawa,Canada,100072 </p>
-                <p className="mb-1 text-textmuted dark:text-textmuted/50"> sprukotrust.Xintra@gmail.com </p>
-                <p className="mb-1 text-textmuted dark:text-textmuted/50"> (222) 142-1245 </p>
+                <p className="text-textmuted dark:text-textmuted/50 mb-2"> Billing Address : </p>
+                {/* <p className="font-bold mb-1"> SPRUKO TECHNOLOGIES </p> */}
+                <p className="mb-1 text-textmuted dark:text-textmuted/50"> {user.address ? user.address : '-'} </p>
+                <p className="mb-1 text-textmuted dark:text-textmuted/50"> {user.city ? user.city : '-'} </p>
+                <p className="mb-1 text-textmuted dark:text-textmuted/50"> {user.province ? user.province : '-'} </p>
+                <p className="mb-1 text-textmuted dark:text-textmuted/50"> {user.post_code ? user.post_code : '-'} </p>
+                <p className="mb-1 text-textmuted dark:text-textmuted/50"> {user.country ? user.country : '-'} </p>
                 
                 <div className="text-[1.5rem] mb-1 font-medium mt-6"> Subscription totals </div>
               </div>
@@ -63,16 +72,19 @@ export default function ViewInvoice({otherSubscriptions}: any) {
           </div>
           <div className="xl:col-span-3 col-span-12">
             <p className="font-medium text-textmuted dark:text-textmuted/50 mb-1">Product:</p>
-            <p className="text-[15px] mb-1">{current_subscription?.plan?.name}</p>
+            <p className="text-[15px] mb-1">{subscription?.plan?.name}</p>
           </div>
           <div className="xl:col-span-3 col-span-12"></div>
           <div className="xl:col-span-3 col-span-12"></div>
           <div className="xl:col-span-3 col-span-12">
             <p className="font-medium text-textmuted dark:text-textmuted/50 mb-1">Total :</p>
-            <p className="text-[1rem] mb-1 font-medium">ZAR {current_subscription?.plan?.price}</p>
+            <p className="text-[1rem] mb-1 font-medium">US$ {subscription?.plan?.price}</p>
           </div>
           <div className="xl:col-span-12 col-span-12">
-            <div className="table-responsive">
+           
+
+            <div className="table-responsive mt-4">
+              <p className="text-[1.5rem] mb-1 font-medium">Related Orders</p>
               <table className="ti-custom-table ti-custom-table-head mt-3 border border-defaultborder dark:border-defaultborder/10">
                 <thead>
                   <tr className="border-b !border-defaultborder dark:!border-defaultborder/10">
@@ -85,7 +97,7 @@ export default function ViewInvoice({otherSubscriptions}: any) {
                 </thead>
                 <tbody>
                   {otherSubscriptions.map((subscription: any) => (
-                    <tr className="border-b !border-defaultborder dark:!border-defaultborder/10">
+                    <tr key={subscription?.id} className="border-b !border-defaultborder dark:!border-defaultborder/10">
                     <td>
                       <div className="font-medium"> {subscription?.plan?.name} </div>
                     </td>
@@ -93,52 +105,11 @@ export default function ViewInvoice({otherSubscriptions}: any) {
                       <div className="text-textmuted dark:text-textmuted/50"> {format(subscription?.created_at,'MMMM d, yyyy')} </div>
                     </td>
                     <td className="product-quantity-container"> </td>
-                    <td> To BE Determined </td>
+                    <td>  {isActive(subscription) ? 'Active' : 'Expired'} </td>
                     <td> ${subscription?.plan?.price} </td>
                   </tr>
                   ))}
                   
-                  <tr className="border-b !border-defaultborder dark:!border-defaultborder/10">
-                    <td colSpan={3}></td>
-                    <td colSpan={2}>
-                      <table className="table table-sm text-nowrap mb-0 table-borderless">
-                        <tbody>
-                          <tr className="border-b !border-transparent">
-                            <th scope="row">
-                              <p className="mb-0">Sub Total :</p>
-                            </th>
-                            <td>
-                              <p className="mb-0 font-medium text-[15px]">$1,784</p>
-                            </td>
-                          </tr>
-                          <tr className="border-b !border-transparent">
-                            <th scope="row">
-                              <p className="mb-0">Avail Discount :</p>
-                            </th>
-                            <td>
-                              <p className="mb-0 font-medium text-[15px]">$15.58</p>
-                            </td>
-                          </tr>
-                          <tr className="border-b !border-transparent">
-                            <th scope="row">
-                              <p className="mb-0">Coupon Discount <span className="text-success">(3.5%)</span> : </p>
-                            </th>
-                            <td>
-                              <p className="mb-0 font-medium text-[15px]">$987.56</p>
-                            </td>
-                          </tr>
-                          <tr className="border-b !border-transparent">
-                            <th scope="row">
-                              <p className="mb-0 text-[14px]">Total :</p>
-                            </th>
-                            <td>
-                              <p className="mb-0 font-medium text-[1rem] text-success">$3,846.53</p>
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </td>
-                  </tr>
                 </tbody>
               </table>
             </div>
@@ -146,10 +117,10 @@ export default function ViewInvoice({otherSubscriptions}: any) {
         
         </div>
       </div>
-      <div className="box-footer text-end">
+      {/* <div className="box-footer text-end">
         <button className="ti-btn ti-btn-primary">Download <ArrowDownToLine className=" ms-1 align-middle"/>
         </button>
-      </div>
+      </div> */}
     </div>
   </div>
   <div className="xl:col-span-3 col-span-12">

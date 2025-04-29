@@ -1,4 +1,4 @@
-// resources/js/Pages/Backup/Index.jsx
+import InputError from '@/Components/InputError';
 import Authenticated from '@/Layouts/AuthenticatedLayout';
 import { Breadcrumb } from '@/Shared/Breadcrumb';
 import showToast from '@/utils/showToast';
@@ -38,7 +38,7 @@ export default function Index({schedules}:{ schedules: any }) {
     post(route('backup.schedule.store'), {
       ...data,
       onSuccess: () => {
-        reset()
+        reset();
         showToast('success','Backup scheduled successfully', {position: 'bottom-right'});
       },
       onError: () => {
@@ -60,7 +60,7 @@ export default function Index({schedules}:{ schedules: any }) {
 
   return (
     <Authenticated>
-      <Head title="Events" />
+      <Head title="Database Backups" />
           <div className="main-content app-content">
             <div className="container-fluid">
              <Breadcrumb
@@ -89,7 +89,7 @@ export default function Index({schedules}:{ schedules: any }) {
                   </button>
               </div>
               
-              {/* <ValidationErrors errors={errors} /> */}
+              
               
               <form onSubmit={handleSubmit}>
                 <div className="mb-4">
@@ -122,6 +122,7 @@ export default function Index({schedules}:{ schedules: any }) {
                         </option>
                       ))}
                     </select>
+                    <InputError message={errors.weekday} />
                   </div>
                   
                   
@@ -137,6 +138,7 @@ export default function Index({schedules}:{ schedules: any }) {
                       onChange={(e) => setData('scheduled_time', e.target.value)}
                       required
                     />
+                    <InputError message={errors.scheduled_time} />
                   </div>
                 </div>
                 
@@ -156,6 +158,7 @@ export default function Index({schedules}:{ schedules: any }) {
                       </option>
                     ))}
                   </select>
+                  <InputError message={errors.scheduled_time} />
                 </div>
                 
                 <div className="mb-4">

@@ -212,7 +212,8 @@ protected function generateVideoFilename(UploadedFile $file)
                 }
                
                 $event->update(['status' => true]);
-                return new EventResource($event);
+                $data = new EventResource($event);
+                return response()->json($data->toArray(request()));
            } catch (\Throwable $th) {
              return response()->json(['message' => $th->getMessage()], 400);
            }
