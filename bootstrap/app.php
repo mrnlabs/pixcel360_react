@@ -38,6 +38,13 @@ return Application::configure(basePath: dirname(__DIR__))
         // Run the database backup job every day at 3:00 AM
         // $schedule->job(new DatabaseBackupJob)->dailyAt('03:00');
         $schedule->command('backups:run-scheduled')->everyMinute();
+
+        $schedule->command('subscriptions:check-expiring')
+        ->dailyAt('08:00')
+        ->appendOutputTo(storage_path('logs/subscription-reminders.log'));
+
+        // Run Horizon snapshot command to keep metrics available
+        $schedule->command('horizon:snapshot')->everyFiveMinutes(); 
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

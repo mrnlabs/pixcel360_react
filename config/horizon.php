@@ -278,6 +278,14 @@ return [
                     'tries' => 1,
                     'timeout' => 7200,  // 2 hours for payments operations
                 ],
+                'supervisor-reminders' => [
+                    'connection' => 'redis',
+                    'queue' => ['reminders'],
+                    'balance' => 'simple',
+                    'processes' => 1,
+                    'tries' => 1,
+                    'timeout' => 7200,  // 2 hours for payments operations
+                ],
             ],
 
             'local' => [
@@ -315,6 +323,14 @@ return [
                 'supervisor-payments' => [
                     'connection' => 'redis',
                     'queue' => ['payments'],
+                    'balance' => 'simple',
+                    'processes' => 1,
+                    'tries' => 1,
+                    'timeout' => 7200,  // 2 hours for payments operations
+                ],
+                'supervisor-reminders' => [
+                    'connection' => 'redis',
+                    'queue' => ['reminders'],
                     'balance' => 'simple',
                     'processes' => 1,
                     'tries' => 1,
