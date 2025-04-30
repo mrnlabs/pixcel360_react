@@ -44,8 +44,9 @@ class SendSubscriptionReminderJob implements ShouldQueue
      * @param  int  $daysUntilExpiration
      * @return void
      */
-    public function __construct(Subscription $subscription, int $daysUntilExpiration)
+    public function __construct(Subscription $subscription, $daysUntilExpiration)
     {
+        Log::info('Constructor called');
         $this->subscription = $subscription;
         $this->daysUntilExpiration = $daysUntilExpiration;
     }
@@ -58,14 +59,13 @@ class SendSubscriptionReminderJob implements ShouldQueue
     public function handle()
     {
         $user = $this->subscription->user;
-        
         if (!$user || !$user->email) {
             Log::warning("Cannot send subscription reminder: User not found or has no email for subscription #{$this->subscription->id}");
             return;
         }
 
         try {
-            Mail::to($user)->send(new SubscriptionReminderMail(
+            Mail::to($user->email)->send(new SubscriptionReminderMail(
                 $user,
                 $this->subscription,
                 $this->daysUntilExpiration

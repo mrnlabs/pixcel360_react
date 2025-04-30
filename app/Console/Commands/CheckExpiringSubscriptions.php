@@ -30,10 +30,13 @@ class CheckExpiringSubscriptions extends Command
     {
         // Find subscriptions expiring in 7 days
         $sevenDaysFromNow = Carbon::now()->addDays(7)->toDateString();
-        $subscriptionsExpiringInSevenDays = Subscription::with('plan')->where('expires_at', $sevenDaysFromNow)
+        $subscriptionsExpiringInSevenDays = Subscription::with('plan')
+        ->whereDate('expires_at', $sevenDaysFromNow)
             ->where('reminder_sent_7_days', false)
             ->with('user')
             ->get();
+
+        $this->info('Found '.$subscriptionsExpiringInSevenDays->count().' subscriptions expiring in 7 days');
 
         foreach ($subscriptionsExpiringInSevenDays as $subscription) {
             SendSubscriptionReminderJob::dispatch($subscription, 7)
@@ -48,7 +51,8 @@ class CheckExpiringSubscriptions extends Command
 
         // Find subscriptions expiring tomorrow
         $tomorrow = Carbon::now()->addDay()->toDateString();
-        $subscriptionsExpiringTomorrow = Subscription::with('plan')->where('expires_at', $tomorrow)
+        $subscriptionsExpiringTomorrow = Subscription::with('plan')
+        ->whereDate('expires_at', $tomorrow)
             ->where('reminder_sent_1_day', false)
             ->with('user')
             ->get();
@@ -63,7 +67,6 @@ class CheckExpiringSubscriptions extends Command
             
             $this->info("1-day reminder queued for subscription #{$subscription->id}");
         }
-
         $this->info('Finished queuing expiring subscription reminders');
     }
 }

@@ -31,11 +31,7 @@ const PayFastCheckout = ({ payfastIdentifier, onSuccess, onError }: any) => {
       };
       
       document.body.appendChild(script);
-      // @ts-expect-error
-    } else if (window.payfast_do_onsite_payment) {
-      // PayFast script already loaded, initialize payment
-      initializePayment();
-    }
+    } 
   }, [payfastIdentifier, onSuccess, onError]);
   
   const initializePayment = () => {
@@ -45,9 +41,9 @@ const PayFastCheckout = ({ payfastIdentifier, onSuccess, onError }: any) => {
         // @ts-expect-error
         window.payfast_do_onsite_payment({
           uuid: payfastIdentifier,
-          return_url: window.location.origin + '/payment/success',
-          cancel_url: window.location.origin + '/payment/cancel',
-          notify_url: window.location.origin + '/api/payment/notification',
+          return_url: route('payment.success'),
+          cancel_url: route('payment.cancel'),
+          notify_url: route('payment.notify'),
           // Optional callback handlers
           callback: function(result: any) {
             console.log('Payment Result:', result);

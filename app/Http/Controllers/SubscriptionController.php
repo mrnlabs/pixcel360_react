@@ -37,5 +37,9 @@ class SubscriptionController extends Controller
     function trialEnded() {
         return Inertia::render('Subscriptions/TrialEnded');
     }
+    
+    function renew() {
+        //return Inertia::render('Subscriptions/TrialEnded');
+    }
 
 }

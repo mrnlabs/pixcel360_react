@@ -366,6 +366,8 @@ class PayFastController extends Controller
                         'expires_at' => $plan->getEndDate(),
                         'payment_method' => 'payfast',
                         'transaction_id' => $pf_payment_id,
+                        'reminder_sent_7_days' => false,
+                        'reminder_sent_1_days' => false,
                     ]);
                     
                     logger()->info("Subscription {$subscription->id} created successfully for plan: {$plan->id}, user: {$user->id}");
