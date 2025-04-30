@@ -43,13 +43,16 @@ class ProcessVideoJob implements ShouldQueue
      * @var \App\Models\Video
      */
     protected $video;
+    protected $userHasSubscription;
 
     /**
      * Create a new job instance.
      */
-    public function __construct(Video $video)
+    public function __construct(Video $video, $subscription)
     {
         $this->video = $video;
+        $this->userHasSubscription = $subscription;
+
     }
 
     /**
@@ -83,16 +86,21 @@ class ProcessVideoJob implements ShouldQueue
             $data = [
                 'normal_play' => $videoSettings->duration ?? 2,
                 'slow_play' => $videoSettings->slomo_recording_time ?? 2,
-                'slow_factor' => $videoSettings->speed ?? 0.5,//speed
+                'slow_factor' => $videoSettings->speed ?? 0.5,
                 'effect' => 'slomo_boomerang',
                 'video_url' => $videoPath,
                 'quality' => 'ultra'
             ];
+            
+           
             if ($videoSettings->add_audio_file) {
                 $data['audio_url'] = $videoSettings->add_audio_file;
             }
-
-            if ($eventOverlay) {
+            
+        
+            if (!$this->userHasSubscription) {
+                $data['overlay_url'] = 'https://pixcelcapetown.s3.af-south-1.amazonaws.com/placeholders/watermark.png';
+            } elseif ($eventOverlay) {
                 $data['overlay_url'] = $eventOverlay->path;
             }
     

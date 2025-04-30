@@ -57,7 +57,8 @@ class EventAPIController extends Controller
                 ]);
 
                 // Dispatch the video processing job
-                ProcessVideoJob::dispatch($video)->onQueue('video-processing');
+                $currentSubscription = request()->user()->currentSubscription()->first();
+                ProcessVideoJob::dispatch($video, $currentSubscription)->onQueue('video-processing');
                 
                 return response()->json([
                     'message' => 'Video uploaded successfully and queued for processing',

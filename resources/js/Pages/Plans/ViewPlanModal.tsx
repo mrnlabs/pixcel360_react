@@ -35,7 +35,7 @@ function ViewPlanModal({
                             <div className="box">
                                 <div className="box-body">
                                     <div className="ecommerce-gallery flex text-center">
-                                        <span className="badge bg-primarytint2color tag-badge">{plan?.category?.name}</span>
+                                        {/* <span className="badge bg-primarytint2color tag-badge">{plan?.category?.name}</span> */}
                                         <img src={plan?.photo} alt="image" className="w-full"/>
                                     </div>
                                 </div>

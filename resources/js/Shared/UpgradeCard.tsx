@@ -17,7 +17,7 @@ const UpgradeCard = ({diffDays}:{diffDays:number}) => {
           </button>
         )}
       
-      {diffDays > 0 && (
+      {(!current_subscription && diffDays > 0) && (
         <button className="w-full bg-gray-700 flex items-center justify-center gap-2 border border-gray-600 text-gray-300 py-2 px-4 rounded-xs hover:bg-gray-700 transition-colors">
          You have {diffDays} day(s) left in your free trial.
         </button> 

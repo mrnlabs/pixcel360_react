@@ -81,7 +81,7 @@ const updateFilters = React.useCallback(
                     </h6>
                     <span className='mb-4 ml-4'><span className='text-danger'>*</span> The gallery of an event is deleted 
                       <span className='text-primary'> six months </span> 
-                       creation. Backup your data before the indicated date.</span>
+                       after creation. Backup your data before the indicated date.</span>
                   </div>
                 </div>
           

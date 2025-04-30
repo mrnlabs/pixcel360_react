@@ -86,7 +86,7 @@ class PayFastController extends Controller
                 ]);
             } else {
                 logger()->error('Failed to get PayFast payment identifier');
-                return back()->with('error', 'Unable to initialize payment. Please try again.');
+                return back()->with('error', 'Unable to initialize payment. Please check your network connection and try again.');
             }
             
         } catch (\Exception $e) {
@@ -240,10 +240,8 @@ class PayFastController extends Controller
         $m_payment_id = $request->input('m_payment_id');
         $pf_payment_id = $request->input('pf_payment_id');
         
-        // Find the transaction by merchant payment ID
         $transaction = Transaction::where('merchant_payment_id', $m_payment_id)->first();
         
-        // Update transaction with return data
         if ($transaction) {
             $paymentData = $transaction->payment_data ?? [];
             $paymentData['return_data'] = $request->all();
@@ -329,9 +327,10 @@ class PayFastController extends Controller
                     "plan_id" => $planId,
                     "email" => $request->input('email_address'),
                 ]);
-            }
+
+            }else{
             
-            // Update transaction with notification data
+      
             $paymentData = $transaction->payment_data ?? [];
             $paymentData['notification_data'] = $request->all();
 
@@ -351,12 +350,10 @@ class PayFastController extends Controller
                 "email" => $request->input('email_address'),
             ]);
             
-            // Process based on payment status
-            if ($payment_status === 'COMPLETE') {
-                // Mark transaction as completed
+        }
+            if ($payment_status === 'COMPLETE') {                
                 $transaction->markAsCompleted();
                 
-                // Get the plan
                 $plan = $transaction->plan;
                 $user = $transaction->user;
                 
@@ -377,7 +374,7 @@ class PayFastController extends Controller
                         $user, $subscription, 
                         $transaction->email,
                         $plan)
-                        ->onQueue('emails');
+                        ->onQueue('payments');
                 }
             } else if (in_array($payment_status, ['FAILED', 'CANCELLED'])) {
                 $transaction->markAsFailed();
@@ -388,7 +385,7 @@ class PayFastController extends Controller
             SendPaymentErrorEmailJob::dispatch(
                 $user, $subscription, 
                 $transaction->email, $plan)
-            ->onQueue('emails');
+            ->onQueue('payments');
             
             return response('OK');
         } catch (\Exception $e) {

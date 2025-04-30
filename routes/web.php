@@ -12,12 +12,23 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Gallery\GalleryController;
 use App\Http\Controllers\Plans\PlanController;
 use App\Http\Controllers\TermsAndConditionController;
+use App\Models\Plan;
 
 Route::get('/clear-cache', function () {
     Artisan::call('optimize:clear');
     Artisan::call('storage:link');
     Artisan::call('config:clear');
     return "success";
+});
+
+Route::get('/emails', function () {
+    $plan = Plan::where('id', '4')->first();
+    $user = auth()->user();
+    return view('emails.payments.error',[
+        'user' => $user,
+        'plan' => $plan,
+        'subscription' => $user->subscriptions()->first(),
+    ]);
 });
 
 Route::get('/', [HomeController::class, 'index'])->name('home');

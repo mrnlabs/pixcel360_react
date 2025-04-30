@@ -1,13 +1,41 @@
-import React from 'react'
-import { ToggleNav } from './ToggleNav'
+import React, { useEffect, useState } from 'react'
 import HeaderProfile from './HeaderProfile'
 import FullScreen from './FullScreen'
-import { Search } from 'lucide-react'
+import { Search, WifiOff } from 'lucide-react'
 import { HeaderSearch } from './HeaderSearch'
 import NotificationBell from './NotificationBell'
 import { AuthGuard } from '@/guards/authGuard'
 
 export default function Header() {
+
+  /**
+ * React hook that tracks whether the user is currently online or offline
+ * @returns {boolean} - Returns true if the user is online, false if offline
+ */
+const useOnlineStatus = () => {
+  // Initialize with the current online status
+  const [isOnline, setIsOnline] = useState(
+    typeof navigator !== 'undefined' && typeof navigator.onLine === 'boolean' 
+      ? navigator.onLine 
+      : true
+  );
+
+  useEffect(() => {
+    const handleOnline = () => setIsOnline(true);
+    const handleOffline = () => setIsOnline(false);
+    window.addEventListener('online', handleOnline);
+    window.addEventListener('offline', handleOffline);
+
+    return () => {
+      window.removeEventListener('online', handleOnline);
+      window.removeEventListener('offline', handleOffline);
+    };
+  }, []);
+
+  return isOnline;
+};
+
+  const isOnline = useOnlineStatus();
   return (
     <header className="app-header sticky" id="header">
           
@@ -31,7 +59,6 @@ export default function Header() {
                 </a>
               </li> */}
             
-              
               <AuthGuard 
               roles={["System Admin", "System SuperAdmin"]} 
               permissions={["*"]}
@@ -40,6 +67,11 @@ export default function Header() {
                   <NotificationBell/>
                 </li>
               </AuthGuard>
+              {!isOnline && (
+                <li className="header-element">
+                <WifiOff className='animate-pulse text-danger' />
+              </li>
+              )}
               
               <FullScreen />
               

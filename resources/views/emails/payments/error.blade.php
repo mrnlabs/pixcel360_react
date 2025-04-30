@@ -55,16 +55,16 @@
             <h2>Payment Failed for Your Pixcel360 Subscription ⚠️</h2>
         </div>
         <div class="content">
-            <p>Hi {{ $user['name'] ?? '[Person\'s Name]' }},</p>
+            <p>Hi {{ $user['firstname'] ?? '[Person\'s Name]' }} {{ $user['lastname'] ?? '[Person\'s Name]' }},</p>
             
             <p>We encountered an issue while processing the payment for your Pixcel360 subscription. Unfortunately, the payment was unsuccessful.</p>
             
             <div class="details">
                 <h3>Subscription Details:</h3>
                 <ul>
-                    <li><strong>Subscription Type:</strong> {{ $plan->interval ?? '[Subscription Type]' }}</li>
-                    <li><strong>Amount Due:</strong> USD {{ $plan->interval == 'semi_annual' ? '6 months' : ucfirst($plan->interval) }}</li>
-                    <li><strong>Billing Cycle:</strong> [Billing Cycle]</li>
+                    <li><strong>Subscription Type:</strong> {{ ucfirst($plan->name) ?? '[Subscription Type]' }}</li>
+                    <li><strong>Amount Due:</strong> USD {{ $plan->price }}</li>
+                    <li><strong>Billing Cycle:</strong> {{ $plan->interval == 'semi_annual' ? '6 months' : ucfirst($plan->interval) }} [Billing Cycle]</li>
                 </ul>
             </div>
             
@@ -79,12 +79,13 @@
                 
                 <p>Thank you for your attention to this matter!</p>
             </div>
+            <div>
+                <p>Best regards,<br>
+                The Pixcel360 Team ☀️</p>
+                <p><a href="https://www.pixcel360.com">www.pixcel360.com</a></p>
+            </div>
         </div>
-        <div class="footer">
-            <p>Best regards,<br>
-            The Pixcel360 Team ☀️</p>
-            <p><a href="https://www.pixcel360.com">www.pixcel360.com</a></p>
-        </div>
+       
     </div>
 </body>
 </html>

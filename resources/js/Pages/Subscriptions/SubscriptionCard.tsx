@@ -59,7 +59,8 @@ export default function SubscriptionCard({subscription}: SubscriptionCardProps) 
         </span>
       </p>
      
-      <Link href={route('subscriptions.show', subscription?.slug)} className="ti-btn ti-btn-primary w-full">View</Link>
+      <Link href={route('subscriptions.show', subscription?.slug)} 
+      className="ti-btn bg-[linear-gradient(243deg,#ffcc00_0%,#ff9339_100%)] text-white font-bold py-2 px-4 rounded w-full">View</Link>
      
     </div>
     </div>

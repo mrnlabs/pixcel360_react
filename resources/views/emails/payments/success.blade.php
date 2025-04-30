@@ -38,7 +38,7 @@
             padding: 15px;
             background-color: #fff;
             border-radius: 5px;
-            border-left: 4px solid #4CAF50;
+            border-left: 4px solid #ff9339; 
         }
         .details p {
             margin: 5px 0;
@@ -46,7 +46,7 @@
         .cta-button {
             display: inline-block;
             padding: 10px 20px;
-            background-color: #4CAF50;
+            background-color: #ff9339;
             color: white;
             text-decoration: none;
             border-radius: 5px;
@@ -61,8 +61,7 @@
 </head>
 <body>
     <div class="container">
-        <div class="header">
-            <h1>Your Pixcel360 Subscription is Ready! 🎉</h1>
+        <div cl2>Your Pixcel360 Subscription is Ready! 🎉</h2>
         </div>
         <div class="content">
             <p>Hi {{ $user['firstname'] ?? '[Person\'s Name]' }} {{ $user['lastname'] ?? '[Person\'s Name]' }},</p>
@@ -70,9 +69,10 @@
             <p>Great news! Your Pixcel360 subscription is now active and ready to use. Here are the details of your subscription:</p>
             
             <div class="details">
-                <p><strong>Subscription ID:</strong> {{ $subscription['id'] ?? '[Subscription ID]' }}</p>
-                <p><strong>Start Date:</strong> {{ $subscription['started_at'] ?? '[Start Date]' }}</p>
-                <p><strong>End Date:</strong> {{ $subscription['expires_at'] ?? '[End Date]' }}</p>
+                <p><strong>Subscription ID:</strong> #{{ $subscription['id'] ?? '[Subscription ID]' }}</p>
+                {{-- include hour and minutes on the start date --}}
+                <p><strong>Start Date:</strong> {{ \Carbon\Carbon::parse($subscription['started_at'])->format('F j, Y H:i') ?? '[Start Date]' }}</p>
+                <p><strong>End Date:</strong> {{ \Carbon\Carbon::parse($subscription['expires_at'])->format('F j, Y H:i') ?? '[End Date]' }}</p>
                 <p><strong>Subscription Type:</strong> {{ $plan->name }}</p>
                 <p><strong>Total Amount:</strong> USD {{ $plan->price ?? '[Total Amount]' }}</p>
             </div>
@@ -88,13 +88,14 @@
                 
                 <p>We're excited to have you on board and look forward to seeing you enjoy your Pixcel360 experience!</p>
             </div>
+            <div class="">
+                <p>Best regards,<br>
+                The Pixcel360 Team ☀️</p>
+                <p><a href="https://www.pixcel360.com">www.pixcel360.com</a></p>
+                <p>&copy; {{ date('Y') }} Pixcel360. All rights reserved.</p>
+            </div>
         </div>
-        <div class="footer">
-            <p>Best regards,<br>
-            The Pixcel360 Team ☀️</p>
-            <p><a href="https://www.pixcel360.com">www.pixcel360.com</a></p>
-            <p>&copy; {{ date('Y') }} Pixcel360. All rights reserved.</p>
-        </div>
+        
     </div>
 </body>
 </html>

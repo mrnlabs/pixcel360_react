@@ -1,7 +1,7 @@
 import Authenticated from '@/Layouts/AuthenticatedLayout'
 import { Breadcrumb } from '@/Shared/Breadcrumb'
-import { Head, Link, router, useForm } from '@inertiajs/react'
-import { SquarePlus } from 'lucide-react'
+import { Head, Link, router, useForm, usePage } from '@inertiajs/react'
+import { SquarePlus, WifiOff } from 'lucide-react'
 import React, { Suspense, useState } from 'react'
 import { Filters, Plan, QueryParams } from '@/types'
 // @ts-expect-error
@@ -17,6 +17,8 @@ export default function Index({plans} : any) {
   
   const [dialogOpen, setDialogOpen] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
+
+  const initializationError = usePage().props.error as string;
 
     const totalItems = plans?.original?.pagination?.total;
     const itemsPerPage = plans?.original?.pagination?.per_page;
@@ -109,6 +111,14 @@ const handleSubscribe = () => {
                   <div className="box">
                     <div className="box-header justify-between">
                       <div className="box-title"> Plans </div>
+                      {initializationError && (
+                        <div className="box-title flex"> 
+                          <span className="text-red-500 flex">
+                            <WifiOff className="mr-1 animate-pulse" /> {String(initializationError)}
+                            </span>
+                        </div>
+                      )}
+                     
                       <div className="flex flex-wrap gap-2">
                       <AuthGuard 
                           roles={["System Admin", "System SuperAdmin"]} 
@@ -119,26 +129,6 @@ const handleSubscribe = () => {
                       </AuthGuard>
 
                         
-                        {/* <div>
-                          <Input 
-                          onChange={(e) => updateFilters({ search: e.target.value })}
-                          className="form-control form-control-sm" type="search" placeholder="Search" aria-label=".form-control-sm example"/>
-                        </div>
-                        <div className="ti-dropdown hs-dropdown">
-                          <Select onValueChange={(e) => updateFilters({ sort: e })}>
-                          <SelectTrigger className="w-[180px] form-control">
-                            <SelectValue placeholder="Sort By"></SelectValue>
-                          </SelectTrigger>
-                          <SelectContent className='form-control'>
-                            <SelectGroup>
-                              <SelectLabel>Sort By</SelectLabel>
-                              <SelectItem className='cursor-pointer' value="latest">Latest</SelectItem>
-                              <SelectItem className='cursor-pointer' value="oldest">Oldest</SelectItem>
-                            </SelectGroup>
-                          </SelectContent>
-                        </Select>
-
-                        </div> */}
                       </div>
                     </div>
                     <div className="box-body">

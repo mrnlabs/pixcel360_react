@@ -11,7 +11,7 @@ export default function Index({user} : any) {
 
   const tabs = [
     { id: 'account', label: 'Account' },
-    { id: 'notification', label: 'Notification' },
+    // { id: 'notification', label: 'Notification' },
     { id: 'security', label: 'Security' }
   ];
   return (
