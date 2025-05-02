@@ -27,14 +27,14 @@
             padding: 20px 0;
         }
         .subscription-details {
-            background-color: #f8f9fa;
+            /* background-color: #f8f9fa; */
             padding: 15px;
             border-radius: 5px;
             margin: 20px 0;
         }
         .btn {
             display: inline-block;
-            background-color: #0066cc;
+            background-color: #ff9339;
             color: white;
             text-decoration: none;
             padding: 10px 20px;
@@ -54,8 +54,8 @@
 </head>
 <body>
     <div class="header">
-        <img src="{{ asset('images/logo.png') }}" alt="Pixcel360 Logo" class="logo">
-        <h1>Subscription Reminder</h1>
+        {{-- <img src="{{ asset('images/logo.png') }}" alt="Pixcel360 Logo" class="logo"> --}}
+        <h2>Subscription Reminder</h2>
     </div>
 
     <div class="content">

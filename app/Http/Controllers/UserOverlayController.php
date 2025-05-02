@@ -74,9 +74,10 @@ class UserOverlayController extends Controller
            return $this->uploadOverlayAPI($request);
         }
         
+        $eventId = explode('&', $request->event_id)[0];
+      
       
         $request->validate([
-            'event_id' => 'required|exists:events,slug',
             'pngFile' => ['required', 'image', 'mimes:png'],
         ]);
         
@@ -86,7 +87,10 @@ class UserOverlayController extends Controller
         $url = Storage::url($filePath);
         
         if ($filePath) {
-            $event = Event::whereSlug($request->event_id)->first();
+            $event = Event::whereSlug($eventId)->first();
+            if(!$event) {
+                return back()->with('error', 'Event not found');
+            }
             
             // Begin a database transaction to ensure data integrity
             DB::beginTransaction();

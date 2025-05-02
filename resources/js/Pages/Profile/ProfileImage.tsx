@@ -55,7 +55,7 @@ export default function ProfileImage() {
     if (fileInputRef.current) {
       fileInputRef.current.value = '';
     }
-    setPreview('https://picxel-bucket.s3.af-south-1.amazonaws.com/placeholders/128x128.png');
+    setPreview('https://pixcelcapetown.s3.af-south-1.amazonaws.com/placeholders/profile_placeholder.png');
     
     router.delete('/remove-profile-image', {
       onSuccess: () => {

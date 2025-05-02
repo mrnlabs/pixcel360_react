@@ -6,7 +6,7 @@ import UserOverLayModal from './UserOverLayModal'
 import showToast from '@/utils/showToast'
 import { checkPNGTransparency } from '@/utils/checkPNGTransparency'
 import { Popover, PopoverContent, PopoverTrigger } from '@/Components/ui/popover'
-import { Check, ChevronsUpDown } from 'lucide-react'
+import { Check, ChevronsUpDown, Loader } from 'lucide-react'
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from '@/Components/ui/command'
 import { cn } from '@/lib/utils'
 import { Button } from '@/Components/ui/button'
@@ -104,10 +104,7 @@ export default function SelectedOverlay({ overlayPreset, events, overlaysLength 
       showToast('error', 'Please select an overlay image.', {position: 'bottom-right'});
       return;
     }
-    if (!value) {
-      showToast('error', 'Please select an event.', {position: 'bottom-right'});
-      return;
-    }
+   
     post(route('user.overlays.store'), {
       preserveState: true,
       onSuccess: (response: any) => {
@@ -162,10 +159,11 @@ export default function SelectedOverlay({ overlayPreset, events, overlaysLength 
                     </div>
                     <div className="flex flex-wrap gap-2 w-full sm:w-auto mt-3 sm:mt-0">
                       
-                    <Button disabled={!data.pngFile || !value || processing}
+                    <Button disabled={!data.pngFile || processing}
                        onClick={handleSubmit}
                      className={` w-full ti-btn ti-btn bg-[linear-gradient(243deg,#ffcc00_0%,#ff9339_100%)] text-white ti-btn-lg`}>
-                      Submit</Button>
+                     {processing && <Loader className='animate-spin mr-1'/>} Submit
+                      </Button>
                       
                     </div>
                   </div>
