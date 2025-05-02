@@ -162,7 +162,7 @@ export default function SelectedOverlay({ overlayPreset, events, overlaysLength 
                     <Button disabled={!data.pngFile || processing}
                        onClick={handleSubmit}
                      className={` w-full ti-btn ti-btn bg-[linear-gradient(243deg,#ffcc00_0%,#ff9339_100%)] text-white ti-btn-lg`}>
-                     {processing && <Loader className='animate-spin mr-1'/>} Submit
+                     {processing && <Loader className='animate-spin mr-1'/>} Save Overlay
                       </Button>
                       
                     </div>
