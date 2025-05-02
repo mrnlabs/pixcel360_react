@@ -22,7 +22,7 @@ class BoomerangSettingResource extends JsonResource
             'boomerang' => $this->boomerang,
             'animated_gif' => $this->animated_gif,
             'videos' => $this->videos,
-            'duration' => $this->duration ?? 2,
+            'duration' => $this->duration ?? "2",
             'slomo' => $this->slomo,
             'boomerang_repeats' => $this->boomerang_repeats,
             'boomerang_speed' => $this->boomerang_speed,

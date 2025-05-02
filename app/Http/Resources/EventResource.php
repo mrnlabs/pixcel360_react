@@ -29,8 +29,6 @@ class EventResource extends JsonResource
             'terms_and_conditions' => $this->terms_and_conditions,
             'enable_start_end_date' => $this->enable_start_end_date,
             'slug' => $this->slug,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
             'setting' => new SettingResource($this->whenLoaded('setting')),
             'boomerang_setting' => new BoomerangSettingResource($this->whenLoaded('boomerang_setting')),
             'sharing_method' => new SharingMethodResource($this->whenLoaded('sharing_method')),

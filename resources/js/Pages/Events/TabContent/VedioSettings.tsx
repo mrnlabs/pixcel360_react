@@ -78,6 +78,38 @@ export default function VedioSettings({event} : any) {
       
 
     </div>
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-3">
+      <div className="space-y-4">
+        <div className="xl:col-span-6 lg:col-span-6 md:col-span-6 sm:col-span-12 col-span-12">
+        <label className="block text-sm mb-1">Front or rear camera</label>
+        <Select value={String(data.front_rear_camera)} onValueChange={(value) => setData('front_rear_camera', value)}>
+      <SelectTrigger className="w-[180px] form-control border rounded-lg">
+        <SelectValue placeholder="Select" />
+        </SelectTrigger>
+        <SelectContent className='form-control'>
+            <SelectGroup>
+            <SelectLabel>Camera</SelectLabel>
+            <SelectItem value="0">Front</SelectItem>
+            <SelectItem value="1">Back</SelectItem>
+            </SelectGroup>
+        </SelectContent>
+    </Select>
+  </div>
+  
+       
+      </div>
+
+      <div className="space-y-4">
+      <CustomToggle 
+        label="Enable Flash Light" 
+        initialValue={data.flash} 
+        onChange={(value) => setData('flash', value ? 1 : 0)} 
+        />
+      </div>
+
+      
+
+    </div>
 
 
   <Button onClick={handleSubmit} disabled={processing} className='mt-4 ti-btn bg-[linear-gradient(243deg,#ffcc00_0%,#ff9339_100%)] text-white w-full'>

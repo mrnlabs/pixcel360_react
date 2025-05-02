@@ -58,6 +58,7 @@ class PayFastController extends Controller
                 'm_payment_id' => $orderId,
                 'amount' => number_format(sprintf('%.2f', $plan->price), 2, '.', ''),
                 'item_name' => $plan->name ?? 'Subscription Plan',
+                // 'item_currency' => 'USD',
 
                 'custom_str1' => (string)$user->id,  // User ID
                 'custom_str2' => (string)$plan->id,  // Plan ID

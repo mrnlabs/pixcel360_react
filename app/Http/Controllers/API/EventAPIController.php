@@ -182,8 +182,8 @@ protected function generateVideoFilename(UploadedFile $file)
 
                 $validator = Validator::make($request->all(), [
                     'slug' => 'required|string|max:255',
-                     'device_name' => 'required|string|max:255',
-                     'device_id' => 'required|string|max:255',
+                    //  'device_name' => 'required|string|max:255',
+                    //  'device_id' => 'required|string|max:255',
                 ]);
                 
                 if ($validator->fails()) {
@@ -202,15 +202,15 @@ protected function generateVideoFilename(UploadedFile $file)
                         'message' => 'Events limit reached.'
                     ], 400);
                 }
-                $deviceExists = DB::table('devices')->where('device_id', $request->device_id)->exists();
-                if(!$deviceExists){
-                    DB::table('devices')->insert([
-                        'device_name' => $request->device_name,
-                        'device_id' => $request->device_id,
-                        // 'subscription_id' => $user->currentSubscription->id,
-                        'subscription_id' => 1,
-                    ]);
-                }
+                // $deviceExists = DB::table('devices')->where('device_id', $request->device_id)->exists();
+                // if(!$deviceExists){
+                //     DB::table('devices')->insert([
+                //         'device_name' => $request->device_name,
+                //         'device_id' => $request->device_id,
+                //         // 'subscription_id' => $user->currentSubscription->id,
+                //         'subscription_id' => 1,
+                //     ]);
+                // }
                
                 $event->update(['status' => true]);
                 $data = new EventResource($event);
