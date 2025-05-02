@@ -15,4 +15,8 @@ Schedule::command('subscriptions:check-expiring')
 
 // Run Horizon snapshot command to keep metrics available
 Schedule::command('horizon:snapshot')->everyMinute(); 
-Schedule::command('emails:cart-abandonment')->dailyAt('14:00')->appendOutputTo(storage_path('logs/abandonment-emails.log'));
+
+Schedule::command('emails:cart-abandonment --hour')->everyTenMinutes()->appendOutputTo(storage_path('logs/abandonment-emails.log'));
+    
+    // Run once per day for day-old abandonments
+ Schedule::command('emails:cart-abandonment --day')->dailyAt('19:36')->appendOutputTo(storage_path('logs/abandonment-emails.log'));

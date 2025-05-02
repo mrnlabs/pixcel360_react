@@ -13,10 +13,10 @@
     
     <p>Whether you're preparing for your next big booking or just getting set up, we're ready when you are.</p>
     
-    <p><a href="{{ $resumeUrl }}" style="display: inline-block; padding: 10px 20px; background-color: #4a86e8; color: white; text-decoration: none; border-radius: 5px;">Resume My Subscription</a></p>
+    <p><a href="{{ $resumeUrl }}" style="display: inline-block; padding: 10px 20px; background-color: #ff9339; color: white; text-decoration: none; border-radius: 5px;">Resume My Subscription</a></p>
     
     <p>If you need any help or have questions about the plans, feel free to reach out— we're here to support your events every step of the way.</p>
-    
+    <br>
     <p>Spin you soon,<br><strong>The Pixcel360 Team</strong></p>
 </body>
 </html>

@@ -24,11 +24,34 @@ class PaymentAttempt extends Model
     }
 
     // Scope for finding abandoned carts
+    public function scopeOneHourAbandoned($query)
+    {
+        return $query->where('status', 'initiated')
+            ->whereBetween('created_at', [
+                now()->subMinutes(70), // 1 hour 10 minutes ago
+                now()->subMinutes(50)  // 50 minutes ago
+            ])
+            ->whereNull('email_sent_at');
+    }
+    
+    // Keep the original method for finding all abandoned carts
     public function scopeAbandoned($query)
     {
         return $query->where('status', 'initiated')
             ->where('created_at', '<=', now()->subHours(1))
             ->where('created_at', '>=', now()->subDays(3))
             ->whereNull('email_sent_at');
+    }
+    
+    // Add additional scopes for staged reminders
+    public function scopeOneDayAbandoned($query)
+    {
+        return $query->where('status', 'initiated')
+            ->whereBetween('created_at', [
+                now()->subHours(25), // 25 hours ago
+                now()->subHours(23)  // 23 hours ago
+            ])
+            ->whereNotNull('email_sent_at')
+            ->where('email_sent_at', '<=', now()->subHours(22));
     }
 }

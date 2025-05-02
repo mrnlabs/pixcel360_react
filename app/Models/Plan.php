@@ -86,4 +86,21 @@ public function getIntervalInDays(): int
         };
     }
 
+//     public function getEndDate($startDate = null)
+// {
+//     $startDate = $startDate ?: now();
+    
+//     switch ($this->duration_unit) {
+//         case 'day':
+//             return $startDate->copy()->addDays($this->duration_value);
+//         case 'week':
+//             return $startDate->copy()->addWeeks($this->duration_value);
+//         case 'month':
+//             return $startDate->copy()->addMonths($this->duration_value);
+//         case 'year':
+//             return $startDate->copy()->addYears($this->duration_value);
+//         default:
+//             return $startDate->copy()->addDays(30); // Default fallback
+//     }
+// }
 }

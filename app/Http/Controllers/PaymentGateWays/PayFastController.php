@@ -384,12 +384,16 @@ class PayFastController extends Controller
                 $user = $transaction->user;
                 
                 if ($plan && $user) {
+                    $currentSubscription = $user->currentSubscription()->first();
+        
+                    // Determine start date for the new subscription
+                    $startDate = $currentSubscription ? $currentSubscription->expires_at : now();
                     // Create subscription
                     $subscription = $plan->subscriptions()->create([
                         'user_id' => $user->id,
                         'plan_id' => $plan->id,
-                        'started_at' => now(),
-                        'expires_at' => $plan->getEndDate(),
+                        'started_at' => $startDate,
+                        'expires_at' => $plan->getEndDate($startDate),
                         'payment_method' => 'payfast',
                         'transaction_id' => $pf_payment_id,
                         'reminder_sent_7_days' => false,

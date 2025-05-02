@@ -44,11 +44,30 @@ class User extends Authenticatable
     }
 
     public function currentSubscription()
-    {
-        return $this->hasOne(Subscription::class)
-            ->where('expires_at', '>', now())
-            ->latest();
-    }
+{
+    return $this->hasOne(Subscription::class)
+        ->where('starts_at', '<=', now())
+        ->where('expires_at', '>', now())
+        ->latest('starts_at');
+}
+
+public function activeAndFutureSubscriptions()
+{
+    return $this->hasMany(Subscription::class)
+        ->where(function ($query) {
+            $query->where('expires_at', '>', now());
+        })
+        ->orderBy('started_at', 'asc');
+}
+
+// Get the next subscription that hasn't started yet
+public function nextSubscription()
+{
+    return $this->hasOne(Subscription::class)
+        ->where('started_at', '>', now())
+        ->orderBy('started_at', 'asc');
+}
+
 
     public static function getSystemAdmins()
     {
