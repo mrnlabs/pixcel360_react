@@ -29,7 +29,11 @@ class EventAPIController extends Controller
     protected  EventService $eventService;
     protected VideoSettingsService $videoSettingsService;
     protected SharingSettingsService $sharingSettingService;
-    public function __construct(EventService $eventService, VideoSettingsService $videoSettingsService, SharingSettingsService $sharingSettingService)
+   
+    public function __construct(
+        EventService $eventService,
+         VideoSettingsService $videoSettingsService, 
+         SharingSettingsService $sharingSettingService)
 
     {
         $this->eventService = $eventService;
@@ -57,7 +61,10 @@ class EventAPIController extends Controller
                 ]);
 
                 // Dispatch the video processing job
-                $currentSubscription = request()->user()->currentSubscription()->first();
+                $user = User::whereId($event->user_id)->first();
+                
+                $currentSubscription = $user ? $user->currentSubscription()->with('plan')->first() : null;
+            
                 ProcessVideoJob::dispatch($video, $currentSubscription)->onQueue('video-processing');
                 
                 return response()->json([

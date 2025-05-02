@@ -1,7 +1,4 @@
 import InputError from '@/Components/InputError';
-import InputLabel from '@/Components/InputLabel';
-import PrimaryButton from '@/Components/PrimaryButton';
-import TextInput from '@/Components/Form/ThemeTextInput';
 import GuestLayout from '@/Layouts/GuestLayout';
 import { Head, Link, useForm, usePage } from '@inertiajs/react';
 import { FormEventHandler, useState } from 'react';
@@ -9,7 +6,6 @@ import ThemeTextInput from '@/Components/Form/ThemeTextInput';
 import { Eye, EyeOff, Loader } from 'lucide-react';
 
 export default function Register() {
-    const registerError = usePage().props.errors;
     const [showPassword, setShowPassword] = useState(false);
     const { data, setData, post, processing, errors, reset } = useForm({
         firstname: '',

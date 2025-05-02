@@ -3,15 +3,19 @@ import Authenticated from '@/Layouts/AuthenticatedLayout';
 import { Breadcrumb } from '@/Shared/Breadcrumb';
 import { Plan, PlanCardProps } from '@/types';
 import showToast from '@/utils/showToast';
-import { Head, useForm } from '@inertiajs/react';
+import { Head, router, useForm, usePage } from '@inertiajs/react';
 import { Loader } from 'lucide-react';
 import React from 'react'
 
 export default function Show({plan}: PlanCardProps) {
-
-    const { data, setData, post, processing, errors, reset } = useForm({
-            plan: "",
-        });
+// @ts-ignore
+    const { user } = usePage().props.auth;
+    const handleSubscribe = () => {
+         if(user){
+          return router.get(route('payment.checkout', plan?.slug));
+         }
+          router.visit(`/?redirectTo=plans&plan=${plan?.slug}&wordpress=true`);
+       }
 
   return (
     <Authenticated>
@@ -69,8 +73,8 @@ export default function Show({plan}: PlanCardProps) {
                     </div>
                 </div>
                 <div className=" bottom-0 pt-4 pb-2 bg-white dark:bg-gray-900 z-10">
-                    <Button onClick={() => {showToast('success', 'Will plugin Payment gateway here!', {position: 'bottom-right'});}} disabled={processing} className="w-full ti-btn bg-[linear-gradient(243deg,#ffcc00_0%,#ff9339_100%)] text-white btn-wave waves-effect waves-light">
-                        {processing && <Loader className="mr-2 h-4 w-4 animate-spin" />} Subscribe
+                    <Button onClick={() => {handleSubscribe()}} className="w-full ti-btn bg-[linear-gradient(243deg,#ffcc00_0%,#ff9339_100%)] text-white btn-wave waves-effect waves-light">
+                         Subscribe
                     </Button>
                 </div>
                   </div>

@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Jobs\SendPaymentErrorEmailJob;
 use App\Jobs\SendPaymentSuccessEmailJob;
+use App\Models\PaymentAttempt;
 
 class PayFastController extends Controller
 {
@@ -77,6 +78,18 @@ class PayFastController extends Controller
             $identifier = $this->generatePaymentIdentifier($data_string);
             
             if ($identifier) {
+
+             
+            $paymentAttempt = new PaymentAttempt();
+            $paymentAttempt->user_id = $user->id;
+            $paymentAttempt->plan_id = $plan->id;
+            $paymentAttempt->order_id = $orderId;
+            $paymentAttempt->amount = $plan->price;
+            $paymentAttempt->status = 'initiated';
+            $paymentAttempt->identifier = $identifier;
+            $paymentAttempt->save();
+
+
                 return Inertia::render('PaymentMethods/Index', [
                     'order' => $plan,
                     'payfastIdentifier' => $identifier,
@@ -267,6 +280,12 @@ class PayFastController extends Controller
         logger()->info('Cancel data: ' . json_encode($request->all()));
         
         $m_payment_id = $request->input('m_payment_id');
+
+        $attempt = PaymentAttempt::where('order_id', $m_payment_id)->first();
+        if ($attempt) {
+            $attempt->status = 'cancelled';
+            $attempt->save();
+        }
         
         // Find the transaction
         $transaction = Transaction::where('merchant_payment_id', $m_payment_id)->first();
@@ -304,8 +323,14 @@ class PayFastController extends Controller
         $amount_gross = $request->input('amount_gross');
         $userId = $request->input('custom_str1');
         $planId = $request->input('custom_str2');
-        
-        logger()->info("Processing payment: Status={$payment_status}, OrderID={$m_payment_id}, PayFastID={$pf_payment_id}, Amount={$amount_gross}");
+
+
+        $attempt = PaymentAttempt::where('order_id', $m_payment_id)->first();
+
+        if ($attempt) {
+            $attempt->status = 'completed';
+            $attempt->save();
+        }
         
         try {
             // Find the transaction by merchant payment ID

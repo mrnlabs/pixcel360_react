@@ -32,8 +32,6 @@ class SettingResource extends JsonResource
             'app_logo' => $this->app_logo,
             'app_background' => $this->app_background,
             'webgallery_background' => $this->webgallery_background,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
         ];
     }
 }

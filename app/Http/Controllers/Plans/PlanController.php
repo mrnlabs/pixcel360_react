@@ -52,7 +52,7 @@ class PlanController extends Controller
                 'name' => $request->name,
                 'price' => $request->price,
                 'interval' => $request->interval,
-                'plan_category_id' => $request->category,
+                'plan_category_id' => 1,
                 'photo' => $url,
                 'description' => $request->description
             ]);
@@ -78,11 +78,10 @@ class PlanController extends Controller
     {
         if(!request('wordpress') && !auth()->user()) return abort(404);
         $plan = Plan::where('slug', $slug)->first();
-        $plans = Plan::all();
+       
         if(request('wordpress')){
             return Inertia::render('Plans/WordpressShow',[
                 'plan' => $plan,
-                'plans' => $plans
             ]);
         }
         return Inertia::render('Plans/Show',[
@@ -100,7 +99,7 @@ class PlanController extends Controller
                 'name' => $request->name,
                 'price' => $request->price,
                 'interval' => $request->interval,
-                'plan_category_id' => $request->category,
+                'plan_category_id' => 1,
                 'photo' => $url,
                 'description' => $request->description
             ]);
@@ -109,7 +108,7 @@ class PlanController extends Controller
                 'name' => $request->name,
                 'price' => $request->price,
                 'interval' => $request->interval,
-                'plan_category_id' => $request->category,
+                'plan_category_id' => 1,
                 'description' => $request->description
             ]);
         }

@@ -26,8 +26,6 @@ class SharingMethodResource extends JsonResource
             'general' => $this->general,
             'whatsapp' => $this->whatsapp,
             'inappgallery' => $this->inappgallery,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
         ];
     }
 }

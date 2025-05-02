@@ -162,7 +162,7 @@ const handleQuillChange = (value: string) => {
                               </div>
                     
                               <div className="space-y-4">
-                              <div>
+                              {/* <div>
                                   <label className="block text-sm mb-1">Category <span className='text-red-500'>*</span></label>
                                   <select 
                                   value={data.category} 
@@ -174,7 +174,7 @@ const handleQuillChange = (value: string) => {
                                     ))}
                                   </select>
                                   <InputError message={errors.category} />
-                                </div>
+                                </div> */}
                                 <div>
                                   <label className="block text-sm mb-1">Price Per <span className='text-red-500'>*</span></label>
                                   <select 
@@ -253,7 +253,7 @@ const handleQuillChange = (value: string) => {
                     
                             <div className="flex justify-between mt-6">
                               <button disabled={processing} onClick={handleSubmit} type="button" className="ti-btn bg-[linear-gradient(243deg,#ffcc00_0%,#ff9339_100%)] text-white w-full">
-                                {processing ? 'Creating...' : 'Create Plan'}</button>
+                                {processing && (<Loader className='animate-spin mr-1'/>)} {plan ? 'Update' : 'Create'} Plan</button>
                             </div>
                           </div>
                     </div>

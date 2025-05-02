@@ -36,6 +36,6 @@ Route::get('/plans', function() {$plans = Plan::with('category')->latest()->get(
 // reprocess videos
 Route::post('/reprocess-videos', [ReprocessVideoController::class, 'reprocessUnprocessedVideos'])->name('reprocess.videos');
 
-require __DIR__.'/wordpress.php';
+
 require __DIR__.'/audio.php';
 

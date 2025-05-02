@@ -15,3 +15,4 @@ Schedule::command('subscriptions:check-expiring')
 
 // Run Horizon snapshot command to keep metrics available
 Schedule::command('horizon:snapshot')->everyMinute(); 
+Schedule::command('emails:cart-abandonment')->dailyAt('14:00')->appendOutputTo(storage_path('logs/abandonment-emails.log'));

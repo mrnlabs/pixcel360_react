@@ -2,7 +2,7 @@ import Authenticated from '@/Layouts/AuthenticatedLayout'
 import { Breadcrumb } from '@/Shared/Breadcrumb'
 import { Head, Link, router, useForm, usePage } from '@inertiajs/react'
 import { SquarePlus, WifiOff } from 'lucide-react'
-import React, { Suspense, useState } from 'react'
+import React, { Suspense, useEffect, useState } from 'react'
 import { Filters, Plan, QueryParams } from '@/types'
 // @ts-expect-error
 import { debounce } from 'lodash';
@@ -14,6 +14,9 @@ import ViewPlanModal from './ViewPlanModal'
 import ConfirmDialog from '@/Components/ConfirmDialog'
 
 export default function Index({plans} : any) {
+
+   // @ts-ignore
+   const user = usePage().props.auth.user;
   
   const [dialogOpen, setDialogOpen] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
@@ -23,6 +26,24 @@ export default function Index({plans} : any) {
     const totalItems = plans?.original?.pagination?.total;
     const itemsPerPage = plans?.original?.pagination?.per_page;
     const currentPage = plans?.original?.pagination?.current_page;
+
+    useEffect(() => {
+      // Parse the current URL
+      const url = new URL(window.location.href);
+      const successplan = url.searchParams.get('successplan');
+      
+      if (successplan) {
+        showToast('success', `Welcome ${user.firstname } `, {position: 'top-right'});
+        
+        const timeoutId = setTimeout(() => {
+          url.searchParams.delete('successplan');
+          
+          window.history.replaceState({}, '', url.toString());
+        }, 5000);
+        
+        return () => clearTimeout(timeoutId);
+      }
+    }, []); 
 
     const [plan, setPlan] = useState<Plan | null>(null);
 
@@ -124,7 +145,7 @@ const handleSubscribe = () => {
                           roles={["System Admin", "System SuperAdmin"]} 
                           permissions={["*"]}
                           requireAll={true}>
-                          <Link href={route('plans.create')} className="ti-btn ti-btn-primary !m-0 btn-wave ti-btn-sm waves-effect waves-light">
+                          <Link href={route('plans.create')} className="ti-btn bg-[linear-gradient(243deg,#ffcc00_0%,#ff9339_100%)] text-white !m-0 btn-wave ti-btn-sm waves-effect waves-light">
                           <SquarePlus className="align-middle" />Create New Plan </Link>
                       </AuthGuard>
 

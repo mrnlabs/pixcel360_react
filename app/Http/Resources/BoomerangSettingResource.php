@@ -41,8 +41,6 @@ class BoomerangSettingResource extends JsonResource
             'time_outs' => $this->time_outs,
             'editing' => $this->editing,
             'sharing' => $this->sharing,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
         ];
     }
 }

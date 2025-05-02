@@ -34,7 +34,9 @@ class AuthenticatedSessionController extends Controller
         $request->session()->regenerate();
 
         auth()->user()->update(['last_login_at' => now()]);
-
+        if(!is_null($request->plan)){
+            return Inertia::location(route('plans', ['successplan' => 'Logged in success'], absolute: true));
+        }
         return Inertia::location(route('dashboard', ['success' => 'Logged in success'], absolute: true));
     }
 

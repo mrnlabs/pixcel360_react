@@ -16,6 +16,7 @@ export default function Welcome() {
         email: "",
         password: "",
         remember: false as boolean,
+        plan: window.location.search.split('=')[1] || null,
     });
     const submit: FormEventHandler = (e) => {
         e.preventDefault();

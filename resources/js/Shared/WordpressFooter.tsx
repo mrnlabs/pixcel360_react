@@ -25,28 +25,15 @@ export default function WordpressFooter({plans=[]}: PlanCardProps) {
                 </ul>
             </div>
 
-            
-            <div>
-               {/*  <h3 className="text-lg font-semibold mb-3 text-white">Subscription Plans</h3>
-                <ul className="space-y-5">
-                    {plans.map((plan) => (
-                        <li key={plan.id}>
-                            <a href={route('plans.show',plan.slug) + '?wordpress=true'} className="hover:text-gray-400">
-                                {plan.name}
-                            </a>
-                        </li>
-                    ))}
-                </ul> */}
-            </div>
 
             
             <div>
                 <h3 className="text-lg font-semibold text-white mb-3">Get in touch</h3>
                 <div className="flex space-x-4">
-                    <a href="#" className="bg-red-500 p-2 rounded-full"><Facebook /></a>
-                    <a href="#" className="bg-red-500 p-2 rounded-full"><X /></a>
-                    <a href="#" className="bg-red-500 p-2 rounded-full"><Instagram /></a>
-                    <a href="#" className="bg-red-500 p-2 rounded-full"><Youtube /></a>
+                    <a href="#" className="bg-[#ff9339] p-2 rounded-full"><Facebook /></a>
+                    <a href="#" className="bg-[#ff9339] p-2 rounded-full"><X /></a>
+                    <a href="#" className="bg-[#ff9339] p-2 rounded-full"><Instagram /></a>
+                    <a href="#" className="bg-[#ff9339] p-2 rounded-full"><Youtube /></a>
                 </div>
             </div>
         </div>
