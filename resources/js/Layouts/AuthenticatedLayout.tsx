@@ -31,7 +31,30 @@ export default function Authenticated({
         
         {children}
         <Footer/>
-        <Toaster/>
+        <Toaster 
+         toastOptions={{
+          success: {
+            style: {
+              background: 'green',
+              color: 'white',
+            },
+            iconTheme: {
+              primary: 'white',
+              secondary: 'black',
+            },
+          },
+          error: {
+            style: {
+              background: 'red',
+              color: 'white',
+            },
+            iconTheme: {
+              primary: 'white',
+              secondary: 'black',
+            },
+          },
+        }}
+        />
       </div>
     );
 }

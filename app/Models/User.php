@@ -46,9 +46,9 @@ class User extends Authenticatable
     public function currentSubscription()
 {
     return $this->hasOne(Subscription::class)
-        ->where('starts_at', '<=', now())
+        ->where('started_at', '<=', now())
         ->where('expires_at', '>', now())
-        ->latest('starts_at');
+        ->latest('started_at');
 }
 
 public function activeAndFutureSubscriptions()

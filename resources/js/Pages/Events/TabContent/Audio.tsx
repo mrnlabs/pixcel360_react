@@ -1,12 +1,13 @@
 import ConfirmDialog from '@/Components/ConfirmDialog';
 import CustomTooltip from '@/Components/CustomTooltip';
 import FileUpload from '@/Components/FileUpload'
+import ProgressBarComponent from '@/Components/Progress';
 import { Button } from '@/Components/ui/button';
 import { Slider } from '@/Components/ui/slider';
 import { formatFileSize } from '@/utils/formatFileSize';
 import { isAudioFile } from '@/utils/isAudioFile';
 import showToast from '@/utils/showToast';
-import { Head, router, useForm } from '@inertiajs/react';
+import { Head, router, useForm, usePage } from '@inertiajs/react';
 import { Loader, Play, Pause, ArrowUpFromLine, Trash2, Scissors, Loader2 } from 'lucide-react'
 import React, { Suspense, useState, useRef, useEffect } from 'react'
 
@@ -30,12 +31,19 @@ export default function Audio({event}: any) {
     const [audioDuration, setAudioDuration] = useState(0);
     const [trimRange, setTrimRange] = useState<[number, number]>([0, 100]);
     const [originalAudioFile, setOriginalAudioFile] = useState<File | null>(null);
+    const [message, setMessage] = useState<string>('');
 
     useEffect(() => {
         if (event?.boomerang_setting?.add_audio_file) {
             setDbAudio(event?.boomerang_setting?.add_audio_file);
         }
     }, [event]);
+const success = usePage().props;
+    useEffect(() => {
+            if (success && typeof success.message === 'string') {
+                setMessage(success.message);
+            }
+        }, [success]);
     
     const handleFileSelect = (files: File[]) => {
         if (!isAudioFile(files[0])) { 
@@ -236,25 +244,43 @@ export default function Audio({event}: any) {
         }
     }
 
-    const { data, setData, post, progress, processing, errors } = useForm({
+    const { data, setData, post, processing, errors } = useForm({
         audioFile: null as File | null,
     });
+    const [progress, setProgress] = useState(0);
 
     function handleSubmit(e: React.MouseEvent<HTMLButtonElement>) {
         e.preventDefault();
         const formData = new FormData();
-        if (data.audioFile) {
+        if (!data.audioFile) {return}
             formData.append('audioFile', data.audioFile);
-        }
+
+            setProgress(0);
+        
+            // Create a simulated progress updater
+            let percentage = 0;
+            const interval = setInterval(() => {
+                // Increment by small amounts, slow down as it approaches higher values
+                if (percentage < 90) {
+                    percentage += 5;
+                } else if (percentage < 95) {
+                    percentage += 1;
+                }
+                setProgress(percentage);
+            }, 500);
+        
         post(route('event.update.audio', event.slug), {
             preserveScroll: true,
             forceFormData: true,
             onSuccess: () => {
+                clearInterval(interval);
+                setProgress(0);
                 setAudioFile(null);
                 setData('audioFile', null);
                 showToast('success', 'Audio updated successfully.', {position: 'bottom-right'});
             },
             onError: () => {
+                clearInterval(interval);
                 showToast('error', 'Something went wrong.', {position: 'bottom-right'});
             }
         });
@@ -446,11 +472,20 @@ export default function Audio({event}: any) {
                         className="ti-btn bg-[linear-gradient(243deg,#ffcc00_0%,#ff9339_100%)] text-white w-full mt-4">
                         {!processing && <ArrowUpFromLine className="mr-2" />}
                         {processing && <Loader className='mr-2 animate-spin'/>}
-                        Upload
+                       {message ? 'Saved!!' : 'Submit'} 
                     </Button>
                 </div>
             )}
-            {progress && (<progress value={progress.percentage} max="100">{progress.percentage}%</progress>)}
+            {/* {progress && (<progress value={progress.percentage} max="100">{progress.percentage}%</progress>)} */}
+            {progress > 0 ? (
+                <div className="mt-1">
+                <ProgressBarComponent 
+                 percentage={progress}
+                 />
+                </div>
+
+            ): null}
+           
             <Suspense fallback={""}>
                 <ConfirmDialog 
                     message="Do you want to delete this audio from database ?"

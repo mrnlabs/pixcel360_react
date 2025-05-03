@@ -87,3 +87,18 @@
 .user-overlay{
   outline: 2px dashed #3b82f6;
 }
+
+/* For progress bar file uploads */
+/* .fileUploadedContainer {
+  background-color: pink;
+}
+
+.fileUploadedBarCompleted {
+  background-color: green;
+  width: 80%;
+} */
+/* 
+.fileUploadedbarLabel {
+  font-size: 20px;
+  color: #fff;
+} */
