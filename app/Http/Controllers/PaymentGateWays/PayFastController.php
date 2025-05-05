@@ -396,7 +396,7 @@ class PayFastController extends Controller
                         'expires_at' => $plan->getEndDate($startDate),
                         'payment_method' => 'payfast',
                         'transaction_id' => $pf_payment_id,
-                        'reminder_sent_7_days' => false,
+                        'reminder_sent_2_days' => false,
                         'reminder_sent_1_days' => false,
                     ]);
                     

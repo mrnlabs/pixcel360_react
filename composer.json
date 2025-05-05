@@ -45,7 +45,8 @@
         "files": [
             "app/Helpers/UserHelper.php",
             "app/Helpers/validatePngTransparency.php",
-            "app/Helpers/getSignedDownloadUrl.php"
+            "app/Helpers/getSignedDownloadUrl.php",
+            "app/Helpers/userHasNoSubscription.php"
         ]
     },
     "autoload-dev": {

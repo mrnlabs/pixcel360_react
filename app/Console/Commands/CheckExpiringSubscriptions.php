@@ -28,25 +28,25 @@ class CheckExpiringSubscriptions extends Command
      */
     public function handle()
     {
-        // Find subscriptions expiring in 7 days
-        $sevenDaysFromNow = Carbon::now()->addDays(7)->toDateString();
-        $subscriptionsExpiringInSevenDays = Subscription::with('plan')
-        ->whereDate('expires_at', $sevenDaysFromNow)
-            ->where('reminder_sent_7_days', false)
+        // Find subscriptions expiring in 2 days
+        $twoDaysFromNow = Carbon::now()->addDays(2)->toDateString();
+        $subscriptionsExpiringInTwoDays = Subscription::with('plan')
+        ->whereDate('expires_at', $twoDaysFromNow)
+            ->where('reminder_sent_2_days', false)
             ->with('user')
             ->get();
 
-        $this->info('Found '.$subscriptionsExpiringInSevenDays->count().' subscriptions expiring in 7 days');
+        $this->info('Found '.$subscriptionsExpiringInTwoDays->count().' subscriptions expiring in 2 days');
 
-        foreach ($subscriptionsExpiringInSevenDays as $subscription) {
-            SendSubscriptionReminderJob::dispatch($subscription, 7)
+        foreach ($subscriptionsExpiringInTwoDays as $subscription) {
+            SendSubscriptionReminderJob::dispatch($subscription, 2)
                 ->onQueue('reminders');
             
             // Mark as sent
-            $subscription->reminder_sent_7_days = true;
+            $subscription->reminder_sent_2_days = true;
             $subscription->save();
             
-            $this->info("7-day reminder queued for subscription #{$subscription->id}");
+            $this->info("2-day reminder queued for subscription #{$subscription->id}");
         }
 
         // Find subscriptions expiring tomorrow
@@ -56,6 +56,7 @@ class CheckExpiringSubscriptions extends Command
             ->where('reminder_sent_1_day', false)
             ->with('user')
             ->get();
+            // dd($tomorrow);
 
         foreach ($subscriptionsExpiringTomorrow as $subscription) {
             SendSubscriptionReminderJob::dispatch($subscription, 1)

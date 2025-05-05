@@ -80,7 +80,7 @@ class SubscriptionReminderMail extends Mailable implements ShouldQueue
                 'subscription' => $this->subscription,
                 'daysUntilExpiration' => $this->daysUntilExpiration,
                 'expiryDate' => $this->subscription->expires_at->format('F j, Y'),
-                'renewalLink' => route('subscription.renew', $this->subscription->id),
+                'renewalLink' => route('plans.show', $this->subscription->plan->slug),
             ],
         );
     }
