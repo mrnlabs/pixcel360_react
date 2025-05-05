@@ -23,7 +23,7 @@ useEffect(() => {
 
     return (
         <Guest>
-            <Head title="Pixcel360 - Forgot Password" />
+            <Head title="Pixcel360 - Reset Password" />
             <div className="container">
    <div className="grid grid-cols-12 justify-center items-center authentication authentication-basic h-full">
       <div className="xxl:col-span-4 xl:col-span-4 lg:col-span-3 md:col-span-3 sm:col-span-2 col-span-12"></div>
@@ -32,13 +32,11 @@ useEffect(() => {
             <div className="box-body p-[3rem]">
                <div className="mb-3 flex justify-center"> 
                    <Link href="/"> 
-                    <img src="https://pixcel360.com/wp-content/uploads/2024/01/Backup_of_PIXEL360-LOGO-with-grey.png" alt="logo" className="desktop-logo"/> 
-                    <img src="https://pixcel360.com/wp-content/uploads/2024/01/Backup_of_PIXEL360-LOGO-with-grey.png" alt="logo" className="desktop-white"/> 
+                    <img src="https://pixcel360.com/wp-content/uploads/2023/11/PIXEL360-LOGO.png" alt="logo" className="desktop-logo"/> 
+                    <img src="https://pixcel360.com/wp-content/uploads/2023/11/PIXEL360-LOGO.png" alt="logo" className="desktop-white"/> 
                     </Link> 
                     </div>
-               <p className=" mb-2 text-center">Forgot your password? No problem. Just let us know your email
-                address and we will email you a password reset link that will
-                allow you to choose a new one.</p>
+               <p className=" mb-2 text-center">Please enter the email that you used when creating your account. You will receive an email with further instructions to reset your password.</p>
                <div className="flex mb-3 justify-between gap-2 flex-wrap flex-lg-nowrap"> 
                   </div>
                

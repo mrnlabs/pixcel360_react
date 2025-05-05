@@ -2,9 +2,9 @@
 # Welcome to {{ config('app.name') }}!
 
 Hi {{ $user->firstname }} {{ $user->lastname }},
-<p>Welcome to Pixcel360! Your account has been created, and you’ll receive a separate email with your username and a link to set your password. 
-    You can manage your account and subscriptions at any time on your account page.</p>
-<p>Your account has been successfully created. Here are your login credentials:</p>
+<p>Welcome to Pixcel360! Your account has been created, and you’ll receive a separate email with your username and a link to set your password. You can manage your account and subscriptions at any time on your account page. 
+</p>
+
 
 <p>If you need assistance, we’re here for you:</p>
 <p>

@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
+use App\Notifications\CustomResetPasswordNotification;
 use App\Traits\HasSlug;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
@@ -91,5 +92,16 @@ public function nextSubscription()
         return $this->hasMany(Event::class)
             ->where('status', 1);
     }
+
+    /**
+ * Send the password reset notification.
+ *
+ * @param  string  $token
+ * @return void
+ */
+public function sendPasswordResetNotification($token)
+{
+    $this->notify(new CustomResetPasswordNotification($token));
+}
 
 }

@@ -17,7 +17,7 @@ class Subscription extends Model
         'started_at' => 'datetime',
         'expires_at' => 'datetime',
         'price' => 'decimal:2',
-        'reminder_sent_7_days' => 'boolean',
+        'reminder_sent_2_days' => 'boolean',
         'reminder_sent_1_day' => 'boolean',
 
     ];

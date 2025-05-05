@@ -46,7 +46,6 @@ class SendSubscriptionReminderJob implements ShouldQueue
      */
     public function __construct(Subscription $subscription, $daysUntilExpiration)
     {
-        Log::info('Constructor called');
         $this->subscription = $subscription;
         $this->daysUntilExpiration = $daysUntilExpiration;
     }

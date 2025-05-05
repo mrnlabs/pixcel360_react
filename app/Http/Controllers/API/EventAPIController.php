@@ -199,6 +199,13 @@ protected function generateVideoFilename(UploadedFile $file)
                         'message' => $validator->errors()->first()
                     ], 400);
                 }
+                if(userHasNoSubscription()){
+                    return response()->json([
+                        'status' => false,
+                        'message' => 'You have no active subscription.'
+                    ], 403);
+                }
+
                 $user= User::whereId($event->user_id)->first();
      
                $hasReachedLimit = $user->activeEvents()->count() >= env('EVENT_LIMIT_NUM', 4);
@@ -207,17 +214,15 @@ protected function generateVideoFilename(UploadedFile $file)
                     return response()->json([
                         'status' => false,
                         'message' => 'Events limit reached.'
-                    ], 400);
+                    ], 403);
                 }
-                // $deviceExists = DB::table('devices')->where('device_id', $request->device_id)->exists();
-                // if(!$deviceExists){
-                //     DB::table('devices')->insert([
-                //         'device_name' => $request->device_name,
-                //         'device_id' => $request->device_id,
-                //         // 'subscription_id' => $user->currentSubscription->id,
-                //         'subscription_id' => 1,
-                //     ]);
-                // }
+                $deviceExists = DB::table('devices')->where('device_id', $request->device_id)->exists();
+                if(!$deviceExists){
+                    DB::table('devices')->insert([
+                        'device_name' => $request->device_name ?? 'Unknown',
+                        'device_id' => $request->device_id ?? 'Unknown',
+                    ]);
+                }
                
                 $event->update(['status' => true]);
                 $data = new EventResource($event);
