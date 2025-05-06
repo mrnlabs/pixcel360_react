@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Traits\HasSlug;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\DeletedModels\Models\Concerns\KeepsDeletedModels;
@@ -11,16 +12,16 @@ class Subscription extends Model
 {
     use HasFactory, HasSlug,KeepsDeletedModels;
 
-    protected $fillable = ['user_id', 'plan_id', 'started_at', 'expires_at', 'slug'];
+    protected $guarded = [];
     
-    protected $casts = [
-        'started_at' => 'datetime',
-        'expires_at' => 'datetime',
-        'price' => 'decimal:2',
-        'reminder_sent_2_days' => 'boolean',
-        'reminder_sent_1_day' => 'boolean',
+   protected $casts = [
+    //     'started_at' => 'datetime',
+    //     'expires_at' => 'datetime',
+           'price' => 'decimal:2',
+          'reminder_sent_2_days' => 'boolean',
+          'reminder_sent_1_day' => 'boolean',
 
-    ];
+   ];
     
     public function user()
     {
@@ -45,7 +46,10 @@ class Subscription extends Model
      */
     public function isActive()
     {
-        return $this->status === 'active' && $this->expires_at->isFuture();
+        if (!$this->expires_at instanceof Carbon) {
+            $date = Carbon::parse($this->expires_at);
+        }
+        return $this->status === 'active' && $date->isFuture();
     }
 
     /**
@@ -55,7 +59,10 @@ class Subscription extends Model
      */
     public function hasExpired()
     {
-        return $this->expires_at->isPast();
+        if (!$this->expires_at instanceof Carbon) {
+            $date = Carbon::parse($this->expires_at);
+        }
+        return $date->isPast();
     }
 
     /**
@@ -65,7 +72,10 @@ class Subscription extends Model
      */
     public function isExpiringSoon()
     {
-        return $this->isActive() && $this->expires_at->diffInDays(now()) <= 7;
+        if (!$this->expires_at instanceof Carbon) {
+            $date = Carbon::parse($this->expires_at);
+        }
+        return $this->isActive() && $date->diffInDays(now()) <= 7;
     }
 
     public function devices(){

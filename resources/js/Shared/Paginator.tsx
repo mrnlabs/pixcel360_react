@@ -107,7 +107,7 @@ const Paginator: React.FC<PaginatorProps> = ({
                     onClick={() => handlePageChange(page as number)}
                     className={`px-3 py-2 text-sm font-medium rounded-sm transition-colors
                       ${currentPage === page
-                        ? 'bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white'
+                        ? 'bg-gradient-to-r from-[#ff9339] to-[#ffcc00] text-white'
                         : 'text-gray-700 bg-white border border-gray-300 hover:bg-gray-50'
                       }`}
                     aria-label={`Page ${page}`}

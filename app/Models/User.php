@@ -47,9 +47,8 @@ class User extends Authenticatable
     public function currentSubscription()
 {
     return $this->hasOne(Subscription::class)
-        ->where('started_at', '<=', now())
         ->where('expires_at', '>', now())
-        ->latest('started_at');
+        ->oldest('started_at');
 }
 
 public function activeAndFutureSubscriptions()
@@ -90,7 +89,8 @@ public function nextSubscription()
     public function activeEvents(): HasMany
     {
         return $this->hasMany(Event::class)
-            ->where('status', 1);
+        ->where('status', 1)
+        ->where('user_id', $this->id);
     }
 
     /**

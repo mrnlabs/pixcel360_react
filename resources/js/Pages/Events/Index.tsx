@@ -80,8 +80,8 @@ const updateFilters = React.useCallback(
                     My events
                     </h6>
                     <span className='mb-4 ml-4'><span className='text-danger'>*</span> The gallery of an event is deleted 
-                      <span className='text-primary'> six months </span> 
-                       after creation. Backup your data before the indicated date.</span>
+                      <span className='text-primary'> 60 days </span> 
+                      from the first day of event activation. Backup your data before the indicated date.</span>
                   </div>
                 </div>
           

@@ -149,8 +149,8 @@ class PayFastController extends Controller
             }
             
             // Add timeout
-            curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 30);
-            curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+            curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 60);
+            curl_setopt($ch, CURLOPT_TIMEOUT, 60);
             
             // Execute cURL
             $response = curl_exec($ch);
@@ -217,7 +217,7 @@ class PayFastController extends Controller
 
             $signature = $this->generateSignature($data, $this->passphrase);
             $data['signature'] = $signature;
-            logger()->info('PayFast Request Data: ' . json_encode($data));
+            // logger()->info('PayFast Request Data: ' . json_encode($data));
             return response()->json([
                 'merchantId' => $this->merchant_id,
                 'merchantKey' => $this->merchant_key,
@@ -382,22 +382,38 @@ class PayFastController extends Controller
                 
                 $plan = $transaction->plan;
                 $user = $transaction->user;
-                
+                logger()->info('Current Subscription: ' . json_encode($user->currentSubscription()));
                 if ($plan && $user) {
+
+                    $latestSubscription = $user->subscriptions()
+                                                ->latest('expires_at')
+                                                ->first();
+
                     $currentSubscription = $user->currentSubscription()->first();
-        
+
+                    logger()->info("Current subscription:", ['subscription' => $latestSubscription]);
+    
                     // Determine start date for the new subscription
-                    $startDate = $currentSubscription ? $currentSubscription->expires_at : now();
+                    $startDate = !is_null($latestSubscription) ? $latestSubscription->expires_at : now();
+                    
+                    // Debug log
+                    logger()->info("Start date being used:", [
+                        'startDate' => $startDate,
+                        'now' => now(),
+                        'pf_payment_id' => $pf_payment_id,
+                        'isCurrentSubscriptionNull' => $latestSubscription
+                    ]);
+                    
+        
                     // Create subscription
                     $subscription = $plan->subscriptions()->create([
                         'user_id' => $user->id,
                         'plan_id' => $plan->id,
                         'started_at' => $startDate,
-                        'expires_at' => $plan->getEndDate($startDate),
-                        'payment_method' => 'payfast',
+                        'expires_at' => $plan->computeEndDate($startDate, $plan->interval),
                         'transaction_id' => $pf_payment_id,
                         'reminder_sent_2_days' => false,
-                        'reminder_sent_1_days' => false,
+                        'reminder_sent_1_day' => false,
                     ]);
                     
                     logger()->info("Subscription {$subscription->id} created successfully for plan: {$plan->id}, user: {$user->id}");

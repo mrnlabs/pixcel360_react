@@ -103,4 +103,30 @@ public function getIntervalInDays(): int
 //             return $startDate->copy()->addDays(30); // Default fallback
 //     }
 // }
+
+// week
+// month
+// semi_annual
+// year
+
+
+public function computeEndDate($startDate, $interval){
+    if (!$startDate instanceof Carbon) {
+        $startDate = Carbon::parse($startDate);
+    }
+    switch ($interval) {
+        case 'week':
+            return $startDate->addWeeks(1);
+        case 'month':
+            return $startDate->addMonths(1);
+        case 'semi_annual':
+            return $startDate->addMonths(6);
+        case 'year':
+            // make sure startDate is a Carbon instance
+
+            return $startDate->addYear();
+        default:
+            throw new \InvalidArgumentException("Invalid interval: {$interval}");
+}
+}
 }

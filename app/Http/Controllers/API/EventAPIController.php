@@ -189,8 +189,8 @@ protected function generateVideoFilename(UploadedFile $file)
 
                 $validator = Validator::make($request->all(), [
                     'slug' => 'required|string|max:255',
-                    //  'device_name' => 'required|string|max:255',
-                    //  'device_id' => 'required|string|max:255',
+                     'device_name' => 'required|string|max:255',
+                     'device_id' => 'required|string|max:255',
                 ]);
                 
                 if ($validator->fails()) {
@@ -217,14 +217,20 @@ protected function generateVideoFilename(UploadedFile $file)
                     ], 403);
                 }
                 $deviceExists = DB::table('devices')->where('device_id', $request->device_id)->exists();
+             
                 if(!$deviceExists){
                     DB::table('devices')->insert([
                         'device_name' => $request->device_name ?? 'Unknown',
                         'device_id' => $request->device_id ?? 'Unknown',
+                        'subscription_id' => $user->currentSubscription()->first() ? $user->currentSubscription()->first()->id : null,
+                        'event_id' => $event->id,
                     ]);
                 }
                
-                $event->update(['status' => true]);
+                $event->update([
+                    'status' => true,
+                    'activated_at' => now()
+                ]);
                 $data = new EventResource($event);
                 return response()->json($data->toArray(request()));
            } catch (\Throwable $th) {

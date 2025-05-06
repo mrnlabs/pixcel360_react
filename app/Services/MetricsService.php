@@ -22,7 +22,7 @@ class MetricsService
         // Count totals
         $totalEvents = Event::count();
         $totalUsers = User::count();
-        $totalSubscriptions = Subscription::count();
+        $totalSubscriptions = isInternalPortalUser() ? Subscription::count() : auth()->user()->subscriptions()->count();
         $totalOrders = 100;
         
         // Get percentage changes
