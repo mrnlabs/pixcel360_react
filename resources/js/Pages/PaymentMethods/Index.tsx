@@ -5,7 +5,7 @@ import { router } from '@inertiajs/react';
 import PayFastCheckout from './PayFastCheckout';
 import Authenticated from '@/Layouts/AuthenticatedLayout';
 
-const Index = ({ payfastIdentifier, error }: any) => {
+const Index = ({ payfastIdentifier, error, plan }: any) => {
   const props = usePage().props
   const [paymentStatus, setPaymentStatus] = useState<{ success: boolean; message: string; data: any } | null>(null);
   
@@ -53,6 +53,7 @@ const Index = ({ payfastIdentifier, error }: any) => {
                     payfastIdentifier={payfastIdentifier} 
                     onSuccess={handlePaymentSuccess}
                     onError={handlePaymentError}
+                    plan={plan}
                   />
                 </div>
               )}

@@ -78,8 +78,7 @@ class VideoSettingsController extends Controller
      */
     public function uploadVedioAudio(Request $request, $slug)
     {
-        sleep(10);
-return back()->with('success','sucesssssssssssssssssssss');
+ 
         $event = Event::where('slug', $slug)->first();
      
         if($request->isMethod('delete')) {

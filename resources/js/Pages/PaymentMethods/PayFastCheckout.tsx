@@ -4,8 +4,9 @@ import InputError from '@/Components/InputError';
 import { Link, useForm, usePage } from '@inertiajs/react';
 import { Loader } from 'lucide-react';
 import React, { useEffect, useRef } from 'react';
+import CheckoutPlan from './CheckoutPlan';
 
-const PayFastCheckout = ({ payfastIdentifier, onSuccess, onError }: any) => {
+const PayFastCheckout = ({ payfastIdentifier, onSuccess, onError, plan }: any) => {
   const scriptLoaded = useRef(false);
   
   useEffect(() => {
@@ -89,6 +90,11 @@ const PayFastCheckout = ({ payfastIdentifier, onSuccess, onError }: any) => {
         <div className="box-body p-[3rem]">
         <p className="h5 mb-2 text-center">Complete Your Payment</p>
         <p className="mb-4 text-textmuted dark:text-textmuted/50 opacity-70 font-normal text-center">Please confirm your payment details before proceeding</p>
+        
+         <CheckoutPlan plan={plan}/>
+        
+        
+        
         <div className="grid grid-cols-12 gap-y-4">
         <div className="xl:col-span-12 col-span-12">
           <label htmlFor="firstname" className="form-label text-defaulttextcolor">First Name <sup className="text-xs text-danger">*</sup>

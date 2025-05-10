@@ -19,6 +19,15 @@ export default function Index({subscriptions}: SubscriptionCardProps) {
               ]}
               />
         <div className="grid grid-cols-12 gap-x-6">
+        {subscriptions?.length === 0 && (
+            <div className="col-span-12">
+                <div className="box flex ml-4"> 
+                    <p className="text-center p-4 ml-4">
+                    No subscriptions found
+                    </p>
+                </div>
+            </div>
+        )}
             {subscriptions?.map((subscription: any) => (
                 <SubscriptionCard key={subscription.id} subscription={subscription} />
             ))}

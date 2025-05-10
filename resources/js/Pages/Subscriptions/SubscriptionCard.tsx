@@ -1,5 +1,6 @@
 import { useSubscriptionStatus } from '@/hooks/useSubscriptionStatus';
 import { SubscriptionCardProps } from '@/types';
+import { getPlanInterval } from '@/utils/getPlangetInterval';
 import { Link, usePage } from '@inertiajs/react';
 import { isBefore, isAfter, isEqual, parseISO, format } from 'date-fns';
 
@@ -42,20 +43,7 @@ export default function SubscriptionCard({subscription}: SubscriptionCardProps) 
       return "Unknown";
     };
     
-    const getInterval = (interval: string) => {
-      switch (interval) {
-        case 'week':
-          return 'Week';
-        case 'month':
-          return 'Month';
-        case 'semi_annual':
-          return '6 Months';
-        case 'year':
-          return 'Yearl';
-        default:
-          return interval;
-      }
-    }
+   
 
   return (
     <div className="xxl:col-span-3 lg:col-span-6 col-span-12">
@@ -71,7 +59,7 @@ export default function SubscriptionCard({subscription}: SubscriptionCardProps) 
       <p className="mb-4">
         <span className="font-medium text-textmuted dark:text-textmuted/50 text-xs">Total :</span>
         <span className="text-success font-medium text-[14px]">
-          ${subscription?.plan?.price} <span className='text-textmuted'> / {getInterval(subscription?.plan?.interval || '')}</span>
+          ${subscription?.plan?.price} <span className='text-textmuted'> / {getPlanInterval(subscription?.plan?.interval || '')}</span>
         </span>
       </p>
       <p className="mb-4">
