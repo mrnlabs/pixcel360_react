@@ -41,7 +41,9 @@ class PayFastController extends Controller
             
             // Generate a unique order ID
             $orderId = Str::random(10);
-            
+            $latestSubscription = $user->subscriptions()
+            ->latest('expires_at')
+            ->first();
             $data = array(
                 // Merchant details
                 'merchant_id' => $this->merchant_id,
@@ -63,6 +65,10 @@ class PayFastController extends Controller
 
                 'custom_str1' => (string)$user->id,  // User ID
                 'custom_str2' => (string)$plan->id,  // Plan ID
+
+// the reason i used this is because querying on notify was buggy
+                'custom_str3' => !is_null($latestSubscription) ? $latestSubscription->expires_at : now(),//subscription start date
+                'custom_str4' => $plan->computeEndDate($latestSubscription ? $latestSubscription->expires_at : now(), $plan->interval),// subscription end date
             );
             
             // Add signature
@@ -75,8 +81,7 @@ class PayFastController extends Controller
             logger()->info('PayFast Request Data: ' . $data_string);
             
             // Get payment identifier
-            // $identifier = $this->generatePaymentIdentifier($data_string);
-            $identifier = "123";
+            $identifier = $this->generatePaymentIdentifier($data_string);
             
             if ($identifier) {
 
@@ -97,7 +102,7 @@ class PayFastController extends Controller
                     "return_url" => $data['return_url'],
                     "cancel_url" => $data['cancel_url'],
                     "notify_url" => $data['notify_url'],
-                    "plan" => $plan
+                    "amount" => $plan->price
                 ]);
             } else {
                 logger()->error('Failed to get PayFast payment identifier');
@@ -391,33 +396,17 @@ class PayFastController extends Controller
                                                 ->first();
 
                     $currentSubscription = $user->currentSubscription()->first();
-
-                    logger()->info("Current subscription:", ['subscription' => $latestSubscription]);
-    
-                    // Determine start date for the new subscription
-                    $startDate = !is_null($latestSubscription) ? $latestSubscription->expires_at : now();
-                    
-                    // Debug log
-                    logger()->info("Start date being used:", [
-                        'startDate' => $startDate,
-                        'now' => now(),
-                        'pf_payment_id' => $pf_payment_id,
-                        'isCurrentSubscriptionNull' => $latestSubscription
-                    ]);
-                    
-        
                     // Create subscription
                     $subscription = $plan->subscriptions()->create([
                         'user_id' => $user->id,
                         'plan_id' => $plan->id,
-                        'started_at' => $startDate,
-                        'expires_at' => $plan->computeEndDate($startDate, $plan->interval),
+                        'started_at' => $request->custom_str3,
+                        'expires_at' => $request->custom_str4,
                         'transaction_id' => $pf_payment_id,
                         'reminder_sent_2_days' => false,
                         'reminder_sent_1_day' => false,
                     ]);
                     
-                    logger()->info("Subscription {$subscription->id} created successfully for plan: {$plan->id}, user: {$user->id}");
                     
                     SendPaymentSuccessEmailJob::dispatch(
                         $user, $subscription, 

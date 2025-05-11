@@ -6,6 +6,7 @@ use Inertia\Inertia;
 use App\Models\Event;
 use App\Models\Overlay;
 use Illuminate\Http\Request;
+use Intervention\Image\Laravel\Facades\Image;
 use App\Rules\PNGHasTransparency;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -72,6 +73,18 @@ class UserOverlayController extends Controller
     {
         if($request->is('api/*')) {
            return $this->uploadOverlayAPI($request);
+        }
+
+        // get pngFile dimensions
+        $image = Image::read($request->file('pngFile'));
+
+        $width = $image->width();
+        $height = $image->height();
+    
+        // make sure the image width and height are divisible by 2
+
+        if($width % 2 !== 0 || $height % 2 !== 0) {
+            return back()->with('error', 'Image dimensions must be even numbers.');
         }
         
         $eventId = explode('&', $request->event_id)[0];
@@ -142,12 +155,19 @@ class UserOverlayController extends Controller
             'pngFile' => ['required','mimes:png'],
         ]);
 
-        // if(!validatePngTransparency($request->file('pngFile'))) {
-        //     return response()->json([
-        //         'status' => 'error',
-        //         'message' => 'Image has transparency',
-        //     ], 400);
-        // }
+           // get pngFile dimensions
+           $image = Image::read($request->file('pngFile'));
+
+           $width = $image->width();
+           $height = $image->height();
+           
+
+        if($width % 2 !== 0 || $height % 2 !== 0) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Image dimensions must be even numbers.',
+            ], 400);
+        }
         
         $event = Event::whereSlug($request->slug)->first();
         $filePath = Storage::put('video_overlays', $request->file('pngFile'));

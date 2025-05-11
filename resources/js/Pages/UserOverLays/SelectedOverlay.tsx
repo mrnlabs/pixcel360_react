@@ -63,10 +63,15 @@ export default function SelectedOverlay({ overlayPreset, events, overlaysLength 
         // Get width and height here
         const width = img.width;
         const height = img.height;
-        console.log(`Image dimensions: ${width}x${height}`);
+        // console.log(`Image dimensions: ${width}x${height}`);
         
         // You can use these dimensions as needed
         // For example, store them in state or validate them
+        // if width and height are not divisible by 2, show error
+        if (width % 2 !== 0 || height % 2 !== 0) {
+            showToast('error', 'Image width and height must be even numbers', {position: 'bottom-right'});
+            return;
+        }
         
         // Now check transparency
         checkPNGTransparency(file).then((hasTransparency) => {
@@ -108,6 +113,7 @@ export default function SelectedOverlay({ overlayPreset, events, overlaysLength 
     post(route('user.overlays.store'), {
       preserveState: true,
       onSuccess: (response: any) => {
+        console.log(response)
         // Assuming the response contains the path to the saved overlay
         if (response?.overlay?.path) {
           setUserOverlay(response.overlay.path);

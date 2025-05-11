@@ -1,7 +1,7 @@
 import toast, { Toast, ToastPosition } from 'react-hot-toast';
 
 const showToast = (type = 'default', message: string, options: Partial<Pick<Toast, 'style' | 'className' | 'id' | 'duration' | 'position' | 'icon' | 'ariaProps' | 'iconTheme' | 'removeDelay'>> = {}) => {
-  const baseOptions = { position: 'top-right' as ToastPosition, duration: 3000, ...options };
+  const baseOptions = { position: 'top-right' as ToastPosition, duration: 5000, ...options };
 
   switch (type) {
     case 'success':

@@ -139,7 +139,7 @@ const handleDeleteSelected = () => {
 
               </Suspense>
       </div>
-              {!adminOverlays.data?.length && <div className="text-center">No overlays found.</div>}
+              {!adminOverlays.data?.length && <div className="text-center">No preset overlays found.</div>}
             </div>
           </div>
         </Authenticated>
