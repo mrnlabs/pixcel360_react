@@ -101,6 +101,7 @@ const PayFastCheckout = ({ payfastIdentifier, onSuccess, onError, plan }: any) =
           </label>
           <ThemeTextInput
             id="firstname"
+            disabled={true}
             type="text"
             name="firstname"
             value={data.firstname}
@@ -115,6 +116,7 @@ const PayFastCheckout = ({ payfastIdentifier, onSuccess, onError, plan }: any) =
           </label>
           <ThemeTextInput
             id="lastname"
+            disabled={true}
             type="text"
             name="lastname"
             value={data.lastname}
@@ -130,6 +132,7 @@ const PayFastCheckout = ({ payfastIdentifier, onSuccess, onError, plan }: any) =
           <ThemeTextInput
                 id="email"
                 type="email"
+                disabled={true}
                 name="email"
                 value={data.email}
                 autoComplete="username"
@@ -146,6 +149,7 @@ const PayFastCheckout = ({ payfastIdentifier, onSuccess, onError, plan }: any) =
                 id="phone"
                 type="text"
                 name="phone"
+                disabled={true}
                 value={data.phone}
                 isFocused={true}
                 onChange={(e) => setData("phone", e.target.value) }

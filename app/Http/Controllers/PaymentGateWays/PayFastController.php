@@ -102,7 +102,7 @@ class PayFastController extends Controller
                     "return_url" => $data['return_url'],
                     "cancel_url" => $data['cancel_url'],
                     "notify_url" => $data['notify_url'],
-                    "amount" => $plan->price
+                    "plan" => $plan
                 ]);
             } else {
                 logger()->error('Failed to get PayFast payment identifier');

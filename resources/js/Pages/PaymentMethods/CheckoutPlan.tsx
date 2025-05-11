@@ -8,12 +8,12 @@ export default function CheckoutPlan({plan}: any) {
         <div className="flex flex-wrap items-center gap-4 flex-xl-nowrap align-items-center">
          
           <div>
-            <p className="mb-0 ">{plan.name} / {getPlanInterval(plan.interval)}</p>
-            <p className="mb-0 font-bold">US$ {plan.price}</p>
+            <p className="mb-0 ">{plan?.name} / {getPlanInterval(plan?.interval)}</p>
+            <p className="mb-0 font-bold">US$ {plan?.price}</p>
            
           </div>
           <div className="ms-auto">
-            <Link href={route('plans.show', plan.slug)} className="ti-btn bg-[linear-gradient(243deg,#ffcc00_0%,#ff9339_100%)] text-white">View</Link>
+            <Link href={route('plans.show', plan?.slug)} className="ti-btn bg-[linear-gradient(243deg,#ffcc00_0%,#ff9339_100%)] text-white">View</Link>
           </div>
         </div>
       </div>

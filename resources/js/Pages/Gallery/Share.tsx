@@ -129,13 +129,13 @@ export default function Share({event, videos}: {
           <LoadingOverlay show={loading} />
           <div className="main-content mt-6">
           <div className="container-fluid" style={{ 
-            background: `linear-gradient(to right, ${event?.setting?.webgallery_background ?? '#ffff'}, ${event?.setting?.webgallery_background ?? '#c0c0c0'})`, 
-            color: event?.setting?.text_button_color ?? '' 
+            background: `linear-gradient(to right, ${event?.setting?.webgallery_background ?? '#fff'}, ${event?.setting?.webgallery_background ?? '#c0c0c0'})`, 
+            color: event?.setting?.text_button_color ?? '#000000' 
           }}>
         
         <div className="row" >
           <div className="col-xl-12">
-            <div className="box" style={{ backgroundColor: event?.setting?.webgallery_background  ?? '', color: event?.setting?.text_button_color ?? '' }}>
+            <div className="box" style={{ backgroundColor: event?.setting?.webgallery_background  ?? '#fff', color: event?.setting?.text_button_color ?? '#000000' }}>
               <div className="box-body p-4">
               <div className="box-body border-b border-dashed border-defaultborder dark:border-defaultborder/10">
               <div className="text-center">
@@ -143,8 +143,8 @@ export default function Share({event, videos}: {
                   <img src={event.setting?.app_logo ?? "https://pixcelcapetown.s3.af-south-1.amazonaws.com/placeholders/128x128.png"} alt=""/>
                   
                 </span>
-                <h5 style={{ color: event?.setting?.text_button_color ?? '' }} className="font-semibold mb-1">{event.setting?.gallery_name}</h5>
-                <span style={{ color: event?.setting?.text_button_color ?? '' }} className="block font-medium mb-2">{event.setting?.gallery_contact}</span>
+                <h5 style={{ color: event?.setting?.text_button_color ?? '#000000' }} className="font-semibold mb-1">{event.setting?.gallery_name}</h5>
+                <span style={{ color: event?.setting?.text_button_color ?? '#000000' }} className="block font-medium mb-2">{event.setting?.gallery_contact}</span>
               </div>
             </div>
               </div>
@@ -156,10 +156,10 @@ export default function Share({event, videos}: {
 
         <div className="row">
           <div className="col-xl-12">
-            <div className="box" style={{ backgroundColor: event?.setting?.webgallery_background  ?? '', color: event?.setting?.text_button_color ?? '' }}>
+            <div className="box" style={{ backgroundColor: event?.setting?.webgallery_background  ?? '#fff', color: event?.setting?.text_button_color ?? '#000000' }}>
               <div className="box-body p-4">
                 <div className="flex items-center justify-between flex-wrap gap-4">
-                <div style={{ color: event?.setting?.text_button_color ?? '' }} className="avatar-list-stacked">
+                <div style={{ color: event?.setting?.text_button_color ?? '#000000' }} className="avatar-list-stacked">
                  <div> Gallery Name: <span className='font-bold'>{event?.name}</span></div>
                  <div> Event nr: <span className='font-bold'><span className='text-primary'>#</span>{event?.id}</span>
                  <span className='ml-3'>Number of files: {totalItems ?? 0 }</span>
